@@ -755,3 +755,10 @@
 - 真实宿主：10 项通过，覆盖两类节点及 CodeTab、文件/别名/标题/块、Enter/Tab/鼠标、Escape、textarea 原生撤销/重做、重开不额外写盘、空节点 BR/emoji 后的范围替换。用例使用独立临时库；CodeTab 扩展场景的显式保存调用公开 handle.commit，原 Mod+Enter 的基础六场景另已实测。启动只对首次信任库的上下文导航重试一次，不重试功能断言。
 - 配套 CodeTab：仅本轮 completion.ts 适配与自有说明，未覆盖其它开发改动。云笔记 CodeTab 已更新；当前工作源码加本轮适配的隔离构建与已安装三件套逐项 SHA256 相同，97 项测试、构建/类型、lint 全绿。再使用云笔记实际 CodeTab 包复制到临时库联测上述 10 项全绿，日志 `/tmp/mindmap-wiki-cloud-codetab-host.log`，报告 `/tmp/mindmap-wiki-current-provider-report.json`。不降级或重复覆盖 CodeTab。
 - Git：延续 feat/wikilink-completion，第一笔重构 5058fd0；本步独立保存功能提交，未推送、未改版本/标识、未改 Markdown 格式。用户主题、真实中文 IME、多窗口操作手感仍需云笔记验收。
+
+> **2026-11-20 双链补全安装与交付，第 3 步（K208 / K219）**
+
+- 提交：5058fd0 统一输入边界；cc14e97 接入三种输入面的双链补全。改动及依据见前两条流水与 decisions.md，均在 feat/wikilink-completion，本次不推送或创建远程 PR。
+- 安装：make install 安装 Oh-My-Mindmap-Studio 0.3.3 到云笔记的 mindmap-studio 插件目录；原三件套与 data.json 已由安装器备份，发布三件套逐项 SHA256 与本项目构建一致。日志 `/tmp/mindmap-wikilink-install.log`，核对 `/tmp/mindmap-wikilink-installed-check.json`；原设置和笔记未修改。
+- CodeTab：核对发现日常库已包含本轮单文件适配及其最新功能。当前源码快照的三件套与日常安装逐字节一致，因此不再覆盖 CodeTab；仅保留配套 completion.ts 和接入说明的未提交改动，未提交其它仓库的并行工作。隔离源码快照 97 项测试、构建/类型、lint 通过；日志 `/tmp/code-tab-wiki-current-checks.log`。
+- 验证：源码提交前 check:gates 已全部通过（139 文件/3419 项及真实 Chrome）；以日常 CodeTab 实际包复制到临时库的 10 项联测全部通过，无运行时错误。安装后再次构建与三件套校验通过，未自动重启日常 Obsidian；完整重启后由用户验收实际主题、中文 IME 和操作手感。
