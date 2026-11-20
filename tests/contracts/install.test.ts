@@ -74,6 +74,9 @@ describe('local plugin installer', () => {
 		writeFileSync(join(base, 'Makefile'), readFileSync(new URL('../../Makefile', import.meta.url)));
 		writeFileSync(join(base, 'scripts/install.mjs'), "import{writeFileSync}from'node:fs';writeFileSync('vault.txt',process.env.MINDMAP_STUDIO_VAULT);");
 		const value = join(base, '云笔记 $(touch BAD) `touch WORSE`');
+		const defaultResult = spawnSync('make', ['install'], { cwd: base, encoding: 'utf8' });
+		expect(defaultResult.status, defaultResult.stderr).toBe(0);
+		expect(readFileSync(join(base, 'vault.txt'), 'utf8')).toBe('~/Nutstore Files/我的坚果云/云笔记');
 		const result = spawnSync('make', ['install', 'vault=' + value], { cwd: base, encoding: 'utf8' });
 		expect(result.status, result.stderr).toBe(0); expect(readFileSync(join(base, 'vault.txt'), 'utf8')).toBe(value);
 		expect(existsSync(join(base, 'BAD'))).toBe(false); expect(existsSync(join(base, 'WORSE'))).toBe(false);

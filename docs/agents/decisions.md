@@ -8,6 +8,7 @@
 | 场景 | 选择 | 说明 |
 |---|---|---|
 | Fork 品牌与作者（K37） | `manifest.json` / `package.json` / `main.registerHoverLinkSource` | 显示品牌 Oh-My-Mindmap-Studio，维护作者 volmodaoist、作者 URL 指向其 GitHub；包名 oh-my-mindmap-studio 与 lock 根名称同步。设置及悬停来源由 manifest.name 呈现。插件 ID/安装目录/命令及持久化键沿用 mindmap-studio，不另起配置存储；README 的发布链接使用实际 Fork 仓库，保留 WinterMosquito 上游出处和原 MIT 版权，追加 Fork 修改版权。历史版本说明、提交和测量记录不追溯更名。 |
+| 本地开发与安装入口（K212） | `Makefile` / `scripts/install.mjs` | Makefile 包装既有开发监听、测试监听、构建、lint 与 check:gates；默认只显示帮助。安装路径唯一定义在 Makefile 的 vault 变量，默认当前用户的坚果云云笔记，命令行 vault 覆盖；以原始环境值传给安装器，由安装器展开 ~/、校验库、构建、备份和 SHA256 核对。依据是减少重复命令与路径输入，同时保留一个安装入口和现有文件保护。 |
 | 创建入口与命名弹窗（K217） | `commands.registerCommands` / `main.onload` + `ui/modal-name.ts` / `ui/modal-name.css` | 新建保留命令面板与文件夹右键，删除丝带注册与相应语言刷新分支，命令 ID 不变。使用官方 `Modal.modalEl` 加专属类，将 `--modal-radius` 局部设为宿主 `--radius-m`；名称输入只设宽度，圆角、字体、边框、聚焦反馈和按钮由宿主提供。提示和动作间距使用宿主变量；空名禁用、Enter 提交、Esc/遮罩取消及创建落点保持既有流程。 |
 | 纯逻辑（无 obsidian / 引擎依赖） | `domain/` | lint 强制零依赖 |
 | 通用机制（常量/文案/错误/并发/事件/持久化） | `core/` | 各一份，不分模块重复 |
@@ -97,6 +98,7 @@
   - 官方 AbstractInputSuggest 公开构造参数仅支持 input/div，不能直接绑定现有 textarea；EditorSuggest 依赖宿主 Editor/文件上下文，片段编辑器没有该上下文。因此 textarea 采用轻量宿主样式弹层，CodeTab 使用自己的公开 completion API，不复制其 CodeMirror 编辑器或文件写盘机制。
   - CodeTab 规则只在实际聚焦的导图插件控件内返回候选；sourcePath 来自控件所属 FileView，重命名后实时读取。仅移除自己的注册，不释放共享补全引擎。
   - CodeTab 配套适配允许已注册 Markdown 规则在普通 Markdown 区域运行；代码语言补全优先，围栏及片段保存行为不变。Markdown 匹配由规则负责，避免 CodeMirror 用 `[[` 前缀筛掉候选。
+  - 插件尺寸重排同时保护正文 editing 状态及 root 内实际持焦控件；依据是 CodeTab 标题输入不属于正文编辑，重建 DOM 会触发 blur 并提前保存。焦点离开插件后解除这一保护，控件的保存与取消继续由插件负责。
 
 
 ## 节点内容组件（K209）

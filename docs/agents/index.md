@@ -445,7 +445,7 @@
 
 ## 工具配置与脚本
 
-- [Makefile](../../Makefile)：构建、检查与本地安装入口。
+- [Makefile](../../Makefile)：构建/测试监听、现有门禁、云笔记默认安装与显式 vault 安装入口。
 - **config/**：显式加载的构建与检查配置（K212）。
   - [esbuild.config.mjs](../../config/esbuild.config.mjs)
   - [knip.json](../../config/knip.json)

@@ -83,7 +83,23 @@ function npm(args) {
 
 export function main() {
 	if (process.argv.includes('--help')) {
-		console.log('make install vault="/path/to/Obsidian vault"\n\nBuilds Oh-My-Mindmap-Studio, backs up the installed files, and copies main.js, manifest.json and styles.css.\nExisting notes, plugin settings and enabled-plugin configuration are preserved.\nRestart Obsidian afterward to load the new main.js.\n\nOther targets: make build, make test, make lint, make check.');
+		console.log([
+			'Oh-My-Mindmap-Studio local development',
+			'',
+			'make dev                          Watch and rebuild the plugin',
+			'make build                        Check types and build production assets',
+			'make test                         Run all tests',
+			'make test-watch                   Watch and rerun tests',
+			'make lint                         Run ESLint',
+			'make check                        Run the existing change-driven gates',
+			'make install                      Build and install into the configured vault',
+			'make install vault="/path/to/vault"  Install into another initialized vault',
+			'',
+			`Vault: ${process.env.MINDMAP_STUDIO_VAULT ?? '(set vault="/path/to/vault")'}`,
+			'Install backs up the existing files, copies main.js, manifest.json and styles.css, and verifies SHA256.',
+			'Notes, plugin settings and enabled-plugin configuration are preserved.',
+			'Restart Obsidian afterward to load the new main.js.',
+		].join('\n'));
 		return;
 	}
 	const vault = validateVault(process.env.MINDMAP_STUDIO_VAULT ?? process.argv[2]);

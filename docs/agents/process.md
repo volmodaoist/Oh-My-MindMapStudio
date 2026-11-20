@@ -41,11 +41,11 @@
 
 ## 本地安装与验收
 
-- `make install vault="/path/to/vault"`：经 `scripts/install.mjs` 校验已有 `.obsidian`，按需安装依赖，生产构建后将三件套安装到 manifest.id 对应的插件目录。
+- `make install`：默认路径由 Makefile 的 `vault` 变量配置（当前为 `~/Nutstore Files/我的坚果云/云笔记`）；`make install vault="/path/to/vault"` 显式覆盖。经 `scripts/install.mjs` 校验已有 `.obsidian`，按需安装依赖，生产构建后将三件套安装到 manifest.id 对应的插件目录。
   - Makefile 用原始环境变量传递路径，支持空格和中文；Node 子进程不拼接用户路径为 shell 命令。
   - 覆盖前将旧三件套及已有 data.json 备份到系统临时目录，打印备份路径并写 install.json；复制后逐项核对 SHA256。只覆盖三件套，不更改笔记、设置或 community-plugins.json。
   - 命令不自动重启宿主；安装后重启 Obsidian，首次安装时在第三方插件设置启用。简单停用/启用不能保证重新加载 main.js。
-- `make build/test/lint/check` 分别调用既有 npm 命令；`make check` 使用同一 check:gates 门禁，不另维护检查清单。
+- `make dev/build/test/test-watch/lint/check` 分别调用既有 npm 命令；`make check` 使用同一 check:gates 门禁，不另维护检查清单。`make` / `make help` 只显示帮助。
 - `tests/contracts/install.test.ts` 在临时目录验证路径/产物拒绝、首次安装、备份、设置与笔记保留、Make 原始路径传递及帮助入口；不在用户 vault 中运行这些用例。
 
 ## 数据格式变更

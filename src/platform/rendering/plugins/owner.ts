@@ -215,8 +215,10 @@ export class PluginOwnerSession {
 		entry.width = 0; entry.height = 0; entry.work = null; entry.session = null; entry.failedProvider = null;
 	}
 	get hasEntries(): boolean { return this.entries.size > 0; }
+	/** 正文编辑状态之外，标题等持焦控件同样必须在尺寸重排中保留原 DOM。 */
 	get editingNodeIds(): ReadonlySet<string> {
-		return new Set(Array.from(this.entries.values()).filter(entry => entry.session?.editing).map(entry => entry.nodeId));
+		return new Set(Array.from(this.entries.values()).filter(entry => entry.session?.editing ||
+			!!entry.root?.contains(entry.root.ownerDocument.activeElement)).map(entry => entry.nodeId));
 	}
 	async prepare(): Promise<ReadonlySet<string>> {
 		if (!this.canvas || this.closed) return new Set();

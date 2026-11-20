@@ -762,3 +762,18 @@
 - 安装：make install 安装 Oh-My-Mindmap-Studio 0.3.3 到云笔记的 mindmap-studio 插件目录；原三件套与 data.json 已由安装器备份，发布三件套逐项 SHA256 与本项目构建一致。日志 `/tmp/mindmap-wikilink-install.log`，核对 `/tmp/mindmap-wikilink-installed-check.json`；原设置和笔记未修改。
 - CodeTab：核对发现日常库已包含本轮单文件适配及其最新功能。当前源码快照的三件套与日常安装逐字节一致，因此不再覆盖 CodeTab；仅保留配套 completion.ts 和接入说明的未提交改动，未提交其它仓库的并行工作。隔离源码快照 97 项测试、构建/类型、lint 通过；日志 `/tmp/code-tab-wiki-current-checks.log`。
 - 验证：源码提交前 check:gates 已全部通过（139 文件/3419 项及真实 Chrome）；以日常 CodeTab 实际包复制到临时库的 10 项联测全部通过，无运行时错误。安装后再次构建与三件套校验通过，未自动重启日常 Obsidian；完整重启后由用户验收实际主题、中文 IME 和操作手感。
+
+> **2026-11-20 便捷 Makefile 入口（K212）**
+
+- 摘要：沿用参考项目的 Makefile 包装方式，补齐 dev/test-watch 与完整帮助；安装只保留 make install，默认 vault 在 Makefile 配置为当前用户的坚果云云笔记，命令行 vault 显式覆盖。
+- 依据：减少重复命令和路径输入；路径原始值经环境传入现有安装器，沿用校验、备份、SHA256 与设置保留机制。新增入口均调用已有 npm 命令，不另起门禁或安装逻辑。
+- 验证：7 项安装契约通过，覆盖默认路径、显式覆盖、中文/空格和字面 shell 字符；make help 与 make -n dev/test-watch/install 通过。check:gates 全绿：构建/类型、139 文件/3419 项测试、lint、knip、发布元数据；日志 `/tmp/mindmap-makefile-gates.log`。
+- 文档：双语 README、流程、索引、K212 与决策同步；源/测试清单未增删，46 条豁免不变。改动留在当前分支工作区；本轮未执行日常库安装，未修改 CodeTab 或提交/推送。
+
+> **2026-11-20 CodeTab 更新后回归与双库安装（K219）**
+
+- 初始回归：两个日常库的 Beyond-CodeTab 三件套与其最新构建一致，公开类型仅新增可选标签 ID；47 项相关单测及 10 项双链宿主联测通过。完整交互回归发现标题输入在节点尺寸重建时失焦，调用栈确认 group.clear 触发标题 blur 并提前保存。
+- 修复：owner.editingNodeIds 同时保护公开正文 editing 状态与插件 root 内实际持焦控件，焦点离开后解除 DOM 保护。标题不属于 CodeTab 的正文 editing 标记，单看标记不能覆盖标题输入；复用既有引擎实时尺寸路径，CodeTab 源码和接口未修改。
+- 验证：check:gates 全绿，构建/类型、139 文件/3419 项测试、lint、knip、真实 Chrome（新增标题持焦/离焦两项，桥契约 15 项）与 release metadata。修复后的实际 CodeTab + TikZJax 14 项交互回归和再次执行的 10 项双链回归全部通过，无运行时错误，覆盖宽度、焦点、标题改名、正文保存/撤销、固定宽度、只读、重开、停启和导出。日志 `/tmp/mindmap-codetab-upgrade-gates.log`、`/tmp/mindmap-codetab-upgrade-fixed-interaction.log`、`/tmp/mindmap-codetab-upgrade-final-wiki.log`。
+- 安装：按用户明确指定安装 Oh-My-Mindmap-Studio 0.3.3 到云笔记和数学与算法；两个库的三件套与当前构建逐项 SHA256 一致，原设置与备份字节一致。数学与算法首次安装，第三方插件配置仍由用户启用；日常 Obsidian 未自动重启。备份与安装核对记录 `/tmp/mindmap-codetab-upgrade-two-vaults.json`。
+- Git：保留原 Makefile 未提交改动，本次桥接修复和浏览器契约也留在当前分支工作区，未提交或推送。源/测试清单未增删，owner 小于 300 行，46 条豁免不变。

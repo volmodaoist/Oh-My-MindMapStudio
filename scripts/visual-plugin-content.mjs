@@ -3,7 +3,7 @@ import { join } from 'node:path';
 export function buildPluginProbe(root) {
 	const module = name => JSON.stringify(join(root, 'src', name));
 	return `
-import { PluginContentBridge, syncPluginContents, disposePluginContents, freezePluginContents } from ${module('platform/rendering/plugins/bridge.ts')};
+import { PluginContentBridge, syncPluginContents, disposePluginContents, freezePluginContents, getEditingPluginNodeIds } from ${module('platform/rendering/plugins/bridge.ts')};
 import { buildPluginBlock } from ${module('ui/node-content/content-plugin.ts')};
 const probe = document.createElement('pre');probe.id='plugin-content-probe';document.body.appendChild(probe);
 const assert=(v,message)=>{if(!v)throw new Error(message)};
@@ -54,6 +54,10 @@ assert(window.pluginMRCalls===1&&window.pluginMRDetached,'TikZ 使用官方渲�
 assert(first.querySelector('.mindmap-plugin-live svg'),'SVG 完成后进入真实节点');
 const live=second.querySelector('.mindmap-plugin-live');const button=live.querySelector('button');button.click();await wait(50);
 assert(live.textContent.includes('B')&&settled>0&&commits===0,'切换只改变组件并触发尺寸同步');
+const titleInput=document.createElement('input');live.appendChild(titleInput);titleInput.focus();
+assert(lastHandle.getSnapshot().editing===false&&getEditingPluginNodeIds(owner).has('n2'),'标题持焦即保护节点，不依赖正文编辑标记');
+const outside=document.createElement('button');document.body.appendChild(outside);outside.focus();
+assert(!getEditingPluginNodeIds(owner).has('n2'),'焦点离开插件控件后解除保护');outside.remove();titleInput.remove();
 const fresh=make('n2','tab','tab: A\\nhello');second.replaceWith(fresh);syncPluginContents(canvas,owner,sources);await wait(30);
 assert(fresh.querySelector('.mindmap-plugin-live')===live&&creates===1,'重排复用同一活动 DOM 和事件');
 button.click();assert(live.textContent.includes('B'),'复用后按钮仍可用');
@@ -70,7 +74,7 @@ sources.delete('n2');syncPluginContents(canvas,owner,sources);assert(!live.isCon
 disposePluginContents(owner);observer.disconnect();canvas.remove();
 document.removeEventListener('obsidian-code-tab-api',discover);
 assert(!document.querySelector('.mindmap-plugin-live'),'引擎关闭清理所有活动组件');
-probe.textContent=JSON.stringify({ok:true,settled,creates,checks:13});
+probe.textContent=JSON.stringify({ok:true,settled,creates,checks:15});
 }catch(error){probe.textContent=JSON.stringify({ok:false,error:error.stack||String(error)})}})();
 `;
 }

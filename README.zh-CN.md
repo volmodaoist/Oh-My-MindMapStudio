@@ -284,7 +284,7 @@ Mindmap Layout: logical     ← 布局（六种 kebab 值；缺省回落设置�
 - **安装本 Fork**：使用本仓库的 Release 或源码构建方式；社区目录中的 *MindMap Studio* 对应上游项目。
 - **从 GitHub Release 安装**：从仓库 [Releases](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/releases) 页面下载最新版本的附件（`main.js`、`manifest.json`、`styles.css`），复制到 `<仓库>/.obsidian/plugins/mindmap-studio/`，重启 Obsidian 后在 **设置 → 第三方插件** 启用。（每个 Release 同时附带 `LICENSE` 与 `THIRD-PARTY-NOTICES.md` 以履行许可声明——无需复制进插件目录。）
 - **从源码构建**：`npm install && npm run build` 生成 `main.js`，与 `manifest.json`、`styles.css` 一起放入插件目录。
-- **快速本地安装**：`make install vault="/你的仓库路径"` 自动构建、备份现有插件文件并安装三件套；输出备份路径，逐项核对 SHA256，保留笔记和插件设置。安装后重启 Obsidian 加载新代码。
+- **快速本地安装**：`make install` 自动构建并安装到 Makefile 中 `vault` 配置的默认路径（`~/Nutstore Files/我的坚果云/云笔记`）；其他已初始化的仓库使用 `make install vault="/你的仓库路径"`。安装前备份，逐项核对 SHA256，保留笔记和设置，安装后重启 Obsidian。`make help` 显示全部入口；`make dev`、`make test-watch` 和 `make check` 分别用于构建监听、测试监听和现有门禁。
 
 > 每个版本的变更说明见仓库 [Releases](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/releases) 页面（正文取自 [`docs/release-notes-<版本>.md`](docs/)）。
 
