@@ -221,3 +221,35 @@ export function linkDisplayText(link: string): string {
 	}
 	return linkpathDisplayName(parts.linkpath);
 }
+
+/** 光标处尚未完成的双链范围；识别编辑状态，不另定义完整双链语法。 */
+export interface WikilinkTrigger {
+	from: number;
+	to: number;
+	query: string;
+}
+
+export interface WikilinkSuggestion {
+	label: string;
+	detail: string;
+	linkpath: string;
+	alias?: string;
+	icon: 'file-text' | 'file' | 'heading' | 'hash';
+}
+
+/** UTF-16 光标位置与 textarea/Obsidian Editor 一致；不覆盖选区、别名或另一条链接。 */
+export function wikilinkTriggerAt(value: string, cursor: number, selectionEnd = cursor): WikilinkTrigger | null {
+	if (cursor !== selectionEnd || cursor < 2 || cursor > value.length) return null;
+	const from = value.lastIndexOf('[[', cursor - 2);
+	if (from < 0) return null;
+	const query = value.slice(from + 2, cursor);
+	if (/[[\]\n|]/.test(query)) return null;
+	let escapes = 0;
+	for (let i = from - 1; i >= 0 && value[i] === '\\'; i--) escapes++;
+	if (escapes % 2) return null;
+	const closing = value.indexOf(']]', cursor);
+	const tail = closing < 0 ? '' : value.slice(cursor, closing);
+	if (tail.includes('|') && !/[[\]\n]/.test(tail)) return null;
+	const to = closing >= 0 && !/[[\]\n]/.test(tail) ? closing + 2 : cursor;
+	return { from, to, query };
+}

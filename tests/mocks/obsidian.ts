@@ -268,6 +268,11 @@ export class AbstractInputSuggest {
 	constructor(_app: unknown, _inputEl: unknown) {}
 }
 
+/** 元数据/匹配函数的占位导出；行为由局部替身或真实宿主验证。 */
+export function parseFrontMatterAliases(_frontmatter: unknown): string[] | null { return null; }
+export function prepareFuzzySearch(_query: string): (_text: string) => { score: number } | null { return () => null; }
+export function stripHeadingForLink(heading: string): string { return heading; }
+
 export class Workspace {}
 
 export const Platform = {

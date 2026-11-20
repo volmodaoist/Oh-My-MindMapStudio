@@ -52,6 +52,7 @@ import type { MindMap, MindMapNode } from '../../core/engine-types';
 import type { ViewNodeEditContext } from '../view/view-context';
 import { NODE_INLINE_CONTENT_CLASS } from '../../core/constants';
 import { NodeEditor } from '../../ui/node-editor/node-editor';
+import { NodeWikilinkCompletion } from './node-wikilink-completion';
 import { applyRawNodeContent } from '../content/node-content-write';
 
 // 兼容原调用入口；写回实现与按键判定均只有一份。
@@ -95,6 +96,7 @@ export function openNodeInlineEditor(view: ViewNodeEditContext, node: MindMapNod
 		onInput: () => placeEditor(session, view),
 		onCommit: () => commitSession(view, session),
 	});
+	editor.useInputBehavior(new NodeWikilinkCompletion(view.app, editor.input));
 	const session: InlineEditorSession = {
 		mindMap, node, editor, initialValue, active: true,
 		hiddenGroup: null, restoreGroup: null, events: new EventBinder(),

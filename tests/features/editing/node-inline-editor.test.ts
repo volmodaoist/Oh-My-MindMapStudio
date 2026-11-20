@@ -20,6 +20,11 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { MindMap, MindMapNode } from '../../../vendor/simple-mind-map.cjs';
 import type { ViewNodeEditContext } from '../../../src/features/view/view-context';
 
+// 补全行为单独直测；此处验证原会话与 NodeEditor 生命周期，不模拟候选 DOM。
+vi.mock('../../../src/features/editing/node-wikilink-completion', () => ({
+	NodeWikilinkCompletion: class { dispose(): void {} },
+}));
+
 const {
 	getNodeGroupElMock,
 	getDrawTransformMock,

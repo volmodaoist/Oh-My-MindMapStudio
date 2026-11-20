@@ -73,6 +73,18 @@ interface TextEditor {
 }
 
 const adapted = new WeakSet<object>();
+const inputObservers = new WeakMap<MindMap, Set<(input: HTMLElement | null) => void>>();
+
+/** 只暴露已挂载输入面及关闭通知；features 不读取 renderer 或改写引擎提交。 */
+export function observeNodeTextEditor(mindMap: MindMap, observer: (input: HTMLElement | null) => void): () => void {
+	const observers = inputObservers.get(mindMap) ?? new Set();
+	inputObservers.set(mindMap, observers); observers.add(observer);
+	return () => { observers.delete(observer); };
+}
+
+function notifyInput(mindMap: MindMap, input: HTMLElement | null): void {
+	for (const observer of inputObservers.get(mindMap) ?? []) observer(input);
+}
 
 /** engine 内部安装入口，所有编辑入口（插入、双击、F2、缩放重开）共用。 */
 export function installNodeEditorAppearance(mindMap: MindMap): void {
@@ -84,6 +96,7 @@ export function installNodeEditorAppearance(mindMap: MindMap): void {
 	const release = (): void => {
 		restore?.();
 		restore = null;
+		notifyInput(mindMap, null);
 	};
 	// 私有关闭方法缺失时只适配外观，避免隐藏节点后没有恢复入口。
 	if (typeof editor.hideEditTextBox === 'function') {
@@ -113,6 +126,7 @@ export function installNodeEditorAppearance(mindMap: MindMap): void {
 			release();
 			const group = getNodeGroupEl(node);
 			if (group && typeof this.hideEditTextBox === 'function') restore = hideNodeForEditing(group);
+			notifyInput(mindMap, el);
 		} catch (error) {
 			console.warn('节点编辑框样式适配失败，保留引擎样式', error);
 		}

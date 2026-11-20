@@ -96,6 +96,7 @@ import {
 	closeInlineEditor,
 	isAnyNodeEditing,
 } from '../editing/node-inline-editor';
+import { NativeNodeWikilinkCompletion } from '../editing/native-node-wikilink-completion';
 import {
 	hideCopyButtonsInExportSvg,
 	registerCodeBlockInteractions,
@@ -299,6 +300,7 @@ export class MindMapView
 	private commitsArmed = false;
 	/** 引擎实例生命周期（防腐收口，引擎内部访问不再出现在本类） */
 	private engine: EngineController;
+	private readonly nativeWikilinks = new NativeNodeWikilinkCompletion(this);
 	/**
 	 * 布局写入在途的目标值（引擎 layout id）：`applyLayout` 写属性期间置位、收尾清空。
 	 *
@@ -506,8 +508,10 @@ export class MindMapView
 			// 引擎销毁通知（未定稿数学段登记面的唯一清理点）：按引擎身份清掉该
 			// 实例归属的条目（语义见 content-remeasure 的 forgetEngine；按 DOM
 			// 连接状态判归属会在首帧前误清新引擎的全部懒加载段，2026-10-14 实机定案）
-			onEngineDisposed: (engine) =>
-				this.contentRemeasure.forgetEngine(engine),
+			onEngineDisposed: (engine) => {
+				this.nativeWikilinks.dispose();
+				this.contentRemeasure.forgetEngine(engine);
+			},
 			// 节点内联内容（方案 B 原型）：含行内链接 / 轻标记、或超长文本（引擎的
 			// SVG 换行是逐字符二次复杂度，长行必须接管）且无图的节点改走自绘 HTML；
 			// 其余节点返回 null 走引擎默认文本（点击跳转复用 view-wikilink 既有分流）
@@ -1160,6 +1164,7 @@ export class MindMapView
 
 	/** 引擎就绪收尾：重建工具栏（连线开关态跟随文件布局）；md 模式补返回按钮 */
 	private onEngineReady(): void {
+		if (this.mindMap) this.nativeWikilinks.attach(this.mindMap);
 		// 加载基线与大图首帧提示：容器 0 尺寸（后台标签）时加载那一刻引擎还没建，
 		// 两者都挂在 `LoadSession` 的 pending 字段上等这一刻（见各自字段说明）。
 		// 此刻引擎的 `render()` 已排进 setTimeout(0)、尚未执行 ⇒ 提示仍赶得上首帧；

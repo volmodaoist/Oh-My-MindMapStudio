@@ -526,6 +526,10 @@ export function normalizePath(p) {
 	return String(p).replace(/\\\\/g, '/');
 }
 export function setIcon() {}
+// 双链候选的数据行为由 platform 单测和真实 Obsidian 联测覆盖；渲染探针只补公开导出。
+export function parseFrontMatterAliases() { return []; }
+export function prepareFuzzySearch() { return () => null; }
+export function stripHeadingForLink(heading) { return heading; }
 // 标注图标（platform/rendering/callout-icon 的具名导入）：垫片返回 null = 宿主没有这个图标，
 // 即**生产环境的降级路径**（图标缺失 ⇒ 省略图标、保留标题与类型色）。探针因此
 // 断言的是"无图标时盒子仍成立"，图标本身的取用由 platform 层直连宿主 getIcon。
@@ -711,6 +715,8 @@ HTMLElement.prototype.createDiv = function (info) {
 HTMLElement.prototype.createSpan = function (info) {
 	return this.createEl('span', info);
 };
+HTMLElement.prototype.show = function () { this.style.removeProperty('display'); };
+HTMLElement.prototype.hide = function () { this.style.display = 'none'; };
 // Obsidian 的 Element.isShown()（祖先链无 display:none）；无头页没有它。
 // 2026-10-14：content-remeasure 的可见性守卫（flush / retryDeferred /
 // remeasureSettled / syncVisibility，经宿主注入的 isVisible）与嵌入的注入都会

@@ -181,9 +181,9 @@ export default defineConfig(
 		},
 	},
 	{
-		// Chromium textarea 的 setRangeText 不进入原生撤销；仅放行此适配器的 insertText 通道。
+		// 标准 DOM 范围替换不进入 Chromium 原生撤销；仅放行此适配器的 insertText 通道。
 		// 运行时检测返回值并提供标准 API 回退，不放宽其它弃用 API 或文件。
-		files: ['src/ui/node-editor/textarea-input.ts'],
+		files: ['src/ui/node-editor/native-input.ts'],
 		rules: {
 			'@typescript-eslint/no-deprecated': ['warn', { allow: [{ from: 'lib', name: 'execCommand' }] }],
 		},

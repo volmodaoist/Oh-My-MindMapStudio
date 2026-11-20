@@ -54,7 +54,7 @@ import {
 import { applyHistoryLimitOnCreate, seedInitialHistory } from './mindmap-history';
 import { countTreeNodes, getRenderRoot } from './mindmap-nodes';
 import { installNodeEditorAppearance } from './mindmap-editor';
-export { hideNodeForEditing, readNodeEditorAppearance } from './mindmap-editor';
+export { hideNodeForEditing, readNodeEditorAppearance, observeNodeTextEditor } from './mindmap-editor';
 import {
 	applyLiveColorDirectives,
 	type ColorDirectiveReader,

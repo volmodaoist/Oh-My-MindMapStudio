@@ -6,7 +6,7 @@ vi.hoisted(() => {
 	(globalThis as { document?: unknown }).document ??= { documentElement: {} };
 });
 
-import { hideNodeForEditing, installNodeEditorAppearance, readNodeEditorAppearance } from '../../src/engine/mindmap-editor';
+import { hideNodeForEditing, installNodeEditorAppearance, readNodeEditorAppearance, observeNodeTextEditor } from '../../src/engine/mindmap-editor';
 
 function groupStub() {
 	const attributes = new Map<string, string>();
@@ -43,6 +43,22 @@ function harness(fill = 'transparent', canvasColor = 'rgb(30, 30, 30)') {
 }
 
 describe('节点编辑框外观', () => {
+	it('输入订阅只暴露挂载面和关闭通知，取消订阅后不再回调', () => {
+		const h = harness(); const observer = vi.fn();
+		const unsubscribe = observeNodeTextEditor(h.mindMap, observer);
+		installNodeEditorAppearance(h.mindMap); h.editor.showEditTextBox({ node: h.node });
+		expect(observer).toHaveBeenLastCalledWith(h.el);
+		h.editor.hideEditTextBox(); expect(observer).toHaveBeenLastCalledWith(null);
+		unsubscribe(); const calls = observer.mock.calls.length;
+		h.editor.showEditTextBox({ node: h.node }); expect(observer).toHaveBeenCalledTimes(calls);
+	});
+	it('引擎销毁通知输入关闭，保留原关闭和显示调用次数', () => {
+		const h = harness(); const observer = vi.fn();
+		observeNodeTextEditor(h.mindMap, observer); installNodeEditorAppearance(h.mindMap);
+		h.editor.showEditTextBox({ node: h.node }); h.events.get('beforeDestroy')?.();
+		expect(observer).toHaveBeenLastCalledWith(null);
+		expect(h.show).toHaveBeenCalledOnce(); expect(h.close).not.toHaveBeenCalled();
+	});
 	it.each(['rgb(255, 255, 255)', 'rgb(30, 30, 30)'])('透明节点跟随画布底色 %s', (canvasColor) => {
 		const h = harness('transparent', canvasColor);
 		installNodeEditorAppearance(h.mindMap);

@@ -5,6 +5,8 @@
 
 ## 测试与 CI
 
+双链补全（K208/K219）：domain 直测 UTF-16 未完成链接、选区、闭合、转义和别名边界；platform 验证官方来源路径、别名、标题及块缓存；输入扩展验证范围替换、IME、实时上下文与清理，CodeTab 规则验证焦点归属和提供者替换。`CODE_TAB_PLUGIN=/path/to/artifacts node scripts/verify-wikilink-obsidian.mjs` 在独立临时库联测两种编辑器、候选键盘/鼠标选择与显式保存；不修改日常库。Obsidian 实机的用户主题、IME 与操作手感仍由用户验收。
+
 编辑态外观（K199）：`engine-editor.test.ts` 验证节点/画布取色与原显示方法只调用一次；`node-inline-editor.test.ts` 验证缩放后的内容盒起点、字体与自适应宽高（现行策略见 K203）。`verify:visual` 的 `inline-edit` 探针在真实 Chrome 中覆盖中心/分支的三档缩放与亮暗画布、节点配色，不替代 Obsidian 实机的 IME、主题 CSS 与操作手感验收。
 
 画布交互（K200）：`view-canvas-interaction.test.ts` 捕获真实 `MindMapView` 构造器交给控制器的特性装配回调，保留真实节点动作与事件绑定后派发空白连续点击 / 双击，断言不插入节点；同时验证节点双击仍编辑、显式新建仍立即编辑。其它特性使用局部桩，右键菜单行为由 `view-context-menu.test.ts` 另测；Obsidian 实机仍需验证空白点击结束编辑、取消选中与 Tab / Enter / 加号手感。

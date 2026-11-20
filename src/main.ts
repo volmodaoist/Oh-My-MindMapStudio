@@ -21,6 +21,7 @@ import {
 } from './settings';
 import { MindMapView } from './features/view/view';
 import { offerColorSentinelCleanup } from './features/editing/view-node-color';
+import { CodeTabWikilinkCompletion } from './features/editing/code-tab-wikilink-completion';
 import { MindmapEmbedRenderChild } from './features/mindmap-codeblock';
 import { createNewMindMap } from './creation';
 import {
@@ -193,6 +194,12 @@ export default class MindMapStudioPlugin extends Plugin {
 
 		// 命令面板入口；文件夹右键入口在下方的 file-menu 监听中注册。
 		registerCommands(this);
+		const wikiCompletion = new CodeTabWikilinkCompletion(this.app);
+		wikiCompletion.register(document);
+		this.register(() => wikiCompletion.dispose());
+		this.registerEvent(this.app.workspace.on('layout-change', () => wikiCompletion.register(document)));
+		this.registerEvent(this.app.workspace.on('window-open', (_window, win) => wikiCompletion.register(win.document)));
+		this.registerEvent(this.app.workspace.on('window-close', (_window, win) => wikiCompletion.unregister(win.document)));
 		this.markdownAction = new MarkdownMindMapAction(this.app.workspace, () => this.settings.language);
 		this.markdownAction.register(this);
 

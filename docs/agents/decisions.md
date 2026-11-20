@@ -91,6 +91,12 @@
 - 扩展归属：`NodeEditor.useInputBehavior` 统一管理按键优先级、弹层内部点击与释放。
   - 依据：补全交互属于编辑组件，避免每个 feature 再维护一份键盘 hook、控件排除和销毁链。
   - 未消费按键继续原提交；输入法期间跳过扩展；来源路径读取当前 TFile，重命名后不沿用缓存旧值。
+- 双链补全：`platform/workspace/wikilink-completions` 只读取官方文件/元数据缓存、模糊搜索及 fileToLinktext；未完成 token 判定与格式生成复用 domain/wikilink。
+  - textarea 由 `NodeWikilinkCompletion` 接入统一输入接口；候选显示/选择与 Vault 查询分开，Enter/Tab 选择仅替换原文，后续提交仍经既有会话。
+  - 原生空节点经已有编辑防腐面的 observeNodeTextEditor 暴露挂载/关闭通知，`ContenteditableInput` 用文本节点/BR 与 UTF-16 Range 对齐引擎文本；复用同一补全行为和原生插入，不切换空节点编辑器或改引擎提交。引擎重建/销毁释放输入监听与弹层。
+  - 官方 AbstractInputSuggest 公开构造参数仅支持 input/div，不能直接绑定现有 textarea；EditorSuggest 依赖宿主 Editor/文件上下文，片段编辑器没有该上下文。因此 textarea 采用轻量宿主样式弹层，CodeTab 使用自己的公开 completion API，不复制其 CodeMirror 编辑器或文件写盘机制。
+  - CodeTab 规则只在实际聚焦的导图插件控件内返回候选；sourcePath 来自控件所属 FileView，重命名后实时读取。仅移除自己的注册，不释放共享补全引擎。
+  - CodeTab 配套适配允许已注册 Markdown 规则在普通 Markdown 区域运行；代码语言补全优先，围栏及片段保存行为不变。Markdown 匹配由规则负责，避免 CodeMirror 用 `[[` 前缀筛掉候选。
 
 
 ## 节点内容组件（K209）

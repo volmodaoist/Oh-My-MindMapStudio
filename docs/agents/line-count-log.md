@@ -745,3 +745,13 @@
 - 依据：不同输入控件共享上下文和替换语义即可，不需要替换编辑器；扩展生命周期内聚到组件，避免 features 重复维护事件。范围替换优先 Chromium 原生插入以保留撤销，标准 API 回退；ESLint 仅对适配器具名放行 execCommand。
 - 验证：定向 49 项通过；check:gates 完整通过，类型/构建、135 文件/3392 项测试、lint、knip、真实 Chrome 组件/720 组内容对照及原布局、结构拖动、撤销、导出探针。日志 `/tmp/mindmap-input-refactor-gates-complete.log`；最初 lint 发现弃用 API，已按上述具名例外处理并重跑全绿。
 - 规模：46 个超限源文件均已登记，未登记超限 0；新接口和适配器均低于 300 行。按用户授权在 feat/wikilink-completion 保存独立本地提交，未推送、未安装此中间快照。
+
+> **2026-11-20 双链补全，第 2 步（K208 / K219）**
+
+- 摘要：普通节点 textarea、新建空节点原生 contenteditable 与导图内 CodeTab Markdown 均支持双链候选。文件、别名、标题和块来自同一官方元数据服务；文本范围与格式生成仅在 domain/wikilink。候选选择只插入原文，保留原文档会话、引擎创建/布局、保存和撤销路径。
+- 依据：第一步输入接口承接不同控件，补全不重复实现范围替换/生命周期。原生输入面沿用已有编辑防腐包装的挂载/关闭通知，不修改 vendor；文本节点/BR 与 UTF-16 Range 对齐引擎文本。CodeTab 使用公开 completion 规则，活动文件来自实际聚焦控件，失焦窗口/关闭窗口不沿用陈旧上下文。
+- 交互：Enter/Tab 在候选显示时选择，Escape 先关候选；未显示候选时沿用原键位。IME 期间不弹候选；手写别名与选区不会被补全覆盖。Chromium 原生插入由共享 native-input 收口，以保留撤销；标准 DOM 范围 API 回退，ESLint 具名例外仅落该文件。
+- 主仓库门禁：check:gates 全绿，构建/类型、139 文件/3419 项测试、lint、knip、真实 Chrome 组件/720 组内容对照与原布局、拖动、撤销、导出探针；日志 `/tmp/mindmap-wiki-submit-gates.log`。新模块均小于 300 行，46 条豁免/未登记超限 0，索引与决策同步。
+- 真实宿主：10 项通过，覆盖两类节点及 CodeTab、文件/别名/标题/块、Enter/Tab/鼠标、Escape、textarea 原生撤销/重做、重开不额外写盘、空节点 BR/emoji 后的范围替换。用例使用独立临时库；CodeTab 扩展场景的显式保存调用公开 handle.commit，原 Mod+Enter 的基础六场景另已实测。启动只对首次信任库的上下文导航重试一次，不重试功能断言。
+- 配套 CodeTab：仅本轮 completion.ts 适配与自有说明，未覆盖其它开发改动。云笔记 CodeTab 已更新；当前工作源码加本轮适配的隔离构建与已安装三件套逐项 SHA256 相同，97 项测试、构建/类型、lint 全绿。再使用云笔记实际 CodeTab 包复制到临时库联测上述 10 项全绿，日志 `/tmp/mindmap-wiki-cloud-codetab-host.log`，报告 `/tmp/mindmap-wiki-current-provider-report.json`。不降级或重复覆盖 CodeTab。
+- Git：延续 feat/wikilink-completion，第一笔重构 5058fd0；本步独立保存功能提交，未推送、未改版本/标识、未改 Markdown 格式。用户主题、真实中文 IME、多窗口操作手感仍需云笔记验收。
