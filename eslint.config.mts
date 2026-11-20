@@ -181,6 +181,14 @@ export default defineConfig(
 		},
 	},
 	{
+		// Chromium textarea 的 setRangeText 不进入原生撤销；仅放行此适配器的 insertText 通道。
+		// 运行时检测返回值并提供标准 API 回退，不放宽其它弃用 API 或文件。
+		files: ['src/ui/node-editor/textarea-input.ts'],
+		rules: {
+			'@typescript-eslint/no-deprecated': ['warn', { allow: [{ from: 'lib', name: 'execCommand' }] }],
+		},
+	},
+	{
 		// 手写类型声明 vendor/simple-mind-map.d.cts（项目维护，非第三方产物）
 		// 纳入 lint——由上方 globalIgnores 收窄为只排除 vendor/*.cjs 而来。
 		// 引擎节点数据面本质是任意 JSON，`AnyObject = Record<string, any>` 必须

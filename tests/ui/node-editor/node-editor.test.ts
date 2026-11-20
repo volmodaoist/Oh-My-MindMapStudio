@@ -128,4 +128,42 @@ describe('NodeEditor', () => {
 		expect(h.el.remove).toHaveBeenCalledTimes(1);
 		expect(h.el.focus).not.toHaveBeenCalled();
 	});
+
+	it('输入扩展先处理按键，未消费时继续原提交；输入法期间不调用扩展', () => {
+		const h = setup();
+		const onKeyDown = vi.fn((event: KeyboardEvent) => {
+			if (event.key !== 'Escape') return false;
+			event.preventDefault(); return true;
+		});
+		h.editor.useInputBehavior({ onKeyDown, dispose: vi.fn() });
+		h.el.fire('keydown', key('Escape'));
+		expect(h.onCommit).not.toHaveBeenCalled();
+		h.el.fire('keydown', key('Enter', { isComposing: true }));
+		expect(onKeyDown).toHaveBeenCalledTimes(1);
+		h.el.fire('keydown', key('Enter'));
+		expect(h.onCommit).toHaveBeenCalledTimes(1);
+		h.editor.dispose();
+	});
+
+	it('扩展控件内点击保留编辑，控件外点击继续提交', () => {
+		const h = setup();
+		const control = {};
+		h.editor.useInputBehavior({ contains: target => target === control, dispose: vi.fn() });
+		h.doc.fireDoc('mousedown', { target: control });
+		expect(h.onCommit).not.toHaveBeenCalled();
+		h.doc.fireDoc('mousedown', { target: {} });
+		expect(h.onCommit).toHaveBeenCalledTimes(1);
+		h.editor.dispose();
+	});
+
+	it('组件统一释放扩展，重复注册与销毁只释放一次，销毁后注册立即释放', () => {
+		const h = setup();
+		const dispose = vi.fn(); const behavior = { dispose };
+		h.editor.useInputBehavior(behavior); h.editor.useInputBehavior(behavior);
+		h.editor.dispose(); h.editor.dispose();
+		expect(dispose).toHaveBeenCalledTimes(1);
+		const lateDispose = vi.fn();
+		h.editor.useInputBehavior({ dispose: lateDispose });
+		expect(lateDispose).toHaveBeenCalledTimes(1);
+	});
 });

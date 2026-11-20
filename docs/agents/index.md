@@ -44,6 +44,7 @@
   - **core/**：通用机制与共享词汇
     - [concurrency.ts](../../src/core/concurrency.ts)
     - [constants.ts](../../src/core/constants.ts)
+    - [editor-input.ts](../../src/core/editor-input.ts)
     - [engine-types.ts](../../src/core/engine-types.ts)
     - [errors.ts](../../src/core/errors.ts)
     - [event-binder.ts](../../src/core/event-binder.ts)
@@ -165,6 +166,7 @@
     - **node-editor/**
       - [node-editor.styles.ts](../../src/ui/node-editor/node-editor.styles.ts)
       - [node-editor.ts](../../src/ui/node-editor/node-editor.ts)
+      - [textarea-input.ts](../../src/ui/node-editor/textarea-input.ts)
     - **search/**
       - [search-bar.css](../../src/ui/search/search-bar.css)
       - [search-bar.ts](../../src/ui/search/search-bar.ts)
@@ -351,6 +353,7 @@
       - [content-plugin.test.ts](../../tests/ui/node-content/content-plugin.test.ts)
     - **node-editor/**
       - [node-editor.test.ts](../../tests/ui/node-editor/node-editor.test.ts)
+      - [textarea-input.test.ts](../../tests/ui/node-editor/textarea-input.test.ts)
     - [modal-common.test.ts](../../tests/ui/modal-common.test.ts)
     - [modal-input.test.ts](../../tests/ui/modal-input.test.ts)
   - **services/**：文档会话与视图服务

@@ -87,6 +87,8 @@ export interface ViewEngineContext {
 export interface ViewNodeEditContext extends ViewEngineContext {
 	readonly app: App;
 	readonly lang: Language;
+	/** 编辑输入的来源上下文；数据替换不绑定到原生文件写盘器。 */
+	readonly file?: TFile | null;
 	/**
 	 * 调度防抖保存（编辑提交后触发）。
 	 * 声明为**函数属性**而非方法语法：调用方会把引用透传/断言，方法语法会触发

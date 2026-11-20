@@ -91,6 +91,7 @@ export function openNodeInlineEditor(view: ViewNodeEditContext, node: MindMapNod
 	const editor = new NodeEditor(doc, {
 		value: initialValue,
 		label: t(view.lang, 'modal.text.title'),
+		sourcePath: () => view.file?.path ?? '',
 		onInput: () => placeEditor(session, view),
 		onCommit: () => commitSession(view, session),
 	});

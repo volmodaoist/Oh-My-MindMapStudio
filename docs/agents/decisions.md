@@ -84,6 +84,14 @@
 
 `features/editing/node-inline-editor` 管理编辑会话与引擎/节点访问，`ui/node-editor` 内聚文本框 DOM、按键/点击、测量与内联样式；UI 不访问引擎。会话与组件各自持有 `EventBinder`，结束编辑立即清理引擎和 DOM 监听，恢复节点 visibility。共享写回唯一源 `features/content/node-content-write`，原编辑模块仅保留仍有调用的单项写回兼容出口；业务调用方直接依赖提交模块，避免任务/配色/联系通过编辑器加载 UI。按键纯语义在 domain，已有保存/撤销/文档会话契约保持不变。
 
+- 输入边界：`core/editor-input` 定义文本、UTF-16 选区、实时来源路径与范围替换；`ui/node-editor/textarea-input` 适配现有 textarea。
+  - 依据：节点输入与插件片段编辑采用不同控件，共享上下文和替换语义即可，替换整套编辑器会扩大焦点、尺寸和保存风险。
+  - 范围替换优先使用 Chromium 原生插入保留撤销，不支持时用标准 textarea API；只通知 input，不写盘。
+  - ESLint 仅在该输入适配器具名放行已弃用的 execCommand；依据是标准范围 API 缺少原生撤销记录，不关闭其它弃用检查。
+- 扩展归属：`NodeEditor.useInputBehavior` 统一管理按键优先级、弹层内部点击与释放。
+  - 依据：补全交互属于编辑组件，避免每个 feature 再维护一份键盘 hook、控件排除和销毁链。
+  - 未消费按键继续原提交；输入法期间跳过扩展；来源路径读取当前 TFile，重命名后不沿用缓存旧值。
+
 
 ## 节点内容组件（K209）
 

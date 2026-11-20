@@ -738,3 +738,10 @@
 - 完整 check:gates 通过：构建/类型、134 文件/3384 项测试、lint、CSS lint、knip、真实 Chrome（720 组节点内容及原有布局/拖拽/导出回归）。CSS 为覆盖宿主/CodeTab 的已有 important 规则保留必要 important，仅有 warning、无 error；未添加运行时依赖。main.js 为 1,516,505 字节。
 - 最终实际 Obsidian + 已安装 Beyond-CodeTab/TikZJax 的 14 项联测通过、运行时错误 0：内容宽 468 → 640px，节点 foreignObject 为约 672.34px，代码 214px 高与原始行数匹配；宽度收回、原生键盘/粘贴、焦点、保存/共享撤销、宽代码 SVG、固定宽度、只读、停启与改名路径覆盖。报告 `/var/folders/zf/srfxv0kd7vn459nd5bs72j0c0000gn/T/mindmap-plugin-e2e-11Ngsb/report.json`。测试操作限定当前视图/foreignObject，撤销恢复节点后重新取得对应句柄；只读操作与其开始时的正文比较，避免混用早期编辑前基线。
 - 已经 make install 覆盖云笔记的 MindMap Studio 三件套并验证 SHA256/原设置；与联测相同的 Beyond-CodeTab 三项产物已逐项比对。备份与记录 `/tmp/oh-my-mindmap-plugin-width-install.json`；未自动重启 Obsidian，未提交/推送，用户重启后验收实际主题与操作手感。
+
+> **2026-11-20 输入层重构，第 1 步（K208）**
+
+- 摘要：统一文本、UTF-16 选区、动态来源路径和范围替换接口；现有 textarea 经薄适配器接入，NodeEditor 统一管理输入扩展的按键、控件判定和销毁。未接入补全，原焦点、键位、尺寸、保存和撤销管线保留。
+- 依据：不同输入控件共享上下文和替换语义即可，不需要替换编辑器；扩展生命周期内聚到组件，避免 features 重复维护事件。范围替换优先 Chromium 原生插入以保留撤销，标准 API 回退；ESLint 仅对适配器具名放行 execCommand。
+- 验证：定向 49 项通过；check:gates 完整通过，类型/构建、135 文件/3392 项测试、lint、knip、真实 Chrome 组件/720 组内容对照及原布局、结构拖动、撤销、导出探针。日志 `/tmp/mindmap-input-refactor-gates-complete.log`；最初 lint 发现弃用 API，已按上述具名例外处理并重跑全绿。
+- 规模：46 个超限源文件均已登记，未登记超限 0；新接口和适配器均低于 300 行。按用户授权在 feat/wikilink-completion 保存独立本地提交，未推送、未安装此中间快照。
