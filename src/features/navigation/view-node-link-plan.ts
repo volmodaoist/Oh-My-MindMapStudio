@@ -160,12 +160,12 @@ export function planAttachmentLink(
 }
 
 import type { App, TFile } from 'obsidian';
-import { isEmbeddableAttachmentExtension } from '../../core/constants';
-import { formatWikilink, parseWikilink } from '../../domain/wikilink';
-import { newReferencePath } from '../../links/file-lookup';
+import { isEmbeddableAttachmentExtension } from '@/src/core/constants';
+import { formatWikilink, parseWikilink } from '@/src/domain/links';
+import { newReferencePath } from '@/src/links/file-lookup';
 import {
 	preferredLinkPathFormat,
 	prefersMarkdownLinks,
-} from '../../platform/workspace/vault-prefs';
-import type { DocLinkPlan } from '../editing/view-node-actions';
-import type { MindMapViewContext } from '../view/view-context';
+} from '@/src/platform/workspace/vault-prefs';
+import type { DocLinkPlan } from '@/src/features/editing/view-node-actions';
+import type { MindMapViewContext } from '@/src/features/view/view-context';

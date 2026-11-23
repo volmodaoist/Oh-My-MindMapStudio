@@ -17,17 +17,17 @@
  *   两者各持自己的 `ContentRemeasureSession`（同一实现、两个宿主）。
  */
 import type { App } from 'obsidian';
-import { PluginContentBridge } from '../../platform/rendering/plugins/bridge';
+import { PluginContentBridge } from '@/src/platform/rendering/plugins/bridge';
 import {
 	getRenderedMathNode,
 	renderMathWithMathJax,
-} from '../../platform/rendering/math/math-jax';
-import { resolveCalloutIcon } from '../../platform/rendering/callout-icon';
-import { renderMermaidNode } from '../../platform/rendering/mermaid';
+} from '@/src/platform/rendering/math/math-jax';
+import { resolveCalloutIcon } from '@/src/platform/rendering/callout-icon';
+import { renderMermaidNode } from '@/src/platform/rendering/mermaid';
 import {
 	getRenderedCodeNodes,
 	renderCodeWithPrism,
-} from '../../platform/rendering/code/prism-code';
+} from '@/src/platform/rendering/code/prism-code';
 import type { InlineContentOptions } from './node-inline-content';
 
 /**

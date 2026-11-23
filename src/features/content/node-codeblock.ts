@@ -1,4 +1,4 @@
-import { freezePluginContents } from '../../platform/rendering/plugins/bridge';
+import { freezePluginContents } from '@/src/platform/rendering/plugins/bridge';
 /**
  * 代码块复制交互（视图层）：节点内块级代码块的「悬停复制按钮」行为，
  * 对齐 Obsidian 阅读视图的代码块复制（悬停显形 → 点击复制 → 短暂 ✓）。
@@ -13,10 +13,10 @@ import { freezePluginContents } from '../../platform/rendering/plugins/bridge';
  * 剥离，见 `node-inline-content.splitFenceInfo`；不含围栏定界符）。
  * 反馈与剪贴板失败均**不抛穿**渲染链：失败仅 `console.warn`（可诊断）。
  */
-import { writeClipboardText } from '../../platform/system/clipboard';
+import { writeClipboardText } from '@/src/platform/system/clipboard';
 import { CODE_BLOCK_CLASS, CODE_COPY_CLASS } from './node-inline-content';
-import type { EventBinder } from '../../core/event-binder';
-import type { MindMap } from '../../core/engine-types';
+import type { EventBinder } from '@/src/core/event-binder';
+import type { MindMap } from '@/src/core/engine-types';
 
 /** 复制按钮命中：构建侧类名的单一来源（node-inline-content 导出） */
 const COPY_BUTTON_SELECTOR = `.${CODE_COPY_CLASS}`;

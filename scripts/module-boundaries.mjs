@@ -97,6 +97,39 @@ export const COMBO_ROOT_MODULES = Object.freeze([
 	'creation',
 ]);
 
+/** 多文件能力的唯一公共入口；叶子工具不强制建立 barrel。 */
+export const PUBLIC_MODULES = Object.freeze([
+	'domain/content',
+	'domain/document',
+	'domain/links',
+	'domain/relations',
+	'engine',
+	'markdown',
+	'services/document',
+	'services/engine',
+]);
+
+/** 领域根目录保留的跨能力叶子；新职责优先归入已有能力模块。 */
+export const DOMAIN_LEAF_MODULES = Object.freeze(['color', 'node-edit-key']);
+
+/**
+ * 输入为相对仓库根的 posix 文件路径，类型引用与值引用共用规则。
+ * 外部只能访问 index；模块内部不得反向导入自身 index。
+ * @param {string} from
+ * @param {string} to
+ * @returns {boolean}
+ */
+export function violatesPublicEntry(from, to) {
+	if (!from.startsWith('src/')) return false;
+	return PUBLIC_MODULES.some((module) => {
+		const prefix = `src/${module}/`;
+		const entry = `${prefix}index.ts`;
+		if (!to.startsWith(prefix)) return false;
+		const internal = from.startsWith(prefix);
+		return internal ? from !== entry && to === entry : to !== entry;
+	});
+}
+
 /**
  * 某组允许依赖的全部组（含恒许的 domain），按层级顺序返回。
  *
@@ -135,12 +168,12 @@ function forbiddenTargets(group) {
  * @param {string} names 组名，或多个组名拼成的正则交替式（`a|b|c`）
  * @returns {string} 正则源码（ESLint patterns 的 `regex` 字段语义）
  */
-function relativeSpecifierRegex(names) {
+function projectSpecifierRegex(names) {
 	// `(?:…)` 不可省：交替式必须整体成组，否则 `^…/main|commands|…` 会把
 	// `commands` 变成顶层分支——`./commands`、`x/commands` 都会被误命中
 	// （2026-10-17 重构时真实踩过：同一目录的 `./mindmap-commands` 被判成
 	// 「引用组合根」）。单组名套一层非捕获组无副作用。
-	return `^\\.\\./(?:\\.\\./)*(?:${names})(?:/|$)`;
+	return `^(?:\\.\\./(?:\\.\\./)*|@/src/)(?:${names})(?:/|$)`;
 }
 
 /**
@@ -153,7 +186,7 @@ export function forbiddenSpecifierPatterns(group) {
 	// 文案对全组相同，只算一次（permitted 列表不随 target 变化）。
 	const message = `src/${group}/ 只允许依赖 ${allowedTargets(group).join(' / ')}（依赖矩阵见 AGENTS.md K51）`;
 	return forbiddenTargets(group).map((target) => ({
-		regex: relativeSpecifierRegex(target),
+		regex: projectSpecifierRegex(target),
 		message,
 	}));
 }
@@ -167,7 +200,7 @@ export function forbiddenSpecifierPatterns(group) {
  * @type {{ regex: string, allowTypeImports: true, message: string }}
  */
 export const COMBO_ROOT_SPECIFIER_PATTERN = Object.freeze({
-	regex: relativeSpecifierRegex(COMBO_ROOT_MODULES.join('|')),
+	regex: projectSpecifierRegex(COMBO_ROOT_MODULES.join('|')),
 	allowTypeImports: true,
 	message:
 		'组合根（main/commands/settings/creation）只能被组合根本身引用（见 AGENTS.md K51）',

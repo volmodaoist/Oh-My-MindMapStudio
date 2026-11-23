@@ -10,15 +10,15 @@
  */
 import { describe, expect, it, vi } from 'vitest';
 // 直接取桩模块（vitest 把 'obsidian' 别名到同一文件）：只有它带 `instances`
-import { Notice } from '../../mocks/obsidian';
-import type { MindMapNode } from '../../../src/core/engine-types';
+import { Notice } from '@/tests/mocks/obsidian';
+import type { MindMapNode } from '@/src/core/engine-types';
 import {
 	cancelNodePick,
 	handleNodePickClick,
 	setupNodePick,
 	startNodePick,
-} from '../../../src/features/relations/node-pick';
-import type { ViewNodeEditContext } from '../../../src/features/view/view-context';
+} from '@/src/features/relations/node-pick';
+import type { ViewNodeEditContext } from '@/src/features/view/view-context';
 
 /** 引擎事件桩：记录注册的引擎监听，供用例手动触发 */
 function makeHost(withEngine = true) {

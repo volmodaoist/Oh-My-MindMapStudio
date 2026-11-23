@@ -4,7 +4,7 @@
  * 职责只有三件：把新版本写进 `manifest.json`、在 `versions.json` 里登记该版本对应的
  * `minAppVersion`（Obsidian 依该表判断升级时要求的最低 app 版本）、补齐 `package-lock.json`
  * 根版本（手工改版本号时漏它不会报错，只是 lock 与 `package.json` 不一致——2026-10-13 发
- * 0.2.1 时实际漏过一次，见 docs/agents/process.md「发布流程」）。
+ * 0.2.1 时实际漏过一次，见 .agents/process.md「发布流程」）。
  *
  * 三条实现约束：
  * - **版本号以 `package.json` 为准**：`npm version` 先改 package.json 再跑本脚本，而
@@ -14,8 +14,8 @@
  * - **幂等**：`versions.json` 里已登记也按当前 `minAppVersion` 重算（改过 minAppVersion
  *   后旧值会滞留）；内容无变化则不写盘，不制造只剩 mtime 差异的改动。
  *
- * 需要人工补的两步（本脚本刻意不代劳）：`docs/release-notes-<版本>.md`（release.yml 的
- * tag 门禁硬校验其存在）与 `docs/markdown-mindmap-standard.md` 附录的 manifest 版本指针
+ * 需要人工补的两步：CHANGELOG 的对应版本条目（release.yml 从中提取正文）
+ * 与 `docs/markdown-mindmap-standard.md` 附录的 manifest 版本指针
  * （`tests/contracts/docs-standard.test.ts` 硬校验其等于 `manifest.version`）。
  */
 import { readFileSync, writeFileSync } from 'node:fs';
@@ -83,6 +83,6 @@ console.log(
 		(changed.length > 0 ? `已更新 ${changed.join(' / ')}` : '三个文件均已是最新'),
 );
 console.log(
-	`  待办：docs/release-notes-${targetVersion}.md；` +
+	`  待办：CHANGELOG 的 ${targetVersion} 条目；` +
 		'docs/markdown-mindmap-standard.md 附录的 manifest 版本指针',
 );

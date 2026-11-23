@@ -1,6 +1,6 @@
 /** 节点内容 link.styles：DOM/样式内聚，保持原输出与导出保真。 */
 import { THEME_LINK_COLOR } from './content-common.styles';
-import { type NodeContentTones } from '../../domain/color';
+import { type NodeContentTones } from '@/src/domain/color';
 
 /**
  * 库内锚点样式（主题变量 + 字面量兜底：导出图内没有主题变量上下文）。

@@ -3,38 +3,38 @@
  * 各类 DOM 与内联样式内聚于 ui/node-content；语法解析仍在 node-inline-tokenize。
  * UI 通过窄回调递归本管线，保持段顺序、缓存、测量和导出输出（K209）。
  */
-import { readNodeDataString } from '../../core/node-data';
-import { buildPluginBlock } from '../../ui/node-content/content-plugin';
-import { normalizeHexColor, nodeContentTones, type NodeContentTones } from '../../domain/color';
-import { t, type Language } from '../../core/i18n';
-import type { MindMapNode } from '../../core/engine-types';
-import type { NodeContentStyle } from '../../engine/mindmap';
+import { readNodeDataString } from '@/src/core/node-data';
+import { buildPluginBlock } from '@/src/ui/node-content/content-plugin';
+import { normalizeHexColor, nodeContentTones, type NodeContentTones } from '@/src/domain/color';
+import { t, type Language } from '@/src/core/i18n';
+import type { MindMapNode } from '@/src/core/engine-types';
+import type { NodeContentStyle } from '@/src/engine';
 import { MAX_INLINE_CONTENT_CHARS, buildInlineSegments, clampSegments, isMermaidFence, resolveSelfDrawSource, taskStateOf } from './node-inline-tokenize';
-import type { InlineContentDocument, InlineContentOptions, InlineSegment } from '../../core/node-content-types';
-import { type InlineContentRenderer, type BuildContentParams } from '../../ui/node-content/content-context';
-import { buildContentElement } from '../../ui/node-content/content-root';
-import { buildTableElement } from '../../ui/node-content/content-table';
-import { buildTagElement } from '../../ui/node-content/content-tag';
-import { buildFootnoteRef } from '../../ui/node-content/content-footnote';
-import { MAX_QUOTE_DEPTH } from '../../ui/node-content/content-quote.styles';
-import { buildQuoteElement } from '../../ui/node-content/content-quote';
-import { buildAnchor } from '../../ui/node-content/content-link';
-import { buildMathElement } from '../../ui/node-content/content-math';
-import { buildMermaidElement } from '../../ui/node-content/content-mermaid';
-import { buildCodeBlockElement } from '../../ui/node-content/content-code';
-import { buildMarkupElement } from '../../ui/node-content/content-text';
+import type { InlineContentDocument, InlineContentOptions, InlineSegment } from '@/src/core/node-content-types';
+import { type InlineContentRenderer, type BuildContentParams } from '@/src/ui/node-content/content-context';
+import { buildContentElement } from '@/src/ui/node-content/content-root';
+import { buildTableElement } from '@/src/ui/node-content/content-table';
+import { buildTagElement } from '@/src/ui/node-content/content-tag';
+import { buildFootnoteRef } from '@/src/ui/node-content/content-footnote';
+import { MAX_QUOTE_DEPTH } from '@/src/ui/node-content/content-quote.styles';
+import { buildQuoteElement } from '@/src/ui/node-content/content-quote';
+import { buildAnchor } from '@/src/ui/node-content/content-link';
+import { buildMathElement } from '@/src/ui/node-content/content-math';
+import { buildMermaidElement } from '@/src/ui/node-content/content-mermaid';
+import { buildCodeBlockElement } from '@/src/ui/node-content/content-code';
+import { buildMarkupElement } from '@/src/ui/node-content/content-text';
 
-export { NODE_INLINE_CONTENT_CLASS } from '../../core/constants';
-export { NODE_TASK_CLASS } from '../../ui/node-content/content-task.styles';
-export { FOOTNOTE_REF_CLASS } from '../../ui/node-content/content-footnote.styles';
-export { FOOTNOTE_ID_ATTR } from '../../ui/node-content/content-footnote.styles';
-export { FOOTNOTE_SUMMARY_CLASS } from '../../ui/node-content/content-footnote.styles';
-export { FOOTNOTE_IDS_ATTR } from '../../ui/node-content/content-footnote.styles';
-export { CODE_BLOCK_CLASS } from '../../ui/node-content/content-code.styles';
-export { MERMAID_BLOCK_CLASS } from '../../ui/node-content/content-mermaid.styles';
-export { CODE_COPY_CLASS } from '../../ui/node-content/content-copy.styles';
-export { QUOTE_BLOCK_CLASS } from '../../ui/node-content/content-quote.styles';
-export { CALLOUT_BLOCK_CLASS } from '../../ui/node-content/content-quote.styles';
+export { NODE_INLINE_CONTENT_CLASS } from '@/src/core/constants';
+export { NODE_TASK_CLASS } from '@/src/ui/node-content/content-task.styles';
+export { FOOTNOTE_REF_CLASS } from '@/src/ui/node-content/content-footnote.styles';
+export { FOOTNOTE_ID_ATTR } from '@/src/ui/node-content/content-footnote.styles';
+export { FOOTNOTE_SUMMARY_CLASS } from '@/src/ui/node-content/content-footnote.styles';
+export { FOOTNOTE_IDS_ATTR } from '@/src/ui/node-content/content-footnote.styles';
+export { CODE_BLOCK_CLASS } from '@/src/ui/node-content/content-code.styles';
+export { MERMAID_BLOCK_CLASS } from '@/src/ui/node-content/content-mermaid.styles';
+export { CODE_COPY_CLASS } from '@/src/ui/node-content/content-copy.styles';
+export { QUOTE_BLOCK_CLASS } from '@/src/ui/node-content/content-quote.styles';
+export { CALLOUT_BLOCK_CLASS } from '@/src/ui/node-content/content-quote.styles';
 
 const contentRenderer: InlineContentRenderer = { buildInlineSegments, appendSegments, buildTextElement };
 

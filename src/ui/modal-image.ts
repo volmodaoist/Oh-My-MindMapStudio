@@ -7,14 +7,14 @@
  *   外链 → 原样 URL。
  */
 import { App, TFile } from 'obsidian';
-import { isImageExtension, MAX_IMAGE_SIZE_MB } from '../core/constants';
-import { isExternalImageRef, resourceUrlPathCandidates } from '../domain/url';
-import { t, type Language } from '../core/i18n';
-import { buildPastedImageName } from '../media/images-save';
-import { resolvePathToFile } from '../links/links-resolve';
+import { isImageExtension, MAX_IMAGE_SIZE_MB } from '@/src/core/constants';
+import { isExternalImageRef, resourceUrlPathCandidates } from '@/src/domain/links';
+import { t, type Language } from '@/src/core/i18n';
+import { buildPastedImageName } from '@/src/media/images-save';
+import { resolvePathToFile } from '@/src/links/links-resolve';
 import { createButton, openFormModal, VaultFileSuggest } from './modal-common';
 
-/** 输入是否为外链/数据地址（无需库内解析）：domain/url 单一权威 */
+/** 输入是否为外链/数据地址（无需库内解析）：domain/links/url 单一权威 */
 function isExternalImageUrl(value: string): boolean {
 	return isExternalImageRef(value);
 }
@@ -60,7 +60,7 @@ export function openImageEditorModal(
 				}
 			};
 			// current 可能是资源地址（app://local/...）：解码并去掉主机前缀 → 库内路径。
-			// 走 domain/url 的唯一提取实现（不再本地手写 replace + decode）：
+			// 走 domain/links/url 的唯一提取实现（不再本地手写 replace + decode）：
 			// - 取 `://` 后第一个 `/` 之后的全部内容，并**截到 `?`/`#` 之前**
 			//   （查询串不是路径的一部分——旧实现会把 `?v=2` 留在输入框里）；
 			// - 候选顺序是 [原样, decode]，展示取最后一个即解码值；

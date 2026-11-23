@@ -21,7 +21,7 @@
  */
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-type MeasureCache = typeof import('../../src/core/measure-cache');
+type MeasureCache = typeof import('@/src/core/measure-cache');
 
 /** 字体面桩：记录 loadingdone 监听器，便于手动触发 */
 interface FontsStub {
@@ -70,7 +70,7 @@ function makeFonts(status: string, withReady = false): FontsStub {
 /** 全新模块实例（重置「已装配」标记与 epoch 计数） */
 async function freshModule(): Promise<MeasureCache> {
 	vi.resetModules();
-	return import('../../src/core/measure-cache');
+	return import('@/src/core/measure-cache');
 }
 
 describe('measure-cache：字体代际缓存键（K114）', () => {

@@ -25,11 +25,11 @@
  */
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type { App } from 'obsidian';
-import { parseMdOutline } from '../src/markdown/md-outline';
-import { serializeMdBody } from '../src/markdown/md-serialize';
-import { seedHeadingStart } from '../src/markdown/md-heading-syntax';
-import { headingStartOfSyntax, type NewMapSyntax } from '../src/core/constants';
-import { createNewMindMap, type NewMindMapSettings } from '../src/creation';
+import { parseMdOutline } from '@/src/markdown/outline/md-outline';
+import { serializeMdBody } from '@/src/markdown/serialize/md-serialize';
+import { seedHeadingStart } from '@/src/markdown/syntax/md-heading-syntax';
+import { headingStartOfSyntax, type NewMapSyntax } from '@/src/core/constants';
+import { createNewMindMap, type NewMindMapSettings } from '@/src/creation';
 
 /** 用例间清空 mock 调用记录（两个 describe 共用，故置于文件级） */
 beforeEach(() => {
@@ -41,13 +41,13 @@ const TYPED_NAME = '测试导图';
 
 /** 错误提示通道：用于区分「创建失败」与「已创建但打开失败」两条错误边界 */
 const errors = vi.hoisted(() => ({ notifyError: vi.fn() }));
-vi.mock('../src/core/errors', () => errors);
+vi.mock('@/src/core/errors', () => errors);
 
-vi.mock('../src/ui/modal-name', () => ({
+vi.mock('@/src/ui/modal-name', () => ({
 	openNameInputModal: vi.fn(async () => TYPED_NAME),
 }));
 
-vi.mock('../src/markdown/md-open', () => ({
+vi.mock('@/src/markdown/md-open', () => ({
 	openAsMindMap: vi.fn(async () => undefined),
 }));
 

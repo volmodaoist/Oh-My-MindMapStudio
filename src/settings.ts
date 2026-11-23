@@ -25,9 +25,9 @@ import {
 	type NewMapSyntax,
 	type NodeColorScope,
 	type SaveLocation,
-} from './core/constants';
-import { Language, LANGUAGE_OPTIONS, t, type TranslationKey } from './core/i18n';
-import { createWarnOnce } from './core/errors';
+} from '@/src/core/constants';
+import { Language, LANGUAGE_OPTIONS, t, type TranslationKey } from '@/src/core/i18n';
+import { createWarnOnce } from '@/src/core/errors';
 
 /**
  * MindMapStudioSettingTab 对宿主插件的窄化契约。

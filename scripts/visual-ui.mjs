@@ -184,6 +184,9 @@ const assert = (value, label) => { if (!value) throw new Error(label); };
 export const UI_SHIM_SOURCE = `
 export class App {}
 export class TFile {}
+export class TFolder {}
+export class FileSystemAdapter {}
+export function normalizePath(value) { return value.replaceAll('\\\\', '/').replace(/\\/+/g, '/'); }
 export class AbstractInputSuggest {}
 export class MarkdownView {
 	constructor(leaf) { this.leaf = leaf; this.header = document.createElement('div'); document.body.appendChild(this.header); }

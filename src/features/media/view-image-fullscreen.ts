@@ -5,9 +5,9 @@
  * 基于 Obsidian Modal 实现：组件生命周期（打开/关闭/清理）由 Obsidian 管理。
  */
 import { App, Modal } from 'obsidian';
-import { t, type Language } from '../../core/i18n';
-import type { MindMapNode } from '../../core/engine-types';
-import type { MindMapViewContext } from '../view/view-context';
+import { t, type Language } from '@/src/core/i18n';
+import type { MindMapNode } from '@/src/core/engine-types';
+import type { MindMapViewContext } from '@/src/features/view/view-context';
 
 /** 打开节点图片的全屏查看（灯箱）；节点无图片时不动作 */
 export function openNodeImageFullscreen(

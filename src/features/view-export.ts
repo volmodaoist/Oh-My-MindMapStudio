@@ -1,16 +1,16 @@
-import { preparePluginExport } from './content/plugin-content-session';
+import { preparePluginExport } from '@/src/features/content/plugin-content-session';
 /**
  * 导出子系统：图片（PNG / SVG）导出与下载工具。
  * （导出 JSON / 导入 JSON 已随专有格式支持删除）
  * DoExport 插件访问与导出倍率切换收口在 mindmap.exportMindMapImage。
  */
 import { Notice } from 'obsidian';
-import type { ExportImageFormat } from '../core/constants';
-import { notifyError } from '../core/errors';
-import { t, tf, type Language } from '../core/i18n';
-import { exportMindMapImage } from '../engine/mindmap';
-import { primeExportMathFonts } from '../platform/rendering/math/math-jax';
-import type { MindMapViewContext } from './view/view-context';
+import type { ExportImageFormat } from '@/src/core/constants';
+import { notifyError } from '@/src/core/errors';
+import { t, tf, type Language } from '@/src/core/i18n';
+import { exportMindMapImage } from '@/src/engine';
+import { primeExportMathFonts } from '@/src/platform/rendering/math/math-jax';
+import type { MindMapViewContext } from '@/src/features/view/view-context';
 
 const FALLBACK_NAME = 'mindmap';
 

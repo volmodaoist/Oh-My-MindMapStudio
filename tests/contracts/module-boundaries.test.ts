@@ -26,14 +26,19 @@ import { describe, expect, it } from 'vitest';
 import {
 	COMBO_ROOT_MODULES,
 	COMBO_ROOT_SPECIFIER_PATTERN,
+	DOMAIN_LEAF_MODULES,
 	MODULE_DEPENDENCIES,
 	MODULE_GROUPS,
+	PUBLIC_MODULES,
 	allowedTargets,
 	forbiddenSpecifierPatterns,
-} from '../../scripts/module-boundaries.mjs';
+	violatesPublicEntry,
+} from '@/scripts/module-boundaries.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '../..');
 const SRC = path.join(ROOT, 'src');
+const CONFIG = ts.readConfigFile(path.join(ROOT, 'tsconfig.json'), file => ts.sys.readFile(file));
+const COMPILER_OPTIONS = ts.parseJsonConfigFileContent(CONFIG.config, ts.sys, ROOT).options;
 
 /**
  * 相对说明符的解析后缀（顺序即优先级）。
@@ -41,7 +46,7 @@ const SRC = path.join(ROOT, 'src');
  * 空串在首位：`../../vendor/simple-mind-map.cjs` 这类带扩展名的目标必须原样命中；
  * 目录由 `isRegularFile` 排除，故空串不会把 `../engine` 误判成文件。
  */
-const RESOLVE_SUFFIXES = ['', '.ts', '.cts', '.mts', '.d.cts', '.json'];
+const RESOLVE_SUFFIXES = ['', '.ts', '.cts', '.mts', '.d.ts', '.d.cts', '.json'];
 
 /** 诊断信息一律用相对 ROOT 的 posix 路径（跨平台可读、与仓库书写一致） */
 function relPath(absPath: string): string {
@@ -87,6 +92,10 @@ function resolveSpecifier(
 	fromFile: string,
 	specifier: string,
 ): SpecifierResolution {
+	if (specifier.startsWith('@/')) {
+		const resolved = ts.resolveModuleName(specifier, fromFile, COMPILER_OPTIONS, ts.sys).resolvedModule;
+		return resolved ? { kind: 'file', file: path.normalize(resolved.resolvedFileName) } : { kind: 'missing' };
+	}
 	if (!specifier.startsWith('.')) {
 		return { kind: 'external' };
 	}
@@ -334,9 +343,12 @@ describe('矩阵定义（scripts/module-boundaries.mjs）', () => {
 		expect(forbiddenFromCore('../features/view')).toBe(true);
 		expect(forbiddenFromCore('../../features/view')).toBe(true);
 		expect(forbiddenFromCore('../../../ui/modal-common')).toBe(true);
+		expect(forbiddenFromCore('@/src/features/view')).toBe(true);
+		expect(forbiddenFromCore('@/src/ui/modal-common')).toBe(true);
+		expect(forbiddenFromCore('@/src/domain/document')).toBe(false);
 		// 许可集内与组内相对引用不得被拦
-		expect(forbiddenFromCore('../domain/md-meta')).toBe(false);
-		expect(forbiddenFromCore('./md-meta')).toBe(false);
+		expect(forbiddenFromCore('../domain/document')).toBe(false);
+		expect(forbiddenFromCore('./document')).toBe(false);
 		// 组名前缀相同的**非**该组路径不得被误命中（`(?:/|$)` 的边界作用）
 		expect(forbiddenFromCore('../core-utils/x')).toBe(false);
 
@@ -355,6 +367,9 @@ describe('矩阵定义（scripts/module-boundaries.mjs）', () => {
 		expect(combo.test('../settings')).toBe(true);
 		expect(combo.test('../../settings')).toBe(true);
 		expect(combo.test('../commands/panel')).toBe(true);
+		expect(combo.test('@/src/settings')).toBe(true);
+		expect(combo.test('@/src/main')).toBe(true);
+		expect(combo.test('@/src/engine')).toBe(false);
 		// 回归（2026-10-17）：交替式漏掉 `(?:…)` 时 `commands` 会成为顶层分支，
 		// 于是 `./commands`、`./mindmap-commands` 都被误判为「引用组合根」。
 		expect(combo.test('./commands')).toBe(false);
@@ -380,6 +395,43 @@ describe('矩阵定义（scripts/module-boundaries.mjs）', () => {
 });
 
 describe('模块边界（K51）：依赖图性质', () => {
+	it('项目根别名按 tsconfig 解析为真实文件，缺失目标不会被当作 npm 包跳过', () => {
+		expect(CONFIG.error).toBeUndefined();
+		expect(COMPILER_OPTIONS.paths?.['@/*']).toEqual(['./*']);
+		const from = path.join(SRC, 'features/view/view.ts');
+		expect(resolveSpecifier(from, '@/src/domain/document')).toEqual({ kind: 'file', file: path.join(SRC, 'domain/document/index.ts') });
+		expect(resolveSpecifier(from, '@/src/absent-module')).toEqual({ kind: 'missing' });
+		expect(resolveSpecifier(from, '@codemirror/view')).toEqual({ kind: 'external' });
+	});
+	it('公共入口拒绝外部深层引用和内部反向导入，允许叶子与直测', () => {
+		expect(violatesPublicEntry('src/features/view/view.ts', 'src/engine/nodes/mindmap-nodes.ts')).toBe(true);
+		expect(violatesPublicEntry('src/services/document/document-session.ts', 'src/engine/index.ts')).toBe(false);
+		expect(violatesPublicEntry('src/markdown/outline/md-outline.ts', 'src/markdown/index.ts')).toBe(true);
+		expect(violatesPublicEntry('src/markdown/index.ts', 'src/markdown/outline/md-outline.ts')).toBe(false);
+		expect(violatesPublicEntry('src/features/view/view.ts', 'src/domain/color.ts')).toBe(false);
+		expect(violatesPublicEntry('src/core/constants.ts', 'src/domain/document/mindmap-property.ts')).toBe(true);
+		expect(violatesPublicEntry('src/domain/relations/relation.ts', 'src/domain/document/index.ts')).toBe(false);
+	});
+
+	it('实际源文件均遵循唯一公共入口（含类型和 re-export 边）', () => {
+		const violations = IMPORT_EDGES.filter(edge => violatesPublicEntry(relPath(edge.from), relPath(edge.to)));
+		expect(violations.map(edge => `${relPath(edge.from)} → ${relPath(edge.to)}`)).toEqual([]);
+	});
+
+	it('公共出口存在、仅具名转出 API，且不执行初始化', () => {
+		for (const module of PUBLIC_MODULES) {
+			const entry = path.join(SRC, module, 'index.ts');
+			const source = ts.createSourceFile(entry, readFileSync(entry, 'utf8'), ts.ScriptTarget.Latest, true);
+			expect(source.statements.length, module).toBeGreaterThan(0);
+			for (const statement of source.statements) {
+				expect(ts.isExportDeclaration(statement), `${module}: 入口只允许转出`).toBe(true);
+				if (ts.isExportDeclaration(statement)) {
+					expect(statement.exportClause && ts.isNamedExports(statement.exportClause), `${module}: 禁止 export *`).toBeTruthy();
+				}
+			}
+		}
+	});
+
 	it('依赖图采集非空（防止解析器失效后全部断言空转）', () => {
 		// 采集为空时，下面每条「无违规」都会假绿——宁可在此红灯。
 		expect(SRC_FILES.length).toBeGreaterThan(50);
@@ -420,6 +472,15 @@ describe('模块边界（K51）：依赖图性质', () => {
 			rootFiles,
 			'src/ 根层文件即「组合根」，新增/改名必须同步 COMBO_ROOT_MODULES（K51）',
 		).toEqual([...COMBO_ROOT_MODULES].sort());
+	});
+
+	it('领域根目录只保留已登记叶子，能力目录均有受检查的公共入口', () => {
+		const entries = readdirSync(path.join(SRC, 'domain'), { withFileTypes: true });
+		const leaves = entries.filter(entry => entry.isFile() && entry.name.endsWith('.ts'))
+			.map(entry => entry.name.replace(/\.ts$/, '')).sort();
+		const modules = entries.filter(entry => entry.isDirectory()).map(entry => `domain/${entry.name}`).sort();
+		expect(leaves).toEqual([...DOMAIN_LEAF_MODULES].sort());
+		expect(modules).toEqual(PUBLIC_MODULES.filter(module => module.startsWith('domain/')).sort());
 	});
 
 	it('每条相对 import 都能解析到真实文件（无陈旧路径）', () => {
@@ -493,9 +554,16 @@ describe('模块边界（K51）：依赖图性质', () => {
 			(file) => moduleGroupOf(file) === 'domain',
 		).flatMap((file) =>
 			collectSpecifiers(file)
-				.filter(({ specifier }) => !specifier.startsWith('.'))
+				.filter(({ specifier }) => !specifier.startsWith('.') && !specifier.startsWith('@/'))
 				.map(({ specifier }) => `${relPath(file)} → ${specifier}`),
 		);
 		expect(violations).toEqual([]);
+	});
+
+	it('domain 的相对依赖只落在领域层内（含类型边，不因子目录放宽到 vendor）', () => {
+		const violations = IMPORT_EDGES.filter(edge =>
+			moduleGroupOf(edge.from) === 'domain' && moduleGroupOf(edge.to) !== 'domain',
+		);
+		expect(violations.map(edge => `${relPath(edge.from)} → ${relPath(edge.to)}`)).toEqual([]);
 	});
 });

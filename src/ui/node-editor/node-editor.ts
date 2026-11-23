@@ -3,15 +3,18 @@
  * 调用方提供屏幕矩形/内容样式及回调；组件不读取节点、引擎、视图或文件。
  * 编辑期只更新 DOM，任何写回均由提交回调承接。
  */
-import { EventBinder } from '../../core/event-binder';
-import { resolveInlineEditKey } from '../../domain/node-edit-key';
+import { EventBinder } from '@/src/core/event-binder';
+import { resolveInlineEditKey } from '@/src/domain/node-edit-key';
 import { EDITOR_STYLES } from './node-editor.styles';
+import { TextareaInput } from './textarea-input';
+import type { EditorInputBehavior, EditorInputSurface } from '@/src/core/editor-input';
 
 interface NodeEditorOptions {
 	value: string;
 	label: string;
 	onInput: () => void;
 	onCommit: () => void;
+	sourcePath?: () => string;
 }
 
 export interface NodeEditorLayout {
@@ -25,7 +28,9 @@ export interface NodeEditorLayout {
 
 export class NodeEditor {
 	readonly element: HTMLTextAreaElement;
+	readonly input: EditorInputSurface;
 	private readonly events = new EventBinder();
+	private readonly behaviors = new Set<EditorInputBehavior>();
 	private measureContext: CanvasRenderingContext2D | null;
 	private disposed = false;
 
@@ -35,6 +40,7 @@ export class NodeEditor {
 			attr: { spellcheck: 'false', 'aria-label': options.label },
 		});
 		this.element = el;
+		this.input = new TextareaInput(el, options.sourcePath);
 		Object.assign(el.style, EDITOR_STYLES);
 		el.value = options.value;
 		// 所属窗口的公开 Elements API；Canvas 仅测量，不挂进 DOM。
@@ -44,6 +50,7 @@ export class NodeEditor {
 		this.events.onDom(el, 'keydown', (event) => {
 			event.stopPropagation();
 			if (event.isComposing || event.key === 'Process') return;
+			if (Array.from(this.behaviors).some(behavior => behavior.onKeyDown?.(event))) return;
 			const action = resolveInlineEditKey(event);
 			if (action !== 'commit') return;
 			event.preventDefault();
@@ -55,19 +62,21 @@ export class NodeEditor {
 		// capture 先于画布拖拽/右键处理；编辑器内部按下保持编辑。
 		this.events.onDom(doc, 'mousedown', (event) => {
 			const target = event.target as Node | null;
-			if (target && el.contains(target)) return;
+			if (target && (el.contains(target) || Array.from(this.behaviors).some(behavior => behavior.contains?.(target)))) return;
 			options.onCommit();
 		}, true);
 	}
 
-	get value(): string { return this.element.value; }
+	get value(): string { return this.input.text; }
+
+	useInputBehavior(behavior: EditorInputBehavior): void {
+		if (this.disposed) { behavior.dispose(); return; }
+		this.behaviors.add(behavior);
+	}
 
 	focusAtEnd(): void {
 		if (this.disposed) return;
-		const el = this.element;
-		el.focus();
-		el.setSelectionRange(el.value.length, el.value.length);
-		el.scrollTop = 0;
+		this.input.focusAtEnd();
 	}
 
 	/** 沿用原内容盒起点与字号，不取整；原文增长到 maxWidth 后换行增高。 */
@@ -115,6 +124,8 @@ export class NodeEditor {
 	dispose(): void {
 		if (this.disposed) return;
 		this.disposed = true;
+		for (const behavior of this.behaviors) behavior.dispose();
+		this.behaviors.clear();
 		this.events.destroy();
 		this.measureContext = null;
 		this.element.remove();

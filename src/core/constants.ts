@@ -1,14 +1,14 @@
 /**
  * 全局常量定义。
  *
- * 扩展名分流的**权威口径**（2026-09-15 收敛）：文档 = `domain/wikilink.isDocumentExtension`
+ * 扩展名分流的**权威口径**（2026-09-15 收敛）：文档 = `domain/links/wikilink.isDocumentExtension`
  * （md / canvas / base），其余带扩展名者 = 附件（`wikilinkTargetIsAttachment`）——
  * 拖入、联想、点击三条路径共用它。本文件只保留「可渲染清单」这类**渲染能力**判定
  * （`canOpenInObsidian` / `isRenderableImageExtension` / `isEmbeddableAttachmentExtension`），
  * 不再维护「可链接附件」白名单（比解析侧窄，会造成「拖入被拒、手写却行」）。
  */
-import { normalizeHexColor } from '../domain/color';
-import type { MindMapLayoutId } from '../domain/mindmap-property';
+import { normalizeHexColor } from '@/src/domain/color';
+import type { MindMapLayoutId } from '@/src/domain/document';
 import type { TranslationKey } from './i18n';
 
 /** 自定义视图类型标识 */
@@ -146,10 +146,10 @@ export interface LayoutOption {
  * 布局选项（右键「布局」级联菜单与设置面板下拉共用）。
  *
  * `value` 是**引擎 layout id**；它与「属性标准值」的双向表在
- * `domain/mindmap-property.MINDMAP_LAYOUT_VALUES`——这里用 domain 导出的 id 联合
+ * `domain/document/mindmap-property.MINDMAP_LAYOUT_VALUES`——这里用 domain 导出的 id 联合
  * 做 `satisfies` 对齐，**不另建一份「值 → 布局」映射**（硬规则 5；方向只能是
  * core → domain）。表里写错 / 多出一个 id 在此编译失败；漏写一个 id 由
- * `tests/domain/md-frontmatter-trigger.test.ts` 对 `MINDMAP_LAYOUT_IDS` 断言。
+ * `tests/domain/document/mindmap-property.test.ts` 对 `MINDMAP_LAYOUT_IDS` 断言。
  */
 export const LAYOUT_OPTIONS = [
 	{ value: 'logicalStructure', label: 'layout.logical' },
@@ -469,7 +469,7 @@ const IMAGE_EXTENSIONS = [
 /**
  * 音频/视频扩展基表：Obsidian 桌面端没有音频/视频的标签页视图。
  * 「可链接附件」与「系统媒体」两份清单已于 2026-09-15 删除（附件口径收敛到
- * `domain/wikilink.wikilinkTargetIsAttachment`），此处仅作派生基表保留。
+ * `domain/links/wikilink.wikilinkTargetIsAttachment`），此处仅作派生基表保留。
  */
 const AUDIO_VIDEO_EXTENSIONS = [
 	// 音频

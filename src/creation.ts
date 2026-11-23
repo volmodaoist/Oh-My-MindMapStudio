@@ -9,17 +9,17 @@
  * 布局取设置 `defaultLayout`（**种子值**：写进新文件的属性后，该文件此后只认
  * 自己的属性，改设置不会影响它）。仅有中心节点，不预置提示分支（见 K201）。
  */
-import { MINDMAP_FILE_SUFFIX, mindMapFileName } from './domain/mindmap-file';
+import { MINDMAP_FILE_SUFFIX, mindMapFileName } from '@/src/domain/document';
 import { App, Notice, normalizePath, type TFile, type TFolder } from 'obsidian';
-import { notifyError } from './core/errors';
-import { t } from './core/i18n';
+import { notifyError } from '@/src/core/errors';
+import { t } from '@/src/core/i18n';
 import {
 	buildDefaultMindMapName,
 	createDefaultMarkdownContent,
-} from './markdown/markdown';
-import { openAsMindMap } from './markdown/md-open';
+} from './markdown';
+import { openAsMindMap } from './markdown';
 import type { MindMapStudioSettings } from './settings';
-import { openNameInputModal } from './ui/modal-name';
+import { openNameInputModal } from '@/src/ui/modal-name';
 
 /** `createNewMindMap` 消费的设置子集（窄化契约：命令宿主只需提供这几项） */
 export type NewMindMapSettings = Pick<

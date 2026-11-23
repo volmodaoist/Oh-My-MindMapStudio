@@ -31,7 +31,7 @@ export async function writeClipboardText(
 		await nav.clipboard.writeText(text);
 		return true;
 	} catch (error) {
-		console.warn('MindMap Studio：写入剪贴板失败', error);
+		console.warn('Oh-My-Mindmap-Studio：写入剪贴板失败', error);
 		return false;
 	}
 }
@@ -49,7 +49,7 @@ export async function readClipboardText(): Promise<string | null> {
 	try {
 		return await navigator.clipboard.readText();
 	} catch (error) {
-		console.warn('MindMap Studio：读取剪贴板失败', error);
+		console.warn('Oh-My-Mindmap-Studio：读取剪贴板失败', error);
 		return null;
 	}
 }

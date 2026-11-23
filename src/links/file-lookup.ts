@@ -26,8 +26,8 @@ import {
 	encodedNameForm,
 	isRemoteOrDataUrl,
 	urlComparisonForms,
-} from '../domain/url';
-import { formatLinkPath, type LinkPathFormat } from '../domain/wikilink';
+} from '@/src/domain/links';
+import { formatLinkPath, type LinkPathFormat } from '@/src/domain/links';
 
 /**
  * 把**单个文件**的全部形态键写入索引：
@@ -47,7 +47,7 @@ function writeFileEntries(
 	index.set(file.path, file);
 	const name = file.name;
 	index.set(name, file);
-	// 编码形态可能不存在（孤立代理对等非法序列，见 domain/url.encodedNameForm）：
+	// 编码形态可能不存在（孤立代理对等非法序列，见 domain/links/url.encodedNameForm）：
 	// 该形态跳过，其余键照建
 	const encodedName = encodedNameForm(name);
 	if (encodedName !== null) {

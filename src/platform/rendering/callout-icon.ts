@@ -87,7 +87,7 @@ export function resolveCalloutIcon(iconId: string): Node | null {
 			resolved = null;
 			warnOnce(
 				'icon-api',
-				'[Mindmap-Studio] 宿主 getIcon 不可用（版本或环境异常），标注只显示类型色、不显示图标。',
+				'[Oh-My-Mindmap-Studio] 宿主 getIcon 不可用（版本或环境异常），标注只显示类型色、不显示图标。',
 			);
 		}
 		if (resolved) {
@@ -99,7 +99,7 @@ export function resolveCalloutIcon(iconId: string): Node | null {
 			// （标题行少一枚图标），留一条痕便于实机定位，且每个 id 只报一次
 			warnOnce(
 				iconId,
-				`[Mindmap-Studio] 宿主未登记标注图标 id「${iconId}」，该类型只显示类型色。`,
+				`[Oh-My-Mindmap-Studio] 宿主未登记标注图标 id「${iconId}」，该类型只显示类型色。`,
 			);
 		}
 	}

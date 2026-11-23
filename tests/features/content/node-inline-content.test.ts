@@ -33,11 +33,11 @@ import {
 	NODE_INLINE_CONTENT_CLASS,
 	QUOTE_BLOCK_CLASS,
 	segmentCacheStats,
-} from '../../../src/features/content/node-inline-content';
-import { CODE_BLOCK_MAX_HEIGHT_PX } from '../../../src/core/constants';
-import { nodeContentTones } from '../../../src/domain/color';
-import type { InlineSegment } from '../../../src/features/content/node-inline-content';
-import type { MindMapNode } from '../../../vendor/simple-mind-map.cjs';
+} from '@/src/features/content/node-inline-content';
+import { CODE_BLOCK_MAX_HEIGHT_PX } from '@/src/core/constants';
+import { nodeContentTones } from '@/src/domain/color';
+import type { InlineSegment } from '@/src/features/content/node-inline-content';
+import type { MindMapNode } from '@/vendor/simple-mind-map.cjs';
 
 describe('buildInlineSegments（行内原文 → 段序列）', () => {
 	it('纯文本：单段、无链接', () => {
@@ -583,7 +583,7 @@ describe('轻标记扩展（显示层，不回写）', () => {
 });
 
 /** 最小文本节点桩 */
-import { FakeTextNode, FakeElement, FakeDocument, asDocument } from '../../helpers/node-content-dom';
+import { FakeTextNode, FakeElement, FakeDocument, asDocument } from '@/tests/helpers/node-content-dom';
 
 /** 节点桩：getData() 无参返回整份 data（与引擎 MindMapNode 形态一致） */
 function fakeNode(data: Record<string, unknown> | null): MindMapNode {
@@ -2051,7 +2051,7 @@ describe('表格段（GFM 管道表：切分 / 装配 / 内联样式）', () => 
 		expect(findTag(box, 'table')).not.toBeNull();
 		expect(findTag(box, 'thead')).not.toBeNull();
 		expect(findTag(box, 'tbody')).not.toBeNull();
-		// 表头行 + 数据行各一个 tr；th/td 文本取自 `domain/pipe-table` 的模型
+		// 表头行 + 数据行各一个 tr；th/td 文本取自 `domain/content/pipe-table` 的模型
 		expect(findAll(box, 'tr')).toHaveLength(2);
 		expect(findAll(box, 'th').map((cell) => plainText(cell))).toEqual(['名称', '数量']);
 		expect(findAll(box, 'td').map((cell) => plainText(cell))).toEqual(['甲', '2']);
@@ -2349,7 +2349,7 @@ describe('着色节点的轻渲染派生色', () => {
 
 /**
  * 引用块 / 标注（2026-11-11）：`>` 行在解析层是 `plain` 行，显示层把
- * 「前缀 + `[!type]` 头部」还原成盒子。判定口径的回归在 `tests/domain/callout.test.ts`，
+ * 「前缀 + `[!type]` 头部」还原成盒子。判定口径的回归在 `tests/domain/content/callout.test.ts`，
  * 本组锁**段切分与 DOM 装配**：块级顺序（引用 → 围栏 → 表格 → 行内）、正文递归、
  * 嵌套深度上限、折叠标记只作装饰、图标注入、原子截断。
  */

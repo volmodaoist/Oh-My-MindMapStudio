@@ -8,7 +8,7 @@
  * 从 modals.ts 拆出。
  */
 import { App } from 'obsidian';
-import { t, type Language } from '../core/i18n';
+import { t, type Language } from '@/src/core/i18n';
 import { createButton, openFormModal } from './modal-common';
 
 export function openNameInputModal(

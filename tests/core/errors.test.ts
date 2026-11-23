@@ -3,8 +3,8 @@
  *
  * 覆盖两条导出：
  * - `createWarnOnce`（2026-10-11 收口）：此前「同一根因只告警一次」在
- *   prism-code / math-jax（两处）/ view 各有一份同构实现，连 `MindMap Studio：`
- *   前缀也各写一遍——本文件把收口后的契约钉住；
+ *   prism-code / math-jax（两处）/ view 各有一份同构实现，连品牌前缀
+ *   也各写一遍——本文件把收口后的契约钉住；
  * - `notifyError`：i18n 前缀 + 错误消息的拼接（用户可见面）。
  *
  * `createWarnOnce` 的三条契约：
@@ -14,8 +14,8 @@
  *   「该视图一次」，两种既有语义都必须能表达，故实例之间互不影响。
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { createWarnOnce, notifyError } from '../../src/core/errors';
-import { t } from '../../src/core/i18n';
+import { createWarnOnce, notifyError } from '@/src/core/errors';
+import { t } from '@/src/core/i18n';
 
 const h = vi.hoisted(() => ({ noticeCalls: [] as string[] }));
 
@@ -47,7 +47,7 @@ describe('createWarnOnce：内部告警的幂等留痕', () => {
 		warn('同类根因的另一种文案');
 
 		expect(warnSpy).toHaveBeenCalledTimes(1);
-		expect(warnSpy).toHaveBeenCalledWith('MindMap Studio：第一处失败');
+		expect(warnSpy).toHaveBeenCalledWith('Oh-My-Mindmap-Studio：第一处失败');
 	});
 
 	it('detail 省略 / 给出：省略时只传正文一个参数，给出时原样作为第二参数', () => {
@@ -60,8 +60,8 @@ describe('createWarnOnce：内部告警的幂等留痕', () => {
 		const withDetail = createWarnOnce();
 		withDetail('带细节', detail);
 
-		expect(warnSpy.mock.calls[0]).toEqual(['MindMap Studio：无细节']);
-		expect(warnSpy.mock.calls[1]).toEqual(['MindMap Studio：带细节', detail]);
+		expect(warnSpy.mock.calls[0]).toEqual(['Oh-My-Mindmap-Studio：无细节']);
+		expect(warnSpy.mock.calls[1]).toEqual(['Oh-My-Mindmap-Studio：带细节', detail]);
 	});
 
 	it('去重范围＝实例：两个实例各告警一次、互不影响（进程级与视图级语义都能表达）', () => {
@@ -74,8 +74,8 @@ describe('createWarnOnce：内部告警的幂等留痕', () => {
 		perView('同一根因');
 
 		expect(warnSpy).toHaveBeenCalledTimes(2);
-		expect(warnSpy.mock.calls[0]?.[0]).toBe('MindMap Studio：同一根因');
-		expect(warnSpy.mock.calls[1]?.[0]).toBe('MindMap Studio：同一根因');
+		expect(warnSpy.mock.calls[0]?.[0]).toBe('Oh-My-Mindmap-Studio：同一根因');
+		expect(warnSpy.mock.calls[1]?.[0]).toBe('Oh-My-Mindmap-Studio：同一根因');
 	});
 });
 

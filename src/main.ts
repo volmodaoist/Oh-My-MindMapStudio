@@ -1,5 +1,5 @@
 /**
- * MindMap Studio —— Obsidian 思维导图插件入口。
+ * Oh-My-Mindmap-Studio —— Obsidian 思维导图插件入口。
  *
  * 本类只做装配与生命周期编排（遵循 obsidian-sample-plugin 规范）：
  * - onload: 设置载入、注册视图/扩展名/事件监听/设置面板；
@@ -9,8 +9,8 @@
  * mindmap.ts / images-*.ts / links-*.ts / markdown.ts / modal-*.ts。
  */
 import { Menu, Plugin, TFile, TFolder } from 'obsidian';
-import { VIEW_TYPE, SETTINGS_PERSIST_DEBOUNCE_MS, SETTINGS_APPLY_DEBOUNCE_MS, VIEW_STATE_PERSIST_MS, CODE_BLOCK_LANGUAGE, isNodeOnlyColorScope } from './core/constants';
-import { createDebouncer } from './core/concurrency';
+import { VIEW_TYPE, SETTINGS_PERSIST_DEBOUNCE_MS, SETTINGS_APPLY_DEBOUNCE_MS, VIEW_STATE_PERSIST_MS, CODE_BLOCK_LANGUAGE, isNodeOnlyColorScope } from '@/src/core/constants';
+import { createDebouncer } from '@/src/core/concurrency';
 import {
 	MindMapStudioSettings,
 	MindMapStudioSettingTab,
@@ -19,36 +19,37 @@ import {
 	sanitizeSettings,
 	type SettingsSanitizeReport,
 } from './settings';
-import { MindMapView } from './features/view/view';
-import { offerColorSentinelCleanup } from './features/editing/view-node-color';
-import { MindmapEmbedRenderChild } from './features/mindmap-codeblock';
+import { MindMapView } from '@/src/features/view/view';
+import { offerColorSentinelCleanup } from '@/src/features/editing/view-node-color';
+import { CodeTabWikilinkCompletion } from '@/src/features/editing/code-tab-wikilink-completion';
+import { MindmapEmbedRenderChild } from '@/src/features/mindmap-codeblock';
 import { createNewMindMap } from './creation';
 import {
 	isMindMapFile,
 	openAsMindMap,
 	openAsMarkdown,
 	setViewSwitchDoneHook,
-} from './markdown/md-open';
+} from './markdown';
 import {
 	refreshCommandLabels,
 	registerCommands,
 } from './commands';
-import { t } from './core/i18n';
-import { VaultSyncService } from './platform/workspace/vault-sync';
-import { fileLookupIndex } from './links/file-lookup';
-import { setImageSizeCacheStore } from './media/images-path';
-import { ViewStateStore } from './services/view-state';
-import { DocumentSessionRegistry } from './services/document-session-registry';
-import { notifyError } from './core/errors';
-import { PluginDataWriter } from './core/persistence';
-import { ElementStatusBarService } from './services/status-bar';
-import type { StatusBarService } from './services/status-bar';
-import { updateStatusBar } from './features/view/view-status';
-import { pruneViewSwitchNoise } from './platform/workspace/nav-history';
-import { MindMapAutoOpener } from './platform/workspace/mindmap-auto-open';
-import { MarkdownMindMapAction } from './platform/workspace/markdown-mindmap-action';
-import { MiniMapSidebar } from './platform/workspace/minimap-sidebar';
-import { attachMiniMap, onMiniMapSessionChange, refreshAttachedMiniMap } from './features/view/view-minimap';
+import { t } from '@/src/core/i18n';
+import { VaultSyncService } from '@/src/platform/workspace/vault-sync';
+import { fileLookupIndex } from '@/src/links/file-lookup';
+import { setImageSizeCacheStore } from '@/src/media/images-path';
+import { ViewStateStore } from '@/src/services/view-state';
+import { DocumentSessionRegistry } from '@/src/services/document';
+import { notifyError } from '@/src/core/errors';
+import { PluginDataWriter } from '@/src/core/persistence';
+import { ElementStatusBarService } from '@/src/services/status-bar';
+import type { StatusBarService } from '@/src/services/status-bar';
+import { updateStatusBar } from '@/src/features/view/view-status';
+import { pruneViewSwitchNoise } from '@/src/platform/workspace/nav-history';
+import { MindMapAutoOpener } from '@/src/platform/workspace/mindmap-auto-open';
+import { MarkdownMindMapAction } from '@/src/platform/workspace/markdown-mindmap-action';
+import { MiniMapSidebar } from '@/src/platform/workspace/minimap-sidebar';
+import { attachMiniMap, onMiniMapSessionChange, refreshAttachedMiniMap } from '@/src/features/view/view-minimap';
 
 export default class MindMapStudioPlugin extends Plugin {
 	override settings!: MindMapStudioSettings;
@@ -187,12 +188,18 @@ export default class MindMapStudioPlugin extends Plugin {
 		// 悬停预览源：导图节点上的 [[wikilink]] 触发 Obsidian 原生页面预览
 		// （core 只处理已注册 hoverLinkSource 的事件，未注册会静默忽略）
 		this.registerHoverLinkSource(VIEW_TYPE, {
-			display: 'MindMap Studio',
+			display: this.manifest.name,
 			defaultMod: false,
 		});
 
 		// 命令面板入口；文件夹右键入口在下方的 file-menu 监听中注册。
 		registerCommands(this);
+		const wikiCompletion = new CodeTabWikilinkCompletion(this.app);
+		wikiCompletion.register(document);
+		this.register(() => wikiCompletion.dispose());
+		this.registerEvent(this.app.workspace.on('layout-change', () => wikiCompletion.register(document)));
+		this.registerEvent(this.app.workspace.on('window-open', (_window, win) => wikiCompletion.register(win.document)));
+		this.registerEvent(this.app.workspace.on('window-close', (_window, win) => wikiCompletion.unregister(win.document)));
 		this.markdownAction = new MarkdownMindMapAction(this.app.workspace, () => this.settings.language);
 		this.markdownAction.register(this);
 

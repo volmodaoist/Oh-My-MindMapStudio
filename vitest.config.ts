@@ -28,6 +28,7 @@ export default defineConfig({
 	},
 	resolve: {
 		alias: {
+			'@': path.resolve(import.meta.dirname),
 			obsidian: path.resolve(import.meta.dirname, 'tests/mocks/obsidian.ts'),
 		},
 	},

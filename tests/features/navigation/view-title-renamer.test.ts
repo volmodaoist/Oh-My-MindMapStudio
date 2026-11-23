@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { TFile } from 'obsidian';
-import { TITLE_RENAME_DEBOUNCE_MS } from '../../../src/core/constants';
-import { TitleRenamer } from '../../../src/features/navigation/view-title-renamer';
+import { TITLE_RENAME_DEBOUNCE_MS } from '@/src/core/constants';
+import { TitleRenamer } from '@/src/features/navigation/view-title-renamer';
 
 afterEach(() => vi.useRealTimers());
 

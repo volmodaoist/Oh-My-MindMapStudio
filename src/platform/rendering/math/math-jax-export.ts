@@ -6,8 +6,8 @@
  * ——这是它能被干净抽出的依据。唯一隐式前提是「CHTML 样式表元素已挂入文档」，
  * 由渲染侧 flush 保证（代码层无状态读取）。
  */
-import { createWarnOnce } from '../../../core/errors';
-import { appendSvgStyle } from '../../export-svg-postprocess';
+import { createWarnOnce } from '@/src/core/errors';
+import { appendSvgStyle } from '@/src/platform/export-svg-postprocess';
 import { relaxMathGlyphClipPaths } from './math-jax-export-clip';
 import { primeMathJaxFonts, withInlinedMathFonts } from './math-jax-fonts';
 

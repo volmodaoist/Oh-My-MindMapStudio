@@ -13,9 +13,9 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 const openTagSearch = vi.hoisted(() => vi.fn());
 
-vi.mock('../../../src/platform/workspace/tag-search', () => ({ openTagSearch }));
+vi.mock('@/src/platform/workspace/tag-search', () => ({ openTagSearch }));
 
-import { registerTagClicks } from '../../../src/features/content/view-tag';
+import { registerTagClicks } from '@/src/features/content/view-tag';
 
 interface Listeners {
 	click?: (event: unknown) => void;

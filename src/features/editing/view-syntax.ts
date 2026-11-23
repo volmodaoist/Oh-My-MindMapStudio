@@ -17,24 +17,24 @@
  * 清位并立即跑一次；`data_change` 那条路只在非拖拽时跑（兜住粘贴 / 撤销 / 重做）。
  */
 import { Notice } from 'obsidian';
-import { createDebouncer, type Debouncer } from '../../core/concurrency';
-import { t, tf } from '../../core/i18n';
+import { createDebouncer, type Debouncer } from '@/src/core/concurrency';
+import { t, tf } from '@/src/core/i18n';
 import {
 	ENGINE_COMMANDS,
 	getRenderRoot,
 	replaceMindMapData,
-} from '../../engine/mindmap';
+} from '@/src/engine';
 import {
 	currentDocumentSyntax,
 	planDocumentSyntax,
-} from '../../markdown/md-heading-format';
-import { normalizeSiblingSyntax } from '../../markdown/md-heading-normalize';
+} from '@/src/markdown';
+import { normalizeSiblingSyntax } from '@/src/markdown';
 import {
 	liveNodeTree,
 	type DocumentSyntax,
-} from '../../markdown/md-heading-syntax';
-import { updateStatusBar } from '../view/view-status';
-import type { MindMapViewContext } from '../view/view-context';
+} from '@/src/markdown';
+import { updateStatusBar } from '@/src/features/view/view-status';
+import type { MindMapViewContext } from '@/src/features/view/view-context';
 
 /** 守卫的去抖窗口：与自动拆分同一拍（拖拽结束另有即时触发） */
 const GUARD_DEBOUNCE_MS = 120;

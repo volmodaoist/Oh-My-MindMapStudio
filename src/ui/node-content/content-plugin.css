@@ -1,0 +1,33 @@
+/* 自动宽度的活动 CodeTab：代码保留行形状；只作用于导图实例，固定宽度与普通阅读视图沿用原样。 */
+.mindmap-plugin-live[data-plugin-auto-width].code-tab > .code-tab__list {
+  box-sizing: border-box;
+  width: 0;
+  min-width: 100%;
+}
+
+.mindmap-plugin-live[data-plugin-auto-width].code-tab .code-tab__panel pre,
+.mindmap-plugin-live[data-plugin-auto-width].code-tab .code-tab__panel pre code {
+  max-width: none;
+  white-space: pre !important;
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+}
+
+.mindmap-plugin-live[data-plugin-auto-width].code-tab .code-tab__panel :is(p, ul, ol, blockquote) {
+  max-width: var(--mindmap-plugin-text-width);
+}
+
+.mindmap-plugin-live[data-plugin-auto-width].code-tab .code-tab__native-editor.is-code-content .cm-line.HyperMD-codeblock {
+  width: max-content;
+  min-width: 100%;
+  white-space: pre !important;
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+}
+
+/* 原生编辑器外壳默认 width:100%，会屏蔽代码的自然宽度；自动模式由代码决定宽度并填满短内容面板。 */
+.mindmap-plugin-live[data-plugin-auto-width].code-tab .code-tab__native-editor.is-code-content,
+.mindmap-plugin-live[data-plugin-auto-width].code-tab .code-tab__native-editor.is-code-content :is(.markdown-embed-content, .markdown-source-view, .code-tab__cm-root, .code-tab__cm-scroller, .code-tab__cm-sizer, .code-tab__cm-container, .code-tab__cm-content) {
+  width: max-content !important;
+  min-width: 100%;
+}

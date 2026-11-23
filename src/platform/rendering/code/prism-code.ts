@@ -45,8 +45,8 @@
  * `highlight()` 本要先 encode 再拼字符串，这里直接用 `tokenize` 的原始 token 流）。
  */
 import { loadPrism } from 'obsidian';
-import { CODE_RENDERED_CLASS, PRISM_TOKEN_CLASS } from '../../../core/constants';
-import { createWarnOnce } from '../../../core/errors';
+import { CODE_RENDERED_CLASS, PRISM_TOKEN_CLASS } from '@/src/core/constants';
+import { createWarnOnce } from '@/src/core/errors';
 import { probeTokenColor } from './prism-code-color-probe';
 
 /**

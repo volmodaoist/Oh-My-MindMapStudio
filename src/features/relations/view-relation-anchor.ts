@@ -19,21 +19,21 @@
  */
 
 import { Notice } from 'obsidian';
-import type { MindMapNode } from '../../core/engine-types';
-import { t } from '../../core/i18n';
-import type { RelationGeometry } from '../../domain/relation';
+import type { MindMapNode } from '@/src/core/engine-types';
+import { t } from '@/src/core/i18n';
+import type { RelationGeometry } from '@/src/domain/relations';
 import {
 	commitAnchorSession,
 	createAnchorSession,
 	moveAnchorSession,
 	previewOf,
-} from '../../domain/relation-anchor';
+} from '@/src/domain/relations';
 import {
 	relationCanvasLayer,
 	relationClientToContent,
 	relationNodeBox,
-} from '../../engine/mindmap';
-import type { ViewNodeEditContext } from '../view/view-context';
+} from '@/src/engine';
+import type { ViewNodeEditContext } from '@/src/features/view/view-context';
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
 

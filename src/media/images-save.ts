@@ -7,10 +7,10 @@
  * 落点一律由 `fileManager.getAvailablePathForAttachment` 决定（与 Obsidian 一致）。
  */
 import { App, Notice, TFile, normalizePath } from 'obsidian';
-import { isImageExtension } from '../core/constants';
-import { createSerialQueue } from '../core/concurrency';
-import { notifyError } from '../core/errors';
-import { t, tf, type Language } from '../core/i18n';
+import { isImageExtension } from '@/src/core/constants';
+import { createSerialQueue } from '@/src/core/concurrency';
+import { notifyError } from '@/src/core/errors';
+import { t, tf, type Language } from '@/src/core/i18n';
 
 /**
  * 图片保存走全局串行队列原语：「文件名选择 + vault 写入」非原子，

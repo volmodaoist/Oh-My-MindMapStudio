@@ -12,9 +12,9 @@ import { describe, expect, it } from 'vitest';
 import {
 	buildInlineNodeContent,
 	buildInlineSegments,
-} from '../../../src/features/content/node-inline-content';
-import { nodeContentTones } from '../../../src/domain/color';
-import type { MindMapNode } from '../../../src/core/engine-types';
+} from '@/src/features/content/node-inline-content';
+import { nodeContentTones } from '@/src/domain/color';
+import type { MindMapNode } from '@/src/core/engine-types';
 
 // ---------------------------------------------------------------------------
 // 最小 DOM 桩（只实现 node-inline-html 用到的面）

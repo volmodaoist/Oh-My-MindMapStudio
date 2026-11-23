@@ -18,8 +18,8 @@
  */
 import { describe, expect, it, vi } from 'vitest';
 import { MarkdownView, TFile } from 'obsidian';
-import { MindMapView } from '../../../src/features/view/view';
-import { openAsMindMap } from '../../../src/markdown/md-open';
+import { MindMapView } from '@/src/features/view/view';
+import { openAsMindMap } from '@/src/markdown/md-open';
 
 /**
  * 引擎防腐面整体桩掉：`src/engine/mindmap` 顶层加载 vendor bundle
@@ -28,7 +28,7 @@ import { openAsMindMap } from '../../../src/markdown/md-open';
  * （setState / getState / openAsMindMap 的写入参数），不调用任何引擎函数，
  * 故空面即可（mock 键只在被访问时才要求存在）。
  */
-vi.mock('../../../src/engine/mindmap', () => ({}));
+vi.mock('@/src/engine', () => ({}));
 
 /**
  * 建一个「只需状态面」的视图实例。

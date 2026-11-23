@@ -2,6 +2,7 @@
 export const PLUGIN_SLOT_CLASS = 'mindmap-plugin-block';
 export const PLUGIN_LIVE_CLASS = 'mindmap-plugin-live';
 export const PLUGIN_SLOT_ID = 'data-plugin-id';
+export const PLUGIN_AUTO_WIDTH_ATTR = 'data-plugin-auto-width';
 export const PLUGIN_INTERACTIVE_ATTR = 'data-codeblock-interactive';
 
 export interface PluginBlockRequest {
@@ -12,6 +13,8 @@ export interface PluginBlockRequest {
 	holder: HTMLElement;
 	owner: object | null;
 	availableWidth?: number;
+	/** 未手动设宽的活动插件可按当前内容增长；availableWidth 是普通正文的起始预算。 */
+	autoWidth?: boolean;
 }
 
 export interface PluginContentRenderer {

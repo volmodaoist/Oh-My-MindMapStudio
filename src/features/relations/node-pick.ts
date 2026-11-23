@@ -16,8 +16,8 @@
  */
 
 import { Notice } from 'obsidian';
-import type { MindMapNode } from '../../core/engine-types';
-import type { ViewNodeEditContext } from '../view/view-context';
+import type { MindMapNode } from '@/src/core/engine-types';
+import type { ViewNodeEditContext } from '@/src/features/view/view-context';
 
 /** 一次落点的结果：结束会话 / 继续等下一次点击 */
 type NodePickOutcome = 'done' | 'continue';

@@ -134,6 +134,9 @@ export default defineConfig(
 		'vendor/upstream/**',
 		'vendor/patches/**',
 		'scripts/**',
+		// 项目内技能脚本与 scripts/ 同属 Agent 工具，不是插件运行时代码。
+		'.agents/skills/**/scripts/**',
+		'.venv-docs/**',
 		'config/esbuild.config.mjs',
 		'scripts/version-bump.mjs',
 		'versions.json',
@@ -181,6 +184,14 @@ export default defineConfig(
 		},
 	},
 	{
+		// 标准 DOM 范围替换不进入 Chromium 原生撤销；仅放行此适配器的 insertText 通道。
+		// 运行时检测返回值并提供标准 API 回退，不放宽其它弃用 API 或文件。
+		files: ['src/ui/node-editor/native-input.ts'],
+		rules: {
+			'@typescript-eslint/no-deprecated': ['warn', { allow: [{ from: 'lib', name: 'execCommand' }] }],
+		},
+	},
+	{
 		// 手写类型声明 vendor/simple-mind-map.d.cts（项目维护，非第三方产物）
 		// 纳入 lint——由上方 globalIgnores 收窄为只排除 vendor/*.cjs 而来。
 		// 引擎节点数据面本质是任意 JSON，`AnyObject = Record<string, any>` 必须
@@ -225,9 +236,15 @@ export default defineConfig(
 					patterns: [
 						// 官方 7 条依赖禁令（替换语义下必须自带，见本表注释）
 						...OFFICIAL_RESTRICTED_IMPORT_PATTERNS,
+						...forbiddenSpecifierPatterns('domain'),
+						{ ...COMBO_ROOT_SPECIFIER_PATTERN, allowTypeImports: false },
 						{
-							group: ['..', '../*', '../**'],
-							message: 'domain 不得反向依赖上层模块或 vendor（黏合类型放 src 根层）',
+							regex: '^(?:\\.\\./(?:\\.\\./)*|@/)vendor(?:/|$)',
+							message: 'domain 不得依赖 vendor（类型适配放 core）',
+						},
+						{
+							regex: '^@/(?!src/domain(?:/|$)).+',
+							message: 'domain 的项目根别名只能指向领域层',
 						},
 						{
 							group: ['obsidian', 'obsidian/*'],
@@ -245,7 +262,7 @@ export default defineConfig(
 							// `./md-meta` 这类组内相对引用（曾据此误报 2 处）。故用正则
 							// 排除「相对 / 绝对 / obsidian」三种前缀，只留裸说明符——
 							// 覆盖 `lodash`、`node:fs/promises` 等。
-							regex: '^(?!\\.)(?!/)(?!obsidian(?:/|$)).+$',
+							regex: '^(?!\\.)(?!/)(?!@/)(?!obsidian(?:/|$)).+$',
 							message:
 								'domain 是零依赖层：不得导入任何外部包（npm 包 / node 内建）',
 						},

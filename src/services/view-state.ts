@@ -16,8 +16,8 @@
  *
  * 布局只读文件属性，不在视图状态中存取。加载只投影当前字段，不改写磁盘。
  */
-import { createDebouncer, type Debouncer } from '../core/concurrency';
-import { VIEW_STATE_PERSIST_MS } from '../core/constants';
+import { createDebouncer, type Debouncer } from '@/src/core/concurrency';
+import { VIEW_STATE_PERSIST_MS } from '@/src/core/constants';
 
 export type PathState = Record<string, unknown>;
 

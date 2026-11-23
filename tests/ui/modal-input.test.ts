@@ -34,16 +34,16 @@ import {
 	type Mock,
 } from 'vitest';
 import { App, TFile, TFolder } from 'obsidian';
-import { MAX_IMAGE_SIZE_MB } from '../../src/core/constants';
-import { t, type Language } from '../../src/core/i18n';
-import { fileLookupIndex } from '../../src/links/file-lookup';
-import { openImageEditorModal } from '../../src/ui/modal-image';
-import { openLinkEditorModal, type LinkPickResult } from '../../src/ui/modal-link';
-import { openNameInputModal } from '../../src/ui/modal-name';
+import { MAX_IMAGE_SIZE_MB } from '@/src/core/constants';
+import { t, type Language } from '@/src/core/i18n';
+import { fileLookupIndex } from '@/src/links/file-lookup';
+import { openImageEditorModal } from '@/src/ui/modal-image';
+import { openLinkEditorModal, type LinkPickResult } from '@/src/ui/modal-link';
+import { openNameInputModal } from '@/src/ui/modal-name';
 import {
 	openNodeTextModal,
 	type NodeTextModalOptions,
-} from '../../src/ui/modal-text';
+} from '@/src/ui/modal-text';
 
 /* ===== 伪 DOM（node 环境无 document；afterEach 还原） ===== */
 
@@ -1380,7 +1380,7 @@ describe('openImageEditorModal（节点图片编辑弹窗）', () => {
 
 	it('畸形 % 序列（app:// 解码失败）不抛错：回退未解码路径，弹窗照常可用', async () => {
 		// decodeURIComponent('%E9%99') 会抛 URIError；抛出去整个弹窗就打不开了。
-		// 走 domain/url.resourceUrlPathCandidates 后，解码失败由它内部 catch
+		// 走 domain/links/url.resourceUrlPathCandidates 后，解码失败由它内部 catch
 		// （只保留未解码候选），本弹窗不再本地兜一份 URIError。
 		const malformed = 'app://local/%E9%99';
 		const harness = openImage(malformed);

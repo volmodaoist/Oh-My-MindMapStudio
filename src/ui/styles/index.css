@@ -2,5 +2,6 @@
 @import './view.css';
 @import '../toolbar/toolbar.css';
 @import '../search/search-bar.css';
+@import '../node-content/content-plugin.css';
 @import './global.css';
 @import '../modal-name.css';

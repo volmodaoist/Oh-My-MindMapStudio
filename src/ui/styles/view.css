@@ -1,7 +1,7 @@
 /* ===== Obsidian plugin styles ===== */
 /* 引擎样式不在此文件：simple-mind-map 的 dist CSS 全为 Quill 富文本规则（本插件未启用
    RichText 插件），引擎本体样式由 bundle 运行时注入 document.head（见 vendor/BUILD.md）。 */
-/* ========== MindMap Studio Plugin Styles ========== */
+/* ========== Oh-My-Mindmap-Studio Plugin Styles ========== */
 
 /* 自动打开：切换期间的源视图遮罩。
    Obsidian 打开文件**先**建 markdown 视图并渲染，之后插件才 setViewState 换视图；

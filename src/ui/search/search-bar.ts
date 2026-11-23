@@ -1,7 +1,7 @@
 /** 搜索栏组件：DOM、文案、键盘分流与焦点；不读取导图或搜索结果。 */
 import { setIcon, setTooltip } from 'obsidian';
-import { createDebouncer } from '../../core/concurrency';
-import { EventBinder } from '../../core/event-binder';
+import { createDebouncer } from '@/src/core/concurrency';
+import { EventBinder } from '@/src/core/event-binder';
 
 export interface SearchBarLabels {
 	placeholder: string;

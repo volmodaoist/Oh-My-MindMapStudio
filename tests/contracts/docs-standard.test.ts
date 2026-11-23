@@ -220,9 +220,9 @@ describe('标准文档一致性（docs/markdown-mindmap-standard.md）', () => {
 		expect(mapping).toEqual(whitelist);
 	});
 
-	it('外迁的历史存档文件存在且被附录引用', () => {
-		const historyRel = 'docs/markdown-mindmap-history.md';
+	it('统一版本记录存在且被标准附录引用', () => {
+		const historyRel = 'CHANGELOG';
 		expect(existsSync(path.join(ROOT, historyRel)), `缺少历史存档：${historyRel}`).toBe(true);
-		expect(DOC.includes('markdown-mindmap-history.md'), '附录未链接历史存档').toBe(true);
+		expect(DOC.includes('../CHANGELOG'), '附录未链接 CHANGELOG').toBe(true);
 	});
 });

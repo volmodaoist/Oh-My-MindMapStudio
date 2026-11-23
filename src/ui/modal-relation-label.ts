@@ -4,13 +4,13 @@
  * 标签存在节点指令行里（`%%rel:xxxxxx | 依赖%%`），是**注释体的一段文本**：
  * 含 `%%`（注释不能嵌套）或 `[[` / `]]`（注释体不是行内 token 的保护区）时解析侧
  * 会 fail-closed 把整条指令当普通注释 ⇒ 关系直接消失、用户看不到任何提示。
- * 判据只有一份（`domain/relation.isWritableRelationLabel`），这里只在输入侧提前拦。
+ * 判据只有一份（`domain/relations/relation.isWritableRelationLabel`），这里只在输入侧提前拦。
  *
  * 空串是**合法**输入（= 无标签的线）；取消返回 null。
  */
 import { App } from 'obsidian';
-import { t, type Language } from '../core/i18n';
-import { isWritableRelationLabel } from '../domain/relation';
+import { t, type Language } from '@/src/core/i18n';
+import { isWritableRelationLabel } from '@/src/domain/relations';
 import { createButton, openFormModal } from './modal-common';
 
 /** 标签长度上限（仅输入侧限制；解析不截断，保真优先） */

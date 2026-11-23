@@ -43,20 +43,21 @@
  * 外观仍全内联；本模块只编排节点会话与引擎跟随，共享写回在 node-content-write。
  * 编辑会话的引擎监听在提交时解绑，不累积已关闭编辑器的闭包（K208）。
  */
-import { t } from '../../core/i18n';
-import { EventBinder } from '../../core/event-binder';
-import { getNodeGroupEl, getDrawTransform, isEditingText, readNodeEditorAppearance, hideNodeForEditing } from '../../engine/mindmap';
-import { composeNodeContent } from '../../markdown/md-serialize';
-import type { MdNodeData } from '../../core/node-data';
-import type { MindMap, MindMapNode } from '../../core/engine-types';
-import type { ViewNodeEditContext } from '../view/view-context';
-import { NODE_INLINE_CONTENT_CLASS } from '../../core/constants';
-import { NodeEditor } from '../../ui/node-editor/node-editor';
-import { applyRawNodeContent } from '../content/node-content-write';
+import { t } from '@/src/core/i18n';
+import { EventBinder } from '@/src/core/event-binder';
+import { getNodeGroupEl, getDrawTransform, isEditingText, readNodeEditorAppearance, hideNodeForEditing } from '@/src/engine';
+import { composeNodeContent } from '@/src/markdown';
+import type { MdNodeData } from '@/src/core/node-data';
+import type { MindMap, MindMapNode } from '@/src/core/engine-types';
+import type { ViewNodeEditContext } from '@/src/features/view/view-context';
+import { NODE_INLINE_CONTENT_CLASS } from '@/src/core/constants';
+import { NodeEditor } from '@/src/ui/node-editor/node-editor';
+import { NodeWikilinkCompletion } from './node-wikilink-completion';
+import { applyRawNodeContent } from '@/src/features/content/node-content-write';
 
 // 兼容原调用入口；写回实现与按键判定均只有一份。
-export { applyRawNodeContent } from '../content/node-content-write';
-export { resolveInlineEditKey } from '../../domain/node-edit-key';
+export { applyRawNodeContent } from '@/src/features/content/node-content-write';
+export { resolveInlineEditKey } from '@/src/domain/node-edit-key';
 
 interface InlineEditorSession {
 	mindMap: MindMap;
@@ -91,9 +92,11 @@ export function openNodeInlineEditor(view: ViewNodeEditContext, node: MindMapNod
 	const editor = new NodeEditor(doc, {
 		value: initialValue,
 		label: t(view.lang, 'modal.text.title'),
+		sourcePath: () => view.file?.path ?? '',
 		onInput: () => placeEditor(session, view),
 		onCommit: () => commitSession(view, session),
 	});
+	editor.useInputBehavior(new NodeWikilinkCompletion(view.app, editor.input));
 	const session: InlineEditorSession = {
 		mindMap, node, editor, initialValue, active: true,
 		hiddenGroup: null, restoreGroup: null, events: new EventBinder(),

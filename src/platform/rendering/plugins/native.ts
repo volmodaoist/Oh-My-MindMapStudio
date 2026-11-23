@@ -1,22 +1,12 @@
 /** 官方 Markdown 渲染入口与可选宿主协议；不访问 app.plugins 或复制第三方运行时。 */
-import { Component, MarkdownRenderer } from 'obsidian';
+import { MarkdownRenderer } from 'obsidian';
 import type { App } from 'obsidian';
+import { renderCodeTab } from './code-tab';
+import type { CodeTabSession } from './code-tab';
+import type { CodeTabRenderOptions } from './code-tab-api';
 
-const CODEBLOCK_HOST_EVENT = 'obsidian-codeblock-render';
-
-export interface CodeBlockHostRequest {
-	version: 1;
+export interface PluginRenderRequest extends CodeTabRenderOptions {
 	language: string;
-	source: string;
-	sourcePath: string;
-	id: string;
-	container: HTMLElement;
-	component: Component;
-	readOnly: boolean;
-	onChange?: (expected: string, source: string | null) => Promise<void>;
-	onEditingChange?: (editing: boolean) => void;
-	handled: boolean;
-	completion?: Promise<void>;
 }
 
 export interface PluginAdapter {
@@ -33,15 +23,15 @@ export const DEFAULT_PLUGIN_ADAPTERS: readonly PluginAdapter[] = [
 ];
 
 export async function renderNativePlugin(
-	app: App, request: CodeBlockHostRequest, adapter: PluginAdapter, signal: AbortSignal, attach?: () => void,
-): Promise<void> {
+	app: App, request: PluginRenderRequest, adapter: PluginAdapter, signal: AbortSignal, attach?: () => void, changed: () => void = () => undefined,
+): Promise<CodeTabSession | null> {
 	const root = request.container;
 	const doc = root.ownerDocument;
 	const win = doc.defaultView;
 	if (!win) throw new Error('渲染窗口已关闭');
 	let finish: (() => void) | null = null;
 	let fail: (error: Error) => void = () => undefined;
-	const stopped = new Promise<void>((_resolve, reject) => { fail = reject; });
+	const stopped = new Promise<never>((_resolve, reject) => { fail = reject; });
 	stopped.catch(() => undefined);
 	const completed = adapter.finishedEvent ? new Promise<void>(resolve => {
 		finish = resolve;
@@ -58,10 +48,7 @@ export async function renderNativePlugin(
 	try {
 		if (signal.aborted) throw new Error('渲染已取消');
 		if (adapter.host) {
-			const event = new win.CustomEvent(CODEBLOCK_HOST_EVENT, { detail: request });
-			doc.dispatchEvent(event);
-			if (!request.handled || !request.completion) throw new Error('CodeTab 尚未提供宿主渲染接口');
-			await Promise.race([request.completion, stopped]);
+			return await Promise.race([renderCodeTab(request, signal, changed), stopped]);
 		} else {
 			const longest = Math.max(3, ...Array.from(request.source.matchAll(/`+/g), m => m[0].length));
 			const fence = '`'.repeat(longest + 1);
@@ -78,6 +65,7 @@ export async function renderNativePlugin(
 			if (svg) Object.assign(svg.style, { maxWidth: '100%', height: 'auto', display: 'block', pointerEvents: adapter.mode === 'static' ? 'none' : 'auto' });
 		}
 		if (signal.aborted) throw new Error('渲染已取消');
+		return null;
 	} finally {
 		win.clearTimeout(timeout);
 		if (adapter.finishedEvent) root.removeEventListener(adapter.finishedEvent, onFinished);

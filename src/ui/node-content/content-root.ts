@@ -1,8 +1,9 @@
 /** 节点内容 root：DOM/样式内聚，保持原输出与导出保真。 */
-import { type InlineContentDocument, type InlineSegment } from '../../core/node-content-types';
+import { type InlineContentDocument, type InlineSegment } from '@/src/core/node-content-types';
 import { type BuildContentParams } from './content-context';
-import { NODE_INLINE_CONTENT_CLASS } from '../../core/constants';
-import { fontMeasureKey } from '../../core/measure-cache';
+import { NODE_INLINE_CONTENT_CLASS } from '@/src/core/constants';
+import { fontMeasureKey } from '@/src/core/measure-cache';
+import { PLUGIN_AUTO_WIDTH_ATTR } from '@/src/core/plugin-content-types';
 import { CONTENT_STYLES } from './content-root.styles';
 import { buildTaskCheckbox } from './content-task';
 import { buildFootnoteSummary } from './content-footnote';
@@ -81,5 +82,10 @@ export function buildContentElement(
 		return box;
 	}
 	params.renderer.appendSegments(doc, box, segments, params, 0);
+	// 活动插件快照有自己的真实宽度。min-content 让它撑开节点，但普通文本仍换行；
+	// 只放开自动模式，手动宽度和其它节点继续遵循原有 500px 预算。内联保证导出同源。
+	if (params.explicitWidth === null && box.querySelector?.(`[${PLUGIN_AUTO_WIDTH_ATTR}]`)) {
+		Object.assign(box.style, { width: 'min-content', maxWidth: 'none', minWidth: CONTENT_STYLES.maxWidth });
+	}
 	return box;
 }

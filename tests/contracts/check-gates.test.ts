@@ -12,20 +12,20 @@ import { spawnSync } from 'node:child_process';
 import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { buildPlan, parseExemptionRows } from '../../scripts/check-gates.mjs';
-import type { ExemptionRow, GatesPlan } from '../../scripts/check-gates.mjs';
-import { buildNodeContentCompareSource } from '../../scripts/visual-node-content.mjs';
+import { buildPlan, parseExemptionRows } from '@/scripts/check-gates.mjs';
+import type { ExemptionRow, GatesPlan } from '@/scripts/check-gates.mjs';
+import { buildNodeContentCompareSource } from '@/scripts/visual-node-content.mjs';
 
 const labelsOf = (plan: GatesPlan): string[] =>
 	plan.gates.map((gate) => gate.label);
 
 describe('check:gates --fix-lines（真实脚本的索引写入位置）', () => {
-	it('只回填 docs/agents/index.md，AGENTS.md 的内容保持逐字不变', () => {
+	it('只回填 .agents/index.md，AGENTS.md 的内容保持逐字不变', () => {
 		const fixture = mkdtempSync(join(tmpdir(), 'mindmap-index-gates-'));
 		try {
 			mkdirSync(join(fixture, 'scripts'));
 			mkdirSync(join(fixture, 'src'));
-			mkdirSync(join(fixture, 'docs/agents'), { recursive: true });
+			mkdirSync(join(fixture, '.agents'), { recursive: true });
 			writeFileSync(join(fixture, 'scripts/check-gates.mjs'), readFileSync(
 				new URL('../../scripts/check-gates.mjs', import.meta.url), 'utf8',
 			));
@@ -34,12 +34,12 @@ describe('check:gates --fix-lines（真实脚本的索引写入位置）', () =>
 			// 入口也放一张旧表：恢复旧路径时脚本会误改入口，本断言必须抓住它。
 			const agents = '# AGENTS.md\n' + table;
 			writeFileSync(join(fixture, 'AGENTS.md'), agents);
-			writeFileSync(join(fixture, 'docs/agents/index.md'), '# 索引\n' + table);
+			writeFileSync(join(fixture, '.agents/index.md'), '# 索引\n' + table);
 			const result = spawnSync(process.execPath, [
 				join(fixture, 'scripts/check-gates.mjs'), '--fix-lines',
 			], { cwd: fixture, encoding: 'utf8' });
 			expect(result.status, result.stdout + result.stderr).toBe(0);
-			expect(readFileSync(join(fixture, 'docs/agents/index.md'), 'utf8')).toBe(
+			expect(readFileSync(join(fixture, '.agents/index.md'), 'utf8')).toBe(
 				'# 索引\n| `src/example.ts` | 2 | 原有豁免理由 |\n',
 			);
 			expect(readFileSync(join(fixture, 'AGENTS.md'), 'utf8')).toBe(agents);
@@ -100,14 +100,16 @@ describe('buildPlan（变更集 → 门禁清单）', () => {
 		}
 	});
 
-	it('发布元数据 → 加跑 check:release（README / manifest / versions / LICENSE / release-notes）', () => {
+	it('发布元数据 → 加跑 check:release（README / manifest / versions / LICENSE / CHANGELOG）', () => {
 		for (const file of [
 			'README.md',
 			'README.zh-CN.md',
 			'manifest.json',
 			'versions.json',
 			'LICENSE',
-			'docs/release-notes-0.2.4.md',
+			'CHANGELOG',
+			'scripts/release-notes.mjs',
+			'scripts/check-release-metadata.mjs',
 		]) {
 			expect(labelsOf(buildPlan([file]))).toContain('npm run check:release');
 		}
@@ -180,7 +182,7 @@ describe('组件 CSS 与构建门禁', () => {
 			expect(labels).toContain('npm run verify:visual -- --require-chrome');
 		},
 	);
-	it.each(['src/ui/toolbar/toolbar.ts', 'src/ui/search/search-bar.ts', 'src/features/view/view-toolbar.ts', 'src/features/view/view-search.ts', 'scripts/visual-ui.mjs', 'scripts/visual-canvas-drag.mjs', 'scripts/visual-minimap-sidebar.mjs', 'scripts/chrome-page.mjs', 'src/core/minimap-geometry.ts', 'src/engine/mindmap-minimap.ts', 'src/features/view/view-minimap.ts', 'src/platform/workspace/minimap-sidebar.ts', 'src/ui/node-editor/node-editor.ts', 'src/ui/node-editor/node-editor.styles.ts', 'src/domain/node-edit-key.ts', 'src/ui/node-content/content-quote.ts', 'src/ui/node-content/content-code.styles.ts', 'src/core/node-content-types.ts', 'scripts/visual-node-content.mjs'])(
+	it.each(['src/ui/toolbar/toolbar.ts', 'src/ui/search/search-bar.ts', 'src/features/view/view-toolbar.ts', 'src/features/view/view-search.ts', 'scripts/visual-ui.mjs', 'scripts/visual-canvas-drag.mjs', 'scripts/visual-minimap-sidebar.mjs', 'scripts/chrome-page.mjs', 'src/core/minimap-geometry.ts', 'src/engine/viewport/mindmap-minimap.ts', 'src/features/view/view-minimap.ts', 'src/platform/workspace/minimap-sidebar.ts', 'src/ui/node-editor/node-editor.ts', 'src/ui/node-editor/node-editor.styles.ts', 'src/domain/node-edit-key.ts', 'src/ui/node-content/content-quote.ts', 'src/ui/node-content/content-code.styles.ts', 'src/core/node-content-types.ts', 'scripts/visual-node-content.mjs'])(
 		'%s 触发组件 DOM 验证', (file) => {
 			expect(labelsOf(buildPlan([file]))).toContain('npm run verify:visual -- --require-chrome');
 		},

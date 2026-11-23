@@ -1,5 +1,5 @@
 /** 节点内容 text：DOM/样式内聚，保持原输出与导出保真。 */
-import { type InlineContentDocument, type InlineSegment } from '../../core/node-content-types';
+import { type InlineContentDocument, type InlineSegment } from '@/src/core/node-content-types';
 import { type BuildContentParams } from './content-context';
 import { MARKUP_TAGS, markupStyle } from './content-text.styles';
 

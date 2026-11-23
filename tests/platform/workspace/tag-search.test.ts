@@ -10,7 +10,7 @@ import { describe, expect, it, vi } from 'vitest';
 /** 每个用例重新加载模块：`reportedMissing` 是模块级会话标记 */
 async function loadModule() {
 	vi.resetModules();
-	return import('../../../src/platform/workspace/tag-search');
+	return import('@/src/platform/workspace/tag-search');
 }
 
 describe('openTagSearch（私有触点）', () => {

@@ -12,16 +12,16 @@
  * 判定一律「必须接管才吞键」：这些键在核心与其他视图里都有原生语义，吞错一个就是
  * 「导图里用不了官方快捷键」。
  */
-import { isPluginContentTarget } from '../../core/plugin-content-types';
+import { isPluginContentTarget } from '@/src/core/plugin-content-types';
 import { Platform, Scope } from 'obsidian';
-import { ENGINE_COMMANDS, getActiveNode } from '../../engine/mindmap';
+import { ENGINE_COMMANDS, getActiveNode } from '@/src/engine';
 import { isAnyNodeEditing } from './node-inline-editor';
-import { isTextEntryTarget } from '../view/view-common';
+import { isTextEntryTarget } from '@/src/features/view/view-common';
 import { deleteActiveNode, editNodeText } from './view-node-actions';
-import { cancelNodePick } from '../relations/node-pick';
-import { removeActiveRelationLine } from '../relations/view-node-relation';
-import { fitToScreen, zoomToSelection } from '../canvas/view-viewport';
-import type { ViewNodeEditContext } from '../view/view-context';
+import { cancelNodePick } from '@/src/features/relations/node-pick';
+import { removeActiveRelationLine } from '@/src/features/relations/view-node-relation';
+import { fitToScreen, zoomToSelection } from '@/src/features/canvas/view-viewport';
+import type { ViewNodeEditContext } from '@/src/features/view/view-context';
 
 /**
  * 快捷键注册所需的最小视图面：引擎 + 编辑入口（app/lang/save）+ 搜索栏入口 +

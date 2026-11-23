@@ -17,7 +17,7 @@ import {
 	isRemoteOrDataUrl,
 	resourceUrlPathCandidates,
 	tryDecodeUri,
-} from '../domain/url';
+} from '@/src/domain/links';
 import { fileLookupIndex, lookupIndexedFile } from './file-lookup';
 
 /**
@@ -28,6 +28,7 @@ import { fileLookupIndex, lookupIndexedFile } from './file-lookup';
 export function resolvePathToFile(
 	input: string,
 	app: App,
+	sourcePath = '',
 ): TFile | null {
 	if (!input) {
 		return null;
@@ -109,7 +110,7 @@ export function resolvePathToFile(
 
 	// 官方链接解析器（getFirstLinkpathDest）：basename/链接文本 → 文件，
 	// 行为与 Obsidian 内部 [[链接]] 解析一致（含大小写、扩展名与同名消歧规则）。
-	const official = app.metadataCache.getFirstLinkpathDest(text, '');
+	const official = app.metadataCache.getFirstLinkpathDest(text, sourcePath);
 	if (official) {
 		return official;
 	}

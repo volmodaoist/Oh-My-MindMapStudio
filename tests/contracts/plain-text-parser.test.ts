@@ -15,7 +15,7 @@
  * 若将来有人把 parser「改回与官方逐字一致」，本文件会失败——这是刻意的防回退。
  */
 import { describe, expect, it } from 'vitest';
-import { plainTextParser as rawPlainTextParser } from '../../scripts/plain-text-parser.mjs';
+import { plainTextParser as rawPlainTextParser } from '@/scripts/plain-text-parser.mjs';
 
 /**
  * parser 的公开形状。`scripts/*.mjs` 是 lint 配置的支撑脚本（不在 `src` 内、

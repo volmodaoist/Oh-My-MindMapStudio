@@ -21,7 +21,7 @@
  *    矩形——否则平移/缩放期间形成「写样式 → 强制布局读矩形」的抖动（2026-11-04）。
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import type { MiniMapContext } from '../../../src/features/view/view-minimap';
+import type { MiniMapContext } from '@/src/features/view/view-minimap';
 import {
 	attachMiniMap,
 	refreshAttachedMiniMap,
@@ -29,7 +29,7 @@ import {
 	refreshMiniMapAfterRender,
 	setupMiniMap,
 	teardownMiniMap,
-} from '../../../src/features/view/view-minimap';
+} from '@/src/features/view/view-minimap';
 
 const mocks = vi.hoisted(() => ({
 	captureMiniMap: vi.fn<
@@ -42,7 +42,7 @@ const mocks = vi.hoisted(() => ({
 	panMindMap: vi.fn<(...args: unknown[]) => void>(),
 }));
 
-vi.mock('../../../src/engine/mindmap', () => ({
+vi.mock('@/src/engine', () => ({
 	captureMiniMap: mocks.captureMiniMap,
 	contentExceedsCanvasAtFullScale: mocks.contentExceedsCanvasAtFullScale,
 	getCanvasSize: mocks.getCanvasSize,

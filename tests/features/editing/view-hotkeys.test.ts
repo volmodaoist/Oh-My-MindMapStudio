@@ -21,14 +21,14 @@
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { Platform, Scope } from 'obsidian';
-import type { MindMap, MindMapNode } from '../../../vendor/simple-mind-map.cjs';
-import type { ViewNodeEditContext } from '../../../src/features/view/view-context';
+import type { MindMap, MindMapNode } from '@/vendor/simple-mind-map.cjs';
+import type { ViewNodeEditContext } from '@/src/features/view/view-context';
 import {
 	ensureViewScope,
 	handleEditNodeHotkey,
 	registerViewHotkeys,
 	type ViewHotkeyHost,
-} from '../../../src/features/editing/view-hotkeys';
+} from '@/src/features/editing/view-hotkeys';
 import {
 	fitMindMap,
 	getActiveNode,
@@ -36,16 +36,16 @@ import {
 	isEditingText,
 	setNodeText,
 	startNodeTextEdit,
-} from '../../../src/engine/mindmap';
-import { openNodeTextModal } from '../../../src/ui/modal-text';
-import { cancelNodePick } from '../../../src/features/relations/node-pick';
-import { removeActiveRelationLine } from '../../../src/features/relations/view-node-relation';
+} from '@/src/engine';
+import { openNodeTextModal } from '@/src/ui/modal-text';
+import { cancelNodePick } from '@/src/features/relations/node-pick';
+import { removeActiveRelationLine } from '@/src/features/relations/view-node-relation';
 import {
 	isAnyNodeEditing,
 	openNodeInlineEditor,
-} from '../../../src/features/editing/node-inline-editor';
+} from '@/src/features/editing/node-inline-editor';
 
-vi.mock('../../../src/engine/mindmap', () => ({
+vi.mock('@/src/engine', () => ({
 	// 与生产常量表同名同值（断言处用字面量核对转发目标）
 	ENGINE_COMMANDS: { BACK: 'BACK', FORWARD: 'FORWARD' },
 	getActiveNode: vi.fn(),
@@ -65,7 +65,7 @@ vi.mock('../../../src/engine/mindmap', () => ({
 	countMindMapNodes: (): number => 0,
 	getActiveNodes: vi.fn((): unknown[] => []),
 	// 概要节点判定（`Delete` 先判概要再删正文节点）：本文件只验证键位转发，
-	// 概要删除路径由 tests/engine/engine-summaries.test.ts 与实机覆盖
+	// 概要删除路径由 tests/engine/nodes/engine-summaries.test.ts 与实机覆盖
 	isSummaryNode: vi.fn((): boolean => false),
 	summaryAnchorOf: vi.fn((): null => null),
 	getNodeGroupEl: vi.fn((): Element | null => null),
@@ -75,7 +75,7 @@ vi.mock('../../../src/engine/mindmap', () => ({
 
 // 插件内联编辑器（自绘节点的编辑入口，2026-09-28 起）：本文件只验证「何时调用」，
 // 编辑器内部（定位/键盘/提交）由 tests/features/editing/node-inline-editor.test.ts 与 verify:visual 覆盖
-vi.mock('../../../src/features/editing/node-inline-editor', () => ({
+vi.mock('@/src/features/editing/node-inline-editor', () => ({
 	isAnyNodeEditing: vi.fn(() => false),
 	isInlineNodeEditing: vi.fn(() => false),
 	openNodeInlineEditor: vi.fn(),
@@ -84,17 +84,17 @@ vi.mock('../../../src/features/editing/node-inline-editor', () => ({
 }));
 
 // 插件文本弹窗（**备选入口**：右键「在弹窗中编辑」）在 Node 环境无法开窗，替换为 spy
-vi.mock('../../../src/ui/modal-text', () => ({ openNodeTextModal: vi.fn() }));
+vi.mock('@/src/ui/modal-text', () => ({ openNodeTextModal: vi.fn() }));
 
 // 联系线的删除入口（Delete / Backspace 的落点）：本文件只验证「何时调用」，
 // 写正文与状态清理的落地由 tests/features/relations/view-node-relation.test.ts 直测
-vi.mock('../../../src/features/relations/view-node-relation', () => ({
+vi.mock('@/src/features/relations/view-node-relation', () => ({
 	removeActiveRelationLine: vi.fn(() => false),
 }));
 
 // 点选会话的取消入口（Esc 的落点，联系 / 概要共用）：落地由
 // tests/features/relations/node-pick.test.ts 直测，这里只验证「Esc 何时被消费」
-vi.mock('../../../src/features/relations/node-pick', () => ({
+vi.mock('@/src/features/relations/node-pick', () => ({
 	cancelNodePick: vi.fn(() => false),
 }));
 

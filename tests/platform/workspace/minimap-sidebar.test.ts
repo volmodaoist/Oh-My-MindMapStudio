@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import { ItemView, type Plugin, type WorkspaceLeaf } from 'obsidian';
-import { MiniMapSidebar, type SidebarMiniMapSource } from '../../../src/platform/workspace/minimap-sidebar';
+import { MiniMapSidebar, type SidebarMiniMapSource } from '@/src/platform/workspace/minimap-sidebar';
 
 class El {
 	classes = new Set<string>();

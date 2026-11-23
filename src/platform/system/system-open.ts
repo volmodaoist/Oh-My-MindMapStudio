@@ -3,7 +3,7 @@
  * 从 view-attachments.ts 拆出（该文件其余能力已并入 view-node-actions.ts）。
  */
 import { App, FileSystemAdapter, Notice, Platform, TFile } from 'obsidian';
-import { t, type Language } from '../../core/i18n';
+import { t, type Language } from '@/src/core/i18n';
 
 /**
  * 把 `shell.openPath` 的结果面化（两处调用点共用）。
@@ -67,7 +67,7 @@ export function openFileWithSystemApp(
 
 /**
  * 用系统默认应用打开**库外**绝对路径（`file:///` 链接指向的文件，见
- * domain/url.absolutePathFromFileUrl）。与 openFileWithSystemApp 同一实现路径
+ * domain/links/url.absolutePathFromFileUrl）。与 openFileWithSystemApp 同一实现路径
  * （Electron `shell.openPath`），差别只在输入：这里没有 TFile——文件不在库里。
  */
 export function openAbsolutePathWithSystemApp(

@@ -14,7 +14,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import {
 	readClipboardText,
 	writeClipboardText,
-} from '../../../src/platform/system/clipboard';
+} from '@/src/platform/system/clipboard';
 
 /** 属主文档桩：只提供 `defaultView.navigator.clipboard.writeText` 这一条链 */
 function ownerDocumentWith(writeText: (text: string) => Promise<void>): Document {

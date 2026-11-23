@@ -8,6 +8,12 @@
 # npm
 node_modules
 
+# Python documentation tools
+.venv/
+.venv-docs/
+__pycache__/
+*.pyc
+
 # vitest coverage report
 coverage/
 

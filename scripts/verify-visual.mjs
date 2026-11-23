@@ -58,7 +58,7 @@
  *   见 vendor `measureCustomNodeContentSize`），故 styles.css 明确禁止给该容器
  *   直接子 div 设 width/height；本脚本不覆盖该规则的样式级联后果。
  *
- * 做法：esbuild 把 `src/engine/mindmap.ts`（纯模块，无 obsidian 依赖）打成浏览器
+ * 做法：esbuild 把 `src/engine/index.ts`（纯模块，无 obsidian 依赖）打成浏览器
  * IIFE，配合**仓库真实 styles.css** 在无头 Chrome 里渲染若干场景，再解析
  * --dump-dom 输出逐场景断言。临时文件默认落在系统临时目录并在验证后清理。
  *
@@ -311,7 +311,7 @@ const SCENARIOS = [
 		name: 'table',
 		label: '表格：GFM 管道表自绘为内联样式 <table>（表宽不撑爆节点）',
 		data: {
-			// 2026-10-14：plain 多行节点里的表格块独立成段（识别在 domain/pipe-table，
+			// 2026-10-14：plain 多行节点里的表格块独立成段（识别在 domain/content/pipe-table，
 			// 装配在 features/content/node-inline-content），产出 table/thead/tbody，样式
 			// **全内联**（导出 SVG 不含 styles.css）。第二列分隔行写 `---:` ⇒ 该列
 			// 对齐必须落到内联 text-align（本场景是「对齐不是摆设」的锁定用例）
@@ -526,6 +526,10 @@ export function normalizePath(p) {
 	return String(p).replace(/\\\\/g, '/');
 }
 export function setIcon() {}
+// 双链候选的数据行为由 platform 单测和真实 Obsidian 联测覆盖；渲染探针只补公开导出。
+export function parseFrontMatterAliases() { return []; }
+export function prepareFuzzySearch() { return () => null; }
+export function stripHeadingForLink(heading) { return heading; }
 // 标注图标（platform/rendering/callout-icon 的具名导入）：垫片返回 null = 宿主没有这个图标，
 // 即**生产环境的降级路径**（图标缺失 ⇒ 省略图标、保留标题与类型色）。探针因此
 // 断言的是"无图标时盒子仍成立"，图标本身的取用由 platform 层直连宿主 getIcon。
@@ -551,7 +555,7 @@ export function requestUrl() {
 
 /** 生成浏览器入口：按场景逐个渲染导图（与插件同款容器类名） */
 function buildEntrySource({ workloadEdits = 0, memoryProbe = false, workloadOps = 'edit' } = {}) {
-	const mindmapModule = join(ROOT, 'src', 'engine', 'mindmap.ts').replaceAll('\\', '/');
+	const mindmapModule = join(ROOT, 'src', 'engine', 'index.ts').replaceAll('\\', '/');
 	const wikilinkModule = join(ROOT, 'src', 'features', 'navigation', 'view-wikilink.ts').replaceAll(
 		'\\',
 		'/',
@@ -711,6 +715,8 @@ HTMLElement.prototype.createDiv = function (info) {
 HTMLElement.prototype.createSpan = function (info) {
 	return this.createEl('span', info);
 };
+HTMLElement.prototype.show = function () { this.style.removeProperty('display'); };
+HTMLElement.prototype.hide = function () { this.style.display = 'none'; };
 // Obsidian 的 Element.isShown()（祖先链无 display:none）；无头页没有它。
 // 2026-10-14：content-remeasure 的可见性守卫（flush / retryDeferred /
 // remeasureSettled / syncVisibility，经宿主注入的 isVisible）与嵌入的注入都会
@@ -884,7 +890,7 @@ window.setTimeout(() => {
 
 	// —— 契约 ④：容器收窄后必须按新宽度重算（观察器常驻） ——
 	// 先记下 640px 下的高度，再收窄到 240px；随后**轮询到几何稳定**（连续两拍高度
-	// 一致，60ms 一拍、上限 1.5s）再写**独立探针**读新高度与越界节点数，断言见
+	// 一致且已离开旧高度，60ms 一拍、上限 1.5s）再写**独立探针**读新高度与越界节点数，断言见
 	// checkEmbed。为什么不用固定单点延时：收窄后要连等三拍（观察器回调 → 100ms
 	// 节流窗口 → 布局落地），负载高 / 首帧慢时固定延时不足会读到中间态而**假失败**
 	// ——本文件其它探针早已改用「事件 + 轮询」的就绪等待（见 whenMapReady 的
@@ -932,7 +938,7 @@ window.setTimeout(() => {
 				? resizeStableRounds + 1
 				: 0;
 		lastResizeHeight = heightNow;
-		if (resizeStableRounds >= 2 || Date.now() > resizeDeadline) {
+			if ((heightNow !== wideBefore && resizeStableRounds >= 2) || Date.now() > resizeDeadline) {
 			writeResizeProbe();
 			return;
 		}
@@ -5728,7 +5734,7 @@ function checkInline(dom) {
 		);
 	}
 	// 表格（2026-10-14）：管道表必须自绘成 table/thead/tbody；单元格文本与列对齐
-	// 取自 domain/pipe-table 的模型；边框/内边距/对齐**必须内联**（导出 SVG 不含
+	// 取自 domain/content/pipe-table 的模型；边框/内边距/对齐**必须内联**（导出 SVG 不含
 	// styles.css 与 app.css，类规则在产物里整体失效）；表宽不得超出内容盒
 	if (probe.tableInForeignObject !== true) {
 		failures.push(
@@ -6604,7 +6610,7 @@ const OPEN_BENCH_BUDGET_MS = 15000;
  * ⚠️ 返回值是模板字符串：其内注释与字符串**不得出现反引号**（K69 记录的坑）。
  */
 function buildBenchEntrySource() {
-	const mindmapModule = join(ROOT, 'src', 'engine', 'mindmap.ts').replaceAll('\\', '/');
+	const mindmapModule = join(ROOT, 'src', 'engine', 'index.ts').replaceAll('\\', '/');
 	const inlineContentModule = join(
 		ROOT,
 		'src', 'features', 'content', 'node-inline-content.ts',

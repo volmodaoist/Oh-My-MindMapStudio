@@ -17,19 +17,19 @@
  * ——否则断言不到「删掉的是哪一行」。
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { t } from '../../../src/core/i18n';
-import type { MindMapNode } from '../../../src/core/engine-types';
-import type { MindMapViewContext } from '../../../src/features/view/view-context';
+import { t } from '@/src/core/i18n';
+import type { MindMapNode } from '@/src/core/engine-types';
+import type { MindMapViewContext } from '@/src/features/view/view-context';
 import {
 	removeActiveRelationLine,
 	schedulePersistRelationGeometry,
 	setupRelationInteractions,
 	startRelationPicking,
 	stripInboundRelations,
-} from '../../../src/features/relations/view-node-relation';
-import { nodeColorOptions } from '../../../src/features/editing/view-node-color';
+} from '@/src/features/relations/view-node-relation';
+import { nodeColorOptions } from '@/src/features/editing/view-node-color';
 // 点选会话是共享设施（联系 / 概要共用）：取消入口在 node-pick，不在联系模块
-import { cancelNodePick, setupNodePick } from '../../../src/features/relations/node-pick';
+import { cancelNodePick, setupNodePick } from '@/src/features/relations/node-pick';
 
 /** 级联子菜单桩（`setSubmenu()` 的返回值；结构见 FakeMenuClass） */
 interface SubmenuStub {
@@ -159,7 +159,7 @@ vi.mock('obsidian', async (importOriginal) => {
 });
 
 // 引擎面：本文件只验证「问引擎要了哪条线」
-vi.mock('../../../src/engine/mindmap', () => ({
+vi.mock('@/src/engine', () => ({
 	activeRelationLine: mocks.activeRelationLine,
 	clearActiveRelationLine: mocks.clearActiveRelationLine,
 	collectRelationIds: (): Set<string> => new Set<string>(),
@@ -183,13 +183,13 @@ vi.mock('../../../src/engine/mindmap', () => ({
 }));
 
 // 原文提交通道（真实实现在 node-content-write）：只验证写进去的原文
-vi.mock('../../../src/features/content/node-content-write', () => ({
+vi.mock('@/src/features/content/node-content-write', () => ({
 	// 联系只走批量通道；单项版是 view-node-color 的依赖面，同样要给出来
 	applyRawNodeContent: vi.fn(),
 	applyRawNodeContents: mocks.applyRawNodeContents,
 }));
 
-vi.mock('../../../src/ui/modal-relation-label', () => ({
+vi.mock('@/src/ui/modal-relation-label', () => ({
 	openRelationLabelModal: mocks.openRelationLabelModal,
 }));
 

@@ -7,7 +7,7 @@
  * attachment/export/paste），收口为 notifyError 后格式化只有一份实现。
  *
  * 「同一根因只告警一次」此前在 prism-code / math-jax（两处）/ view 各写了一份
- * 模块级或实例级去重标记，连 `MindMap Studio：` 前缀也各写一遍——收口为
+ * 模块级或实例级去重标记，连品牌前缀也各写一遍——收口为
  * `createWarnOnce` 后调用方只给正文。内部告警（console）的呈现口径见
  * docs/agents/decisions.md 决策表：用户可感 → `notifyError`；内部 → `console.error/warn`。
  */
@@ -15,7 +15,7 @@ import { Notice } from 'obsidian';
 import { t, type Language, type TranslationKey } from './i18n';
 
 /** 内部告警统一前缀（与既有 console.warn 文案口径一致） */
-const WARN_PREFIX = 'MindMap Studio：';
+const WARN_PREFIX = 'Oh-My-Mindmap-Studio：';
 
 /**
  * 创建「同一根因只告警一次」的留痕器（幂等 console.warn）。

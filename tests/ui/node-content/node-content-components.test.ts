@@ -1,17 +1,17 @@
 /** 内容组件直测：注入窄渲染回调，验证 DOM 契约、缓存同步和递归复用。 */
 import { describe, expect, it, vi } from 'vitest';
-import { buildCodeBlockElement } from '../../../src/ui/node-content/content-code';
-import { buildMathElement } from '../../../src/ui/node-content/content-math';
-import { buildQuoteElement } from '../../../src/ui/node-content/content-quote';
-import { buildMarkupElement } from '../../../src/ui/node-content/content-text';
-import { buildTaskCheckbox } from '../../../src/ui/node-content/content-task';
-import { buildFootnoteRef, buildFootnoteSummary } from '../../../src/ui/node-content/content-footnote';
-import { buildAnchor } from '../../../src/ui/node-content/content-link';
-import type { BuildContentParams } from '../../../src/ui/node-content/content-context';
-import { nodeContentTones } from '../../../src/domain/color';
-import { parseCalloutHeader } from '../../../src/domain/callout';
-import { CODE_RENDERED_CLASS } from '../../../src/core/constants';
-import { FakeDocument, FakeElement, asDocument } from '../../helpers/node-content-dom';
+import { buildCodeBlockElement } from '@/src/ui/node-content/content-code';
+import { buildMathElement } from '@/src/ui/node-content/content-math';
+import { buildQuoteElement } from '@/src/ui/node-content/content-quote';
+import { buildMarkupElement } from '@/src/ui/node-content/content-text';
+import { buildTaskCheckbox } from '@/src/ui/node-content/content-task';
+import { buildFootnoteRef, buildFootnoteSummary } from '@/src/ui/node-content/content-footnote';
+import { buildAnchor } from '@/src/ui/node-content/content-link';
+import type { BuildContentParams } from '@/src/ui/node-content/content-context';
+import { nodeContentTones } from '@/src/domain/color';
+import { parseCalloutHeader } from '@/src/domain/content/callout';
+import { CODE_RENDERED_CLASS } from '@/src/core/constants';
+import { FakeDocument, FakeElement, asDocument } from '@/tests/helpers/node-content-dom';
 
 function fixture() {
 	const fakeDoc = new FakeDocument();

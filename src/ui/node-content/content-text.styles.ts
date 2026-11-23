@@ -1,6 +1,6 @@
 /** 节点内容 text.styles：DOM/样式内聚，保持原输出与导出保真。 */
-import { type InlineTextStyle } from '../../core/node-content-types';
-import { type NodeContentTones } from '../../domain/color';
+import { type InlineTextStyle } from '@/src/core/node-content-types';
+import { type NodeContentTones } from '@/src/domain/color';
 
 /**
  * 轻标记 → 语义元素（与 Obsidian 阅读视图一致）。

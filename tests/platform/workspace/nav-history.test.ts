@@ -13,16 +13,16 @@
  */
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { MarkdownView, TFile } from 'obsidian';
-import { CORE_VIEW_TYPE, VIEW_TYPE } from '../../../src/core/constants';
+import { CORE_VIEW_TYPE, VIEW_TYPE } from '@/src/core/constants';
 import {
 	openAsMarkdown,
 	openAsMindMap,
 	setViewSwitchDoneHook,
-} from '../../../src/markdown/md-open';
+} from '@/src/markdown/md-open';
 import {
 	pruneHistoryStack,
 	pruneViewSwitchNoise,
-} from '../../../src/platform/workspace/nav-history';
+} from '@/src/platform/workspace/nav-history';
 
 /** 历史条目桩：{state:{type,state:{file}}} 最小形态（与 Navigation 记录同构） */
 function entry(file: string, type: string): unknown {

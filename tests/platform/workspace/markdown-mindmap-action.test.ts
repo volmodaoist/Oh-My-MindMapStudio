@@ -1,11 +1,11 @@
 /** 标题栏动作归属具体 MarkdownView，重复布局/文件事件不重复注册，卸载可清理。 */
 import { describe, expect, it, vi } from 'vitest';
 import { MarkdownView, TFile } from 'obsidian';
-import type { Language } from '../../../src/core/i18n';
-import { MarkdownMindMapAction } from '../../../src/platform/workspace/markdown-mindmap-action';
-import { openAsMindMap } from '../../../src/markdown/md-open';
+import type { Language } from '@/src/core/i18n';
+import { MarkdownMindMapAction } from '@/src/platform/workspace/markdown-mindmap-action';
+import { openAsMindMap } from '@/src/markdown/md-open';
 
-vi.mock('../../../src/markdown/md-open', () => ({ openAsMindMap: vi.fn() }));
+vi.mock('@/src/markdown/md-open', () => ({ openAsMindMap: vi.fn() }));
 
 function view(path: string | null) {
 	const file = path === null ? null : Object.assign(new TFile(), { path, extension: 'md' });

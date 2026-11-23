@@ -14,8 +14,8 @@ import {
 	IMAGE_HEIGHT,
 	IMAGE_MAX_SIDE_PX,
 	IMAGE_WIDTH,
-} from '../../src/core/constants';
-import { fileLookupIndex } from '../../src/links/file-lookup';
+} from '@/src/core/constants';
+import { fileLookupIndex } from '@/src/links/file-lookup';
 import {
 	applyImageSizeCorrectionsToTree,
 	cacheImageFail,
@@ -36,8 +36,8 @@ import {
 	withDefaultImageSizes,
 	imageSizeKey,
 	reuseKnownImageSizes,
-} from '../../src/media/images-path';
-import type { MindMapTreeNode } from '../../vendor/simple-mind-map.cjs';
+} from '@/src/media/images-path';
+import type { MindMapTreeNode } from '@/vendor/simple-mind-map.cjs';
 
 /** 资源地址前缀：fake vault 的 getResourcePath 输出形态（app:// 语义） */
 const RESOURCE_PREFIX = 'app://fake/';
@@ -1022,7 +1022,7 @@ describe('跨会话尺寸缓存（注入式存储）', () => {
 
 		// 第一次会话：探测成功 → 防抖落盘
 		vi.resetModules();
-		const first = await import('../../src/media/images-path');
+		const first = await import('@/src/media/images-path');
 		first.setImageSizeCacheStore(store);
 		const pending = first.probeImageNaturalSize(url);
 		lastImage().emitLoad(300, 100);
@@ -1032,7 +1032,7 @@ describe('跨会话尺寸缓存（注入式存储）', () => {
 
 		// 第二次会话：内存缓存为空 → 必须靠持久化缓存命中
 		vi.resetModules();
-		const second = await import('../../src/media/images-path');
+		const second = await import('@/src/media/images-path');
 		second.setImageSizeCacheStore(store);
 		const created = FakeImage.instances.length;
 		await expect(second.probeImageNaturalSize(url)).resolves.toEqual({
@@ -1048,7 +1048,7 @@ describe('跨会话尺寸缓存（注入式存储）', () => {
 	it('外链地址不落盘：远程换图后不得沿用旧比例', async () => {
 		const { map, store } = makeStore();
 		vi.resetModules();
-		const mod = await import('../../src/media/images-path');
+		const mod = await import('@/src/media/images-path');
 		mod.setImageSizeCacheStore(store);
 		const pending = mod.probeImageNaturalSize('https://x.com/a.png');
 		lastImage().emitLoad(300, 100);
@@ -1064,7 +1064,7 @@ describe('跨会话尺寸缓存（注入式存储）', () => {
 		const { map, store } = makeStore();
 		const url = `${RESOURCE_PREFIX}附件/坏缓存.png?222`;
 		vi.resetModules();
-		const first = await import('../../src/media/images-path');
+		const first = await import('@/src/media/images-path');
 		first.setImageSizeCacheStore(store);
 		const pending = first.probeImageNaturalSize(url);
 		lastImage().emitLoad(10, 20);
@@ -1076,7 +1076,7 @@ describe('跨会话尺寸缓存（注入式存储）', () => {
 		}
 
 		vi.resetModules();
-		const second = await import('../../src/media/images-path');
+		const second = await import('@/src/media/images-path');
 		second.setImageSizeCacheStore(store);
 		const created = FakeImage.instances.length;
 		const again = second.probeImageNaturalSize(url);

@@ -14,13 +14,13 @@ import {
 	encodedNameForm,
 	isRemoteOrDataUrl,
 	urlComparisonForms,
-} from '../domain/url';
-import { walkTree } from '../domain/tree';
-import { formatWikilink, parseWikilink } from '../domain/wikilink';
-import type { WikilinkParts } from '../domain/wikilink';
-import { hasNodeReference, readNodeDataString } from '../core/node-data';
-import type { MindMapTreeNode } from '../core/engine-types';
-import type { MdNodeData } from '../core/node-data';
+} from '@/src/domain/links';
+import { walkTree } from '@/src/domain/document';
+import { formatWikilink, parseWikilink } from '@/src/domain/links';
+import type { WikilinkParts } from '@/src/domain/links';
+import { hasNodeReference, readNodeDataString } from '@/src/core/node-data';
+import type { MindMapTreeNode } from '@/src/core/engine-types';
+import type { MdNodeData } from '@/src/core/node-data';
 
 /** Obsidian 库内回收站目录（vault 根下的 .trash） */
 const TRASH_DIR = '.trash';

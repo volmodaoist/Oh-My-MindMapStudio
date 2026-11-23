@@ -4,28 +4,28 @@
  * 被 view-toolbar.ts / view-context-menu.ts / view-dnd.ts / view-paste.ts 共用。
  */
 import { App, TFile } from 'obsidian';
-import { ENGINE_COMMANDS, getNodeDataString } from '../../engine/mindmap';
+import { ENGINE_COMMANDS, getNodeDataString } from '@/src/engine';
 import {
 	createNaturalSizeSetNodeImageOptions,
 	createSetNodeImageOptions,
-} from '../../media/images-path';
-import { resolvePathToFile } from '../../links/links-resolve';
-import { newReferencePath } from '../../links/file-lookup';
-import { openImageEditorModal } from '../../ui/modal-image';
-import { saveImageToVault } from '../../media/images-save';
+} from '@/src/media/images-path';
+import { resolvePathToFile } from '@/src/links/links-resolve';
+import { newReferencePath } from '@/src/links/file-lookup';
+import { openImageEditorModal } from '@/src/ui/modal-image';
+import { saveImageToVault } from '@/src/media/images-save';
 import {
 	preferredLinkPathFormat,
 	prefersMarkdownLinks,
-} from '../../platform/workspace/vault-prefs';
-import { notifyError } from '../../core/errors';
+} from '@/src/platform/workspace/vault-prefs';
+import { notifyError } from '@/src/core/errors';
 import {
 	isAppResourceUrl,
 	isExternalImageRef,
-} from '../../domain/url';
-import { readNodeDataString, type MdNodeData } from '../../core/node-data';
-import type { MindMapNode } from '../../core/engine-types';
-import type { MindMapViewContext } from '../view/view-context';
-import { insertChildNodeWithData, requireActiveNode } from '../view/view-common';
+} from '@/src/domain/links';
+import { readNodeDataString, type MdNodeData } from '@/src/core/node-data';
+import type { MindMapNode } from '@/src/core/engine-types';
+import type { MindMapViewContext } from '@/src/features/view/view-context';
+import { insertChildNodeWithData, requireActiveNode } from '@/src/features/view/view-common';
 
 /** 单独移除节点图片（不影响节点与其他数据） */
 export function removeNodeImage(view: MindMapViewContext, node: MindMapNode): void {

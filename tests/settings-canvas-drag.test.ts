@@ -1,8 +1,8 @@
 /** K216：持久化归一、声明式双语控件与即时写回走同一设置入口。 */
 import { describe, expect, it, vi } from 'vitest';
 import type { App } from 'obsidian';
-import { t } from '../src/core/i18n';
-import { DEFAULT_SETTINGS, diffLiveRefreshKeys, MindMapStudioSettingTab, sanitizeSettings } from '../src/settings';
+import { t } from '@/src/core/i18n';
+import { DEFAULT_SETTINGS, diffLiveRefreshKeys, MindMapStudioSettingTab, sanitizeSettings } from '@/src/settings';
 
 describe('画布热键拖拽设置', () => {
 	it('缺省关闭，显式 true/false 均可保存；坏值回退并留痕，加载不修改输入', () => {

@@ -3,9 +3,9 @@
  * 显式选择只属于当前 leaf；返回 Markdown 不升级/降级属性，重启不恢复普通笔记导图。
  */
 import { App, MarkdownView, TFile, WorkspaceLeaf } from 'obsidian';
-import { CORE_VIEW_TYPE, VIEW_TYPE } from '../core/constants';
-import { isDedicatedMindMapPath } from '../domain/mindmap-file';
-import { isMindMapEnabled, readMindMapLayout } from '../domain/mindmap-property';
+import { CORE_VIEW_TYPE, VIEW_TYPE } from '@/src/core/constants';
+import { isDedicatedMindMapPath } from '@/src/domain/document';
+import { isMindMapEnabled, readMindMapLayout } from '@/src/domain/document';
 
 interface ViewModeChoice { file: TFile; mode: 'mindmap' | 'markdown' }
 const viewModes = new WeakMap<WorkspaceLeaf, ViewModeChoice>();

@@ -12,8 +12,8 @@
  *   打开后聚焦延迟 50ms（SEARCH_FOCUS_DELAY_MS）都断言到毫秒边界。
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import type { MindMap } from '../../../vendor/simple-mind-map.cjs';
-import { t, type Language } from '../../../src/core/i18n';
+import type { MindMap } from '@/vendor/simple-mind-map.cjs';
+import { t, type Language } from '@/src/core/i18n';
 import {
 	buildSearchBar,
 	closeSearchBar,
@@ -24,7 +24,7 @@ import {
 	searchNext,
 	searchPrev,
 	updateSearchCount,
-} from '../../../src/features/view/view-search';
+} from '@/src/features/view/view-search';
 
 /** view-search 的窄访问面（模块未导出类型，从函数签名取） */
 type SearchViewContext = Parameters<typeof buildSearchBar>[0];
@@ -57,7 +57,7 @@ vi.mock('obsidian', async (importOriginal) => {
 	};
 });
 
-vi.mock('../../../src/engine/mindmap', () => ({
+vi.mock('@/src/engine', () => ({
 	endMindMapSearch: searchMocks.endMindMapSearch,
 	getSearchCurrentIndex: searchMocks.getSearchCurrentIndex,
 	getSearchMatchCount: searchMocks.getSearchMatchCount,

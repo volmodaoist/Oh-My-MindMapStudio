@@ -10,14 +10,14 @@
  */
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { App, TFile } from 'obsidian';
-import { fileLookupIndex } from '../../src/links/file-lookup';
-import { parseMdOutline } from '../../src/markdown/md-outline';
-import { serializeMdBody } from '../../src/markdown/md-serialize';
+import { fileLookupIndex } from '@/src/links/file-lookup';
+import { parseMdOutline } from '@/src/markdown/outline/md-outline';
+import { serializeMdBody } from '@/src/markdown/serialize/md-serialize';
 import {
 	removeReferencesOnDelete,
 	updateReferencesOnRename,
-} from '../../src/links/links-tree';
-import type { MindMapTreeNode } from '../../vendor/simple-mind-map.cjs';
+} from '@/src/links/links-tree';
+import type { MindMapTreeNode } from '@/vendor/simple-mind-map.cjs';
 
 /** 资源地址前缀：fake vault 的 getResourcePath 输出形态 */
 const RESOURCE_PREFIX = 'app://fake/';

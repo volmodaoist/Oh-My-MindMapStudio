@@ -15,7 +15,7 @@ import {
 	clearMermaidCache,
 	mermaidCacheSize,
 	renderMermaidSvg,
-} from '../../../src/platform/rendering/mermaid';
+} from '@/src/platform/rendering/mermaid';
 
 /** 最小可渲染源码（Pele 的 flowchart 语法） */
 const FLOW = 'flowchart LR\n  A[Pele] --> B[SVG]';

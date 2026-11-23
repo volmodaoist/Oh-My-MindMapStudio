@@ -1,10 +1,10 @@
 /** 节点内容 code：DOM/样式内聚，保持原输出与导出保真。 */
-import { type InlineContentDocument, type InlineSegment, type InlineContentOptions } from '../../core/node-content-types';
-import { type Language, t } from '../../core/i18n';
-import { type NodeContentTones } from '../../domain/color';
+import { type InlineContentDocument, type InlineSegment, type InlineContentOptions } from '@/src/core/node-content-types';
+import { type Language, t } from '@/src/core/i18n';
+import { type NodeContentTones } from '@/src/domain/color';
 import { CODE_BLOCK_CLASS, codeBlockStyle, CODE_BLOCK_PRE_STYLES } from './content-code.styles';
 import { CODE_COPY_CLASS, CODE_COPY_BUTTON_STYLES } from './content-copy.styles';
-import { CODE_RENDERED_CLASS } from '../../core/constants';
+import { CODE_RENDERED_CLASS } from '@/src/core/constants';
 
 /**
  * 块级代码块段（围栏，`block` 标记）：轻量渲染 + Obsidian 同款复制按钮。

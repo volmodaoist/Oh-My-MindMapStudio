@@ -8,12 +8,12 @@ import {
 	supportsLineStyleSwitch,
 	zoomInMindMap,
 	zoomOutMindMap,
-} from '../../engine/mindmap';
-import { Toolbar, type ToolbarButtonSpec } from '../../ui/toolbar/toolbar';
-import { fitToScreen } from '../canvas/view-viewport';
-import { exportImage } from '../view-export';
+} from '@/src/engine';
+import { Toolbar, type ToolbarButtonSpec } from '@/src/ui/toolbar/toolbar';
+import { fitToScreen } from '@/src/features/canvas/view-viewport';
+import { exportImage } from '@/src/features/view-export';
 import { refreshMiniMapAfterRender } from './view-minimap';
-import { t, type TranslationKey } from '../../core/i18n';
+import { t, type TranslationKey } from '@/src/core/i18n';
 import type { MindMapViewContext } from './view-context';
 
 const toolbars = new WeakMap<HTMLElement, Toolbar>();

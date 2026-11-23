@@ -1,4 +1,4 @@
-import { commitPluginBlock } from '../content/plugin-content-session';
+import { commitPluginBlock } from '@/src/features/content/plugin-content-session';
 /**
  * 思维导图视图（Controller）：Obsidian 生命周期、DOM 装配与编排委托。
  *
@@ -11,7 +11,7 @@ import { commitPluginBlock } from '../content/plugin-content-session';
  * - openHyperlink（view-link-navigator.ts） 节点超链接跳转路由；
  * - 本类只做编排：生命周期事件 → 装配 services 与 view-* 交互特性。
  */
-import { isDedicatedMindMapPath, mindMapFileTitle } from '../../domain/mindmap-file';
+import { isDedicatedMindMapPath, mindMapFileTitle } from '@/src/domain/document';
 import {
 	type EventRef,
 	FileView,
@@ -20,16 +20,16 @@ import {
 	type ViewStateResult,
 	WorkspaceLeaf,
 } from 'obsidian';
-import { Language, t, tf } from '../../core/i18n';
-import { readNodeDataString } from '../../core/node-data';
-import { postProcessExportSvg } from '../../platform/export-svg-postprocess';
+import { Language, t, tf } from '@/src/core/i18n';
+import { readNodeDataString } from '@/src/core/node-data';
+import { postProcessExportSvg } from '@/src/platform/export-svg-postprocess';
 import {
 	injectMathStylesIntoExportSvg,
 	pinMathContainerHeightsInExportSvg,
-} from '../../platform/rendering/math/math-jax';
-import { refreshPrismTokenColors } from '../../platform/rendering/code/prism-code';
-import { updatesInternalLinksOnRename } from '../../platform/workspace/vault-prefs';
-import { createDebouncer, createThrottler, type Debouncer } from '../../core/concurrency';
+} from '@/src/platform/rendering/math/math-jax';
+import { refreshPrismTokenColors } from '@/src/platform/rendering/code/prism-code';
+import { updatesInternalLinksOnRename } from '@/src/platform/workspace/vault-prefs';
+import { createDebouncer, createThrottler, type Debouncer } from '@/src/core/concurrency';
 import {
 	AUTO_SPLIT_CHECK_DELAY_MS,
 	DEFAULT_PALETTE,
@@ -40,13 +40,13 @@ import {
 	normalizePalettePreference,
 	normalizeThemeStyle,
 	VIEW_TYPE,
-} from '../../core/constants';
+} from '@/src/core/constants';
 import type {
 	MindMap,
 	MindMapNode,
 	MindMapTreeNode,
-} from '../../core/engine-types';
-import { notifyError } from '../../core/errors';
+} from '@/src/core/engine-types';
+import { notifyError } from '@/src/core/errors';
 import {
 	applyCanvasDragMode,
 	applyColorDirectivesToTree,
@@ -61,12 +61,12 @@ import {
 	syncLiveRelations,
 	syncLiveSummaries,
 	syncNodeColorDirectives,
-} from '../../engine/mindmap';
+} from '@/src/engine';
 import {
 	resolveFilePreferences,
 	type PreferenceKey,
-} from '../../services/view-state';
-import { ContentRemeasureSession } from '../content/content-remeasure';
+} from '@/src/services/view-state';
+import { ContentRemeasureSession } from '@/src/features/content/content-remeasure';
 import { LoadSession } from './view-load-session';
 import {
 	collectImageSizeCorrections,
@@ -74,39 +74,40 @@ import {
 	imageSizeKey,
 	reuseKnownImageSizes,
 	type ImageSizeValue,
-} from '../../media/images-path';
+} from '@/src/media/images-path';
 
-import { openAsMarkdown, readDeclaredLayout, readMdBackMode } from '../../markdown/md-open';
+import { openAsMarkdown, readDeclaredLayout, readMdBackMode } from '@/src/markdown';
 import {
 	normalizeLayoutId,
 	setMindMapLayout,
-} from '../../domain/mindmap-property';
-import { registerWikilinkInteractions } from '../navigation/view-wikilink';
-import { setupNodeTaskInteraction } from '../content/view-node-task';
-import { cancelNodePick, setupNodePick } from '../relations/node-pick';
-import { cancelRelationAnchor } from '../relations/view-relation-anchor';
+} from '@/src/domain/document';
+import { registerWikilinkInteractions } from '@/src/features/navigation/view-wikilink';
+import { setupNodeTaskInteraction } from '@/src/features/content/view-node-task';
+import { cancelNodePick, setupNodePick } from '@/src/features/relations/node-pick';
+import { cancelRelationAnchor } from '@/src/features/relations/view-relation-anchor';
 import {
 	schedulePersistRelationGeometry,
 	setupRelationInteractions,
 	teardownRelationInteraction,
-} from '../relations/view-node-relation';
-import { registerTagClicks } from '../content/view-tag';
-import { setupFootnoteInteractions } from '../content/view-footnote';
+} from '@/src/features/relations/view-node-relation';
+import { registerTagClicks } from '@/src/features/content/view-tag';
+import { setupFootnoteInteractions } from '@/src/features/content/view-footnote';
 import {
 	closeInlineEditor,
 	isAnyNodeEditing,
-} from '../editing/node-inline-editor';
+} from '@/src/features/editing/node-inline-editor';
+import { NativeNodeWikilinkCompletion } from '@/src/features/editing/native-node-wikilink-completion';
 import {
 	hideCopyButtonsInExportSvg,
 	registerCodeBlockInteractions,
-} from '../content/node-codeblock';
+} from '@/src/features/content/node-codeblock';
 import {
 	buildInlineNodeContent,
 	type InlineContentOptions,
-} from '../content/node-inline-content';
-import { colorDirectiveOf } from '../content/node-inline-tokenize';
-import { createInlineContentOptions } from '../content/node-content-factory';
-import { setupNodeTextEditFallback } from '../editing/view-node-actions';
+} from '@/src/features/content/node-inline-content';
+import { colorDirectiveOf } from '@/src/features/content/node-inline-tokenize';
+import { createInlineContentOptions } from '@/src/features/content/node-content-factory';
+import { setupNodeTextEditFallback } from '@/src/features/editing/view-node-actions';
 import type {
 	HyperlinkOpenMode,
 	MindMapViewContext,
@@ -116,16 +117,16 @@ import {
 	DocumentSession,
 	type SessionSaveState,
 	type SessionViewPort,
-} from '../../services/document-session';
-import type { SaveState } from '../../services/status-bar';
-import { EngineController } from '../../services/engine-controller';
+} from '@/src/services/document';
+import type { SaveState } from '@/src/services/status-bar';
+import { EngineController } from '@/src/services/engine';
 import {
 	buildSearchBar,
 	disposeSearchBar,
 	openSearchBar,
 	refreshSearchBarLabels,
 } from './view-search';
-import { exportImage } from '../view-export';
+import { exportImage } from '@/src/features/view-export';
 import {
 	arrangeMindMap,
 	buildToolbar,
@@ -133,47 +134,47 @@ import {
 	refreshToolbar,
 	syncHistoryButtons,
 } from './view-toolbar';
-import { setupDragAndDrop } from '../editing/view-dnd';
+import { setupDragAndDrop } from '@/src/features/editing/view-dnd';
 import { setupContextMenu } from './view-context-menu';
-import { registerViewHotkeys } from '../editing/view-hotkeys';
-import { setupViewportGestures } from '../canvas/view-viewport';
-import { handleWindowPaste, setupPasteHandler } from '../editing/view-paste';
-import { handleClipboardShortcut } from '../editing/view-clipboard';
+import { registerViewHotkeys } from '@/src/features/editing/view-hotkeys';
+import { setupViewportGestures } from '@/src/features/canvas/view-viewport';
+import { handleWindowPaste, setupPasteHandler } from '@/src/features/editing/view-paste';
+import { handleClipboardShortcut } from '@/src/features/editing/view-clipboard';
 import {
 	cancelStatusBarUpdate,
 	updateStatusBar,
 } from './view-status';
-import { openNodeImageFullscreen } from '../media/view-image-fullscreen';
-import { setupImageResize, teardownImageResize } from '../media/image-resize';
+import { openNodeImageFullscreen } from '@/src/features/media/view-image-fullscreen';
+import { setupImageResize, teardownImageResize } from '@/src/features/media/image-resize';
 import {
 	refreshMiniMap,
 	refreshMiniMapAfterRender,
 	setupMiniMap,
 	teardownMiniMap,
 } from './view-minimap';
-import { gateNodeWidthHandles, setupNodeWidthRefresh } from '../canvas/view-node-width';
-import { EventBinder } from '../../core/event-binder';
-import { TitleRenamer } from '../navigation/view-title-renamer';
+import { gateNodeWidthHandles, setupNodeWidthRefresh } from '@/src/features/canvas/view-node-width';
+import { EventBinder } from '@/src/core/event-binder';
+import { TitleRenamer } from '@/src/features/navigation/view-title-renamer';
 import {
 	isResolvedWikiLinkpath,
 	openHyperlink as linkNavigatorOpen,
-} from '../navigation/view-link-navigator';
+} from '@/src/features/navigation/view-link-navigator';
 import {
 	captureAutoSplitCandidate,
 	runAutoSplitCheck,
 	splitAllLinksInDocument,
-} from '../navigation/view-split-links';
+} from '@/src/features/navigation/view-split-links';
 import {
 	applyDocumentSyntax as applyDocumentSyntaxFeature,
 	cancelSyntaxGuard,
 	resolveDocumentSyntax as resolveDocumentSyntaxFeature,
 	scheduleSyntaxGuard,
 	setupSyntaxGuard,
-} from '../editing/view-syntax';
+} from '@/src/features/editing/view-syntax';
 import {
 	seedHeadingStart,
 	type DocumentSyntax,
-} from '../../markdown/md-heading-syntax';
+} from '@/src/markdown';
 
 /** 视图装配完成信号超时（毫秒）：正常 onOpen 会 resolve；超时表示装配未完成，降级继续加载 */
 const READY_TIMEOUT_MS = 10_000;
@@ -299,6 +300,7 @@ export class MindMapView
 	private commitsArmed = false;
 	/** 引擎实例生命周期（防腐收口，引擎内部访问不再出现在本类） */
 	private engine: EngineController;
+	private readonly nativeWikilinks = new NativeNodeWikilinkCompletion(this);
 	/**
 	 * 布局写入在途的目标值（引擎 layout id）：`applyLayout` 写属性期间置位、收尾清空。
 	 *
@@ -506,8 +508,10 @@ export class MindMapView
 			// 引擎销毁通知（未定稿数学段登记面的唯一清理点）：按引擎身份清掉该
 			// 实例归属的条目（语义见 content-remeasure 的 forgetEngine；按 DOM
 			// 连接状态判归属会在首帧前误清新引擎的全部懒加载段，2026-10-14 实机定案）
-			onEngineDisposed: (engine) =>
-				this.contentRemeasure.forgetEngine(engine),
+			onEngineDisposed: (engine) => {
+				this.nativeWikilinks.dispose();
+				this.contentRemeasure.forgetEngine(engine);
+			},
 			// 节点内联内容（方案 B 原型）：含行内链接 / 轻标记、或超长文本（引擎的
 			// SVG 换行是逐字符二次复杂度，长行必须接管）且无图的节点改走自绘 HTML；
 			// 其余节点返回 null 走引擎默认文本（点击跳转复用 view-wikilink 既有分流）
@@ -1160,6 +1164,7 @@ export class MindMapView
 
 	/** 引擎就绪收尾：重建工具栏（连线开关态跟随文件布局）；md 模式补返回按钮 */
 	private onEngineReady(): void {
+		if (this.mindMap) this.nativeWikilinks.attach(this.mindMap);
 		// 加载基线与大图首帧提示：容器 0 尺寸（后台标签）时加载那一刻引擎还没建，
 		// 两者都挂在 `LoadSession` 的 pending 字段上等这一刻（见各自字段说明）。
 		// 此刻引擎的 `render()` 已排进 setTimeout(0)、尚未执行 ⇒ 提示仍赶得上首帧；
@@ -1860,7 +1865,7 @@ export class MindMapView
 			return;
 		}
 		console.warn(
-			'[mindmap-studio] 官方「自动更新内部链接」已关闭：本图对 %s 的引用保持不变（%s）',
+			'[Oh-My-Mindmap-Studio] 官方「自动更新内部链接」已关闭：本图对 %s 的引用保持不变（%s）',
 			file.path,
 			action,
 		);

@@ -200,9 +200,9 @@ function fakeRendered(name: string, style?: Record<string, string>): Node {
 }
 
 /** 逐例重新加载模块：重置「告警去重」模块级状态 */
-async function loadModule(): Promise<typeof import('../../../../src/platform/rendering/math/math-jax')> {
+async function loadModule(): Promise<typeof import('@/src/platform/rendering/math/math-jax')> {
 	vi.resetModules();
-	return await import('../../../../src/platform/rendering/math/math-jax');
+	return await import('@/src/platform/rendering/math/math-jax');
 }
 
 /**
@@ -1021,7 +1021,7 @@ describe('injectMathStylesIntoExportSvg（导出 SVG 后处理 · 方案 B）', 
 			};
 		});
 		const { injectMathStylesIntoExportSvg, primeExportMathFonts } = await import(
-			'../../../../src/platform/rendering/math/math-jax'
+			'@/src/platform/rendering/math/math-jax'
 		);
 		expect(await primeExportMathFonts()).toBe(true);
 

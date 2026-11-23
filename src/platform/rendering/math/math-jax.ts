@@ -108,9 +108,9 @@
  * 名** `mjx-container`（class 是 `MathJax`，`.mjx-container` 类选择器匹配不到）。
  */
 import { finishRenderMath, loadMathJax } from 'obsidian';
-import { MATH_RENDERED_HOLDER_CLASS } from '../../../core/constants';
-import { createWarnOnce } from '../../../core/errors';
-import { formatMathPlaceholder } from '../../../core/math-placeholder';
+import { MATH_RENDERED_HOLDER_CLASS } from '@/src/core/constants';
+import { createWarnOnce } from '@/src/core/errors';
+import { formatMathPlaceholder } from '@/src/core/math-placeholder';
 // 导出 SVG 后处理链已拆至 ./math-jax-export（纯 DOM/CSSOM、零渲染态依赖，见其文件头），
 // 此处只转发其公共 API；样式表元素 id 已随字符规则族移至 ./math-jax-char-rules。
 import {
@@ -382,7 +382,7 @@ async function runFlush(): Promise<void> {
 	} catch (e) {
 		// flush 失败：保持字面显示，由重试预算兜底，不打断渲染链。
 		// 留痕一次便于定位无痕退化（K85 / K113 同族治理：静默会让失效无迹可寻）
-		console.debug('MindMap Studio：MathJax flush 失败', e);
+		console.debug('Oh-My-Mindmap-Studio：MathJax flush 失败', e);
 	}
 	flushGeneration += 1;
 	schedulePumpForPending();

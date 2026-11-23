@@ -24,9 +24,9 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { Mock } from 'vitest';
 import type { App } from 'obsidian';
 import { TFile } from 'obsidian';
-import { t, type Language, type TranslationKey } from '../../../src/core/i18n';
-import type { MindMapNode } from '../../../vendor/simple-mind-map.cjs';
-import type { MindMapViewContext } from '../../../src/features/view/view-context';
+import { t, type Language, type TranslationKey } from '@/src/core/i18n';
+import type { MindMapNode } from '@/vendor/simple-mind-map.cjs';
+import type { MindMapViewContext } from '@/src/features/view/view-context';
 import {
 	addImageToActiveNode,
 	addLinkToActiveNode,
@@ -41,11 +41,11 @@ import {
 	moveNodeUp,
 	removeNodeImage,
 	removeNodeText,
-} from '../../../src/features/editing/view-node-actions';
+} from '@/src/features/editing/view-node-actions';
 import {
 	insertChildNodeWithData,
 	requireActiveNode,
-} from '../../../src/features/view/view-common';
+} from '@/src/features/view/view-common';
 
 const {
 	noticeCalls,
@@ -63,7 +63,7 @@ const {
 	applyRawMock,
 } = vi.hoisted(() => ({
 	noticeCalls: [] as string[],
-	// 命令名取值与 src/engine/mindmap.ts 的 ENGINE_COMMANDS 一致；常量表本身的 token
+	// 命令名取值与 src/engine/runtime/mindmap.ts 的 ENGINE_COMMANDS 一致；常量表本身的 token
 	// 契约由 vendor-contract 测试把关，这里只验证编排传了哪一个命令。
 	ENGINE: {
 		BACK: 'BACK',
@@ -79,7 +79,7 @@ const {
 	setNodeTextMock: vi.fn<(...args: unknown[]) => void>(),
 	markNodeNeedLayoutMock: vi.fn<(...args: unknown[]) => void>(),
 	// 兄弟上/下移的防腐入口（兄弟判定与清坐标在 engine/mindmap.ts，
-	// 由 tests/engine/engine-node-move.test.ts 直测；本文件只验编排与提示映射）
+	// 由 tests/engine/nodes/engine-node-move.test.ts 直测；本文件只验编排与提示映射）
 	siblingMoveMock: vi.fn<(...args: unknown[]) => unknown>(),
 	forceRemoveMock: vi.fn<(...args: unknown[]) => void>(),
 	openLinkMock: vi.fn<(...args: unknown[]) => Promise<unknown>>(),
@@ -104,7 +104,7 @@ vi.mock('obsidian', async (importOriginal) => {
 	};
 });
 
-vi.mock('../../../src/engine/mindmap', () => ({
+vi.mock('@/src/engine', () => ({
 	ENGINE_COMMANDS: ENGINE,
 	setNodeText: (...args: unknown[]): void => {
 		setNodeTextMock(...args);
@@ -117,7 +117,7 @@ vi.mock('../../../src/engine/mindmap', () => ({
 		forceRemoveMock(...args);
 	},
 	// 以下三个保持生产语义：桩成常量会让「按节点数据分流」的分支永远走同一路，
-	// 断言全部失真（renderer 缺失 ⇒ 无激活节点/无根，与 src/engine/mindmap.ts 一致）。
+	// 断言全部失真（renderer 缺失 ⇒ 无激活节点/无根，与 src/engine/runtime/mindmap.ts 一致）。
 	getActiveNode: (mindMap: unknown): unknown => {
 		const renderer = (
 			mindMap as { renderer?: { activeNodeList?: unknown[] } } | null
@@ -138,19 +138,19 @@ vi.mock('../../../src/engine/mindmap', () => ({
 	summaryAnchorOf: (): null => null,
 }));
 
-vi.mock('../../../src/ui/modal-link', () => ({
+vi.mock('@/src/ui/modal-link', () => ({
 	openLinkEditorModal: (...args: unknown[]): Promise<unknown> =>
 		openLinkMock(...args),
 }));
 
-vi.mock('../../../src/ui/modal-image', () => ({
+vi.mock('@/src/ui/modal-image', () => ({
 	openImageEditorModal: (...args: unknown[]): Promise<unknown> =>
 		openImageMock(...args),
 }));
 
 // 弹窗备选入口（右键「在弹窗中编辑」）在 Node 环境无法开窗：替换为 spy，
 // 预填值与提交值由用例控制（openNodeModalMock）
-vi.mock('../../../src/ui/modal-text', () => ({
+vi.mock('@/src/ui/modal-text', () => ({
 	openNodeTextModal: (...args: unknown[]): Promise<unknown> =>
 		openNodeModalMock(...args),
 }));
@@ -158,7 +158,7 @@ vi.mock('../../../src/ui/modal-text', () => ({
 // 内联编辑器（自绘节点的主编辑入口）非本文件关注点：仅桩掉导入面，
 // 原文模式的写回经 applyRawMock 断言（编辑器内部行为由
 // tests/features/editing/node-inline-editor.test.ts 覆盖）
-vi.mock('../../../src/features/editing/node-inline-editor', () => ({
+vi.mock('@/src/features/editing/node-inline-editor', () => ({
 	isAnyNodeEditing: vi.fn(() => false),
 	isInlineNodeEditing: vi.fn(() => false),
 	resolveInlineEditKey: vi.fn(() => 'none'),
@@ -166,20 +166,20 @@ vi.mock('../../../src/features/editing/node-inline-editor', () => ({
 	closeInlineEditor: vi.fn(),
 }));
 
-vi.mock('../../../src/features/content/node-content-write', () => ({
+vi.mock('@/src/features/content/node-content-write', () => ({
 	applyRawNodeContent: (...args: unknown[]): void => applyRawMock(...args),
 }));
 
 // 库内解析结果由用例决定：未解析（null）= 按目标串扩展名判定；
 // 返回 TFile 形态对象 = 按真实扩展名判定。真实现依赖全库索引，与编排无关。
-vi.mock('../../../src/links/links-resolve', () => ({
+vi.mock('@/src/links/links-resolve', () => ({
 	resolvePathToFile: (...args: unknown[]): unknown => resolveMock(...args),
 }));
 
 // 尺寸探测要读 DOM 图片原始尺寸（node 环境无 Image）：桩掉选项构造器，
 // 只验证编排把「显示地址」交给了 SET_NODE_IMAGE。
-vi.mock('../../../src/media/images-path', async (importOriginal) => {
-	const actual = await importOriginal<typeof import('../../../src/media/images-path')>();
+vi.mock('@/src/media/images-path', async (importOriginal) => {
+	const actual = await importOriginal<typeof import('@/src/media/images-path')>();
 	return {
 		...actual,
 		createSetNodeImageOptions: (...args: unknown[]): unknown =>

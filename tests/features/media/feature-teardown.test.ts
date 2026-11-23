@@ -12,13 +12,13 @@
  * - 「会话结束后监听数为 0」由净挂载表直接断言，而不是靠推断。
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import type { MindMap, MindMapNode } from '../../../vendor/simple-mind-map.cjs';
-import { ENGINE_COMMANDS } from '../../../src/engine/mindmap';
-import type { MindMapViewContext } from '../../../src/features/view/view-context';
+import type { MindMap, MindMapNode } from '@/vendor/simple-mind-map.cjs';
+import { ENGINE_COMMANDS } from '@/src/engine';
+import type { MindMapViewContext } from '@/src/features/view/view-context';
 import {
 	setupImageResize,
 	teardownImageResize,
-} from '../../../src/features/media/image-resize';
+} from '@/src/features/media/image-resize';
 
 // 本模块经 import 链加载 vendor bundle（顶层求值触碰 document.documentElement）
 vi.hoisted(() => {

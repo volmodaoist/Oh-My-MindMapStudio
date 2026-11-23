@@ -6,19 +6,19 @@
  * 全库查找索引原语在 file-lookup.ts（本模块不再持有）。
  */
 import { App } from 'obsidian';
-import { IMAGE_HEIGHT, IMAGE_MAX_SIDE_PX, IMAGE_WIDTH } from '../core/constants';
-import { mapWithConcurrency } from '../core/concurrency';
+import { IMAGE_HEIGHT, IMAGE_MAX_SIDE_PX, IMAGE_WIDTH } from '@/src/core/constants';
+import { mapWithConcurrency } from '@/src/core/concurrency';
 import {
 	isAppResourceUrl,
 	isExternalImageRef,
-} from '../domain/url';
-import { cloneTree, walkTree } from '../domain/tree';
-import { resolvePathToFile } from '../links/links-resolve';
+} from '@/src/domain/links';
+import { cloneTree, walkTree } from '@/src/domain/document';
+import { resolvePathToFile } from '@/src/links/links-resolve';
 import type {
 	MindMapTreeNode,
 	SetNodeImageOptions,
-} from '../core/engine-types';
-import type { MdNodeData } from '../core/node-data';
+} from '@/src/core/engine-types';
+import type { MdNodeData } from '@/src/core/node-data';
 
 /**
  * 是否为**无需按库内路径解析**的地址：库内资源地址（`app://`）与远程/数据/

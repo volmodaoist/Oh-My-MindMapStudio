@@ -24,14 +24,14 @@
  * 时间戳）的判定全在 `core/minimap-geometry.nextMiniMapDeadline`，本文件只做
  * 副作用：起停定时器、换图、淡入淡出、悬停保活、滚轮转发、拖拽导航。
  */
-import { createThrottler, type Throttler } from '../../core/concurrency';
+import { createThrottler, type Throttler } from '@/src/core/concurrency';
 import {
 	MINIMAP_IDLE_FADE_MS,
 	MINIMAP_MIN_CANVAS_WIDTH_PX,
 	MINIMAP_REFRESH_CHECK_MS,
 	MINIMAP_REFRESH_INTERVAL_MS,
 	MINIMAP_SIDEBAR_REFRESH_MS,
-} from '../../core/constants';
+} from '@/src/core/constants';
 import {
 	miniMapScale,
 	nextMiniMapDeadline,
@@ -40,7 +40,7 @@ import {
 	type MiniMapFrameGeometry,
 	type MiniMapMeasure,
 	type MiniMapSize,
-} from '../../core/minimap-geometry';
+} from '@/src/core/minimap-geometry';
 import {
 	captureMiniMap,
 	contentExceedsCanvasAtFullScale,
@@ -49,8 +49,8 @@ import {
 	measureMiniMapContent,
 	panMindMap,
 	type MiniMapFrame,
-} from '../../engine/mindmap';
-import { startWindowDragSession, type WindowDragSession } from '../canvas/drag-session';
+} from '@/src/engine';
+import { startWindowDragSession, type WindowDragSession } from '@/src/features/canvas/drag-session';
 import type { MindMapViewContext } from './view-context';
 
 /**

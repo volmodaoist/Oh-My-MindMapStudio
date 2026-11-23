@@ -1,7 +1,7 @@
 /**
  * 节点内混排双链拆分（自动触发 + 全文批量命令）的视图侧执行。
  *
- * 判定与方案在 `src/markdown/links-split.ts`（纯逻辑，零引擎依赖）；本模块只负责
+ * 判定与方案在 `src/markdown/links/links-split.ts`（纯逻辑，零引擎依赖）；本模块只负责
  * 把方案施加到引擎并给用户反馈：
  * - 单节点：走引擎命令逐条插入（可控，与其它编辑同一条通道；每条命令各记一条
  *   历史，`Ctrl+Z` 逐步回退）；
@@ -10,22 +10,22 @@
  *   （整批一条历史，一次 `Ctrl+Z` 回到拆分前）。
  */
 import { Notice } from 'obsidian';
-import { replaceMindMapData, setNodeText } from '../../engine/mindmap';
-import { isAnyNodeEditing } from '../editing/node-inline-editor';
+import { replaceMindMapData, setNodeText } from '@/src/engine';
+import { isAnyNodeEditing } from '@/src/features/editing/node-inline-editor';
 import {
 	planSplitLinks,
 	splitAllLinksInTree,
 	writeSplitPlanToData,
 	type SplitAllResult,
 	type SplitLinkPlan,
-} from '../../markdown/links-split';
-import { ensureUniqueUids } from '../../markdown/markdown';
-import { isNodeTextEdited } from '../../domain/md-meta';
-import { insertChildNodeWithData } from '../view/view-common';
-import { t, tf } from '../../core/i18n';
-import type { MindMap, MindMapNode } from '../../core/engine-types';
-import type { MdNodeData } from '../../core/node-data';
-import type { MindMapViewContext } from '../view/view-context';
+} from '@/src/markdown';
+import { ensureUniqueUids } from '@/src/markdown';
+import { isNodeTextEdited } from '@/src/domain/document';
+import { insertChildNodeWithData } from '@/src/features/view/view-common';
+import { t, tf } from '@/src/core/i18n';
+import type { MindMap, MindMapNode } from '@/src/core/engine-types';
+import type { MdNodeData } from '@/src/core/node-data';
+import type { MindMapViewContext } from '@/src/features/view/view-context';
 
 /**
  * 施加拆分方案（单节点路径）：改写父节点（文本 + 逐字回写依据 + 链接字段）

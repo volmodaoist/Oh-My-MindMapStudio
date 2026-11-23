@@ -17,7 +17,7 @@ import {
 	sanitizeSettings,
 	shouldOfferColorScopeCleanup,
 	type SettingsSanitizeReport,
-} from '../src/settings';
+} from '@/src/settings';
 import {
 	EXPORT_IMAGE_FORMAT_OPTIONS,
 	EXPORT_SCALE_MAX,
@@ -27,7 +27,7 @@ import {
 	NODE_COLOR_SCOPE_OPTIONS,
 	SAVE_LOCATION_OPTIONS,
 	THEME_OPTIONS,
-} from '../src/core/constants';
+} from '@/src/core/constants';
 
 describe('sanitizeSettings（类型与取值校验）', () => {
 	it('空对象返回默认设置，且是全新对象（不得复用 DEFAULT_SETTINGS 引用）', () => {
@@ -546,7 +546,7 @@ describe('sanitizeSettings：非法值诊断报告', () => {
 		reportDroppedSettings(['defaultLayout']);
 		expect(warnSpy).toHaveBeenCalledTimes(1);
 		const message = String(warnSpy.mock.calls[0]?.[0]);
-		expect(message).toContain('MindMap Studio：');
+			expect(message).toContain('Oh-My-Mindmap-Studio：');
 		expect(message).toContain('language、exportScale');
 
 		warnSpy.mockRestore();

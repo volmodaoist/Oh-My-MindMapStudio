@@ -20,31 +20,31 @@
  *
  * ## 写盘
  * 一律 `applyRawNodeContents`（与建边 / 改色同一通道）：一次渲染、一次保存、
- * 一条撤销。**只改 `sum` 段**（`domain/summary.applySummaries`），同节点的
+ * 一条撤销。**只改 `sum` 段**（`domain/relations/summary.applySummaries`），同节点的
  * `%%id%%` / `%%rel%%` 逐字带回。
  */
 import { Menu, Notice } from 'obsidian';
-import type { MindMapNode } from '../../core/engine-types';
-import type { MdNodeData } from '../../core/node-data';
-import { t, tf } from '../../core/i18n';
+import type { MindMapNode } from '@/src/core/engine-types';
+import type { MdNodeData } from '@/src/core/node-data';
+import { t, tf } from '@/src/core/i18n';
 import {
 	applySummaries,
 	planSummaryRanges,
 	summariesOf,
 	summaryEntryIndexOfRange,
 	type SummaryEntry,
-} from '../../domain/summary';
+} from '@/src/domain/relations';
 import {
 	getNodeDataString,
 	isSummaryNode,
 	summaryAnchorOf,
-} from '../../engine/mindmap';
-import { composeNodeContent } from '../../markdown/md-serialize';
-import { showExclusiveMenu } from '../../ui/menu-submenu';
-import { openSummaryTextModal } from '../../ui/modal-summary-text';
-import { applyRawNodeContents } from '../content/node-content-write';
+} from '@/src/engine';
+import { composeNodeContent } from '@/src/markdown';
+import { showExclusiveMenu } from '@/src/ui/menu-submenu';
+import { openSummaryTextModal } from '@/src/ui/modal-summary-text';
+import { applyRawNodeContents } from '@/src/features/content/node-content-write';
 import { startNodePick } from './node-pick';
-import type { ViewNodeEditContext } from '../view/view-context';
+import type { ViewNodeEditContext } from '@/src/features/view/view-context';
 
 /** 同一个父节点下、下标连续的一段兄弟（一次「概要」= 每个分支一条） */
 interface SiblingRun {
@@ -182,7 +182,7 @@ async function createSummary(
  * 锚点由 `summaryAnchorOf` 反查（父节点 + `range[0]`），条目由
  * `summaryEntryIndexOfRange` 按**规划器自己的区间**认领——不能拿 `count` 去对
  * 宽度：`count` 越界时会被夹到最后一个兄弟（文件里的数字不改），此后两者不再
- * 相等（见 `domain/summary.summaryEntryIndexOfRange`）。
+ * 相等（见 `domain/relations/summary.summaryEntryIndexOfRange`）。
  *
  * 找不到（父节点 / `range` 缺失，或正文里的 `%%sum%%` 已被手改掉）返回 null，
  * 调用方据此给出可见提示——静默 no-op 会让「右键 / Delete」看起来坏了。

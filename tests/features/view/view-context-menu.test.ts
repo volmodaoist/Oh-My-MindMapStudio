@@ -17,17 +17,17 @@
  * Menu 以记录型桩替换（官方 Menu 在 tests/mocks/obsidian.ts 中为空壳，不记录条目）。
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { t, type TranslationKey } from '../../../src/core/i18n';
-import { LAYOUT_OPTIONS, PALETTE_OPTIONS } from '../../../src/core/constants';
-import type { MindMapNode } from '../../../src/core/engine-types';
-import type { MindMapViewContext } from '../../../src/features/view/view-context';
-import { setupContextMenu } from '../../../src/features/view/view-context-menu';
+import { t, type TranslationKey } from '@/src/core/i18n';
+import { LAYOUT_OPTIONS, PALETTE_OPTIONS } from '@/src/core/constants';
+import type { MindMapNode } from '@/src/core/engine-types';
+import type { MindMapViewContext } from '@/src/features/view/view-context';
+import { setupContextMenu } from '@/src/features/view/view-context-menu';
 import {
 	applyColorSentinelCleanup,
 	applyNodeColor,
 	collectColorSentinelSessions,
 	nodeColorOptions,
-} from '../../../src/features/editing/view-node-color';
+} from '@/src/features/editing/view-node-color';
 
 /** 记录型菜单项桩（仅编译期形状，运行时由 FakeMenu 构造） */
 interface MenuItemStub {
@@ -172,7 +172,7 @@ const { FakeMenu, ENGINE } = vi.hoisted(() => {
 			found.click(evt);
 		}
 	}
-	// 命令名取值与 src/engine/mindmap.ts 的 ENGINE_COMMANDS 一致；常量表本身的
+	// 命令名取值与 src/engine/runtime/mindmap.ts 的 ENGINE_COMMANDS 一致；常量表本身的
 	// token 契约由 vendor-contract 测试把关，这里只验证菜单传了哪一个命令。
 	return {
 		FakeMenu: FakeMenuClass,
@@ -257,7 +257,7 @@ vi.mock('obsidian', async (importOriginal) => {
 	return { ...actual, Menu: FakeMenu };
 });
 
-vi.mock('../../../src/engine/mindmap', () => ({
+vi.mock('@/src/engine', () => ({
 	ENGINE_COMMANDS: ENGINE,
 	findNodeByDom: findNodeByDomMock,
 	fitMindMap: fitMindMapMock,
@@ -305,16 +305,16 @@ vi.mock('../../../src/engine/mindmap', () => ({
 }));
 
 // 节点配色落盘走「原文提交」通道（node-content-write）：本文件只验证「写了什么原文」
-vi.mock('../../../src/features/content/node-content-write', () => ({
+vi.mock('@/src/features/content/node-content-write', () => ({
 	applyRawNodeContent: applyRawNodeContentMock,
 	applyRawNodeContents: applyRawNodeContentsMock,
 }));
 
-vi.mock('../../../src/ui/modal-color', () => ({
+vi.mock('@/src/ui/modal-color', () => ({
 	openColorInputModal: openColorInputModalMock,
 }));
 
-vi.mock('../../../src/features/editing/view-node-actions', () => ({
+vi.mock('@/src/features/editing/view-node-actions', () => ({
 	addImageToActiveNode: addImageToActiveNodeMock,
 	addLinkToActiveNode: addLinkToActiveNodeMock,
 	clearNodeHyperlink: clearNodeHyperlinkMock,
@@ -333,16 +333,16 @@ vi.mock('../../../src/features/editing/view-node-actions', () => ({
 // 剪贴板三入口（复制节点 / 粘贴为子节点 / 粘贴节点）已收口到 view-clipboard：
 // 本文件只验证「菜单点了哪一个入口、带了什么落点」，剪贴板内部行为由
 // tests/features/editing/view-clipboard.test.ts 覆盖
-vi.mock('../../../src/features/editing/view-clipboard', () => ({
+vi.mock('@/src/features/editing/view-clipboard', () => ({
 	copySelectedNodes: copySelectedNodesMock,
 	pasteClipboardIntoNode: pasteClipboardIntoNodeMock,
 }));
 
-vi.mock('../../../src/features/media/view-image-fullscreen', () => ({
+vi.mock('@/src/features/media/view-image-fullscreen', () => ({
 	openNodeImageFullscreen: openNodeImageFullscreenMock,
 }));
 
-vi.mock('../../../src/features/view/view-toolbar', () => ({
+vi.mock('@/src/features/view/view-toolbar', () => ({
 	arrangeMindMap: arrangeMindMapMock,
 }));
 
@@ -352,7 +352,7 @@ const startRelationPickingMock = vi.hoisted(() =>
 	vi.fn<(view: unknown, node: unknown) => void>(),
 );
 
-vi.mock('../../../src/features/relations/view-node-relation', () => ({
+vi.mock('@/src/features/relations/view-node-relation', () => ({
 	startRelationPicking: startRelationPickingMock,
 }));
 
@@ -361,7 +361,7 @@ const minimapMocks = vi.hoisted(() => ({
 	refreshMiniMapAfterRender: vi.fn<(view: unknown) => void>(),
 }));
 
-vi.mock('../../../src/features/view/view-minimap', () => ({
+vi.mock('@/src/features/view/view-minimap', () => ({
 	refreshMiniMapAfterRender: minimapMocks.refreshMiniMapAfterRender,
 }));
 

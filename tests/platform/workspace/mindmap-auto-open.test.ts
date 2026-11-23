@@ -11,7 +11,7 @@
  *   （属性被就地加上时补判），故该方法是公开的。
  *
  * 判据本身（frontmatter 的 `Mindmap`）由组合根注入，本套件用「声明集合」桩
- * 代替——那样判据回归在 tests/domain/md-frontmatter-trigger.test.ts 单独锁定，两边互不
+ * 代替——那样判据回归在 tests/domain/document/mindmap-property.test.ts 单独锁定，两边互不
  * 耦合。
  *
  * 为什么延时用例必须用 fake timers 断言**每一档的精确毫秒**：三档的作用就是
@@ -30,16 +30,16 @@ import {
 	AUTO_OPEN_SCAN_DEBOUNCE_MS,
 	CORE_VIEW_TYPE,
 	VIEW_TYPE,
-} from '../../../src/core/constants';
-import { MindMapAutoOpener } from '../../../src/platform/workspace/mindmap-auto-open';
+} from '@/src/core/constants';
+import { MindMapAutoOpener } from '@/src/platform/workspace/mindmap-auto-open';
 
 /** openAsMindMap 的 spy（vi.hoisted 保证先于 mock 工厂可用） */
 const openAsMindMapMock = vi.hoisted(() =>
 	vi.fn<(...args: unknown[]) => Promise<void>>(),
 );
 
-vi.mock('../../../src/markdown/md-open', async (importOriginal) => {
-	const mod = await importOriginal<typeof import('../../../src/markdown/md-open')>();
+vi.mock('@/src/markdown/md-open', async (importOriginal) => {
+	const mod = await importOriginal<typeof import('@/src/markdown/md-open')>();
 	// 仅替换视图切换（副作用单测目标）；其余导出保持真实实现
 	return { ...mod, openAsMindMap: openAsMindMapMock };
 });
@@ -618,7 +618,7 @@ describe('临时导图与当前标签的恢复', () => {
 	});
 
 	it('本轮显式打开普通笔记时启动扫描保留视图，标签换文件后临时授权失效', async () => {
-		const actual = await vi.importActual<typeof import('../../../src/markdown/md-open')>('../../../src/markdown/md-open');
+		const actual = await vi.importActual<typeof import('@/src/markdown/md-open')>('@/src/markdown/md-open');
 		const h = setupHarness([]);
 		const file = fakeFile('OS.md');
 		const setViewState = vi.fn(async () => undefined);
@@ -632,7 +632,7 @@ describe('临时导图与当前标签的恢复', () => {
 	});
 
 	it('专用导图明确返回 Markdown 后不被后台扫描切回，另一个新标签仍自动打开', async () => {
-		const actual = await vi.importActual<typeof import('../../../src/markdown/md-open')>('../../../src/markdown/md-open');
+		const actual = await vi.importActual<typeof import('@/src/markdown/md-open')>('@/src/markdown/md-open');
 		const h = setupHarness(['Map.mindmap.md']);
 		const file = fakeFile('Map.mindmap.md');
 		const first = { view: markdownViewWith({ file }), setViewState: vi.fn(async () => undefined) };

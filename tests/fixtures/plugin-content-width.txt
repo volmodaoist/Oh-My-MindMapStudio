@@ -1,0 +1,22 @@
+tab: 标准输入流与输出流
+```shell
+ls | grep txt
+# ls 把文件列表写到自己的 stdout，此时 OS 通过 pipe 去把 stdout 接到 grep stdin 读数据进行过滤
+# 整个过程示意图: 
+┌──────┐      pipe      ┌────────┐
+│  ls  │ ─────────────▶ │  grep  │
+└──────┘                └────────┘
+ stdout                  stdin
+```
+tab: Python 文件流
+```python
+process = subprocess.Popen(["ls"], stdout=subprocess.PIPE)
+output = process.stdout.read()
+
+# Pyhon 同理，这里相当于是把 ls 输出的结果通过 PIPE 接到了 Python 程序上面
+# 整个过程示意图: 
+┌──────┐       stdout / pipe       ┌────────────────┐
+│  ls  │ ────────────────────────▶ │ Python Program │
+└──────┘                           └────────────────┘
+                                         stdin
+```

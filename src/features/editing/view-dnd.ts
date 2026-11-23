@@ -14,16 +14,16 @@ import {
 	isImageExtension,
 	isRenderableImageExtension,
 	MAX_IMAGE_SIZE_MB,
-} from '../../core/constants';
-import { saveAttachmentToVault, saveImageToVault } from '../../media/images-save';
-import { notifyError } from '../../core/errors';
+} from '@/src/core/constants';
+import { saveAttachmentToVault, saveImageToVault } from '@/src/media/images-save';
+import { notifyError } from '@/src/core/errors';
 import {
 	extractDroppedFileNames,
 	filesUnderFolder,
 	resolveDroppedFile,
 	resolveDroppedFolder,
-} from '../../links/links-resolve';
-import { getActiveNode, getRenderRoot } from '../../engine/mindmap';
+} from '@/src/links/links-resolve';
+import { getActiveNode, getRenderRoot } from '@/src/engine';
 import {
 	applyDocWikiLink,
 	applyMdLink,
@@ -33,15 +33,15 @@ import {
 	planAttachmentLink,
 	planDocLink,
 } from './view-node-actions';
-import { insertChildNodeWithData } from '../view/view-common';
-import { t } from '../../core/i18n';
-import { fileUrlFromAbsolutePath } from '../../domain/url';
+import { insertChildNodeWithData } from '@/src/features/view/view-common';
+import { t } from '@/src/core/i18n';
+import { fileUrlFromAbsolutePath } from '@/src/domain/links';
 import {
 	isDocumentExtension,
 	wikilinkTargetIsAttachment,
-} from '../../domain/wikilink';
-import type { MindMapNode } from '../../core/engine-types';
-import type { MindMapViewContext } from '../view/view-context';
+} from '@/src/domain/links';
+import type { MindMapNode } from '@/src/core/engine-types';
+import type { MindMapViewContext } from '@/src/features/view/view-context';
 
 /** 注册画布拖拽监听（引擎重建时随 initMindMap 调用） */
 export function setupDragAndDrop(view: MindMapViewContext): void {

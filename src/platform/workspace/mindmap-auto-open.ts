@@ -16,13 +16,13 @@
  */
 import type { Component, TFile, Workspace, WorkspaceLeaf } from 'obsidian';
 import { MarkdownView } from 'obsidian';
-import { AUTO_OPEN_SCAN_DEBOUNCE_MS, CORE_VIEW_TYPE, VIEW_TYPE } from '../../core/constants';
-import { createDebouncer, type Debouncer } from '../../core/concurrency';
-import { isDedicatedMindMapPath } from '../../domain/mindmap-file';
+import { AUTO_OPEN_SCAN_DEBOUNCE_MS, CORE_VIEW_TYPE, VIEW_TYPE } from '@/src/core/constants';
+import { createDebouncer, type Debouncer } from '@/src/core/concurrency';
+import { isDedicatedMindMapPath } from '@/src/domain/document';
 import {
 	canAutoOpenMindMap, isExplicitMindMapOpen, openAsMarkdown,
 	openAsMindMap, readMdBackMode,
-} from '../../markdown/md-open';
+} from '@/src/markdown';
 
 /**
  * `file-open` 未命中叶子时的重试延时（ms）。

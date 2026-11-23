@@ -1,7 +1,7 @@
 /** UI 组件直测：不创建导图或文件，验证局部键盘、测量、焦点与事件生命周期。 */
 import { describe, expect, it, vi } from 'vitest';
-import { NodeEditor, type NodeEditorLayout } from '../../../src/ui/node-editor/node-editor';
-import { makeDocStub, lastEl } from '../../helpers/node-editor-dom';
+import { NodeEditor, type NodeEditorLayout } from '@/src/ui/node-editor/node-editor';
+import { makeDocStub, lastEl } from '@/tests/helpers/node-editor-dom';
 
 function setup() {
 	const doc = makeDocStub();
@@ -127,5 +127,43 @@ describe('NodeEditor', () => {
 		expect(h.doc.body.focus).toHaveBeenCalledTimes(1);
 		expect(h.el.remove).toHaveBeenCalledTimes(1);
 		expect(h.el.focus).not.toHaveBeenCalled();
+	});
+
+	it('输入扩展先处理按键，未消费时继续原提交；输入法期间不调用扩展', () => {
+		const h = setup();
+		const onKeyDown = vi.fn((event: KeyboardEvent) => {
+			if (event.key !== 'Escape') return false;
+			event.preventDefault(); return true;
+		});
+		h.editor.useInputBehavior({ onKeyDown, dispose: vi.fn() });
+		h.el.fire('keydown', key('Escape'));
+		expect(h.onCommit).not.toHaveBeenCalled();
+		h.el.fire('keydown', key('Enter', { isComposing: true }));
+		expect(onKeyDown).toHaveBeenCalledTimes(1);
+		h.el.fire('keydown', key('Enter'));
+		expect(h.onCommit).toHaveBeenCalledTimes(1);
+		h.editor.dispose();
+	});
+
+	it('扩展控件内点击保留编辑，控件外点击继续提交', () => {
+		const h = setup();
+		const control = {};
+		h.editor.useInputBehavior({ contains: target => target === control, dispose: vi.fn() });
+		h.doc.fireDoc('mousedown', { target: control });
+		expect(h.onCommit).not.toHaveBeenCalled();
+		h.doc.fireDoc('mousedown', { target: {} });
+		expect(h.onCommit).toHaveBeenCalledTimes(1);
+		h.editor.dispose();
+	});
+
+	it('组件统一释放扩展，重复注册与销毁只释放一次，销毁后注册立即释放', () => {
+		const h = setup();
+		const dispose = vi.fn(); const behavior = { dispose };
+		h.editor.useInputBehavior(behavior); h.editor.useInputBehavior(behavior);
+		h.editor.dispose(); h.editor.dispose();
+		expect(dispose).toHaveBeenCalledTimes(1);
+		const lateDispose = vi.fn();
+		h.editor.useInputBehavior({ dispose: lateDispose });
+		expect(lateDispose).toHaveBeenCalledTimes(1);
 	});
 });

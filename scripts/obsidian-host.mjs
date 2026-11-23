@@ -45,11 +45,19 @@ export async function launchObsidianHost(markdown, plugins) {
 		await page.waitForFunction(() => window.app?.vault?.adapter?.basePath);
 		if (await page.evaluate(() => app.vault.adapter.basePath) !== vault) throw new Error('Unexpected vault; test aborted');
 		await page.getByText(/^(信任仓库作者并启用插件|Trust author and enable plugins)$/).click();
-		await page.waitForFunction(ids => ids.every(id => app.plugins.plugins[id]) && app.workspace.layoutReady, plugins.map(plugin => plugin.id));
-		await page.evaluate(() => {
-			const win = require('@electron/remote').getCurrentWindow();
-			win.webContents.setBackgroundThrottling(false); win.showInactive();
-		});
+		// 首次信任库可能导航一次；仅重试启动上下文切换，不重试功能断言。
+		for (let attempt = 0; attempt < 2; attempt++) {
+			await page.waitForFunction(ids => window.app && ids.every(id => app.plugins.plugins[id]) && app.workspace.layoutReady, plugins.map(plugin => plugin.id));
+			try {
+				await page.evaluate(() => {
+					const win = require('@electron/remote').getCurrentWindow();
+					win.webContents.setBackgroundThrottling(false); win.showInactive();
+				});
+				break;
+			} catch (error) {
+				if (attempt || !String(error).includes('Execution context was destroyed')) throw error;
+			}
+		}
 		return { page, directory, vault, close };
 	} catch (error) { await close(); throw error; }
 }

@@ -1,8 +1,8 @@
 /** 节点内容 math：DOM/样式内聚，保持原输出与导出保真。 */
-import { type InlineContentDocument, type InlineSegment, type InlineContentOptions } from '../../core/node-content-types';
+import { type InlineContentDocument, type InlineSegment, type InlineContentOptions } from '@/src/core/node-content-types';
 import { MARKUP_TAGS } from './content-text.styles';
-import { formatMathPlaceholder } from '../../core/math-placeholder';
-import { MATH_RENDERED_HOLDER_CLASS } from '../../core/constants';
+import { formatMathPlaceholder } from '@/src/core/math-placeholder';
+import { MATH_RENDERED_HOLDER_CLASS } from '@/src/core/constants';
 
 /** 行内数学段的占位类名（MathJax 替换后保留，供主题/调试定位） */
 const MATH_SEGMENT_CLASS = 'mindmap-node-inline-math';

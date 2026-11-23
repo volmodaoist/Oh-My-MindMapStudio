@@ -3,15 +3,15 @@
  * 根节点文本编辑停止（防抖 + 非编辑态）后重命名 .mindmap.md 文件，
  * Obsidian 原生更新链接/反链；外部改名后视图重载，中心随新文件名。
  */
-import { mindMapFileName, mindMapFileTitle } from '../../domain/mindmap-file';
+import { mindMapFileName, mindMapFileTitle } from '@/src/domain/document';
 import { App, Notice, normalizePath, TFile } from 'obsidian';
-import { createDebouncer } from '../../core/concurrency';
-import { notifyError } from '../../core/errors';
-import { isMindMapFile } from '../../markdown/md-open';
-import { sanitizeFileName } from '../../media/images-save';
-import { TITLE_RENAME_DEBOUNCE_MS } from '../../core/constants';
-import { t } from '../../core/i18n';
-import type { Language } from '../../core/i18n';
+import { createDebouncer } from '@/src/core/concurrency';
+import { notifyError } from '@/src/core/errors';
+import { isMindMapFile } from '@/src/markdown';
+import { sanitizeFileName } from '@/src/media/images-save';
+import { TITLE_RENAME_DEBOUNCE_MS } from '@/src/core/constants';
+import { t } from '@/src/core/i18n';
+import type { Language } from '@/src/core/i18n';
 
 interface TitleRenamerDeps {
 	app: App;

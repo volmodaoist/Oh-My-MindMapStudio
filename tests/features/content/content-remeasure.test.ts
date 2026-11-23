@@ -16,8 +16,8 @@
  * （find-node-by-dom / engine-refresh-nodes），这里只验证会话的编排逻辑。
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import type { MindMap, MindMapNode } from '../../../vendor/simple-mind-map.cjs';
-import { ContentRemeasureSession } from '../../../src/features/content/content-remeasure';
+import type { MindMap, MindMapNode } from '@/vendor/simple-mind-map.cjs';
+import { ContentRemeasureSession } from '@/src/features/content/content-remeasure';
 
 const engine = vi.hoisted(() => ({
 	resolveNodesByDoms: vi.fn(),
@@ -28,7 +28,7 @@ const engine = vi.hoisted(() => ({
 	collectRenderNodeData: vi.fn(),
 }));
 
-vi.mock('../../../src/engine/mindmap', () => ({
+vi.mock('@/src/engine', () => ({
 	resolveNodesByDoms: engine.resolveNodesByDoms,
 	findNodesByContentProducts: engine.findNodesByContentProducts,
 	refreshNodesCustomContent: engine.refreshNodesCustomContent,
@@ -39,8 +39,9 @@ vi.mock('../../../src/engine/mindmap', () => ({
 
 const plugins = vi.hoisted(() => ({
 	hasPluginContents: vi.fn(), syncPluginContents: vi.fn(), disposePluginContents: vi.fn(),
+	getEditingPluginNodeIds: vi.fn(),
 }));
-vi.mock('../../../src/platform/rendering/plugins/bridge', () => plugins);
+vi.mock('@/src/platform/rendering/plugins/bridge', () => plugins);
 
 /** 平台层（未定稿修复 / 登记面清理）：本套件只验证会话的**调用编排** */
 const platform = vi.hoisted(() => ({
@@ -49,7 +50,7 @@ const platform = vi.hoisted(() => ({
 	pruneUnsettledMathOwnedBy: vi.fn(),
 }));
 
-vi.mock('../../../src/platform/rendering/math/math-jax', () => ({
+vi.mock('@/src/platform/rendering/math/math-jax', () => ({
 	repairUnsettledMath: platform.repairUnsettledMath,
 	clearUnsettledMath: platform.clearUnsettledMath,
 	pruneUnsettledMathOwnedBy: platform.pruneUnsettledMathOwnedBy,
@@ -57,7 +58,7 @@ vi.mock('../../../src/platform/rendering/math/math-jax', () => ({
 
 /** holder 与节点桩：对会话而言都是不透明引用（编排逻辑只看身份） */
 const holder = (): HTMLElement => ({}) as unknown as HTMLElement;
-const node = (uid: string): MindMapNode => ({ uid }) as unknown as MindMapNode;
+const node = (uid: string): MindMapNode => ({ uid, getData: () => ({ uid }) }) as unknown as MindMapNode;
 
 /** 字体面桩：记录 loadingdone 监听并可手动触发 */
 function makeFontSet() {
@@ -129,6 +130,7 @@ describe('ContentRemeasureSession（自绘内容定稿 → 尺寸同步会话）
 		engine.getRenderRoot.mockReset();
 		engine.collectRenderNodeData.mockReset();
 		plugins.hasPluginContents.mockReset(); plugins.hasPluginContents.mockReturnValue(false);
+		plugins.getEditingPluginNodeIds.mockReset(); plugins.getEditingPluginNodeIds.mockReturnValue(new Set());
 		plugins.syncPluginContents.mockReset(); plugins.disposePluginContents.mockReset();
 	});
 
@@ -176,6 +178,13 @@ describe('ContentRemeasureSession（自绘内容定稿 → 尺寸同步会话）
 			n3,
 		]);
 	});
+	it('活插件编辑时将保留 DOM 的节点集合交给引擎，仍使用同一批重排', () => {
+		const editor = node('editing'); const ordinary = node('ordinary');
+		plugins.getEditingPluginNodeIds.mockReturnValue(new Set(['editing']));
+		engine.resolveNodesByDoms.mockReturnValue([editor, ordinary]);
+		session.schedule(holder()); session.schedule(holder()); vi.advanceTimersByTime(0);
+		expect(engine.refreshNodesCustomContent).toHaveBeenCalledExactlyOnceWith(map, [editor, ordinary], new Set([editor]));
+	});
 
 	it('批次窗口内引擎已销毁（getMindMap → null）：静默结束，不反查不重排不告警', () => {
 		const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
@@ -221,7 +230,7 @@ describe('ContentRemeasureSession（自绘内容定稿 → 尺寸同步会话）
 		// node_tree_render_end → 重试：root 已回填但仍解析不到（真异常）→ 告警一次
 		session.retryDeferred();
 		expect(warnSpy).toHaveBeenCalledTimes(1);
-		expect(String(warnSpy.mock.calls[0]?.[0])).toContain('MindMap Studio：');
+			expect(String(warnSpy.mock.calls[0]?.[0])).toContain('Oh-My-Mindmap-Studio：');
 		expect(String(warnSpy.mock.calls[0]?.[0])).toContain('未能定位归属节点');
 		expect(engine.refreshNodesCustomContent).not.toHaveBeenCalled();
 

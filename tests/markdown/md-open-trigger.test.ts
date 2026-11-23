@@ -1,11 +1,11 @@
 /** 打开方式只影响当前标签；普通笔记不因打开、返回或重启恢复被改写属性。 */
 import { describe, expect, it, vi } from 'vitest';
 import { MarkdownView, TFile } from 'obsidian';
-import { CORE_VIEW_TYPE, VIEW_TYPE } from '../../src/core/constants';
+import { CORE_VIEW_TYPE, VIEW_TYPE } from '@/src/core/constants';
 import {
 	canAutoOpenMindMap, isExplicitMindMapOpen, isMindMapFile,
 	openAsMarkdown, openAsMindMap, readDeclaredLayout,
-} from '../../src/markdown/md-open';
+} from '@/src/markdown/md-open';
 
 function file(path = 'notes/OS.md'): TFile {
 	return Object.assign(new TFile(), { path, extension: 'md' });

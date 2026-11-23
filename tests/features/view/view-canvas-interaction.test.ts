@@ -6,13 +6,13 @@
  */
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { WorkspaceLeaf } from 'obsidian';
-import { EventBinder } from '../../../src/core/event-binder';
-import type { ViewPluginContext } from '../../../src/features/view/view-context';
-import type { MindMapNode } from '../../../src/core/engine-types';
-import type { NewMapSyntax } from '../../../src/core/constants';
-import type { EngineControllerDeps } from '../../../src/services/engine-controller';
-import { MindMapView } from '../../../src/features/view/view';
-import { createChildNodeBelow } from '../../../src/features/editing/view-node-actions';
+import { EventBinder } from '@/src/core/event-binder';
+import type { ViewPluginContext } from '@/src/features/view/view-context';
+import type { MindMapNode } from '@/src/core/engine-types';
+import type { NewMapSyntax } from '@/src/core/constants';
+import type { EngineControllerDeps } from '@/src/services/engine/engine-controller';
+import { MindMapView } from '@/src/features/view/view';
+import { createChildNodeBelow } from '@/src/features/editing/view-node-actions';
 
 const harness = vi.hoisted<{
 	deps: EngineControllerDeps | null;
@@ -42,7 +42,7 @@ vi.mock('obsidian', async (importOriginal) => {
 		},
 	};
 });
-vi.mock('../../../src/services/engine-controller', () => ({
+vi.mock('@/src/services/engine/engine-controller', () => ({
 	EngineController: class {
 		mindMap = harness.engine;
 		engineEvents = harness.events;
@@ -50,7 +50,7 @@ vi.mock('../../../src/services/engine-controller', () => ({
 		constructor(deps: EngineControllerDeps) { harness.deps = deps; }
 	},
 }));
-vi.mock('../../../src/engine/mindmap', () => ({
+vi.mock('@/src/engine', () => ({
 	ENGINE_COMMANDS: { INSERT_CHILD_NODE: 'INSERT_CHILD_NODE' },
 	getRenderRoot: (engine: { renderer: { root: unknown } } | null) => engine?.renderer.root,
 	isCustomNodeContent: () => true,
@@ -58,26 +58,26 @@ vi.mock('../../../src/engine/mindmap', () => ({
 	applySessionSnapshot: harness.applySnapshot,
 	applyCanvasDragMode: harness.applyCanvasDragMode,
 }));
-vi.mock('../../../src/features/editing/node-inline-editor', () => ({
+vi.mock('@/src/features/editing/node-inline-editor', () => ({
 	openNodeInlineEditor: harness.openEditor,
 }));
 
 // 保留真实 view-node-actions 的节点编辑/创建绑定；不测这些独立特性的内部行为。
-vi.mock('../../../src/features/editing/view-dnd');
-vi.mock('../../../src/features/editing/view-paste');
-vi.mock('../../../src/features/view/view-context-menu');
-vi.mock('../../../src/features/navigation/view-wikilink');
-vi.mock('../../../src/features/content/view-node-task');
-vi.mock('../../../src/features/relations/node-pick');
-vi.mock('../../../src/features/relations/view-node-relation');
-vi.mock('../../../src/features/content/view-tag');
-vi.mock('../../../src/features/content/view-footnote');
-vi.mock('../../../src/features/content/node-codeblock');
-vi.mock('../../../src/features/canvas/view-viewport');
-vi.mock('../../../src/features/media/image-resize');
-vi.mock('../../../src/features/canvas/view-node-width');
-vi.mock('../../../src/features/view/view-minimap');
-vi.mock('../../../src/features/editing/view-syntax');
+vi.mock('@/src/features/editing/view-dnd');
+vi.mock('@/src/features/editing/view-paste');
+vi.mock('@/src/features/view/view-context-menu');
+vi.mock('@/src/features/navigation/view-wikilink');
+vi.mock('@/src/features/content/view-node-task');
+vi.mock('@/src/features/relations/node-pick');
+vi.mock('@/src/features/relations/view-node-relation');
+vi.mock('@/src/features/content/view-tag');
+vi.mock('@/src/features/content/view-footnote');
+vi.mock('@/src/features/content/node-codeblock');
+vi.mock('@/src/features/canvas/view-viewport');
+vi.mock('@/src/features/media/image-resize');
+vi.mock('@/src/features/canvas/view-node-width');
+vi.mock('@/src/features/view/view-minimap');
+vi.mock('@/src/features/editing/view-syntax');
 
 /** EventTarget 带 closest：旧绑定的 instanceof/closest 判据也必须能命中空白。 */
 class CanvasTarget extends EventTarget {

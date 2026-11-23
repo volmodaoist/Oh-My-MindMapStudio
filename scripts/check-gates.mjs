@@ -17,8 +17,8 @@
  *
  * **豁免表行数对账**（附带静态核对，每次都跑）：
  * - 行数漂移：登记值 vs 实测（口径 = `tests/contracts/agents-md-sync.test.ts` 的
- *   `countSourceLines`；`--fix-lines` 回填 `docs/agents/index.md` 的**唯一**豁免表。
- *   `docs/agents/architecture.md` 自 2026-11-09 起不再复制该表——两张表并行时只有
+ *   `countSourceLines`；`--fix-lines` 回填 `.agents/index.md` 的**唯一**豁免表。
+ *   `.agents/architecture.md` 自 2026-11-09 起不再复制该表——两张表并行时只有
  *   一张受门禁，另一张必然漂移（实测同一文件曾出现 1121 / 1280 两个读数）；
  * - 未登记超限：`src/` 下超 300 行的 .ts 而不在豁免表 → 红灯（硬规则 10「未登记的
  *   超限文件数只允许递减」；agents-md-sync 测试只守漂移阈值、不校验总数，这里补上
@@ -28,7 +28,7 @@
  *   npm run check:gates                 # 算链并执行（提交前跑）
  *   npm run check:gates -- --dry-run    # 只打印计划与静态核对，不执行
  *   npm run check:gates -- --all        # 附加门禁全跑（拿不准触发条件时用）
- *   npm run check:gates -- --fix-lines  # 只回填豁免表行数（docs/agents/index.md 唯一那张），不跑门禁
+ *   npm run check:gates -- --fix-lines  # 只回填豁免表行数（.agents/index.md 唯一那张），不跑门禁
  */
 import { spawnSync } from 'node:child_process';
 import { readFileSync, readdirSync, realpathSync, writeFileSync } from 'node:fs';
@@ -37,7 +37,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const AGENTS_REL = 'AGENTS.md';
-const INDEX_REL = 'docs/agents/index.md';
+const INDEX_REL = '.agents/index.md';
 
 /**
  * 豁免表行：`| `src/x.ts` | NNN | 理由… |`。
@@ -58,7 +58,7 @@ const VISUAL_MATCHERS = [
 	'scripts/visual-minimap-sidebar.mjs',
 	'scripts/chrome-page.mjs',
 	'src/core/minimap-geometry.ts',
-	'src/engine/mindmap-minimap.ts',
+	'src/engine/',
 	'scripts/visual-node-content.mjs',
 	'config/esbuild.config.mjs',
 	'src/ui/toolbar/',
@@ -79,7 +79,7 @@ const VISUAL_MATCHERS = [
 	'src/features/media/',
 	'src/features/relations/node-pick.ts',
 	'src/features/mindmap-codeblock.ts',
-	'src/domain/pipe-table.ts',
+	'src/domain/content/pipe-table.ts',
 	'src/platform/rendering/',
 ];
 
@@ -89,7 +89,7 @@ if (flags.includes('--help') || flags.includes('-h')) {
   npm run check:gates                 # 按 git 变更集算门禁并顺序执行
   npm run check:gates -- --dry-run    # 只打印计划与静态核对，不执行
   npm run check:gates -- --all        # 附加门禁全跑（含 build:vendor）
-  npm run check:gates -- --fix-lines  # 只回填豁免表行数（docs/agents/index.md 唯一那张）
+  npm run check:gates -- --fix-lines  # 只回填豁免表行数（.agents/index.md 唯一那张）
 
 注意：--all 会连 build:vendor 一起跑，而重打包需要「打包面依赖」已安装
 （@svgdotjs/svg.js 等，见 vendor/BUILD.md；本仓库 package.json 有意不声明）。
@@ -255,7 +255,7 @@ export function buildPlan(changed, { all } = { all: false }) {
 		{
 			args: ['run', 'check:release'],
 			label: 'npm run check:release',
-			match: (f) => f === 'manifest.json' || f === 'versions.json' || f === 'README.md' || f === 'README.zh-CN.md' || f.startsWith('LICENSE') || f.startsWith('docs/release-notes-'),
+			match: (f) => f === 'manifest.json' || f === 'versions.json' || f === 'README.md' || f === 'README.zh-CN.md' || f === 'CHANGELOG' || f === 'scripts/release-notes.mjs' || f === 'scripts/check-release-metadata.mjs' || f.startsWith('LICENSE'),
 			why: (hit) => `发布元数据在变更集：${hit.join('、')}`,
 			skipNote: '发布元数据未变更',
 		},
@@ -361,7 +361,7 @@ function main() {
 	}
 	// 规模观察（**不是门禁**）：超限总数 / 总行数 / 最大 5 个只打印，不红灯。
 	// 机械拆分不是目标（AGENTS「不做机械拆分」），硬指标只会逼出坏拆分；
-	// 趋势交给发布前人工看这一行 + line-count-log 的批次记录（2026-11-09）。
+	// 当前规模直接读取本轮输出，历史趋势通过 Git 的索引变更查证。
 	if (overLimit.length > 0) {
 		const measured = overLimit
 			.map((rel) => ({ rel, lines: countSourceLines(join(ROOT, rel)) ?? 0 }))

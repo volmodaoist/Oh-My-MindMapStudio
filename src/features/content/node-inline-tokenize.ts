@@ -25,31 +25,31 @@ import {
 	isIndentedCodeLine,
 	isRenderableImageTarget,
 	normalizeFenceLanguage,
-} from '../../core/constants';
-import type { InlineTextStyle, InlineSegment } from '../../core/node-content-types';
-import { tf, type Language } from '../../core/i18n';
-import { readNodeDataString } from '../../core/node-data';
+} from '@/src/core/constants';
+import type { InlineTextStyle, InlineSegment } from '@/src/core/node-content-types';
+import { tf, type Language } from '@/src/core/i18n';
+import { readNodeDataString } from '@/src/core/node-data';
 import {
 	isCalloutHeaderLine,
 	parseCalloutHeader,
 	stripQuotePrefix,
-} from '../../domain/callout';
-import { colorDirectiveValueOf } from '../../domain/color';
-import { matchPipeTable, type PipeTable } from '../../domain/pipe-table';
-import { isSchemeUrl, isUrlLikeText } from '../../domain/url';
-import { nodeContinuationIndents, nodeInlineSource } from '../../domain/md-meta';
-import { stripTaskPrefix } from '../../domain/md-task';
+} from '@/src/domain/content';
+import { colorDirectiveValueOf } from '@/src/domain/color';
+import { matchPipeTable, type PipeTable } from '@/src/domain/content';
+import { isSchemeUrl, isUrlLikeText } from '@/src/domain/links';
+import { nodeContinuationIndents, nodeInlineSource } from '@/src/domain/document';
+import { stripTaskPrefix } from '@/src/domain/content';
 import {
 	FOOTNOTE_ID_SOURCE,
 	splitFootnoteDefinitions,
-} from '../../markdown/md-footnote';
+} from '@/src/markdown';
 import {
 	fenceMarker,
 	isFenceCloseLine,
 	isSelfClosedFenceLine,
-} from '../../markdown/md-outline-lines';
-import { tokenDisplay, tokenizeInline, type InlineToken } from '../../markdown/md-outline';
-import type { MindMapNode } from '../../core/engine-types';
+} from '@/src/markdown';
+import { tokenDisplay, tokenizeInline, type InlineToken } from '@/src/markdown';
+import type { MindMapNode } from '@/src/core/engine-types';
 
 
 
@@ -1307,7 +1307,7 @@ interface ContentBlock {
  *   而全部块的 text 拼接仍等于原文（编辑弹窗预览里表格独占行）；
  * - 三类行**不参与**表格识别：① 落在 `protectedRanges` 内的行（围栏代码块 /
  *   块级数学）；② 缩进代码行（`isIndentedCodeLine`，对齐解析层「缩进块是代码」
- *   的既有判定）；③ 其余行交给 `domain/pipe-table.matchPipeTable` 判定
+ *   的既有判定）；③ 其余行交给 `domain/content/pipe-table.matchPipeTable` 判定
  *   （表头行 + 分隔行成对才算表）。
  *
  * 无表时返回**单个文本块 = 整段原文** ⇒ 上层走与引入表格前逐字等价的快路径。
@@ -1723,4 +1723,4 @@ export function inlineContentPreview(
 // 2026-10-15 删除；该语句随 `resolveSelfDrawSource` 迁入本模块）。
 
 // 类型唯一源在 core；保留现有 barrel 的类型出口。
-export type { InlineContentOptions, InlineSegment } from '../../core/node-content-types';
+export type { InlineContentOptions, InlineSegment } from '@/src/core/node-content-types';
