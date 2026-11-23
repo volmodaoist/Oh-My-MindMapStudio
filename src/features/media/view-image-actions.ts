@@ -21,7 +21,7 @@ import { notifyError } from '../../core/errors';
 import {
 	isAppResourceUrl,
 	isExternalImageRef,
-} from '../../domain/url';
+} from '../../domain/links';
 import { readNodeDataString, type MdNodeData } from '../../core/node-data';
 import type { MindMapNode } from '../../core/engine-types';
 import type { MindMapViewContext } from '../view/view-context';

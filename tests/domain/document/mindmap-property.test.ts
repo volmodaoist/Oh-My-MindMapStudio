@@ -1,5 +1,5 @@
 /**
- * 导图声明判据回归（domain/mindmap-property.ts）。
+ * 导图声明判据回归（domain/document/mindmap-property.ts）。
  *
  * 2026-11-07 契约：
  * - **启用信号** `Mindmap`：值严格为 `Mindmap`（容忍大小写/分隔符）才启用；
@@ -31,8 +31,8 @@ import {
 	setMindMapDisabled,
 	setMindMapEnabled,
 	setMindMapLayout,
-} from '../../src/domain/mindmap-property';
-import { LAYOUT_OPTIONS } from '../../src/core/constants';
+} from '../../../src/domain/document/mindmap-property';
+import { LAYOUT_OPTIONS } from '../../../src/core/constants';
 
 describe('isMindMapEnabled（唯一启用信号）', () => {
 	it.each([

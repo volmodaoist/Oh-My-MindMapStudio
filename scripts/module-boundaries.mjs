@@ -99,12 +99,18 @@ export const COMBO_ROOT_MODULES = Object.freeze([
 
 /** 多文件能力的唯一公共入口；叶子工具不强制建立 barrel。 */
 export const PUBLIC_MODULES = Object.freeze([
+	'domain/content',
 	'domain/document',
+	'domain/links',
+	'domain/relations',
 	'engine',
 	'markdown',
 	'services/document',
 	'services/engine',
 ]);
+
+/** 领域根目录保留的跨能力叶子；新职责优先归入已有能力模块。 */
+export const DOMAIN_LEAF_MODULES = Object.freeze(['color', 'node-edit-key']);
 
 /**
  * 输入为相对仓库根的 posix 文件路径，类型引用与值引用共用规则。

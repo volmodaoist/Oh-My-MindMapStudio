@@ -27,7 +27,7 @@ export function isNodeTextEdited(text: unknown, mdDerivedText: unknown): boolean
  * 已编辑 → `data.text` + 关系指令行（`mdRaw` 是解析期快照，编辑后过期）。
  *
  * 唯一实现（2026-10-27 收口）：自绘接管判定（`node-inline-content.resolveSelfDrawSource`）、
- * 节点配色指令（`engine/mindmap-colors`）与关系指令（`domain/relation`）必须读同一份
+ * 节点配色指令（`engine/mindmap-colors`）与关系指令（`domain/relations/relation`）必须读同一份
  * 原文，否则「节点显示里有注释、样式/关系却按旧行解析」这类漂移无从发现。`mdRaw`
  * 缺失时同样回落 `text`（新建节点没有原文快照）。
  *

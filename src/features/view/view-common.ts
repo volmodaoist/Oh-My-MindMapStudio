@@ -9,7 +9,7 @@ import { Notice } from 'obsidian';
 import { ENGINE_COMMANDS, getActiveNode } from '../../engine';
 import { t, type Language } from '../../core/i18n';
 import { composeNodeContent } from '../../markdown';
-import { formatWikilink, linkDisplayText } from '../../domain/wikilink';
+import { formatWikilink, linkDisplayText } from '../../domain/links';
 import type { App } from 'obsidian';
 import type { MdNodeData } from '../../core/node-data';
 import type { MindMap, MindMapNode } from '../../core/engine-types';

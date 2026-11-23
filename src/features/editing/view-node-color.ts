@@ -45,9 +45,9 @@ import {
 	orphanSentinels,
 	scopeSentinels,
 } from '../../domain/color';
-import { splitDirectiveTail } from '../../domain/directive';
+import { splitDirectiveTail } from '../../domain/relations';
 import { nodeInlineSource } from '../../domain/document';
-import { walkTree } from '../../domain/tree';
+import { walkTree } from '../../domain/document';
 import { composeNodeContent } from '../../markdown';
 import { createButton, openFormModal } from '../../ui/modal-common';
 import { applyRawNodeContents } from '../content/node-content-write';

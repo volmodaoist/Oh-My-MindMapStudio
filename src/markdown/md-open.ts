@@ -4,8 +4,8 @@
  */
 import { App, MarkdownView, TFile, WorkspaceLeaf } from 'obsidian';
 import { CORE_VIEW_TYPE, VIEW_TYPE } from '../core/constants';
-import { isDedicatedMindMapPath } from '../domain/mindmap-file';
-import { isMindMapEnabled, readMindMapLayout } from '../domain/mindmap-property';
+import { isDedicatedMindMapPath } from '../domain/document';
+import { isMindMapEnabled, readMindMapLayout } from '../domain/document';
 
 interface ViewModeChoice { file: TFile; mode: 'mindmap' | 'markdown' }
 const viewModes = new WeakMap<WorkspaceLeaf, ViewModeChoice>();

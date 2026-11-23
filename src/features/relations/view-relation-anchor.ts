@@ -21,13 +21,13 @@
 import { Notice } from 'obsidian';
 import type { MindMapNode } from '../../core/engine-types';
 import { t } from '../../core/i18n';
-import type { RelationGeometry } from '../../domain/relation';
+import type { RelationGeometry } from '../../domain/relations';
 import {
 	commitAnchorSession,
 	createAnchorSession,
 	moveAnchorSession,
 	previewOf,
-} from '../../domain/relation-anchor';
+} from '../../domain/relations';
 import {
 	relationCanvasLayer,
 	relationClientToContent,

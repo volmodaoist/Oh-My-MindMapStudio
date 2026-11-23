@@ -2,7 +2,7 @@
 import { FileView } from 'obsidian';
 import type { App } from 'obsidian';
 import { VIEW_TYPE } from '../../core/constants';
-import { formatWikilink, wikilinkTriggerAt } from '../../domain/wikilink';
+import { formatWikilink, wikilinkTriggerAt } from '../../domain/links';
 import { getCodeTabApi } from '../../platform/rendering/plugins/code-tab';
 import type { CodeTabApi, CompletionItem, CompletionRule } from '../../platform/rendering/plugins/code-tab-api';
 import { wikilinkCompletions } from '../../platform/workspace/wikilink-completions';

@@ -1,5 +1,5 @@
 /**
- * 链接「生效显示名」纯判定回归（`domain/wiki-display.ts`，K6 口径）。
+ * 链接「生效显示名」纯判定回归（`domain/links/wiki-display.ts`，K6 口径）。
  *
  * 为什么补这个测试：该判定是**跨模块复用**的关键口径——回写合成
  * （`md-serialize.renderHyperlink` + `nodeLinkDisplay`）与文档页图标 tooltip
@@ -16,7 +16,7 @@
  * **负向自检**（对齐 K53 ⑨ / `verify:visual` 的负向自检惯例，证明断言非空转且
  * 定位精准）：① 拆掉闸门①（`mdLinkStyle !== 'wiki'` 早退）→ **精确 1 例**报红；
  * ⑤ 拆掉闸门⑤ 的 `data.mdEmbed !== true` 条件 → **精确 1 例**报红（附件嵌入用例）。
- * 两次均已还原（还原后 `git diff` 对 `src/domain/wiki-display.ts` 为空）。
+ * 两次均已还原（还原后 `git diff` 对 `src/domain/links/wiki-display.ts` 为空）。
  */
 import { describe, expect, it } from 'vitest';
 import {
@@ -24,7 +24,7 @@ import {
 	editedWikilinkAlias,
 	effectiveDocWikiLink,
 	type WikiAliasSource,
-} from '../../src/domain/wiki-display';
+} from '../../../src/domain/links/wiki-display';
 
 /**
  * 文档双链节点的最小数据面。

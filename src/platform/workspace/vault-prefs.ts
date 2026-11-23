@@ -16,7 +16,7 @@
  * 自动更新链接开），不改变既有行为——不可把「读不到设置」变成行为变化。
  */
 import type { App } from 'obsidian';
-import type { LinkPathFormat } from '../../domain/wikilink';
+import type { LinkPathFormat } from '../../domain/links';
 
 function readVaultConfig(app: App, key: string): unknown {
 	// 官方 d.ts 未声明 getConfig；按可选类型收窄，避免 any 扩散

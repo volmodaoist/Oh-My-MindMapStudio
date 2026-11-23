@@ -11,7 +11,7 @@ import { commitPluginBlock } from '../content/plugin-content-session';
  * - openHyperlink（view-link-navigator.ts） 节点超链接跳转路由；
  * - 本类只做编排：生命周期事件 → 装配 services 与 view-* 交互特性。
  */
-import { isDedicatedMindMapPath, mindMapFileTitle } from '../../domain/mindmap-file';
+import { isDedicatedMindMapPath, mindMapFileTitle } from '../../domain/document';
 import {
 	type EventRef,
 	FileView,
@@ -80,7 +80,7 @@ import { openAsMarkdown, readDeclaredLayout, readMdBackMode } from '../../markdo
 import {
 	normalizeLayoutId,
 	setMindMapLayout,
-} from '../../domain/mindmap-property';
+} from '../../domain/document';
 import { registerWikilinkInteractions } from '../navigation/view-wikilink';
 import { setupNodeTaskInteraction } from '../content/view-node-task';
 import { cancelNodePick, setupNodePick } from '../relations/node-pick';

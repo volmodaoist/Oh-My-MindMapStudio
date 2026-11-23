@@ -37,8 +37,8 @@ import {
 export { planAttachmentLink, planDocLink } from '../navigation/view-node-link-plan';
 import { resolvePathToFile } from '../../links/links-resolve';
 import { t, type TranslationKey } from '../../core/i18n';
-import { isHyperlinkProtocolUrl } from '../../domain/url';
-import { relationStateOf } from '../../domain/relation';
+import { isHyperlinkProtocolUrl } from '../../domain/links';
+import { relationStateOf } from '../../domain/relations';
 import { composeNodeContent, isPureLinkNode } from '../../markdown';
 import { stripInboundRelations } from '../relations/view-node-relation';
 import { editSummaryText, removeSummary } from '../relations/view-node-summary';
@@ -48,7 +48,7 @@ import {
 	linkDisplayText,
 	parseWikilink,
 	wikilinkTargetIsAttachment,
-} from '../../domain/wikilink';
+} from '../../domain/links';
 import { prefersMarkdownLinks } from '../../platform/workspace/vault-prefs';
 import { inlineContentPreview } from '../content/node-inline-content';
 import { openNodeInlineEditor } from './node-inline-editor';

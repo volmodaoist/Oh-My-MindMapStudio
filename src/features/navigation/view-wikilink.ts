@@ -22,8 +22,8 @@
 import { Keymap } from 'obsidian';
 import { HOVER_LINK_EVENT, VIEW_TYPE } from '../../core/constants';
 import { elementFromTarget } from '../../core/event-binder';
-import { isSafeAnchorHref } from '../../domain/url';
-import { formatWikilink, wikilinkLinkpath } from '../../domain/wikilink';
+import { isSafeAnchorHref } from '../../domain/links';
+import { formatWikilink, wikilinkLinkpath } from '../../domain/links';
 import { getNodeDataString, getNodeGroupEl } from '../../engine';
 import { MERMAID_BLOCK_CLASS } from '../content/node-inline-content';
 import type { MindMap, MindMapNode } from '../../core/engine-types';

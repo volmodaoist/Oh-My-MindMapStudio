@@ -311,7 +311,7 @@ const SCENARIOS = [
 		name: 'table',
 		label: '表格：GFM 管道表自绘为内联样式 <table>（表宽不撑爆节点）',
 		data: {
-			// 2026-10-14：plain 多行节点里的表格块独立成段（识别在 domain/pipe-table，
+			// 2026-10-14：plain 多行节点里的表格块独立成段（识别在 domain/content/pipe-table，
 			// 装配在 features/content/node-inline-content），产出 table/thead/tbody，样式
 			// **全内联**（导出 SVG 不含 styles.css）。第二列分隔行写 `---:` ⇒ 该列
 			// 对齐必须落到内联 text-align（本场景是「对齐不是摆设」的锁定用例）
@@ -5734,7 +5734,7 @@ function checkInline(dom) {
 		);
 	}
 	// 表格（2026-10-14）：管道表必须自绘成 table/thead/tbody；单元格文本与列对齐
-	// 取自 domain/pipe-table 的模型；边框/内边距/对齐**必须内联**（导出 SVG 不含
+	// 取自 domain/content/pipe-table 的模型；边框/内边距/对齐**必须内联**（导出 SVG 不含
 	// styles.css 与 app.css，类规则在产物里整体失效）；表宽不得超出内容盒
 	if (probe.tableInForeignObject !== true) {
 		failures.push(

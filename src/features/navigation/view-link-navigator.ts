@@ -8,8 +8,8 @@ import { canOpenInObsidian } from '../../core/constants';
 import {
 	absolutePathFromFileUrl,
 	isHttpUrl,
-} from '../../domain/url';
-import { parseWikilink } from '../../domain/wikilink';
+} from '../../domain/links';
+import { parseWikilink } from '../../domain/links';
 import { resolvePathToFile } from '../../links/links-resolve';
 import {
 	openAbsolutePathWithSystemApp,
@@ -54,7 +54,7 @@ export function openHyperlink(
 	const file = resolvePathToFile(link, host.app);
 	if (!file) {
 		// 库外 file:// 绝对路径（拖入系统文件时 Ctrl/Option 的形态，见
-		// domain/url.fileUrlFromAbsolutePath）：库内解析必然落空，交系统应用打开。
+		// domain/links/url.fileUrlFromAbsolutePath）：库内解析必然落空，交系统应用打开。
 		// `absolutePathFromFileUrl` 内部已判定 `file://` 前缀，此处不再自行判形态。
 		const path = absolutePathFromFileUrl(link);
 		if (path) {

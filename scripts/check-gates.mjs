@@ -79,7 +79,7 @@ const VISUAL_MATCHERS = [
 	'src/features/media/',
 	'src/features/relations/node-pick.ts',
 	'src/features/mindmap-codeblock.ts',
-	'src/domain/pipe-table.ts',
+	'src/domain/content/pipe-table.ts',
 	'src/platform/rendering/',
 ];
 

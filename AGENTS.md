@@ -46,7 +46,7 @@ Obsidian 社区插件（TypeScript → esbuild → `main.js`）。把「声明�
 **5. 不造第二份判定**
 
 - Don't：另写一份 URL 形态判断 / 双链解析 / 并发原语 / 错误消息格式化
-- Do：经 `domain/url.ts`、`domain/wikilink.ts`、`core/concurrency.ts`、`core/errors.ts`
+- Do：经 `domain/links/url.ts`、`domain/links/wikilink.ts`、`core/concurrency.ts`、`core/errors.ts`
 
 **6. 源文件变更必须同步索引**
 

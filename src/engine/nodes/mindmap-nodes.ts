@@ -9,7 +9,7 @@ import type {
 	MindMapNode,
 	MindMapTreeNode,
 } from '../../../vendor/simple-mind-map.cjs';
-import { walkTree } from '../../domain/tree';
+import { walkTree } from '../../domain/document';
 import { createWarnOnce } from '../../core/errors';
 import { readNodeDataString } from '../../core/node-data';
 import { ENGINE_COMMANDS } from '../runtime/mindmap-commands';

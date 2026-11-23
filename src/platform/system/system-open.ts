@@ -67,7 +67,7 @@ export function openFileWithSystemApp(
 
 /**
  * 用系统默认应用打开**库外**绝对路径（`file:///` 链接指向的文件，见
- * domain/url.absolutePathFromFileUrl）。与 openFileWithSystemApp 同一实现路径
+ * domain/links/url.absolutePathFromFileUrl）。与 openFileWithSystemApp 同一实现路径
  * （Electron `shell.openPath`），差别只在输入：这里没有 TFile——文件不在库里。
  */
 export function openAbsolutePathWithSystemApp(

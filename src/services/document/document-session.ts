@@ -37,7 +37,7 @@ import type { MdNodeData } from '../../core/node-data';
 import { App, TFile } from 'obsidian';
 import { createDebouncer, type Debouncer } from '../../core/concurrency';
 import type { MarkdownNode } from '../../domain/document';
-import { cloneTree as cloneJsonTree, walkTree } from '../../domain/tree';
+import { cloneTree as cloneJsonTree, walkTree } from '../../domain/document';
 import { resolveHistoryLimit } from '../../core/history-budget';
 import { splitFrontmatter } from '../../markdown';
 import { withDefaultImageSizes } from '../../media/images-path';

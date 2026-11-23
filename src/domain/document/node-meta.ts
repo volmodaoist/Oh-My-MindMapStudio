@@ -11,7 +11,7 @@
  * 不写入 .mindmap.md 文件正文。
  */
 
-import type { TaskState } from '../md-task';
+import type { TaskState } from '../content';
 
 /** 行类型（data.mdType）：md 三种行形态 */
 type MdLineType = 'heading' | 'list' | 'plain';
@@ -238,7 +238,7 @@ export interface MdNodeMeta {
 	 * 任务列表状态（GFM task list item）。
 	 *
 	 * 只在 `mdType === 'list'` 且**首行**以 `[ ]` / `[x]` / `[X]` 开头时存在；
-	 * 判定与合成收口在 `domain/md-task`。`mdRaw` 保留 token（逐字回写），
+	 * 判定与合成收口在 `domain/content/md-task`。`mdRaw` 保留 token（逐字回写），
 	 * `text` / `mdDerivedText` 剥掉 token（显示文本）——两者必须**一起**剥，
 	 * 否则 `md-serialize.rawOk` 会把每个任务节点判成「已编辑」。
 	 */
@@ -247,20 +247,20 @@ export interface MdNodeMeta {
 	 * 任务 token 的**原样**写法（`[ ]` / `[x]` / `[X]`）。
 	 *
 	 * 合成回写时逐字还原（不把用户写的 `[X]` 规范化成 `[x]`）；仅在 `mdTask`
-	 * 存在时有意义。切换状态时由 `domain/md-task.toggleTaskToken` 生成新值。
+	 * 存在时有意义。切换状态时由 `domain/content/md-task.toggleTaskToken` 生成新值。
 	 */
 	mdTaskToken?: string;
 	/**
 	 * **联系指令行**的逐字原文（多个指令行以 `\n` 连接），已从 `text` 剥出。
 	 *
-	 * 形态见 `domain/relation`：`%%id:xxxxxx%% %%rel:xxxxxx | 标签%%`，位置是
+	 * 形态见 `domain/relations/relation`：`%%id:xxxxxx%% %%rel:xxxxxx | 标签%%`，位置是
 	 * 节点最后一个物理行的**下一行**（独立一行、整行只有指令段）。选择独立行而
 	 * 不是行内尾插是实机结论：行尾指令会让 Obsidian 的 heading 文本变成
 	 * `支付 %%id:9c2e%%`，`[[#支付]]` 与行尾 `^block-id` 一起失效。
 	 *
 	 * 与 `mdTaskToken` 同构：`mdRaw` 逐字保留、`text` / `mdDerivedText` 一起剥、
 	 * 合成回写时贴回节点末行（缩进由序列化器按节点类型补）。派生状态（id / 出边）
-	 * **不落字段**，由 `domain/relation.relationStateOf` 读时算出——引擎内联编辑
+	 * **不落字段**，由 `domain/relations/relation.relationStateOf` 读时算出——引擎内联编辑
 	 * 会直接改写 `data.text`，缓存字段必然过期。
 	 */
 	mdDirectiveTail?: string;

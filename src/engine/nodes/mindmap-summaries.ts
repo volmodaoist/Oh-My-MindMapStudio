@@ -1,5 +1,5 @@
 /**
- * 概要（Summary）：把 `domain/summary` 规划的区间落到引擎节点数据上。
+ * 概要（Summary）：把 `domain/relations/summary` 规划的区间落到引擎节点数据上。
  *
  * ## 数据落点（全部写在**父节点** data）
  * 引擎把「若干兄弟的概要」建模成父节点持有的数组：
@@ -10,7 +10,7 @@
  * ]
  * ```
  *
- * - `range` = **兄弟下标闭区间**（含两端）——与 `domain/summary` 的「起点 + 个数」
+ * - `range` = **兄弟下标闭区间**（含两端）——与 `domain/relations/summary` 的「起点 + 个数」
  *   互相翻译：`start` = 声明那条指令的兄弟下标，`end` = `start + count - 1`；
  * - `text` = 概要节点的文字（引擎据此画一个盒，盒与括号由 `Render` 现算）；
  * - `uid` 只需**文档内唯一**（引擎用它做 DOM 类名与激活列表的身份）——本模块按
@@ -40,8 +40,8 @@ import {
 	planSummaryRanges,
 	summariesOf,
 	type SummaryRange,
-} from '../../domain/summary';
-import { walkTree } from '../../domain/tree';
+} from '../../domain/relations';
+import { walkTree } from '../../domain/document';
 import { getRenderRoot } from './mindmap-nodes';
 
 /** 本模块拥有的节点 data 键（清除分支遍历的就是它，勿另列一份） */
@@ -50,7 +50,7 @@ const SUMMARY_KEY = 'generalization';
 /**
  * 一条概要的引擎形态。
  *
- * 只给本模块与测试用：其它地方读概要一律走 `domain/summary`（正文是唯一真相）。
+ * 只给本模块与测试用：其它地方读概要一律走 `domain/relations/summary`（正文是唯一真相）。
  */
 export interface GeneralizationEntry {
 	/** 文档内唯一（`sum-1`…）；引擎用它做 DOM 类名与激活列表身份 */

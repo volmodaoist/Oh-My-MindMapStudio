@@ -20,7 +20,7 @@ import {
 } from '../../../src/markdown/syntax/md-footnote';
 import { ensureUniqueUids } from '../../../src/markdown/markdown';
 import { isLinkReferenceDefinition, parseMdOutline } from '../../../src/markdown/outline/md-outline';
-import { walkTree } from '../../../src/domain/tree';
+import { walkTree } from '../../../src/domain/document/tree';
 import type { MindMapTreeNode } from '../../../src/core/engine-types';
 
 /** 解析 + 补 uid（生产路径同此：uid 由 `ensureUniqueUids` 补齐后才可定位） */

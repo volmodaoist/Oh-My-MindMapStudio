@@ -17,7 +17,7 @@
  * 是二者共用的注入原语，返回 boolean。
  */
 
-import { CALLOUT_CSS_VARS } from '../domain/callout';
+import { CALLOUT_CSS_VARS } from '../domain/content';
 
 // ---------------------------------------------------------------------------
 // 共用：克隆 SVG 根收窄 + `<style>` 注入原语
@@ -118,7 +118,7 @@ const CSS_VARS_TO_EXPORT: readonly string[] = [
 	'--blockquote-color',
 	'--blockquote-border-color',
 	'--interactive-accent',
-	// 变量名按宿主取值（**不是**类型 id），13 个名字由 `domain/callout` 的
+	// 变量名按宿主取值（**不是**类型 id），13 个名字由 `domain/content/callout` 的
 	// `CALLOUT_CSS_VARS` 现算：`note`→`default`、`abstract`→`summary`、
 	// `failure`→`fail`、`danger`→`error`。此前手抄一份，改一处另一处会静默
 	// 回落到兜底色（硬规则 5）。

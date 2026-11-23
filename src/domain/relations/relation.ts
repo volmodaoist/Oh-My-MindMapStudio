@@ -1,7 +1,7 @@
 /**
- * 联系（关系连线）指令的**唯一**语义实现（语法层在 `domain/directive`）。
+ * 联系（关系连线）指令的**唯一**语义实现（语法层在 `domain/relations/directive`）。
  *
- * 写在指令块里的两种段（**独立指令行、一段一行**，见 `domain/directive`）：
+ * 写在指令块里的两种段（**独立指令行、一段一行**，见 `domain/relations/directive`）：
  *
  * ```markdown
  * ## 支付
@@ -28,13 +28,13 @@
  * 内联编辑会直接改写 `data.text`，缓存字段必然过期。
  */
 
-import { normalizeHexColor } from './color';
+import { normalizeHexColor } from '../color';
 import {
 	type DirectiveSegment,
 	splitDirectiveSegments,
 } from './directive';
-import { nodeInlineSource } from './document';
-import { walkTree } from './tree';
+import { nodeInlineSource } from '../document';
+import { walkTree } from '../document';
 
 /** 端点方向（引擎 `getNodePoint(node, dir, range)` 的 dir） */
 export type RelationAnchorDir = 'left' | 'right' | 'top' | 'bottom';
@@ -259,8 +259,8 @@ export function sameRelationGeometry(
 /**
  * 解释**关系侧**的一段（`id` / `rel`）；其它 key（`sum`）与非法 value 返回 null。
  *
- * `sum` 段由 `domain/summary` 解释：同一行里两种段各管各的，互不吞并
- * （这正是把行语法收进 `domain/directive` 的目的）。
+ * `sum` 段由 `domain/relations/summary` 解释：同一行里两种段各管各的，互不吞并
+ * （这正是把行语法收进 `domain/relations/directive` 的目的）。
  */
 function parseRelationSegment(
 	segment: DirectiveSegment,
@@ -320,7 +320,7 @@ const EMPTY_STATE: RelationState = Object.freeze({ id: null, refs: [] });
 /**
  * 从一段「节点原文」读出关系状态。
  *
- * 覆盖两种真实形态（拆块由 `domain/directive` 唯一实现）：
+ * 覆盖两种真实形态（拆块由 `domain/relations/directive` 唯一实现）：
  * - **标准形态**：末尾若干**指令行**（本插件写出）；
  * - **行内形态**：最后一个内容行的行尾指令段（用户手写 / 旧文件 / 粘贴片段）。
  *
@@ -366,7 +366,7 @@ export function relationStateOf(
  * 状态 → **关系侧**的指令段（`id` 在前，`rel` 按原序；不包含 `sum` 段）。
  *
  * 写侧的唯一原料：调用方把本函数的段与原文里**其它 key 的段**（概要）合到一起，
- * 交给 `domain/directive.applyDirectiveBlock` 统一排序/拼接——这样改联系不会
+ * 交给 `domain/relations/directive.applyDirectiveBlock` 统一排序/拼接——这样改联系不会
  * 抹掉概要，改概要也不会抹掉联系。
  */
 export function relationSegmentsOf(state: RelationState): DirectiveSegment[] {

@@ -1380,7 +1380,7 @@ describe('openImageEditorModal（节点图片编辑弹窗）', () => {
 
 	it('畸形 % 序列（app:// 解码失败）不抛错：回退未解码路径，弹窗照常可用', async () => {
 		// decodeURIComponent('%E9%99') 会抛 URIError；抛出去整个弹窗就打不开了。
-		// 走 domain/url.resourceUrlPathCandidates 后，解码失败由它内部 catch
+		// 走 domain/links/url.resourceUrlPathCandidates 后，解码失败由它内部 catch
 		// （只保留未解码候选），本弹窗不再本地兜一份 URIError。
 		const malformed = 'app://local/%E9%99';
 		const harness = openImage(malformed);

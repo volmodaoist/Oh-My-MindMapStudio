@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { isDedicatedMindMapPath, mindMapFileName, mindMapFileTitle } from '../../src/domain/mindmap-file';
+import { isDedicatedMindMapPath, mindMapFileName, mindMapFileTitle } from '../../../src/domain/document/mindmap-file';
 
 describe('专用 Markdown 导图文件', () => {
 	it.each(['React', 'React.md', 'React.mindmap.md', 'React.MINDMAP.MD', 'React.mindmap'])('输入 %s 只保留一份格式后缀', (name) => {

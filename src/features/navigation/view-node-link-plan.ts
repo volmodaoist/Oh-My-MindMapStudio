@@ -161,7 +161,7 @@ export function planAttachmentLink(
 
 import type { App, TFile } from 'obsidian';
 import { isEmbeddableAttachmentExtension } from '../../core/constants';
-import { formatWikilink, parseWikilink } from '../../domain/wikilink';
+import { formatWikilink, parseWikilink } from '../../domain/links';
 import { newReferencePath } from '../../links/file-lookup';
 import {
 	preferredLinkPathFormat,

@@ -21,7 +21,7 @@
 
 ## 测试归属
 
-- 模块测试对齐 src 的能力目录；组合根测试留在 tests 根目录。
+- 模块测试对齐 src 的能力目录；domain 的 document/links/content/relations 与同名测试目录对应，根测试仅覆盖已登记叶子；组合根测试留在 tests 根目录。
 - `tests/contracts/` 检查依赖矩阵、模块出口、索引、标准文档、vendor、构建与安装。
 - `tests/helpers/`、`tests/mocks/`、`tests/fixtures/` 提供共享支持；测试直接调用内部纯逻辑，不扩大公开 API。
 - Markdown 回归

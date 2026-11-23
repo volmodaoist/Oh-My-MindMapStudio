@@ -1,5 +1,5 @@
 /**
- * 标注（callout）与引用块的**识别口径**回归（`domain/callout`，纯逻辑）。
+ * 标注（callout）与引用块的**识别口径**回归（`domain/content/callout`，纯逻辑）。
  *
  * 锁定五件事：
  * ① **头部解析**与宿主同口径（`obsidian.asar` 的 `\[!([^\]]+)\]([+\-]?)(?:\s|$)`
@@ -23,7 +23,7 @@ import {
 	normalizeCalloutType,
 	parseCalloutHeader,
 	stripQuotePrefix,
-} from '../../src/domain/callout';
+} from '../../../src/domain/content/callout';
 
 describe('类型归一与别名（calloutTypeOf）', () => {
 	it('归一：trim + 小写 + 空白转 `-`（与宿主同口径）', () => {

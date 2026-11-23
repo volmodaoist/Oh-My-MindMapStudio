@@ -2,15 +2,15 @@
  * 概要（Summary）指令回归：`%%sum:<count> | 文字%%`。
  *
  * 四处口径：
- * 1. **语法**（`domain/summary`）：值形态、非法值丢弃、写侧渲染；
+ * 1. **语法**（`domain/relations/summary`）：值形态、非法值丢弃、写侧渲染；
  * 2. **改写**（`applySummaries`）：只动 `sum` 段，同节点的 `%%id%%` / `%%rel%%`
  *    逐字带回（否则「建一条概要」会把节点上的联系全部抹掉）；
  * 3. **规划**（`planSummaryRanges`）：越界夹到末尾、重叠按文档序丢弃；
  * 4. **反查**（`summaryEntryIndexOfRange`）：画出来的框 → 正文里那条声明
  *    （编辑 / 删除概要靠它认领，见该 describe 的回归说明）。
  *
- * 语法本身（指令行判定 / 一段一行 / 行内兼容形态）由 `domain/directive` 承担，
- * 回归在 `tests/domain/relation-directive.test.ts` 与 `tests/domain/summary-directive.test.ts`
+ * 语法本身（指令行判定 / 一段一行 / 行内兼容形态）由 `domain/relations/directive` 承担，
+ * 回归在 `tests/domain/relations/relation.test.ts` 与 `tests/domain/relations/summary.test.ts`
  * 的往返用例里各有覆盖。
  */
 import { describe, expect, it } from 'vitest';
@@ -24,9 +24,9 @@ import {
 	summarySegmentsOf,
 	summariesOfSource,
 	type SummaryEntry,
-} from '../../src/domain/summary';
-import { parseMdOutline } from '../../src/markdown/outline/md-outline';
-import { serializeMdBody } from '../../src/markdown/serialize/md-serialize';
+} from '../../../src/domain/relations/summary';
+import { parseMdOutline } from '../../../src/markdown/outline/md-outline';
+import { serializeMdBody } from '../../../src/markdown/serialize/md-serialize';
 
 describe('sum 段语法', () => {
 	it('值：`<count>` 与 `<count> | <文字>` 都认', () => {

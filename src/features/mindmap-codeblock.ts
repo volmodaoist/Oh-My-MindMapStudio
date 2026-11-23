@@ -62,8 +62,8 @@ import { App, Keymap, MarkdownRenderChild } from 'obsidian';
 import { CODE_BLOCK_MAX_NODES, DEFAULT_PALETTE } from '../core/constants';
 import { createThrottler } from '../core/concurrency';
 import { EventBinder, elementFromTarget } from '../core/event-binder';
-import { isSafeAnchorHref } from '../domain/url';
-import { formatWikilink } from '../domain/wikilink';
+import { isSafeAnchorHref } from '../domain/links';
+import { formatWikilink } from '../domain/links';
 import { t, tf, type Language } from '../core/i18n';
 import {
 	applyColorDirectivesToTree,
@@ -78,7 +78,7 @@ import {
 	measureContentFitToWidth,
 	resizeMindMap,
 } from '../engine';
-import { layoutIdOfPropertyValue } from '../domain/mindmap-property';
+import { layoutIdOfPropertyValue } from '../domain/document';
 import { parseMdOutline } from '../markdown';
 import { ensureUniqueUids } from '../markdown';
 import {
@@ -178,7 +178,7 @@ export function shouldRenderOutline(nodeCount: number): boolean {
 
 /**
  * 块体首行布局指令的外壳：`%%layout: <值>%%`（键名大小写不敏感）。
- * **只认外壳**——值的语义交给 `domain/mindmap-property` 解析（唯一实现）。
+ * **只认外壳**——值的语义交给 `domain/document/mindmap-property` 解析（唯一实现）。
  */
 const EMBED_LAYOUT_DIRECTIVE_RE = /^\s*%%\s*layout\s*:\s*(.+?)\s*%%\s*$/i;
 

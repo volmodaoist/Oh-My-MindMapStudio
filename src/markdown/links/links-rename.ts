@@ -28,9 +28,9 @@
  */
 import { App, TFile } from 'obsidian';
 import { isRenderableImageTarget } from '../../core/constants';
-import { walkTree } from '../../domain/tree';
+import { walkTree } from '../../domain/document';
 import { isNodeTextEdited } from '../../domain/document';
-import { parseWikilink } from '../../domain/wikilink';
+import { parseWikilink } from '../../domain/links';
 import {
 	isTrashedPath,
 	renameTargets,

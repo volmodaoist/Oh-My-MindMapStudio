@@ -22,9 +22,24 @@
 - 公共入口迁移与访问规则记录在同一依赖脚本中；纯逻辑测试可以直测内部实现。
 - 引擎只保留一个正式防腐入口；业务模块不访问 `renderer`、节点 DOM 或 vendor。
 
+## 领域能力与测试目录
+
+- `domain/document/`：文档模型、源码绑定、文件命名、启用/布局声明与通用树操作。
+- `domain/links/`：URL、双链、路径和显示别名的纯语义；Vault 文件解析仍由上层 links 负责。
+- `domain/content/`：任务、callout 与管道表的内容规则。
+- `domain/relations/`：独立指令块、联系、概要与锚点几何。
+- `color.ts`、`node-edit-key.ts`：跨能力使用的单文件叶子，保留在领域根目录。
+
+`tests/domain/` 使用同样的四个能力目录；根目录用例对应叶子工具。
+原综合 domain 用例按现有 describe 边界拆成双链测试与树测试，断言保持；任务测试归入 content。
+领域根叶子与能力入口统一登记到 `scripts/module-boundaries.mjs`，新文件不能无登记继续堆在根目录。
+
 ## 当前公共入口
 
-- `domain/document/index.ts`：领域文档树、原始分段与源码绑定。
+- `domain/document/index.ts`：文档模型、来源、声明、文件身份与树操作。
+- `domain/links/index.ts`：链接纯语义。
+- `domain/content/index.ts`：内容规则。
+- `domain/relations/index.ts`：联系、概要与指令。
 - `markdown/index.ts`：解析、序列化、语法编辑与打开能力。
 - `services/document/index.ts`：共享文档会话与注册表。
 - `services/engine/index.ts`：引擎创建、监听与视口恢复协调。

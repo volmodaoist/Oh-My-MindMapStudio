@@ -1,7 +1,7 @@
 /** 节点内容的共享数据与渲染注入契约；不依赖 features/UI/引擎实现。 */
 import type { PluginContentRenderer } from './plugin-content-types';
-import type { CalloutHeader } from '../domain/callout';
-import type { PipeTable } from '../domain/pipe-table';
+import type { CalloutHeader } from '../domain/content';
+import type { PipeTable } from '../domain/content';
 
 export interface InlineContentDocument {
 	createElement(tag: string): HTMLElement;
@@ -108,7 +108,7 @@ export interface InlineContentOptions {
 	 * **标注图标**的注入（生产实现 = `platform/rendering/callout-icon`，内部转调宿主
 	 * `getIcon`；本模块与 `node-inline-html` 都不 import obsidian）。
 	 *
-	 * 入参是图标 **id**（`domain/callout.calloutVisualOf().icon` 给出的官方取值，
+	 * 入参是图标 **id**（`domain/content/callout.calloutVisualOf().icon` 给出的官方取值，
 	 * 如 `lucide-info` / `help-circle` / `quote-glyph`——后两个在宿主里本就
 	 * **没有** `lucide-` 前缀）。返回 null = 画不了（id 未登记 / 无宿主 /
 	 * 无头验证环境）⇒ 标注**省略图标、保留标题与色块**，不抛错、不占位。
@@ -215,7 +215,7 @@ export interface InlineSegment {
 	 */
 	lang?: string;
 	/**
-	 * **表格段**的模型（仅 kind = 'table'）：解析在 `domain/pipe-table`（纯逻辑），
+	 * **表格段**的模型（仅 kind = 'table'）：解析在 `domain/content/pipe-table`（纯逻辑），
 	 * DOM 装配与内联样式在 `node-inline-html`（`buildTableElement`）。
 	 *
 	 * 与 `block` / `display` 同款纪律：**重建或拷贝段对象时必须带上**，否则表格段

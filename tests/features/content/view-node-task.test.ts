@@ -35,7 +35,7 @@ import {
 	NODE_TASK_CLASS,
 } from '../../../src/features/content/node-inline-html';
 import { setupNodeTaskInteraction } from '../../../src/features/content/view-node-task';
-import { toggleTaskToken } from '../../../src/domain/md-task';
+import { toggleTaskToken } from '../../../src/domain/content/md-task';
 import { nodeContentTones } from '../../../src/domain/color';
 
 const { findNodeByDom, recordHistory } = engineMocks;

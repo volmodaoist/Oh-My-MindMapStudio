@@ -8,7 +8,7 @@
  *   文本或换过图 → 走合成：文本 + 行尾单链接 token（hyperlink）／图片 token；
  * - **纯双链节点（整行只有一个双链）的编辑语义 = 改别名**：节点内显示的就是该
  *   链接的可见名（别名优先），故编辑后把新文本写成别名回写 `[[目标|新别名]]`，
- *   而不是「新文本 + 行尾链接」；判定与边界见 domain/wiki-display.ts 的
+ *   而不是「新文本 + 行尾链接」；判定与边界见 domain/links/wiki-display.ts 的
  *   editedWikilinkAlias（纯判定在 domain，回写与图标 tooltip 共用同一入口）。
  * - heading → `#×N 文本`；list → 缩进 + 标记 + 文本（ordered 重排编号 1..n）；
  *   plain → 原样多行文本；**新用户节点（无 mdType/mdRaw）按层级回写**——位于
@@ -32,7 +32,7 @@ import {
 	splitTrailingColorDirective,
 } from '../../domain/color';
 import { isNodeTextEdited } from '../../domain/document';
-import { withTaskPrefix } from '../../domain/md-task';
+import { withTaskPrefix } from '../../domain/content';
 import { tokenizeInline } from '../outline/md-outline';
 import { isValidIndentUnit } from '../outline/md-outline-lines';
 import { readHeadingStart } from '../syntax/md-heading-syntax';
@@ -54,9 +54,9 @@ import {
 	formatWikilink,
 	linkDisplayText,
 	wikilinkLinkpath,
-} from '../../domain/wikilink';
-import { isSchemeUrl } from '../../domain/url';
-import { docWikiLinkDisplay, editedWikilinkAlias, effectiveDocWikiLink } from '../../domain/wiki-display';
+} from '../../domain/links';
+import { isSchemeUrl } from '../../domain/links';
+import { docWikiLinkDisplay, editedWikilinkAlias, effectiveDocWikiLink } from '../../domain/links';
 import type { MdNodeData } from '../../core/node-data';
 
 /** 链接目标是否需要尖括号包裹（含空格/括号/<>/\，否则会破坏 `(…)` 闭合） */
@@ -66,7 +66,7 @@ function needsDestBraces(dest: string): boolean {
 
 /**
  * 链接「生效显示名」的判定（editedWikilinkAlias / effectiveDocWikiLink /
- * docWikiLinkDisplay）已下沉到 domain/wiki-display.ts：它同时被 mindmap.ts
+ * docWikiLinkDisplay）已下沉到 domain/links/wiki-display.ts：它同时被 mindmap.ts
  * （文档页图标 tooltip）消费，而 mindmap.ts 必须可脱离 obsidian 打包，
  * 不能 import 本模块。此处仅消费，勿在本地复制一份判定。
  */
@@ -623,7 +623,7 @@ function composeFirstLine(data: MdNodeData, app: App | null): string {
  *
  * 语义：这类节点的「文本」不是描述文字，而是 token 的可见名——换链后只写
  * 新 token（不重复输出旧名）；编辑它等于**改别名**（K6，回写见
- * domain/wiki-display.editedWikilinkAlias）。编辑弹窗据此选模式：别名模式 vs
+ * domain/links/wiki-display.editedWikilinkAlias）。编辑弹窗据此选模式：别名模式 vs
  * 原文模式（见 view-node-actions.editNodeText）——**两个判定必须同源**，
  * 否则会出现「弹窗给的是别名、写回按原文」这类错位。
  */
@@ -682,7 +682,7 @@ export function composeNodeContent(data: MdNodeData, app: App | null): string {
 	}
 	const rest = composeContinuationLines(data);
 	const body = [composeNodeFirstLine(data, app), ...rest].join('\n');
-	// 联系指令行（`domain/relation`）永远贴在节点末行：未编辑时已包含在 mdRaw 里，
+	// 联系指令行（`domain/relations/relation`）永远贴在节点末行：未编辑时已包含在 mdRaw 里，
 	// 编辑后由这里补回 —— 指令不进 text（否则显示、搜索、引擎编辑框都会被污染，
 	// 且只剥一半会让 rawOk 恒假，与任务 token 同一教训）。
 	const tail =

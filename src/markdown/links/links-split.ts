@@ -41,14 +41,14 @@ import {
 	type InlineToken,
 } from '../outline/md-outline';
 import { composeNodeFirstLine } from '../serialize/md-serialize';
-import { parseTaskPrefix, stripTaskPrefix } from '../../domain/md-task';
-import { walkTree } from '../../domain/tree';
-import { isAppResourceUrl } from '../../domain/url';
+import { parseTaskPrefix, stripTaskPrefix } from '../../domain/content';
+import { walkTree } from '../../domain/document';
+import { isAppResourceUrl } from '../../domain/links';
 import {
 	formatWikilink,
 	parseWikilink,
 	wikilinkTargetIsAttachment,
-} from '../../domain/wikilink';
+} from '../../domain/links';
 import type { MarkdownNode } from '../../domain/document';
 import type { MdTokenSegment } from '../../domain/document';
 import type { MdNodeData } from '../../core/node-data';

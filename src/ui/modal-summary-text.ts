@@ -4,14 +4,14 @@
  * 概要文字存在节点指令行里（`%%sum:2 | 本周必须完成%%`），是**注释体的一段文本**：
  * 含 `%%`（注释不能嵌套）或 `[[` / `]]`（注释体不是行内 token 的保护区）时解析侧
  * 会 fail-closed 把整条概要丢掉 ⇒ 屏上的概要凭空消失、用户看不到任何提示。
- * 判据只有一份（`domain/summary.isWritableSummaryText`），这里只在输入侧提前拦。
+ * 判据只有一份（`domain/relations/summary.isWritableSummaryText`），这里只在输入侧提前拦。
  *
  * 空串**不是**合法输入：概要与联系标签不同，它就是显示在概要框上的正文，空框
  * 在画布上只是一个没有信息量的方框。取消返回 null。
  */
 import { App } from 'obsidian';
 import { t, type Language } from '../core/i18n';
-import { isWritableSummaryText } from '../domain/summary';
+import { isWritableSummaryText } from '../domain/relations';
 import { createButton, openFormModal } from './modal-common';
 
 /** 文字长度上限（仅输入侧限制；解析不截断，保真优先） */

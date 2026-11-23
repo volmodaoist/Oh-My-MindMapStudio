@@ -15,7 +15,7 @@ import {
 import { getDocIconColor } from '../theme/mindmap-palette';
 import { getThemeConfig, isDarkTheme } from '../theme/mindmap-theme';
 import type { Language } from '../../core/i18n';
-import { docWikiLinkDisplay, type WikiAliasSource } from '../../domain/wiki-display';
+import { docWikiLinkDisplay, type WikiAliasSource } from '../../domain/links';
 import {
 	RENDER_ASYNC_NODE_THRESHOLD,
 	shouldEnablePerformanceMode,

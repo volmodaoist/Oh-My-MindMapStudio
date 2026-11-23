@@ -14,10 +14,10 @@ import {
 	encodedNameForm,
 	isRemoteOrDataUrl,
 	urlComparisonForms,
-} from '../domain/url';
-import { walkTree } from '../domain/tree';
-import { formatWikilink, parseWikilink } from '../domain/wikilink';
-import type { WikilinkParts } from '../domain/wikilink';
+} from '../domain/links';
+import { walkTree } from '../domain/document';
+import { formatWikilink, parseWikilink } from '../domain/links';
+import type { WikilinkParts } from '../domain/links';
 import { hasNodeReference, readNodeDataString } from '../core/node-data';
 import type { MindMapTreeNode } from '../core/engine-types';
 import type { MdNodeData } from '../core/node-data';

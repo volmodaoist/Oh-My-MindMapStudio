@@ -22,12 +22,12 @@ import type { MdNodeData } from '../../core/node-data';
  * 树快照（`save(file, treeHint)`）。违反该不变式会把新文档正文写进旧文件、
  * 或让旧文件丢掉 frontmatter。
  */
-import { mindMapFileTitle } from '../../domain/mindmap-file';
+import { mindMapFileTitle } from '../../domain/document';
 import { App, TFile } from 'obsidian';
 import { AUTO_SAVE_DEBOUNCE_MS } from '../../core/constants';
 import { createDebouncer, createSerialQueue } from '../../core/concurrency';
 import { createWarnOnce } from '../../core/errors';
-import { walkTree } from '../../domain/tree';
+import { walkTree } from '../../domain/document';
 import { parseMdOutline, splitFrontmatter, UTF8_BOM } from '../../markdown';
 import { serializeMdBody } from '../../markdown';
 import { forgetImageFail, walkResolveImagePaths } from '../../media/images-path';

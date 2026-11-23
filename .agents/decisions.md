@@ -31,12 +31,12 @@ Markdown 数据语义以 [标准](../docs/markdown-mindmap-standard.md) 为准�
 
 
 - **默认打开与临时导图（K218）**
-  - 入口：`domain/mindmap-file` + `markdown/md-open` + `platform/workspace/mindmap-auto-open` / `markdown-mindmap-action`
+  - 入口：`domain/document/mindmap-file` + `markdown/md-open` + `platform/workspace/mindmap-auto-open` / `markdown-mindmap-action`
   - 决策：专用 `.mindmap.md` 且启用属性命中时默认导图。普通 `.md` 由标题栏官方 `MarkdownView.addAction`、文件菜单或命令显式打开，切换与返回均不写属性；标签选择以 WeakMap 按 leaf/当前 TFile 保留，重命名随对象更新，导航换文件后失效，重启恢复普通笔记为 Markdown。
   - 详细边界：K218；函数级规则与回归见对应源码和测试。
 
 - **新建导图初始内容（K201 / K218）**
-  - 入口：`creation.createNewMindMap` + `domain/mindmap-file` + `services/document/document-service`
+  - 入口：`creation.createNewMindMap` + `domain/document/mindmap-file` + `services/document/document-service`
   - 决策：新建 `名称.mindmap.md`，仅含启用/布局属性与空正文；重名编号插在完整后缀之前，输入的 .md 或 .mindmap.md 只归一一次。中心与标签显示去掉格式后缀的名称，中心改名保留完整 .mindmap.md 后缀，走官方 FileManager 更新引用。
   - 详细边界：K201、K218；函数级规则与回归见对应源码和测试。
 
@@ -67,16 +67,16 @@ Markdown 数据语义以 [标准](../docs/markdown-mindmap-standard.md) 为准�
   - 详细边界：K150；函数级规则与回归见对应源码和测试。
 
 - **概要（Summary）**
-  - 入口：语法 `domain/summary`（值语义）+ `domain/directive`（指令块语法，唯一）；解析归属沿用 `markdown/outline/md-outline`（指令行特例）；回写 `markdown/serialize/md-serialize` + `domain/summary.applySummaries`；落地 `engine/nodes/mindmap-summaries`；交互 `features/relations/view-node-summary`；文字弹窗 `ui/modal-summary-text`
+  - 入口：语法 `domain/relations/summary`（值语义）+ `domain/relations/directive`（指令块语法，唯一）；解析归属沿用 `markdown/outline/md-outline`（指令行特例）；回写 `markdown/serialize/md-serialize` + `domain/relations/summary.applySummaries`；落地 `engine/nodes/mindmap-summaries`；交互 `features/relations/view-node-summary`；文字弹窗 `ui/modal-summary-text`
   - 决策：**写在第一个被覆盖的兄弟节点上**：`%%sum:<count> | 文字%%`——`count` = 从本节点起**连续覆盖**的同级节点数（`1..999`）。为什么锚在第一个兄弟而不是父节点：锚父节点就得写「第几个到第几个」，在前面插入兄弟会让整段区间错位；锚第一个兄弟时只有**区间内部**的增删才改变覆盖面，与「这一条起往后 N 条」的直觉一致。
 
 - **联系（关系连线）**
-  - 入口：语法 `domain/relation`（判定 / 剥离 / 改写 / 树级图解析）；解析归属 `markdown/outline/md-outline`（指令行特例）；回写 `markdown/serialize/md-serialize`（合成拼回）；落地 `engine/nodes/mindmap-relations`；交互 `features/relations/view-node-relation`（建/删/改标签）+ `features/relations/view-relation-anchor`（手绘锚定 DOM）+ `domain/relation-anchor`（锚定几何）；标签弹窗 `ui/modal-relation-label`
-  - 决策：**独立指令行**：节点最后一个物理行之后的**若干独立指令行**——拆行只为 diff 粒度与行宽〔一条边一行，改哪条看哪行；枢纽节点不再出现 700 字符长行〕，语义与旧形态完全等价），每行只由 `%%id:xxxxxx%%` / `%%rel:xxxxxx | 标签%%` 组成（list 项按续行缩进）。**语法层已抽到 `domain/directive`**：段形状 / 行判定 / 拆贴 / 规范顺序只此一处（`DIRECTIVE_KEYS` 登记 `id` / `rel` / `sum`），`relation` 与 `summary` 各自只解释**自己 key 的 value**；`isDirectiveLine` 只判**形状与已登记 key**——写错的 value（如 `%%rel:xyz%%`）仍算指令行（隐藏、不产生语义），不再在画布上冒出一个空节点。
+  - 入口：语法 `domain/relations/relation`（判定 / 剥离 / 改写 / 树级图解析）；解析归属 `markdown/outline/md-outline`（指令行特例）；回写 `markdown/serialize/md-serialize`（合成拼回）；落地 `engine/nodes/mindmap-relations`；交互 `features/relations/view-node-relation`（建/删/改标签）+ `features/relations/view-relation-anchor`（手绘锚定 DOM）+ `domain/relations/relation-anchor`（锚定几何）；标签弹窗 `ui/modal-relation-label`
+  - 决策：**独立指令行**：节点最后一个物理行之后的**若干独立指令行**——拆行只为 diff 粒度与行宽〔一条边一行，改哪条看哪行；枢纽节点不再出现 700 字符长行〕，语义与旧形态完全等价），每行只由 `%%id:xxxxxx%%` / `%%rel:xxxxxx | 标签%%` 组成（list 项按续行缩进）。**语法层已抽到 `domain/relations/directive`**：段形状 / 行判定 / 拆贴 / 规范顺序只此一处（`DIRECTIVE_KEYS` 登记 `id` / `rel` / `sum`），`relation` 与 `summary` 各自只解释**自己 key 的 value**；`isDirectiveLine` 只判**形状与已登记 key**——写错的 value（如 `%%rel:xyz%%`）仍算指令行（隐藏、不产生语义），不再在画布上冒出一个空节点。
   - 详细边界：K153、K154；函数级规则与回归见对应源码和测试。
 
 - **GFM 管道表的识别（表块 / 单元格 / 对齐 / `\ ` 还原）**
-  - 入口：`domain/pipe-table.ts`
+  - 入口：`domain/content/pipe-table.ts`
   - 决策：纯逻辑零依赖，**唯一实现**（勿另写一份表格判定）；围栏代码块与块级数学**内**的表格行不识别（保护区复用渲染层 `MARKUP_RE`，不造第二份 fence 判定）。单元格内不做块级内容
 
 - **节点内第三方插件内容（K219）**
@@ -168,7 +168,7 @@ Markdown 数据语义以 [标准](../docs/markdown-mindmap-standard.md) 为准�
   - 详细边界：K172、K178、K170、K179、K171、K168、K169；函数级规则与回归见对应源码和测试。
 
 - **任务列表项（`- [ ]` / `- [x]` / `- [X]`）**
-  - 入口：判定/合成 `domain/md-task`；渲染 `features/content/node-inline-html`（`span.mindmap-node-task`）；交互 `features/content/view-node-task`；原文写回 `features/content/node-content-write.applyRawNodeContent`
+  - 入口：判定/合成 `domain/content/md-task`；渲染 `features/content/node-inline-html`（`span.mindmap-node-task`）；交互 `features/content/view-node-task`；原文写回 `features/content/node-content-write.applyRawNodeContent`
   - 决策：**只认列表项首行**（`mdType === 'list'` 且 `^\[[ xX]\](?=[ \t]|$)`；`[ ]foo` 不是任务）。**token 留在 `mdRaw`、`text` 与 `mdDerivedText` 一起剥**——只剥一半会让 `rawOk` 恒假，整篇任务节点被当成「已编辑」合成回写；三条合成路径（纯 token / 分段 / 尾插）都要拼回 `mdTaskToken`（大小写原样，`[X]` 不归一）。
   - 详细边界：K151；函数级规则与回归见对应源码和测试。
 
@@ -283,7 +283,7 @@ Markdown 数据语义以 [标准](../docs/markdown-mindmap-standard.md) 为准�
   - 详细边界：K217；函数级规则与回归见对应源码和测试。
 
 - **标注（callout）/ 引用块（`> [!type]` 与普通 `>` 引用）**
-  - 入口：判定 `domain/callout.ts`（**唯一**）；段型与扫描 `features/content/node-inline-tokenize`（`kind: 'quote'` + `scanQuoteBlocks`）；装配 `ui/node-content/content-quote`（`buildQuoteElement` 只分派 → `buildCalloutShell` / `buildPlainQuoteShell` + `appendQuoteBody`，标题行 `buildCalloutTitle`）；图标 `platform/rendering/callout-icon`（`getIcon` 收口，经 `node-content-factory` 注入）；导出变量 `platform/export-svg-postprocess`
+  - 入口：判定 `domain/content/callout.ts`（**唯一**）；段型与扫描 `features/content/node-inline-tokenize`（`kind: 'quote'` + `scanQuoteBlocks`）；装配 `ui/node-content/content-quote`（`buildQuoteElement` 只分派 → `buildCalloutShell` / `buildPlainQuoteShell` + `appendQuoteBody`，标题行 `buildCalloutTitle`）；图标 `platform/rendering/callout-icon`（`getIcon` 收口，经 `node-content-factory` 注入）；导出变量 `platform/export-svg-postprocess`
   - 决策：**显示层特性**：`>` 行在解析层是 `plain` 行（标准 §2.1），`text` / `mdDerivedText` / `mdRaw` **一字不动**，前缀只在该层剥。**块级顺序即契约**：引用 → 围栏 → 表格 → 行内（`scanQuoteBlocks` 在最外层）——围栏先切会把「引用块内的围栏」（`> ```js`）从中间抽走、标注只剩首行；反向由 `protectedRanges` 挡住围栏 / 数学 / 注释里的 `> ` 行；**同层 `[!type]` 头部行恒起新块**（解析层吃掉空行 ⇒ 不断块会让第二个标注退化成前一个的正文文字，2026-11-11 实机修复）。
   - 详细边界：K196；函数级规则与回归见对应源码和测试。
 
@@ -369,3 +369,10 @@ Markdown 数据语义以 [标准](../docs/markdown-mindmap-standard.md) 为准�
 - 解析结果保留文件头、空白分隔、原始正文和权威树；DocumentService 不另复制加载字段，DocumentSession 仍独占撤销与写盘。
 - 树结构不依赖 vendor 类型，当前渲染字段通过 `core/node-data.ts` 的适配与泛型携带；这是结构边界基础，后续按需求逐步收紧投影字段。
 - 持久化语义以 Markdown 标准为准；未知字段不自动序列化，当前 H1 与虚拟根行为保持。
+
+## 领域能力与测试归属（K222）
+
+- document 聚合模型、源码、声明、文件命名和树操作；links 聚合 URL/双链/别名；content 聚合任务/callout/表；relations 聚合指令/联系/概要/锚定。
+- URL 与双链纯规则属于 domain/links，实际 Vault 文件索引仍属于 src/links；不合并这两个依赖层。
+- 每个能力只具名转出跨模块使用的 API；颜色数学与编辑按键作为跨能力叶子保留，根目录叶子清单由依赖脚本和契约检查。
+- tests/domain 对齐四个目录；综合域测试拆成双链与树两文件，任务测试移至 content，不改变测试主体或产品语义。

@@ -20,7 +20,7 @@
  *
  * ## 写盘
  * 一律 `applyRawNodeContents`（与建边 / 改色同一通道）：一次渲染、一次保存、
- * 一条撤销。**只改 `sum` 段**（`domain/summary.applySummaries`），同节点的
+ * 一条撤销。**只改 `sum` 段**（`domain/relations/summary.applySummaries`），同节点的
  * `%%id%%` / `%%rel%%` 逐字带回。
  */
 import { Menu, Notice } from 'obsidian';
@@ -33,7 +33,7 @@ import {
 	summariesOf,
 	summaryEntryIndexOfRange,
 	type SummaryEntry,
-} from '../../domain/summary';
+} from '../../domain/relations';
 import {
 	getNodeDataString,
 	isSummaryNode,
@@ -182,7 +182,7 @@ async function createSummary(
  * 锚点由 `summaryAnchorOf` 反查（父节点 + `range[0]`），条目由
  * `summaryEntryIndexOfRange` 按**规划器自己的区间**认领——不能拿 `count` 去对
  * 宽度：`count` 越界时会被夹到最后一个兄弟（文件里的数字不改），此后两者不再
- * 相等（见 `domain/summary.summaryEntryIndexOfRange`）。
+ * 相等（见 `domain/relations/summary.summaryEntryIndexOfRange`）。
  *
  * 找不到（父节点 / `range` 缺失，或正文里的 `%%sum%%` 已被手改掉）返回 null，
  * 调用方据此给出可见提示——静默 no-op 会让「右键 / Delete」看起来坏了。

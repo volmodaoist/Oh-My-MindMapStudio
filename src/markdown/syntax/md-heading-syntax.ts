@@ -35,7 +35,7 @@
 import type { MarkdownNode } from '../../domain/document';
 import { readNodeDataString, type MdNodeData } from '../../core/node-data';
 import { stripTrailingColorDirectiveLines } from '../../domain/color';
-import { splitDirectiveTail } from '../../domain/directive';
+import { splitDirectiveTail } from '../../domain/relations';
 
 /** Markdown 只有 6 级标题 */
 export const MAX_HEADING_LEVEL = 6;

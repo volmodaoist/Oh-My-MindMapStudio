@@ -1,5 +1,5 @@
 /**
- * GFM 管道表识别（`domain/pipe-table`）回归。
+ * GFM 管道表识别（`domain/content/pipe-table`）回归。
  *
  * 覆盖两类事实：
  * ① **正例**：外框管道可有可无、列对齐四态、`\|` 还原、数据行列数归一；
@@ -10,7 +10,7 @@
  * 与 `npm run verify:visual` 的 table 场景覆盖。
  */
 import { describe, expect, it } from 'vitest';
-import { matchPipeTable } from '../../src/domain/pipe-table';
+import { matchPipeTable } from '../../../src/domain/content/pipe-table';
 
 /** 便于复用的调用包装：整段文本按行切分后从第 0 行识别 */
 function match(text: string) {

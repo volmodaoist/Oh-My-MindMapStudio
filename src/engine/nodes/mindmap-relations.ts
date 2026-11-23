@@ -1,5 +1,5 @@
 /**
- * 联系（关系连线）：把 `domain/relation` 解析出的边落到引擎节点数据上。
+ * 联系（关系连线）：把 `domain/relations/relation` 解析出的边落到引擎节点数据上。
  *
  * ## 数据落点（全部写在**源节点** data）
  * 引擎 `AssociativeLine` 的模型就是「源节点持有目标列表」：
@@ -40,8 +40,8 @@ import {
 	type RelationRect,
 	relationStateOf,
 	resolveRelationGraph,
-} from '../../domain/relation';
-import { walkTree } from '../../domain/tree';
+} from '../../domain/relations';
+import { walkTree } from '../../domain/document';
 import { getRenderRoot } from './mindmap-nodes';
 
 /** 本模块拥有的节点 data 键（清除分支遍历的就是它，勿另列一份） */
@@ -100,7 +100,7 @@ function wrapEngineTree(root: MindMapNode): EngineNodeWrap {
 		children: [],
 	});
 	const wrapped = create(root);
-	// 显式栈：树深度由文档决定，递归在超深层级上会栈溢出（与 domain/tree 同口径）
+	// 显式栈：树深度由文档决定，递归在超深层级上会栈溢出（与 domain/document/tree 同口径）
 	const stack: EngineNodeWrap[] = [wrapped];
 	while (stack.length > 0) {
 		const current = stack.pop()!;

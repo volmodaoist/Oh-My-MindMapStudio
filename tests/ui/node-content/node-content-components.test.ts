@@ -9,7 +9,7 @@ import { buildFootnoteRef, buildFootnoteSummary } from '../../../src/ui/node-con
 import { buildAnchor } from '../../../src/ui/node-content/content-link';
 import type { BuildContentParams } from '../../../src/ui/node-content/content-context';
 import { nodeContentTones } from '../../../src/domain/color';
-import { parseCalloutHeader } from '../../../src/domain/callout';
+import { parseCalloutHeader } from '../../../src/domain/content/callout';
 import { CODE_RENDERED_CLASS } from '../../../src/core/constants';
 import { FakeDocument, FakeElement, asDocument } from '../../helpers/node-content-dom';
 

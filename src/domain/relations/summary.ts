@@ -1,7 +1,7 @@
 /**
  * 概要（Summary）：把**同一父节点下相邻的若干个兄弟节点**括起来，挂一个说明节点。
  *
- * 语法（写在**第一个被覆盖的兄弟节点**的指令块里，见 `domain/directive`）：
+ * 语法（写在**第一个被覆盖的兄弟节点**的指令块里，见 `domain/relations/directive`）：
  *
  * ```markdown
  * - 需求评审
@@ -35,7 +35,7 @@ import {
 	type DirectiveSegment,
 	splitDirectiveSegments,
 } from './directive';
-import { nodeInlineSource } from './document';
+import { nodeInlineSource } from '../document';
 
 /** 一条概要：覆盖本节点起连续的 `count` 个兄弟 + 说明文字 */
 export interface SummaryEntry {

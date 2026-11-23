@@ -48,7 +48,7 @@ import { t } from '../../core/i18n';
 import {
 	applyDirectiveBlock,
 	splitDirectiveSegments,
-} from '../../domain/directive';
+} from '../../domain/relations';
 import {
 	relationSegmentsOf,
 	relationStateOf,
@@ -56,8 +56,8 @@ import {
 	type RelationGeometry,
 	type RelationRef,
 	type RelationState,
-} from '../../domain/relation';
-import { walkTree } from '../../domain/tree';
+} from '../../domain/relations';
+import { walkTree } from '../../domain/document';
 import {
 	activeRelationLine,
 	clearActiveRelationLine,

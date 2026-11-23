@@ -2,8 +2,8 @@
 import type { App } from 'obsidian';
 import { EventBinder } from '../../core/event-binder';
 import type { EditorInputBehavior, EditorInputSurface } from '../../core/editor-input';
-import { formatWikilink, wikilinkTriggerAt } from '../../domain/wikilink';
-import type { WikilinkSuggestion } from '../../domain/wikilink';
+import { formatWikilink, wikilinkTriggerAt } from '../../domain/links';
+import type { WikilinkSuggestion } from '../../domain/links';
 import { wikilinkCompletions } from '../../platform/workspace/wikilink-completions';
 import { WikilinkSuggestions } from '../../ui/node-editor/wikilink-suggestions';
 

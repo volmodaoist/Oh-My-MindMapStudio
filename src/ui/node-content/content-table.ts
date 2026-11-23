@@ -3,7 +3,7 @@ import { type InlineContentDocument, type InlineSegment } from '../../core/node-
 import { type BuildContentParams } from './content-context';
 import { withDerivedBorder } from './content-common.styles';
 import { TABLE_STYLES, headerStyle, cellStyle } from './content-table.styles';
-import { type PipeTableAlign } from '../../domain/pipe-table';
+import { type PipeTableAlign } from '../../domain/content';
 import { buildAnchor } from './content-link';
 import { buildFootnoteRef } from './content-footnote';
 
@@ -15,7 +15,7 @@ import { buildFootnoteRef } from './content-footnote';
  * - **同步纯 DOM**：没有「占位 → 产物」两段式，也就没有数学/代码块那套定稿重排；
  * - **零监听**：单元格里的链接仍是普通锚点，点击由 `view-wikilink` 经引擎
  *   `node_click` 命中（与节点其余部分的锚点同一契约）；
- * - **只读显示**：模型来自 `domain/pipe-table`（`\|` 已还原、列数已归一），原文
+ * - **只读显示**：模型来自 `domain/content/pipe-table`（`\|` 已还原、列数已归一），原文
  *   仍由 `mdRaw` 逐字保真——回写路径一个字都不经过这里。
  *
  * 单元格内容走同一套段管线（`buildInlineSegments` → 文本段 / 锚点）：单元格是

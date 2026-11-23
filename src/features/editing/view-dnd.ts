@@ -35,11 +35,11 @@ import {
 } from './view-node-actions';
 import { insertChildNodeWithData } from '../view/view-common';
 import { t } from '../../core/i18n';
-import { fileUrlFromAbsolutePath } from '../../domain/url';
+import { fileUrlFromAbsolutePath } from '../../domain/links';
 import {
 	isDocumentExtension,
 	wikilinkTargetIsAttachment,
-} from '../../domain/wikilink';
+} from '../../domain/links';
 import type { MindMapNode } from '../../core/engine-types';
 import type { MindMapViewContext } from '../view/view-context';
 

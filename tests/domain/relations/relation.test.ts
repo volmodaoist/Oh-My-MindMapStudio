@@ -2,14 +2,14 @@
  * 联系（关系连线）指令回归：`%%id:xxxxxx%%` / `%%rel:xxxxxx | 标签%%`。
  *
  * 四段口径分别锁在这里：
- * 1. **语法**（`domain/relation`）：判定表、行内兼容形态的剥离、`isDirectiveLine`；
+ * 1. **语法**（`domain/relations/relation`）：判定表、行内兼容形态的剥离、`isDirectiveLine`；
  * 2. **归属**（`markdown/md-outline`）：整行只有指令的行**不产出节点**，挂到上一个
  *    节点（heading / list / plain 三条路径），且不进 text；
  * 3. **回写**（`markdown/md-serialize` + `md-line-write`）：未编辑逐字回写、编辑后
  *    由 `mdDirectiveTail` 贴回末行；
  * 4. **图解析**（`resolveRelationGraph`）：id 权威性 / 悬空 / 重复 / 自环 / 边上限。
  *
- * 语法为什么是"独立指令行"而不是行内尾插，见 `domain/relation` 文件头（2026-10-30
+ * 语法为什么是"独立指令行"而不是行内尾插，见 `domain/relations/relation` 文件头（2026-10-30
  * 实机：行内形态会让 Obsidian 的 heading 文本带上注释，`[[#标题]]` 与 `^block-id` 失效）。
  */
 import { describe, expect, it } from 'vitest';
@@ -20,7 +20,7 @@ import {
 	splitDirectiveTail,
 	stripDirectiveTail,
 	stripTrailingSegments,
-} from '../../src/domain/directive';
+} from '../../../src/domain/relations/directive';
 import {
 	normalizeRelationId,
 	relationSegmentsOf,
@@ -28,11 +28,11 @@ import {
 	relationStateOfSource,
 	resolveRelationGraph,
 	type RelationState,
-} from '../../src/domain/relation';
-import { parseMdOutline } from '../../src/markdown/outline/md-outline';
-import { serializeMdBody } from '../../src/markdown/serialize/md-serialize';
-import { applyRawToNode } from '../../src/markdown/syntax/md-line-write';
-import type { MdNodeData } from '../../src/core/node-data';
+} from '../../../src/domain/relations/relation';
+import { parseMdOutline } from '../../../src/markdown/outline/md-outline';
+import { serializeMdBody } from '../../../src/markdown/serialize/md-serialize';
+import { applyRawToNode } from '../../../src/markdown/syntax/md-line-write';
+import type { MdNodeData } from '../../../src/core/node-data';
 
 /** 构造一个"未编辑"的节点 data（rawOk 走 mdRaw 逐字回写） */
 function rawData(text: string, mdRaw = text): MdNodeData {
@@ -44,7 +44,7 @@ function rawData(text: string, mdRaw = text): MdNodeData {
  *
  * 与生产代码 `view-node-relation.rawWithState` **同一组合**——不再单独提供
  * 「关系块渲染器」（那会是第二份写侧入口：它不认识同节点上的 `sum` 段，
- * 一经调用就把概要抹掉）。块内顺序与拼接由 `domain/directive` 统一。
+ * 一经调用就把概要抹掉）。块内顺序与拼接由 `domain/relations/directive` 统一。
  */
 const relationBlock = (state: RelationState): string =>
 	renderDirectiveBlock(relationSegmentsOf(state));

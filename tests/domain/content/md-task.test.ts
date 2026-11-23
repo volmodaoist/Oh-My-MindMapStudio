@@ -6,7 +6,7 @@
  * - **回写**：未编辑逐字、编辑后拼回（三种大小写）、拆分链接后仍带 token；
  * - **切换**：只改首行行首 token，续行与其余字节不动。
  *
- * 源码依据：src/domain/md-task.ts、src/markdown/{md-outline,md-serialize,md-line-write,links-split}.ts。
+ * 源码依据：src/domain/content/md-task.ts、src/markdown/{md-outline,md-serialize,md-line-write,links-split}.ts。
  */
 import { describe, expect, it } from 'vitest';
 import { parseMdOutline } from '../../../src/markdown/outline/md-outline';
@@ -18,7 +18,7 @@ import {
 	setTaskTokenInRaw,
 	stripTaskPrefix,
 	toggleTaskToken,
-} from '../../../src/domain/md-task';
+} from '../../../src/domain/content/md-task';
 import type { MdNodeData } from '../../../src/core/node-data';
 import type { MindMapTreeNode } from '../../../src/core/engine-types';
 

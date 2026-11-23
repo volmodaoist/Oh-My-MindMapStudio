@@ -36,26 +36,32 @@
     - [persistence.ts](../src/core/persistence.ts)
     - [plugin-content-types.ts](../src/core/plugin-content-types.ts)
   - **domain/**
+    - **content/**
+      - [callout.ts](../src/domain/content/callout.ts)
+      - [index.ts](../src/domain/content/index.ts)
+      - [md-task.ts](../src/domain/content/md-task.ts)
+      - [pipe-table.ts](../src/domain/content/pipe-table.ts)
     - **document/**
       - [index.ts](../src/domain/document/index.ts)
+      - [mindmap-file.ts](../src/domain/document/mindmap-file.ts)
+      - [mindmap-property.ts](../src/domain/document/mindmap-property.ts)
       - [model.ts](../src/domain/document/model.ts)
       - [node-meta.ts](../src/domain/document/node-meta.ts)
       - [source.ts](../src/domain/document/source.ts)
-    - [callout.ts](../src/domain/callout.ts)
+      - [tree.ts](../src/domain/document/tree.ts)
+    - **links/**
+      - [index.ts](../src/domain/links/index.ts)
+      - [url.ts](../src/domain/links/url.ts)
+      - [wiki-display.ts](../src/domain/links/wiki-display.ts)
+      - [wikilink.ts](../src/domain/links/wikilink.ts)
+    - **relations/**
+      - [directive.ts](../src/domain/relations/directive.ts)
+      - [index.ts](../src/domain/relations/index.ts)
+      - [relation-anchor.ts](../src/domain/relations/relation-anchor.ts)
+      - [relation.ts](../src/domain/relations/relation.ts)
+      - [summary.ts](../src/domain/relations/summary.ts)
     - [color.ts](../src/domain/color.ts)
-    - [directive.ts](../src/domain/directive.ts)
-    - [md-task.ts](../src/domain/md-task.ts)
-    - [mindmap-file.ts](../src/domain/mindmap-file.ts)
-    - [mindmap-property.ts](../src/domain/mindmap-property.ts)
     - [node-edit-key.ts](../src/domain/node-edit-key.ts)
-    - [pipe-table.ts](../src/domain/pipe-table.ts)
-    - [relation-anchor.ts](../src/domain/relation-anchor.ts)
-    - [relation.ts](../src/domain/relation.ts)
-    - [summary.ts](../src/domain/summary.ts)
-    - [tree.ts](../src/domain/tree.ts)
-    - [url.ts](../src/domain/url.ts)
-    - [wiki-display.ts](../src/domain/wiki-display.ts)
-    - [wikilink.ts](../src/domain/wikilink.ts)
   - **engine/**
     - **nodes/**
       - [mindmap-clipboard.ts](../src/engine/nodes/mindmap-clipboard.ts)
@@ -299,19 +305,25 @@
     - [persistence.test.ts](../tests/core/persistence.test.ts)
     - [plugin-content-types.test.ts](../tests/core/plugin-content-types.test.ts)
   - **domain/**
-    - [callout.test.ts](../tests/domain/callout.test.ts)
-    - [color-directive.test.ts](../tests/domain/color-directive.test.ts)
-    - [domain.test.ts](../tests/domain/domain.test.ts)
-    - [md-frontmatter-trigger.test.ts](../tests/domain/md-frontmatter-trigger.test.ts)
-    - [mindmap-file.test.ts](../tests/domain/mindmap-file.test.ts)
+    - **content/**
+      - [callout.test.ts](../tests/domain/content/callout.test.ts)
+      - [md-task.test.ts](../tests/domain/content/md-task.test.ts)
+      - [pipe-table.test.ts](../tests/domain/content/pipe-table.test.ts)
+    - **document/**
+      - [mindmap-file.test.ts](../tests/domain/document/mindmap-file.test.ts)
+      - [mindmap-property.test.ts](../tests/domain/document/mindmap-property.test.ts)
+      - [tree.test.ts](../tests/domain/document/tree.test.ts)
+    - **links/**
+      - [url.test.ts](../tests/domain/links/url.test.ts)
+      - [wiki-display.test.ts](../tests/domain/links/wiki-display.test.ts)
+      - [wikilink-completion.test.ts](../tests/domain/links/wikilink-completion.test.ts)
+      - [wikilink.test.ts](../tests/domain/links/wikilink.test.ts)
+    - **relations/**
+      - [relation-anchor.test.ts](../tests/domain/relations/relation-anchor.test.ts)
+      - [relation.test.ts](../tests/domain/relations/relation.test.ts)
+      - [summary.test.ts](../tests/domain/relations/summary.test.ts)
+    - [color.test.ts](../tests/domain/color.test.ts)
     - [node-edit-key.test.ts](../tests/domain/node-edit-key.test.ts)
-    - [pipe-table.test.ts](../tests/domain/pipe-table.test.ts)
-    - [relation-anchor.test.ts](../tests/domain/relation-anchor.test.ts)
-    - [relation-directive.test.ts](../tests/domain/relation-directive.test.ts)
-    - [summary-directive.test.ts](../tests/domain/summary-directive.test.ts)
-    - [url.test.ts](../tests/domain/url.test.ts)
-    - [wiki-display.test.ts](../tests/domain/wiki-display.test.ts)
-    - [wikilink-completion.test.ts](../tests/domain/wikilink-completion.test.ts)
   - **engine/**
     - **nodes/**
       - [engine-editor.test.ts](../tests/engine/nodes/engine-editor.test.ts)
@@ -404,7 +416,6 @@
       - [md-codeblocks.test.ts](../tests/markdown/syntax/md-codeblocks.test.ts)
       - [md-heading-syntax.test.ts](../tests/markdown/syntax/md-heading-syntax.test.ts)
       - [md-line-write.test.ts](../tests/markdown/syntax/md-line-write.test.ts)
-      - [md-task.test.ts](../tests/markdown/syntax/md-task.test.ts)
     - [document-contract.test.ts](../tests/markdown/document-contract.test.ts)
     - [md-open-trigger.test.ts](../tests/markdown/md-open-trigger.test.ts)
     - [md-roundtrip-property.test.ts](../tests/markdown/md-roundtrip-property.test.ts)
@@ -507,8 +518,8 @@
 | 文件 | 行数 | 豁免理由 |
 |---|---|---|
 | `src/domain/color.ts` | 657 | 颜色纯逻辑的**单一落点**（2026-10-29 增至 355；2026-11-05 增至 504：`orphanSentinels` 无主哨兵判定、`tableLineTone` 深底网格线兜底、`hexToHsl`/`hslToHex` 供自定义配色按明度阶梯派生；2026-11-06 审核删掉 `NodeColorScale.line`——结构线要预设配对表，塞进 domain 只能是「线 = 填充」这一种退化答案）：十六进制 / RGB 解析、WCAG 亮度与对比、节点墨色、着色节点的内容色阶（码块 chip / 网格线）、**节点色阶（原色 → 填充 / 文字；结构线不在此，见 `mindmap-theme-presets.nodeLineColorOf`）**、配色指令的继承遍历。这些判定彼此引用（`nodeColorScale` = 归一 + `nodeInkColor`；`nodeContentTones` = `nodeInkColor` + `contrastRatio` + `mixHex`；继承遍历把哨兵折 null 的口径与「默认」落地同源），拆开必然逼出第二份「先归一再判色」的实现（硬规则 5）；全仓只有这一处对颜色做数学运算，拆分的唯一收益是行数。 |
-| `src/domain/callout.ts` | 366 | 标注 / 引用块的**唯一判定面**（2026-11-11）：13 种类型的元数据表（图标 id + 兜底色 + 别名 + **宿主变量名偏差** `cssVar`，`Record<CalloutTypeId, …>` 编译期锁完整性）、别名 → 规范类型的无原型查表（用户可写 `[!toString]`，K172 ⑥ 同款加固）、头部解析（与宿主 `\[!([^\]]+)\]([+\-]?)(?:\s\|$)` 同口径：`\|` 元数据 / 折叠标记 / `[!info]标题` 不算）、标题 Title Case、颜色 `var()` 链、引用前缀剥离。拆开必然逼出第二份「哪些类型合法 / 前缀怎么剥」的实现（硬规则 5）：颜色与图标共用同一张类型表，变量名偏差也只允许在这里解释一次；行数全部来自数据表与取证注释，拆分的唯一收益是行数。 |
-| `src/domain/relation.ts` | 459 | 联系（关系连线）指令的**唯一**语义落点（语法层在 `domain/directive`）：`relationStateOfSource` 同时认「末尾指令行」与「末行行尾段」两种真实形态；写侧只经 `relationSegmentsOf` 产出段、再由 `domain/directive.applyDirectiveBlock` 整体替换尾块——**只替换 `id` / `rel` 两种 key**，同节点的 `sum` 段逐字带回（原先的 `renderDirectiveLine` / `applyDirectiveLine` 已删：那是第二份「只认关系、自己拼尾块」的写入口，一经调用就把概要抹掉）；`resolveRelationGraph` 负责 id 权威性 / 悬空 / 重复 / 自环 / 边上限。拆开必然逼出第二份「哪些注释算指令」的判定（读写两侧口径一分叉，写出的指令读不回来），与 `domain/color` 同性质。 |
+| `src/domain/content/callout.ts` | 366 | 标注 / 引用块的**唯一判定面**（2026-11-11）：13 种类型的元数据表（图标 id + 兜底色 + 别名 + **宿主变量名偏差** `cssVar`，`Record<CalloutTypeId, …>` 编译期锁完整性）、别名 → 规范类型的无原型查表（用户可写 `[!toString]`，K172 ⑥ 同款加固）、头部解析（与宿主 `\[!([^\]]+)\]([+\-]?)(?:\s\|$)` 同口径：`\|` 元数据 / 折叠标记 / `[!info]标题` 不算）、标题 Title Case、颜色 `var()` 链、引用前缀剥离。拆开必然逼出第二份「哪些类型合法 / 前缀怎么剥」的实现（硬规则 5）：颜色与图标共用同一张类型表，变量名偏差也只允许在这里解释一次；行数全部来自数据表与取证注释，拆分的唯一收益是行数。 |
+| `src/domain/relations/relation.ts` | 459 | 联系（关系连线）指令的**唯一**语义落点（语法层在 `domain/relations/directive`）：`relationStateOfSource` 同时认「末尾指令行」与「末行行尾段」两种真实形态；写侧只经 `relationSegmentsOf` 产出段、再由 `domain/relations/directive.applyDirectiveBlock` 整体替换尾块——**只替换 `id` / `rel` 两种 key**，同节点的 `sum` 段逐字带回（原先的 `renderDirectiveLine` / `applyDirectiveLine` 已删：那是第二份「只认关系、自己拼尾块」的写入口，一经调用就把概要抹掉）；`resolveRelationGraph` 负责 id 权威性 / 悬空 / 重复 / 自环 / 边上限。拆开必然逼出第二份「哪些注释算指令」的判定（读写两侧口径一分叉，写出的指令读不回来），与 `domain/color` 同性质。 |
 | `src/engine/nodes/mindmap-relations.ts` | 777 | 联系在引擎侧的**唯一**收口面：Markdown 边 → `associativeLineTargets` / `associativeLineText` 的映射（创建前与渲染后两时机共用同一份 `buildPlans`）、变化后补画（插件的 `renderAllLines` 绑在同一事件上但早于我们）、id 集合收集（生成新 id 避让冲突）、**引用集合收集**（`collectRelationTargets`，孤儿 `%%id%%` 回收的唯一判定面，K153）、**线色落地**（`associativeLineStyle[目标 uid].associativeLineColor`，渲染侧唯一的颜色写入面）、联系线命中判定（双击改标签的 capture 拦截）、**手绘锚定的画布收口**（`relationCanvasLayer` 取 `draw` 内容坐标层、`relationClientToContent` 反解指针、`relationNodeBox` 取节点盒）。这些都要访问 `mindMap.associativeLine` / `draw` / `el` / 节点 data 的引擎私有形态（硬规则 2），拆开就得在别处再开一个引擎触点。 |
 | `src/features/relations/view-node-summary.ts` | 419 | 概要的**全部编辑入口**：两条建入口（选中集合够用 → 按 `collectRuns` 直接建；否则 → 两次点选）、改文字、删。为什么一个文件：建 / 改 / 删共用同一套「概要节点 → 正文条目」认领逻辑（`entryOfSummary`）与同一套区间校验（`planSummaryRanges` / `canPlaceRun`），拆开会让三处各写一份反查。2026-11-02 增至 395：新增 `startSummaryPicking`（两次点选，起点 = 右键节点）与 `planPickedRun`（可反向取区间、四种失败各给一条提示）。 |
 | `src/features/relations/view-node-relation.ts` | 766 | 联系的**全部编辑入口**：建边（源/目标两行 + 手绘 `geo` 一次批量 raw 提交）、删边（目标再无入边时**一并回收它的 `%%id%%`**）、**线色（右键线「联系配色」，写 `%%rel%%` 的 `color=` 段）**、改标签、删节点清入边 + 回收它曾指向的孤儿 id（只改 data、并进删除那一步撤销；被删实例按身份排除——实例树滞后于数据树，K153）、点选模式与双击拦截。共用同一份「节点 → 新指令行 → raw」的合成（`rawWithState`）与「目标 id 显示名」的反查；拆开会让「谁负责改哪一行」跨文件漂移。 |
@@ -519,7 +530,7 @@
 | `src/features/content/content-remeasure.ts` | 556 | 「自绘内容定稿 → 尺寸同步」会话：三条不变式（同帧合批 `setTimeout(0)` / 按 holder 反查真实节点 / 渲染窗口只重试一次）**加第四条可见性不变式**（2026-10-14）——「隐藏态不测量」与「由隐藏转可见的四路自愈」必须与前三者共享同一份回退链（holders → 产物反查 → 暂存重试），拆开会让 `flush` / `retryDeferred` / 字体批次各自维护一份可见性判定，必然漂移；文件头 ④ 记录实机证据与官方判据（`Element.isShown()`）。2026-10-14 增至 460：新增 ⑤ 未定稿修复（三钩子触发 + 宿主画布根作用域，见第十批）。**2026-10-14 十一批增至 492**：清理点改 `forgetEngine`（按引擎身份清，`pruneUnsettledMathOwnedBy`）；`resetNodes` **不再动登记面**（它跑在首帧渲染前，正是误清高危时刻）。**2026-10-14 十二批增至 502**：`recoverHidden` 补可见性守卫（自愈拍到期前又隐藏时不测量、脏标记保留——否则 0×0 写回且此后不再自愈）。 |
 | `src/features/mindmap-codeblock.ts` | 765 | Markdown 代码块只读嵌入（语言键 `mindmap`）的**单一关注点**：块体解析 → 只读引擎装配（`readonly: true` + `enableViewDrag: false`）→ **容器高度随内容**（按宽度适配量测 + 写内联高度 + 请引擎重排）→ **容器宽度变化即重排**（观察器**先建且常驻**：首帧同步挂载成功也注册，否则高度口径锁死在首帧、内容被 `overflow: hidden` 裁掉；重排在**下一帧**落（`deferFit`），在 RO 回调里写布局会被 Chrome 记 `ResizeObserver loop…` 实机可见）→ 滚轮归宿主页面（capture 拦截；引擎 `onMousewheel` 无条件 preventDefault）→ 超限降级只读大纲 → 生命周期收尾（观察器/事件/尺寸会话/引擎/卸载即清 DOM）是一条不可分割的链；拆开会让「解析口径、零尺寸等待、尺寸反馈环、销毁顺序」四处漂移。**不写 data.json**（用户裁决 2026-10-13）。 |
 | `src/markdown/syntax/md-footnote.ts` | 316 | 脚注的**唯一判定面**：定义语法（`parseFootnoteDefinition` / `isFootnoteDefinition`，解析层的链接引用定义豁免也委托它）、逐行分类（`forEachFootnoteLine` 同时服务渲染期剥离与全文索引——拆开必然出现「显示剥了、索引没剥」）、id 字符类（`FOOTNOTE_ID_SOURCE`，行内引用正则从它拼）。2026-11-12 增至 315：续行改按**相对内容起始列的缩进**判定（`indentOf`：优先解析层 `mdContinuationIndents`，否则行首空白），同列的非空行不再被当成续行隐藏；行分类与 id 语法各自只留一份实现（硬规则 5）。 |
-| `src/markdown/serialize/md-serialize.ts` | 1072 | 逐字回写 与 合成回写 的判定/合成必须共享同一份「节点是否被编辑」上下文（`rawOk` 一族谓词），拆分会把它切成跨文件的隐式协议。**2026-11-08 增至 997**：「跟随兄弟风格」改为按**位置**判（`SerializeFrame.lastWasList`，层首仍看整层）——只看整层会让混排组里排在标题之后的新建节点写出列表项、重开被读成该标题的子节点（K172）。嵌入拼写走 `domain/wikilink.formatEmbedWikilink`，注意 `embedLabelSuffix` 返回值**带前导 `\|`** 需去前缀。2026-10-12 增至 1189：无显示名段（首图 / icon-only URL）的**锚点插入点**反查（`anchorInsertPoint` / `insertionForm`）与替换型 slot 共用同一遍行内拼装，拆开会让「文本定位」与「锚点定位」各持一份区间占用判定。2026-10-13 到 1191：`serializeMdBody` 内的 `nodeLines` 去掉遮蔽外层入参的冗余 `app` 形参 |
+| `src/markdown/serialize/md-serialize.ts` | 1072 | 逐字回写 与 合成回写 的判定/合成必须共享同一份「节点是否被编辑」上下文（`rawOk` 一族谓词），拆分会把它切成跨文件的隐式协议。**2026-11-08 增至 997**：「跟随兄弟风格」改为按**位置**判（`SerializeFrame.lastWasList`，层首仍看整层）——只看整层会让混排组里排在标题之后的新建节点写出列表项、重开被读成该标题的子节点（K172）。嵌入拼写走 `domain/links/wikilink.formatEmbedWikilink`，注意 `embedLabelSuffix` 返回值**带前导 `\|`** 需去前缀。2026-10-12 增至 1189：无显示名段（首图 / icon-only URL）的**锚点插入点**反查（`anchorInsertPoint` / `insertionForm`）与替换型 slot 共用同一遍行内拼装，拆开会让「文本定位」与「锚点定位」各持一份区间占用判定。2026-10-13 到 1191：`serializeMdBody` 内的 `nodeLines` 去掉遮蔽外层入参的冗余 `app` 形参 |
 | `src/markdown/outline/md-outline.ts` | 910 | 大纲 ↔ 节点树 的单一往返实现：解析与生成共用同一套层级/标记规则。2026-10-12 增至 1108：首图与 icon-only URL 也登记台账段并附**上下文锚点**（`tokenAnchors`）——不登记则合成只能尾插，图片被搬到行尾 |
 | `src/markdown/outline/md-outline-lines.ts` | 421 | 逐行分类的唯一实现（围栏状态机 / 自闭合围栏 / setext 与分隔线 / 空列表项 / 有序编号，零依赖）；拆开会把「行 → 分类」与「树装配」割成两份缩进与围栏口径（K164）。2026-11-08 增至 322：有序编号 `orderedNumber` 随行记录（K170），只加字段不拆文件；同批把编号限制为**安全整数**（`orderedNumberOf`，超长编号写回会成 `1e+21.` 让整行退化成段落，K172） |
 | `src/core/minimap-geometry.ts` | 1562 | 小地图纯几何与 SVG 模型的唯一实现：全树内容盒、节点抽样/墨色、布局五态连线、等比面板映射、视口框投影与浮层节拍共享同一坐标系。K215 只增加可用侧栏尺寸参数，SVG、框和拖动仍共用 miniMapScale，不复制几何/连线/导航算法。浮层维持宽 160–220、高度按画布封顶；侧栏以完整承载区和 12px 单源 inset 等比居中，实际连线外扩与全树节点共用一份绘制 bounds；最小像素标记须保留边缘空白。 |
@@ -540,13 +551,13 @@
 | `src/settings.ts` | 657 | 设置字段的「接口 → 默认值 → `sanitizeSettings` 校验 → 声明式面板项」四者一一对应、单文件闭环：新增设置项＝单文件同步四处即闭合；拆开（如面板独立）会让四份清单跨文件漂移。2026-10-11 增至 398：校验器加「被回退/钳制键」的诊断出参 + `reportDroppedSettings` 汇总留痕（无痕退化治理，K33 同族）。2026-10-12 增至 422：新增「导出格式」设置项（`exportImageFormat`，类型引用 `ExportImageFormat`），并令 `pickFrom` 泛型化以返回选项 value 的联合类型。2026-10-14 增至 475：新增「新建导图的默认位置」四档设置（`saveLocation` / `saveFolder`，含 1.13 声明式 `type: 'folder'` 控件与 `visible` 条件项——切档后经 `refreshDomState()` 重算可见性〔2026-10-15 改：该官方入口（d.ts:9290，1.13.0 起）专为 `visible`/`disabled` 谓词变化而设、原地切 CSS 状态不重渲染；`update()` 只留给定义**结构**变化（语言切换属此类）〕）。 |
 | `src/features/content/node-inline-tokenize.ts` | 1726 | 节点原文到段序列的**唯一解析面（纯逻辑，无 DOM）**：块扫描顺序（引用 → 围栏 → 表格 → 行内）、段缓存、接管判定 `resolveSelfDrawSource`、原子截断 `clampSegments`、预览及配色指令读写保持同源。共享段模型与平台注入契约已移至 `core/node-content-types.ts`（K209）；UI 经模型与窄回调消费解析结果，不复制扫描、缓存或截断判据。段型不再要求与解析实现同文件，约束是只有一份解析口径。历史扩展与拆分见 `line-count-log.md`。 |
 | `src/features/navigation/view-wikilink.ts` | 449 | 链接交互**单一关注点**：**点击路径**的锚点识别（`findAnchorInNode` / `resolveAnchorLink`）与**悬停预览**（两级：锚点优先 + 节点级 `nodeLink` 三通道 + `hover-link` 事件）同在一处，还有中键 `auxclick`；把悬停拆出去会让「链接怎么取、锚点取哪个目标」出现第二份实现——正是本文件当初拆出（原在 view.ts）要消除的问题。 |
-| `src/domain/mindmap-property.ts` | 350 | 当前双键声明的唯一判据与写入口：属性值归一、内部引擎 id ↔ 短 id 的单一值表、键名收敛与幂等写入共享同一格式契约。文件属性与嵌入指令只读当前短 id，历史值表和迁移读口已删除（K213）；用户输入查表保持无原型，未知值不能变成引擎参数。 |
+| `src/domain/document/mindmap-property.ts` | 350 | 当前双键声明的唯一判据与写入口：属性值归一、内部引擎 id ↔ 短 id 的单一值表、键名收敛与幂等写入共享同一格式契约。文件属性与嵌入指令只读当前短 id，历史值表和迁移读口已删除（K213）；用户输入查表保持无原型，未知值不能变成引擎参数。 |
 | `src/features/canvas/view-viewport.ts` | 414 | **画布手势的唯一接管面**（2026-10-26 滚轮平滑后越线）：注册面（画布祖先 capture + 非 passive）与让位链（`Ctrl/Cmd` 缩放优先、编辑中交引擎提交、指针不在画布内、连续输入小 delta、纯横向 delta）必须与「接管后怎么走」同处——Alt 横轴映射、rAF 指数趋近、收尾（mousedown / 缩放 / 引擎换代 / 到达画面边界）共用同一份平滑状态；拆开会把「该不该接管」与「接管了走多少」摊到两处，正是引擎那套「先 `stopPropagation` 再平移」当年把容器级监听变成死代码的翻版（K138 / K144）。 |
 | `src/platform/export-svg-postprocess.ts` | 369 | 导出 SVG 后处理**唯一收口**（2026-10-17 由 export-svg-style / export-css-vars / export-foreign-object-padding 三文件合并）：foreignObject 几何余量（K106）→ Obsidian CSS 变量注入（K99/K105）→ `--pele-*` 与通用变量白名单（K173），共用 `appendSvgStyle` 注入原语。三步共享同一条前提「导出克隆里没有插件样式表」，拆开会让变量白名单与几何余量各持一份 CSSOM 读取（同 `math-jax` 性质）。2026-11-09 越线（338 行）并登记。2026-11-11：几何余量的**横向 12px 改为左右各半**（`x -= 6`）——只加 width 会把自绘内容的右内边距压到 4px（实拍"节点边框右边比左边窄"，K106 ④-b）。 |
 | `src/platform/rendering/code/prism-code.ts` | 393 | 代码块语法高亮通道**单一落点**（全插件唯一 import `obsidian` 的代码高亮实现，`loadPrism`）：产品形态是「字面代码 → 异步 `Prism.tokenize` → token 元素（**不经 innerHTML**）→ 定稿（入产物缓存 + 通知重排）」；与数学通道的四点差异（tokenize 是同步纯函数，故**不搬**字体/flush/就绪判据/挂载补替换队列）必须成对阅读；token 颜色**探测宿主计算色后内联**（导出 SVG 无 app.css，K91/K99 口径）；主题切换走 `refreshPrismTokenColors`（清缓存 + 就地改色，不重建节点）。未登记语言 / `tokenize` 抛错 / 空产物一律保留字面（占位即回退）。 |
 | `src/platform/rendering/math/math-jax.ts` | 870 | 数学渲染通道的**状态与就绪编排面**：字面占位、异步渲染/替换、flush、未定稿登记、产物缓存与按 owner 清理共享可变状态和落地时序；渲染就绪既要字符规则落盘，也要可见字符有宽度（兼容 MathJax 3/4，见 K85/K113）。字符规则判定与索引已在 `math-jax-char-rules.ts`，导出 DOM/CSSOM 后处理已在 `math-jax-export.ts`；本文件调用/转发这些能力，保留渲染生命周期，不能再把已拆出的规则索引或导出实现计作本文件职责。历次扩展与拆分见 `line-count-log.md`。 |
 | `src/links/links-tree.ts` | 455 | 树内引用更新**单一遍历实现**：rename / clear 两模式共享待匹配形态派生（资源地址 + [[链接]] 双载体、回收站退化、跨文件夹移动取新位置、非 .md 文档带扩展名）与写回规则；拆开会让「重命名改写」与「删除清理」两条路径的匹配口径漂移。`renamedMdLinkDest` 把 md 目标绕回 `parseWikilink` 是**安全**的（上游 `mdTargetRenamed` 已排除空串与含 `\|`/`#` 的目标），勿误改为「直接构造 parts」 |
-| `src/links/file-lookup.ts` | 376 | 全库文件索引（键形态 / 缓存新鲜度 / 增量补建）与**「新建引用路径形态」的唯一组合判定**（官方 `New link format` 三档 + basename 同名消歧 + `domain/wikilink.formatLinkPath` 拼接）。后者 2026-10-20 从 `features/editing/view-node-actions` 上收：文档链接与图片引用共用同一份——拆开会让「读设置 / 判同名 / 拼路径」在两处各写一遍（图片侧此前正是直接写 `file.path`，无视设置）。 |
+| `src/links/file-lookup.ts` | 376 | 全库文件索引（键形态 / 缓存新鲜度 / 增量补建）与**「新建引用路径形态」的唯一组合判定**（官方 `New link format` 三档 + basename 同名消歧 + `domain/links/wikilink.formatLinkPath` 拼接）。后者 2026-10-20 从 `features/editing/view-node-actions` 上收：文档链接与图片引用共用同一份——拆开会让「读设置 / 判同名 / 拼路径」在两处各写一遍（图片侧此前正是直接写 `file.path`，无视设置）。 |
 | `src/links/links-resolve.ts` | 354 | 「任意地址形态 → TFile」的**统一解析入口**：远程拒绝 → `obsidian://` → 资源地址 → 路径直查 → `file://` 剥离 → 官方 `getFirstLinkpathDest` → 索引兜底——形态路由的**分支顺序本身即契约**（新增规则只改这一处）；拆开会重新引入本文件当初拆出要收敛的「双轨并存、覆盖形态互有盲区」问题 |
 | `src/services/document/document-service.ts` | 855 | md 文档读写数据面：**读**（`DocumentService.load` → `parseMdOutline` + `walkResolveImagePaths`）与**写**（`SavePipeline` → 2 秒防抖调度 + 串行排空 + 卸载快照兜底 + 无差异跳过 + `Vault.process` 原子写盘）成对。**2026-11-07 重写（691 → 583）**：保存策略照搬 Obsidian `TextFileView`——删掉「自动保存开关 / P1a 外部改动检测 / P1b 连续失败挂起 / `forgetBaseline`」，写入改为 `Vault.process`（运行时缺失时回退 `cachedRead` + `modify`），文件头恒取磁盘现值、正文取本视图序列化结果。 |
 | `src/services/document/document-session.ts` | 809 | **Level B 的会话本体**（2026-11-09）：一个文件的权威树、单游标历史、唯一保存管线、跨视图广播、外部写入重载是**同一条不可分割的状态链**——`commit` 必须同时改树 / 入历史 / 排广播 / 排保存（少一处就双写或丢历史）；由它持有的 `SavePipeline` 与 `SessionViewPort` 端口又必须共享同一份 `applying`/`loading` 闩锁（回声守卫）。拆开会让「提交一次编辑到底发生了什么」跨文件漂移，与 `document-service` 的拆分理由同性质；纯逻辑的栈已外置为 `document-session-history.ts`、注册表外置为 `document-session-registry.ts`，本文件只剩状态机与编排。 |
@@ -567,7 +578,7 @@
     - [README.md](README.md)：按需阅读、权威边界与文档规模
     - [architecture.md](architecture.md)：模块职责、数据流与依赖层
     - [baseline-metrics.md](baseline-metrics.md)：可复现基线与静态指标
-    - [conventions.md](conventions.md)：关键约定 K1–K221，按主题及编号读取分层摘要
+    - [conventions.md](conventions.md)：关键约定 K1–K222，按主题及编号读取分层摘要
     - [line-count-log.md](line-count-log.md)：历次规模与验证记录，只追加
     - [testing.md](testing.md)：测试分层、CI 与验证流程
     - [process.md](process.md)：维护义务与发布流程

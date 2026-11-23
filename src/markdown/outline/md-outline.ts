@@ -27,11 +27,11 @@ import {
 	linkDisplayText,
 	parseWikilink,
 	wikilinkTargetIsAttachment,
-} from '../../domain/wikilink';
-import { isUrlLikeText } from '../../domain/url';
-import { parseTaskPrefix, stripTaskPrefix } from '../../domain/md-task';
+} from '../../domain/links';
+import { isUrlLikeText } from '../../domain/links';
+import { parseTaskPrefix, stripTaskPrefix } from '../../domain/content';
 import { isIndentedCodeLine } from '../../core/constants';
-import { isDirectiveLine, stripTrailingSegments } from '../../domain/directive';
+import { isDirectiveLine, stripTrailingSegments } from '../../domain/relations';
 import { isColorDirectiveLine } from '../../domain/color';
 import type { MdTokenSegment } from '../../domain/document';
 import type { MdNodeData } from '../../core/node-data';
@@ -191,7 +191,7 @@ export function buildInlineData(raw: string): InlineData {
 		if (tok.kind === 'wikiImg' || tok.kind === 'mdImg') {
 			// 非图片的嵌入 `![[X]]`，按**目标类型**分两路（Obsidian 语义：末段为
 			// `.md` 或无扩展名 = 文档；其余扩展名 = 附件，判据
-			// `domain/wikilink.wikilinkTargetIsAttachment`）：
+			// `domain/links/wikilink.wikilinkTargetIsAttachment`）：
 			//
 			// ① 文档嵌入 `![[笔记]]` / `![[笔记.md]]` / `![[笔记#标题|别名]]`
 			//    → 与文档双链**同通道**（`mdWikiLinkpath`，自绘文档页图标），
@@ -781,7 +781,7 @@ export function parseMdOutline(
 						continue;
 					}
 				}
-				// **指令行**（整行只有联系指令，`domain/relation.isDirectiveLine`）不产出
+				// **指令行**（整行只有联系指令，`domain/relations/relation.isDirectiveLine`）不产出
 				// 节点，归属上一个节点（2026-10-30）。必须在「列表续行合并」之前拦截：
 				// 列表项的指令行按 restIndent 缩进，否则会被当成续行并进 text。
 				// 段落缓冲非空时交给 flushPlain（指令行在段落内部不算节点内容）。

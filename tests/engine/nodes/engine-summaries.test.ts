@@ -7,7 +7,7 @@
  * 2. `uid` 按文档序分配（`sum-1`…）：同一棵树两次同步得到同一组 uid，不抖动；
  * 3. 没有概要时**删除该键**（不留空数组），没变化时返回 false（调用方据此避免
  *    无意义的补渲染）；
- * 4. 规划（越界夹取 / 重叠丢弃）完全由 `domain/summary` 决定，本模块不另判。
+ * 4. 规划（越界夹取 / 重叠丢弃）完全由 `domain/relations/summary` 决定，本模块不另判。
  */
 import { describe, expect, it, vi } from 'vitest';
 import {

@@ -33,12 +33,12 @@ import {
 	isCalloutHeaderLine,
 	parseCalloutHeader,
 	stripQuotePrefix,
-} from '../../domain/callout';
+} from '../../domain/content';
 import { colorDirectiveValueOf } from '../../domain/color';
-import { matchPipeTable, type PipeTable } from '../../domain/pipe-table';
-import { isSchemeUrl, isUrlLikeText } from '../../domain/url';
+import { matchPipeTable, type PipeTable } from '../../domain/content';
+import { isSchemeUrl, isUrlLikeText } from '../../domain/links';
 import { nodeContinuationIndents, nodeInlineSource } from '../../domain/document';
-import { stripTaskPrefix } from '../../domain/md-task';
+import { stripTaskPrefix } from '../../domain/content';
 import {
 	FOOTNOTE_ID_SOURCE,
 	splitFootnoteDefinitions,
@@ -1307,7 +1307,7 @@ interface ContentBlock {
  *   而全部块的 text 拼接仍等于原文（编辑弹窗预览里表格独占行）；
  * - 三类行**不参与**表格识别：① 落在 `protectedRanges` 内的行（围栏代码块 /
  *   块级数学）；② 缩进代码行（`isIndentedCodeLine`，对齐解析层「缩进块是代码」
- *   的既有判定）；③ 其余行交给 `domain/pipe-table.matchPipeTable` 判定
+ *   的既有判定）；③ 其余行交给 `domain/content/pipe-table.matchPipeTable` 判定
  *   （表头行 + 分隔行成对才算表）。
  *
  * 无表时返回**单个文本块 = 整段原文** ⇒ 上层走与引入表格前逐字等价的快路径。

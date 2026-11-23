@@ -18,7 +18,7 @@ import type { Component, TFile, Workspace, WorkspaceLeaf } from 'obsidian';
 import { MarkdownView } from 'obsidian';
 import { AUTO_OPEN_SCAN_DEBOUNCE_MS, CORE_VIEW_TYPE, VIEW_TYPE } from '../../core/constants';
 import { createDebouncer, type Debouncer } from '../../core/concurrency';
-import { isDedicatedMindMapPath } from '../../domain/mindmap-file';
+import { isDedicatedMindMapPath } from '../../domain/document';
 import {
 	canAutoOpenMindMap, isExplicitMindMapOpen, openAsMarkdown,
 	openAsMindMap, readMdBackMode,

@@ -14,7 +14,7 @@ import {
 	formatWikilink,
 	isDocumentExtension,
 	parseWikilink,
-} from '../domain/wikilink';
+} from '../domain/links';
 
 /**
  * 文档类文件作为双链目标时的写串与可见名：`.md` 省略扩展名（官方等价写法），

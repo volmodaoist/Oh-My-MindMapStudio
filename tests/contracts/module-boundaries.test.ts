@@ -26,6 +26,7 @@ import { describe, expect, it } from 'vitest';
 import {
 	COMBO_ROOT_MODULES,
 	COMBO_ROOT_SPECIFIER_PATTERN,
+	DOMAIN_LEAF_MODULES,
 	MODULE_DEPENDENCIES,
 	MODULE_GROUPS,
 	PUBLIC_MODULES,
@@ -387,7 +388,9 @@ describe('模块边界（K51）：依赖图性质', () => {
 		expect(violatesPublicEntry('src/services/document/document-session.ts', 'src/engine/index.ts')).toBe(false);
 		expect(violatesPublicEntry('src/markdown/outline/md-outline.ts', 'src/markdown/index.ts')).toBe(true);
 		expect(violatesPublicEntry('src/markdown/index.ts', 'src/markdown/outline/md-outline.ts')).toBe(false);
-		expect(violatesPublicEntry('src/features/view/view.ts', 'src/domain/url.ts')).toBe(false);
+		expect(violatesPublicEntry('src/features/view/view.ts', 'src/domain/color.ts')).toBe(false);
+		expect(violatesPublicEntry('src/core/constants.ts', 'src/domain/document/mindmap-property.ts')).toBe(true);
+		expect(violatesPublicEntry('src/domain/relations/relation.ts', 'src/domain/document/index.ts')).toBe(false);
 	});
 
 	it('实际源文件均遵循唯一公共入口（含类型和 re-export 边）', () => {
@@ -449,6 +452,15 @@ describe('模块边界（K51）：依赖图性质', () => {
 			rootFiles,
 			'src/ 根层文件即「组合根」，新增/改名必须同步 COMBO_ROOT_MODULES（K51）',
 		).toEqual([...COMBO_ROOT_MODULES].sort());
+	});
+
+	it('领域根目录只保留已登记叶子，能力目录均有受检查的公共入口', () => {
+		const entries = readdirSync(path.join(SRC, 'domain'), { withFileTypes: true });
+		const leaves = entries.filter(entry => entry.isFile() && entry.name.endsWith('.ts'))
+			.map(entry => entry.name.replace(/\.ts$/, '')).sort();
+		const modules = entries.filter(entry => entry.isDirectory()).map(entry => `domain/${entry.name}`).sort();
+		expect(leaves).toEqual([...DOMAIN_LEAF_MODULES].sort());
+		expect(modules).toEqual(PUBLIC_MODULES.filter(module => module.startsWith('domain/')).sort());
 	});
 
 	it('每条相对 import 都能解析到真实文件（无陈旧路径）', () => {

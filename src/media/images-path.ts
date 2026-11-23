@@ -11,8 +11,8 @@ import { mapWithConcurrency } from '../core/concurrency';
 import {
 	isAppResourceUrl,
 	isExternalImageRef,
-} from '../domain/url';
-import { cloneTree, walkTree } from '../domain/tree';
+} from '../domain/links';
+import { cloneTree, walkTree } from '../domain/document';
 import { resolvePathToFile } from '../links/links-resolve';
 import type {
 	MindMapTreeNode,

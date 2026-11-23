@@ -492,7 +492,7 @@ function effectiveDirective(directive: string | null): string | null {
 /**
  * 「就近覆盖」的配色继承遍历（先序，显式栈）。
  *
- * 与 `domain/tree.walkTree` 的分工：后者**不携带祖先状态**，本函数是唯一需要
+ * 与 `domain/document/tree.walkTree` 的分工：后者**不携带祖先状态**，本函数是唯一需要
  * 「继承值」的场景（节点的颜色 = 自身指令 ?? 最近祖先的指令）。勿在渲染层或
  * 解析层另写一份继承判定。
  *

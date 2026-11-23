@@ -13,8 +13,8 @@
 import type { App } from 'obsidian';
 import { readNodeDataString, type MdNodeData } from '../../core/node-data';
 import { resolvePathToFile } from '../../links/links-resolve';
-import { isExternalImageRef } from '../../domain/url';
-import { formatEmbedWikilink } from '../../domain/wikilink';
+import { isExternalImageRef } from '../../domain/links';
+import { formatEmbedWikilink } from '../../domain/links';
 import { tokenizeInline } from '../outline/md-outline';
 
 /** 目标/地址的 `<>` 包裹剥壳（md 链接与图片目标都可能写作 `<路径 带空格>`） */

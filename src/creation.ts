@@ -9,7 +9,7 @@
  * 布局取设置 `defaultLayout`（**种子值**：写进新文件的属性后，该文件此后只认
  * 自己的属性，改设置不会影响它）。仅有中心节点，不预置提示分支（见 K201）。
  */
-import { MINDMAP_FILE_SUFFIX, mindMapFileName } from './domain/mindmap-file';
+import { MINDMAP_FILE_SUFFIX, mindMapFileName } from './domain/document';
 import { App, Notice, normalizePath, type TFile, type TFolder } from 'obsidian';
 import { notifyError } from './core/errors';
 import { t } from './core/i18n';

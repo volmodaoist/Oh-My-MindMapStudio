@@ -11,7 +11,7 @@
  *   （属性被就地加上时补判），故该方法是公开的。
  *
  * 判据本身（frontmatter 的 `Mindmap`）由组合根注入，本套件用「声明集合」桩
- * 代替——那样判据回归在 tests/domain/md-frontmatter-trigger.test.ts 单独锁定，两边互不
+ * 代替——那样判据回归在 tests/domain/document/mindmap-property.test.ts 单独锁定，两边互不
  * 耦合。
  *
  * 为什么延时用例必须用 fake timers 断言**每一档的精确毫秒**：三档的作用就是

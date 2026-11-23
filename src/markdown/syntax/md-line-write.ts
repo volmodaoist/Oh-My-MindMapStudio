@@ -21,8 +21,8 @@ import {
 	INLINE_LINK_FIELDS,
 	PLAIN_IMAGE_FIELDS,
 } from '../outline/md-outline';
-import { parseTaskPrefix, stripTaskPrefix } from '../../domain/md-task';
-import { isDirectiveLine } from '../../domain/directive';
+import { parseTaskPrefix, stripTaskPrefix } from '../../domain/content';
+import { isDirectiveLine } from '../../domain/relations';
 import type { MdNodeData } from '../../core/node-data';
 
 /**
@@ -52,7 +52,7 @@ const REBUILT_FIELDS = [
  * （含续行），序列化时按树深度补续行缩进。续行行首空白按解析侧口径 `trimStart`
  * ——缩进由序列化器补，留两份会写出双缩进。
  *
- * 末尾的**联系指令行**（`domain/relation.isDirectiveLine`）不进 `text`：它们只落
+ * 末尾的**联系指令行**（`domain/relations/relation.isDirectiveLine`）不进 `text`：它们只落
  * `mdDirectiveTail`，与 `mdRaw` 一起构成「逐字回写 + 指令可改」的两份数据。剥不干净
  * 会让 `text` 与 `mdDerivedText` 口径不一致（`rawOk` 恒假 ⇒ 整篇节点被合成回写）。
  *

@@ -3,7 +3,7 @@
  * 根节点文本编辑停止（防抖 + 非编辑态）后重命名 .mindmap.md 文件，
  * Obsidian 原生更新链接/反链；外部改名后视图重载，中心随新文件名。
  */
-import { mindMapFileName, mindMapFileTitle } from '../../domain/mindmap-file';
+import { mindMapFileName, mindMapFileTitle } from '../../domain/document';
 import { App, Notice, normalizePath, TFile } from 'obsidian';
 import { createDebouncer } from '../../core/concurrency';
 import { notifyError } from '../../core/errors';

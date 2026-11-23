@@ -1,5 +1,5 @@
 /**
- * 手绘锚定的纯几何回归（`domain/relation-anchor`）。
+ * 手绘锚定的纯几何回归（`domain/relations/relation-anchor`）。
  *
  * 三组断言：
  * 1. **射线投射**：四边、内部点、中心退化；`range` 的符号必须与引擎
@@ -16,8 +16,8 @@ import {
 	moveAnchorSession,
 	previewOf,
 	type RelationAnchorSession,
-} from '../../src/domain/relation-anchor';
-import type { RelationRect } from '../../src/domain/relation';
+} from '../../../src/domain/relations/relation-anchor';
+import type { RelationRect } from '../../../src/domain/relations/relation';
 
 const rect = (left: number, top: number, width = 100, height = 20): RelationRect => ({
 	left,

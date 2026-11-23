@@ -7,8 +7,8 @@ import type { MdNodeData } from '../core/node-data';
  */
 import { generateUid } from '../core/constants';
 import { t, type Language } from '../core/i18n';
-import { buildMindMapFrontmatter } from '../domain/mindmap-property';
-import { walkTree } from '../domain/tree';
+import { buildMindMapFrontmatter } from '../domain/document';
+import { walkTree } from '../domain/document';
 import type { MarkdownNode } from '../domain/document';
 
 /**

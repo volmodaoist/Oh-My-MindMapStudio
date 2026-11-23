@@ -1,5 +1,5 @@
 /**
- * URL / 地址形态谓词单元测试（domain/url.ts）。
+ * URL / 地址形态谓词单元测试（domain/links/url.ts）。
  *
  * 为什么需要这一层密集覆盖：这些谓词是 images-path、modal-image、md-serialize、
  * view-wikilink、view（系统打开/外跳）的共同依赖；此前同一问题（「这是外部地址吗」）
@@ -8,7 +8,7 @@
  * 逐条锁定，并额外用「同一地址 × 全部谓词」的语义矩阵锁死它们之间的差异
  * （file:// 是外部图片与超链接、却不是远程/数据地址；app:// 只算库内资源）。
  *
- * 断言原则：全部对齐当前 src/domain/url.ts 实现（含协议大小写敏感、前缀判定
+ * 断言原则：全部对齐当前 src/domain/links/url.ts 实现（含协议大小写敏感、前缀判定
  * 不做 URL 合法性校验、空白/换行拦截等真实边界），不使用恒真断言。
  */
 import { describe, expect, it } from 'vitest';
@@ -27,7 +27,7 @@ import {
 	resourceUrlPathCandidates,
 	tryDecodeUri,
 	urlComparisonForms,
-} from '../../src/domain/url';
+} from '../../../src/domain/links/url';
 
 describe('isHttpUrl', () => {
 	it.each([

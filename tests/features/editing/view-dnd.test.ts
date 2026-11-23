@@ -31,7 +31,7 @@ import type { EventBinder } from '../../../src/core/event-binder';
 import type { SaveImageOptions } from '../../../src/media/images-save';
 import type { Language, TranslationKey } from '../../../src/core/i18n';
 import { t } from '../../../src/core/i18n';
-import { formatWikilink } from '../../../src/domain/wikilink';
+import { formatWikilink } from '../../../src/domain/links/wikilink';
 import type { MindMap, MindMapNode } from '../../../vendor/simple-mind-map.cjs';
 import type { MindMapViewContext } from '../../../src/features/view/view-context';
 import { setupDragAndDrop } from '../../../src/features/editing/view-dnd';

@@ -23,7 +23,7 @@ import {
 	normalizeLineStylePreference,
 	shouldEnablePerformanceMode,
 } from '../../src/core/constants';
-import { isDocumentExtension, wikilinkTargetIsAttachment } from '../../src/domain/wikilink';
+import { isDocumentExtension, wikilinkTargetIsAttachment } from '../../src/domain/links/wikilink';
 
 describe('isDocumentExtension / wikilinkTargetIsAttachment — 文档 vs 附件', () => {
 	it.each([

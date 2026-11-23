@@ -1,5 +1,5 @@
 /**
- * 任务复选框的**交互收口**（渲染在 `node-inline-html`，数据在 `domain/md-task`）。
+ * 任务复选框的**交互收口**（渲染在 `node-inline-html`，数据在 `domain/content/md-task`）。
  *
  * ## 为什么在画布 capture 阶段接管
  * 复选框是自绘节点内容里的一个 `span`，而引擎在**节点 group** 上以 `mousedown`
@@ -21,7 +21,7 @@
  */
 import { findNodeByDom } from '../../engine';
 import { composeNodeContent } from '../../markdown';
-import { setTaskTokenInRaw, toggleTaskToken } from '../../domain/md-task';
+import { setTaskTokenInRaw, toggleTaskToken } from '../../domain/content';
 import { elementFromTarget } from '../../core/event-binder';
 import type { MdNodeData } from '../../core/node-data';
 import { applyRawNodeContent } from './node-content-write';
