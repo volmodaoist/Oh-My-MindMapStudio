@@ -6,7 +6,7 @@
  * 上层依赖），由 eslint 的 no-restricted-imports 边界规则强制。
  */
 import type { MindMapNodeData } from './engine-types';
-import type { MarkdownNodeData } from '../domain/document';
+import type { MarkdownNodeData } from '@/src/domain/document';
 
 /**
  * 引擎节点 data + md 元数据的合并视图。

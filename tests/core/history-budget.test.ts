@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { HISTORY_BUDGET_BYTES, HISTORY_SNAPSHOT_BYTES_PER_NODE, resolveHistoryLimit } from '../../src/core/history-budget';
+import { HISTORY_BUDGET_BYTES, HISTORY_SNAPSHOT_BYTES_PER_NODE, resolveHistoryLimit } from '@/src/core/history-budget';
 
 describe('共享快照预算（无 DOM 或引擎运行时）', () => {
   it('预算内条数、单调性与撤销地板保持一致', () => {

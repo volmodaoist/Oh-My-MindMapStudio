@@ -9,7 +9,7 @@
  * Notice，用户关掉提示后没有任何「未保存」线索；现在状态栏同时承载
  * `保存中… / 已保存 / 未保存`，失败态一直留到下一次成功写入。
  */
-import { t, type Language, type TranslationKey } from '../core/i18n';
+import { t, type Language, type TranslationKey } from '@/src/core/i18n';
 
 /**
  * 保存状态：

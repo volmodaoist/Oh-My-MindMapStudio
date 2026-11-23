@@ -30,8 +30,8 @@
  * 重算——不调用引擎的 `ADD_ASSOCIATIVE_LINE`，否则一次建边会留两条撤销记录。
  */
 
-import type { MindMap, MindMapNode, MindMapTreeNode } from '../../core/engine-types';
-import { RELATION_MAX_RENDER_EDGES } from '../../core/constants';
+import type { MindMap, MindMapNode, MindMapTreeNode } from '@/src/core/engine-types';
+import { RELATION_MAX_RENDER_EDGES } from '@/src/core/constants';
 import {
 	isRelationAnchorDir,
 	type RelationAnchorDir,
@@ -40,8 +40,8 @@ import {
 	type RelationRect,
 	relationStateOf,
 	resolveRelationGraph,
-} from '../../domain/relations';
-import { walkTree } from '../../domain/document';
+} from '@/src/domain/relations';
+import { walkTree } from '@/src/domain/document';
 import { getRenderRoot } from './mindmap-nodes';
 
 /** 本模块拥有的节点 data 键（清除分支遍历的就是它，勿另列一份） */

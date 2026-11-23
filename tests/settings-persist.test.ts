@@ -13,14 +13,14 @@
  * 不依赖 app，loadData/saveData 由测试覆写为内存「磁盘」以观测写盘次数与载荷。
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import MindMapStudioPlugin from '../src/main';
-import { DEFAULT_SETTINGS } from '../src/settings';
+import MindMapStudioPlugin from '@/src/main';
+import { DEFAULT_SETTINGS } from '@/src/settings';
 import {
 	EXPORT_SCALE_MAX,
 	SETTINGS_PERSIST_DEBOUNCE_MS,
 	SETTINGS_APPLY_DEBOUNCE_MS,
 	VIEW_STATE_PERSIST_MS,
-} from '../src/core/constants';
+} from '@/src/core/constants';
 
 // main 的导入链（features/view/view → mindmap）在模块顶层触碰 document，
 // Node 环境需最小桩；vi.hoisted 保证桩早于 import 求值建立。

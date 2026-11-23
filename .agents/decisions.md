@@ -376,3 +376,15 @@ Markdown 数据语义以 [标准](../docs/markdown-mindmap-standard.md) 为准�
 - URL 与双链纯规则属于 domain/links，实际 Vault 文件索引仍属于 src/links；不合并这两个依赖层。
 - 每个能力只具名转出跨模块使用的 API；颜色数学与编辑按键作为跨能力叶子保留，根目录叶子清单由依赖脚本和契约检查。
 - tests/domain 对齐四个目录；综合域测试拆成双链与树两文件，任务测试移至 content，不改变测试主体或产品语义。
+
+## 统一发版记录（K214）
+
+- CHANGELOG 唯一维护用户可读的版本变化和 base → feat 完成快照；历史详细版本文件与映射 JSON 合并后移除，标签保持。
+- 每版 2～3 条短说明；尚未发版的 Fork 功能放在未发布区，避免并入历史 0.3.3。
+- release-notes.mjs 按二级标题提取目标版本，忽略代码围栏中的标题，缺失/重复/空条目拒绝发布；版本同步提示与 release workflow 共用该入口。
+
+## 项目根模块别名（K223）
+
+- @/ 对应仓库根，跨目录 TS 模块和测试 mock 引用使用该别名；同目录 ./ 保持简洁。
+- tsconfig paths、Vitest resolver 与 esbuild 自动配置解析对齐；真实依赖图解析别名目标，ESLint 禁令也覆盖 @/src，不把别名当外部 npm 包跳过。
+- 直接由 Node 加载的 scripts/config、文件 URL 与 Markdown 链接保留可直接运行和点击的路径，避免引入额外加载器。

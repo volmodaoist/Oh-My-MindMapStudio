@@ -1,6 +1,6 @@
 /** 节点内围栏块定位与原文替换：复用 Markdown 围栏判据，保留前缀与换行。 */
-import { fenceMarker, isFenceCloseLine } from '../outline/md-outline-lines';
-import { normalizeFenceLanguage } from '../../core/constants';
+import { fenceMarker, isFenceCloseLine } from '@/src/markdown/outline/md-outline-lines';
+import { normalizeFenceLanguage } from '@/src/core/constants';
 
 export interface FencedNodeBlock {
 	index: number;

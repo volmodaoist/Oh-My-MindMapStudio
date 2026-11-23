@@ -10,10 +10,10 @@
  * `engine-controller.ts` 仍对外转出 `EngineControllerDeps`，既有 import 路径不变。
  */
 import type { App, TFile } from 'obsidian';
-import type { Language } from '../../core/i18n';
-import type { MindMapNode } from '../../core/engine-types';
-import type { NodeContentStyle } from '../../engine';
-import type { ViewStateStore } from '../view-state';
+import type { Language } from '@/src/core/i18n';
+import type { MindMapNode } from '@/src/core/engine-types';
+import type { NodeContentStyle } from '@/src/engine';
+import type { ViewStateStore } from '@/src/services/view-state';
 
 /** 引擎创建选项（设置读取与布局 fallback 由视图负责） */
 export interface EngineSetupOptions {

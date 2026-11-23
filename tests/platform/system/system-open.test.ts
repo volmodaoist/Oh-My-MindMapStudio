@@ -13,8 +13,8 @@
  */
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { Notice } from 'obsidian';
-import { t } from '../../../src/core/i18n';
-import { surfaceOpenResult } from '../../../src/platform/system/system-open';
+import { t } from '@/src/core/i18n';
+import { surfaceOpenResult } from '@/src/platform/system/system-open';
 
 const h = vi.hoisted(() => ({
 	/** Notice 文案（按调用顺序） */

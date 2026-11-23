@@ -3,11 +3,11 @@
  * 调用方提供屏幕矩形/内容样式及回调；组件不读取节点、引擎、视图或文件。
  * 编辑期只更新 DOM，任何写回均由提交回调承接。
  */
-import { EventBinder } from '../../core/event-binder';
-import { resolveInlineEditKey } from '../../domain/node-edit-key';
+import { EventBinder } from '@/src/core/event-binder';
+import { resolveInlineEditKey } from '@/src/domain/node-edit-key';
 import { EDITOR_STYLES } from './node-editor.styles';
 import { TextareaInput } from './textarea-input';
-import type { EditorInputBehavior, EditorInputSurface } from '../../core/editor-input';
+import type { EditorInputBehavior, EditorInputSurface } from '@/src/core/editor-input';
 
 interface NodeEditorOptions {
 	value: string;

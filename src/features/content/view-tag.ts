@@ -17,10 +17,10 @@
  * ——判定收口在 `core/event-binder.elementFromTarget`（任务复选框共用同一份）。
  */
 import type { App } from 'obsidian';
-import { elementFromTarget } from '../../core/event-binder';
-import type { EventBinder } from '../../core/event-binder';
-import type { Language } from '../../core/i18n';
-import { openTagSearch } from '../../platform/workspace/tag-search';
+import { elementFromTarget } from '@/src/core/event-binder';
+import type { EventBinder } from '@/src/core/event-binder';
+import type { Language } from '@/src/core/i18n';
+import { openTagSearch } from '@/src/platform/workspace/tag-search';
 
 /** 标签 pill 的命中选择器（类名与 `data-tag` 由 node-inline-html 产出） */
 const TAG_SELECTOR = 'a.tag[data-tag]';

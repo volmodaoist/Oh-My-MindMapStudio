@@ -39,10 +39,10 @@
  * 样式键是**渲染期派生数据**，不写回文件：回写仍只读 `mdRaw` / `text`
  *（见 `domain/md-meta.nodeInlineSource`）。指令本身留在正文里，是唯一真相。
  */
-import type { MindMapNode, MindMapTreeNode } from '../../core/engine-types';
-import { nodeColorScale, walkColorDirectives } from '../../domain/color';
+import type { MindMapNode, MindMapTreeNode } from '@/src/core/engine-types';
+import { nodeColorScale, walkColorDirectives } from '@/src/domain/color';
 import { nodeLineColorOf } from './mindmap-theme-presets';
-import { nodeInlineSource } from '../../domain/document';
+import { nodeInlineSource } from '@/src/domain/document';
 
 /** 读一行原文里的配色指令（`#rrggbb` / 哨兵 `none` / 未写则 null）；生产实现 = `colorDirectiveOf` */
 export type ColorDirectiveReader = (raw: string) => string | null;

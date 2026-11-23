@@ -1,8 +1,8 @@
 /** 节点内容 task：DOM/样式内聚，保持原输出与导出保真。 */
-import { type InlineContentDocument } from '../../core/node-content-types';
+import { type InlineContentDocument } from '@/src/core/node-content-types';
 import { type BuildContentParams } from './content-context';
 import { NODE_TASK_CLASS, TASK_BOX_STYLES, TASK_GLYPH_STYLES, taskMarkColor } from './content-task.styles';
-import { t } from '../../core/i18n';
+import { t } from '@/src/core/i18n';
 import { THEME_LINK_COLOR } from './content-common.styles';
 
 /**

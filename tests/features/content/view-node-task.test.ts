@@ -13,7 +13,7 @@
  * 引擎面整体 mock（只保留本特性用到的 `findNodeByDom`）。
  */
 import { describe, expect, it, vi, beforeEach } from 'vitest';
-import type { MindMapNode } from '../../../src/core/engine-types';
+import type { MindMapNode } from '@/src/core/engine-types';
 
 /** `vi.hoisted`：mock 工厂先于 import 求值，避免 TDZ（不能直接引用下方 const） */
 const engineMocks = vi.hoisted(() => ({
@@ -21,7 +21,7 @@ const engineMocks = vi.hoisted(() => ({
 	recordHistory: vi.fn(),
 }));
 
-vi.mock('../../../src/engine', () => ({
+vi.mock('@/src/engine', () => ({
 	findNodeByDom: engineMocks.findNodeByDom,
 	recordHistory: engineMocks.recordHistory,
 	markNodeNeedLayout: vi.fn(),
@@ -33,10 +33,10 @@ import {
 	buildInlineNodeContent,
 	NODE_INLINE_CONTENT_CLASS,
 	NODE_TASK_CLASS,
-} from '../../../src/features/content/node-inline-html';
-import { setupNodeTaskInteraction } from '../../../src/features/content/view-node-task';
-import { toggleTaskToken } from '../../../src/domain/content/md-task';
-import { nodeContentTones } from '../../../src/domain/color';
+} from '@/src/features/content/node-inline-html';
+import { setupNodeTaskInteraction } from '@/src/features/content/view-node-task';
+import { toggleTaskToken } from '@/src/domain/content/md-task';
+import { nodeContentTones } from '@/src/domain/color';
 
 const { findNodeByDom, recordHistory } = engineMocks;
 

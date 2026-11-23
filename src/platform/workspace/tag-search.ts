@@ -18,7 +18,7 @@
  * Notice；同一次会话内只提示一次，控制台同样只留一条。
  */
 import { App, Notice } from 'obsidian';
-import { t, type Language } from '../../core/i18n';
+import { t, type Language } from '@/src/core/i18n';
 
 /** 私有面：核心插件注册表（只声明本模块用到的形状） */
 interface InternalSearchPlugin {

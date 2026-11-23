@@ -1,6 +1,6 @@
 /** CodeTab OpenAPI：发现、活动句柄与宿主最新值同步；Busy 等状态通知重试，不覆盖草稿。 */
-import { createSerialQueue } from '../../../core/concurrency';
-import { createWarnOnce } from '../../../core/errors';
+import { createSerialQueue } from '@/src/core/concurrency';
+import { createWarnOnce } from '@/src/core/errors';
 import type { CodeTabApi, CodeTabApiRequest, CodeTabHandle, CodeTabRenderOptions, CodeTabUpdate } from './code-tab-api';
 
 export function getCodeTabApi(doc: Document): CodeTabApi | null {

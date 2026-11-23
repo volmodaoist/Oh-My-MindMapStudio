@@ -24,7 +24,7 @@ import {
 	editedWikilinkAlias,
 	effectiveDocWikiLink,
 	type WikiAliasSource,
-} from '../../../src/domain/links/wiki-display';
+} from '@/src/domain/links/wiki-display';
 
 /**
  * 文档双链节点的最小数据面。

@@ -33,10 +33,12 @@ import {
 	allowedTargets,
 	forbiddenSpecifierPatterns,
 	violatesPublicEntry,
-} from '../../scripts/module-boundaries.mjs';
+} from '@/scripts/module-boundaries.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '../..');
 const SRC = path.join(ROOT, 'src');
+const CONFIG = ts.readConfigFile(path.join(ROOT, 'tsconfig.json'), file => ts.sys.readFile(file));
+const COMPILER_OPTIONS = ts.parseJsonConfigFileContent(CONFIG.config, ts.sys, ROOT).options;
 
 /**
  * 相对说明符的解析后缀（顺序即优先级）。
@@ -90,6 +92,10 @@ function resolveSpecifier(
 	fromFile: string,
 	specifier: string,
 ): SpecifierResolution {
+	if (specifier.startsWith('@/')) {
+		const resolved = ts.resolveModuleName(specifier, fromFile, COMPILER_OPTIONS, ts.sys).resolvedModule;
+		return resolved ? { kind: 'file', file: path.normalize(resolved.resolvedFileName) } : { kind: 'missing' };
+	}
 	if (!specifier.startsWith('.')) {
 		return { kind: 'external' };
 	}
@@ -337,6 +343,9 @@ describe('矩阵定义（scripts/module-boundaries.mjs）', () => {
 		expect(forbiddenFromCore('../features/view')).toBe(true);
 		expect(forbiddenFromCore('../../features/view')).toBe(true);
 		expect(forbiddenFromCore('../../../ui/modal-common')).toBe(true);
+		expect(forbiddenFromCore('@/src/features/view')).toBe(true);
+		expect(forbiddenFromCore('@/src/ui/modal-common')).toBe(true);
+		expect(forbiddenFromCore('@/src/domain/document')).toBe(false);
 		// 许可集内与组内相对引用不得被拦
 		expect(forbiddenFromCore('../domain/document')).toBe(false);
 		expect(forbiddenFromCore('./document')).toBe(false);
@@ -358,6 +367,9 @@ describe('矩阵定义（scripts/module-boundaries.mjs）', () => {
 		expect(combo.test('../settings')).toBe(true);
 		expect(combo.test('../../settings')).toBe(true);
 		expect(combo.test('../commands/panel')).toBe(true);
+		expect(combo.test('@/src/settings')).toBe(true);
+		expect(combo.test('@/src/main')).toBe(true);
+		expect(combo.test('@/src/engine')).toBe(false);
 		// 回归（2026-10-17）：交替式漏掉 `(?:…)` 时 `commands` 会成为顶层分支，
 		// 于是 `./commands`、`./mindmap-commands` 都被误判为「引用组合根」。
 		expect(combo.test('./commands')).toBe(false);
@@ -383,6 +395,14 @@ describe('矩阵定义（scripts/module-boundaries.mjs）', () => {
 });
 
 describe('模块边界（K51）：依赖图性质', () => {
+	it('项目根别名按 tsconfig 解析为真实文件，缺失目标不会被当作 npm 包跳过', () => {
+		expect(CONFIG.error).toBeUndefined();
+		expect(COMPILER_OPTIONS.paths?.['@/*']).toEqual(['./*']);
+		const from = path.join(SRC, 'features/view/view.ts');
+		expect(resolveSpecifier(from, '@/src/domain/document')).toEqual({ kind: 'file', file: path.join(SRC, 'domain/document/index.ts') });
+		expect(resolveSpecifier(from, '@/src/absent-module')).toEqual({ kind: 'missing' });
+		expect(resolveSpecifier(from, '@codemirror/view')).toEqual({ kind: 'external' });
+	});
 	it('公共入口拒绝外部深层引用和内部反向导入，允许叶子与直测', () => {
 		expect(violatesPublicEntry('src/features/view/view.ts', 'src/engine/nodes/mindmap-nodes.ts')).toBe(true);
 		expect(violatesPublicEntry('src/services/document/document-session.ts', 'src/engine/index.ts')).toBe(false);
@@ -534,7 +554,7 @@ describe('模块边界（K51）：依赖图性质', () => {
 			(file) => moduleGroupOf(file) === 'domain',
 		).flatMap((file) =>
 			collectSpecifiers(file)
-				.filter(({ specifier }) => !specifier.startsWith('.'))
+				.filter(({ specifier }) => !specifier.startsWith('.') && !specifier.startsWith('@/'))
 				.map(({ specifier }) => `${relPath(file)} → ${specifier}`),
 		);
 		expect(violations).toEqual([]);

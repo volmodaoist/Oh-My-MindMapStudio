@@ -1,0 +1,155 @@
+# CHANGELOG
+
+每个版本保留主要变化。标题中的链接依次为 base → feat（需求完成快照），点击可浏览 GitHub 源码；首版开发前基线无法恢复。
+
+## 未发布
+
+- 优化节点编辑与结构拖动，加入侧栏缩略图和可配置的画布拖拽。
+- 普通 Markdown 可临时打开为导图；接入插件内容渲染，改善 CodeTab 尺寸、焦点与双链补全。
+- Fork 使用 Oh-My-Mindmap-Studio 品牌，收拢领域、文档和引擎模块，建立公共入口与数据契约。
+
+## 0.3.3 · [399f917](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/399f917c77cd7f3c562cdd97372a0b14bb9aab57) → [a714692](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/a71469200b936dff88d1c32a7c88ecfd99030f4e)
+
+- 支持标题/列表语法互转，同文件多视图共享内容、撤销与保存。
+- 节点内显示 Mermaid、callout 和脚注。
+- 修复换行、续行、围栏及引用保真问题，自动保存采用固定两秒防抖。
+
+## 0.3.2 · [9123c29](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/9123c29e5ea18213c48b6afab9eb19175de1614c) → [399f917](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/399f917c77cd7f3c562cdd97372a0b14bb9aab57)
+
+- 重做十套配色、自动分支着色与节点配色作用范围，调整字体和节点间距。
+- 新增保存状态反馈，完善只读角标和编辑外观。
+
+## 0.3.1 · [ef5a566](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/ef5a566632c65e158fc4ec88e699972ffe4e3cdc) → [9123c29](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/9123c29e5ea18213c48b6afab9eb19175de1614c)
+
+- 新增相邻主题概要，支持创建、修改和删除。
+- 右键拖拽框选后可直接操作选区，改善大图加载和结构编辑反馈。
+
+## 0.3.0 · [d4ed612](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/d4ed6122f29c5ea43fb771e0a96cebde9b7e8dbb) → [ef5a566](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/ef5a566632c65e158fc4ec88e699972ffe4e3cdc)
+
+- 新增有向联系线，支持标签、线色与手动锚点。
+- 建线、修改和删除通过同一撤销/保存通道处理，只读嵌入也可显示联系。
+
+## 0.2.9 · [4284adb](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/4284adbc79df4e0cd909ac336749fa00b7a09876) → [d4ed612](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/d4ed6122f29c5ea43fb771e0a96cebde9b7e8dbb)
+
+- 优化整图与节点配色，采用浅底深字和清晰连线，新增玫瑰色。
+- 标签、任务与着色内容跟随主题，改善代码块和表格对比度。
+
+## 0.2.8 · [e810c2c](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/e810c2c4a4526f6f6081519498e3fd942c0a8712) → [4284adb](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/4284adbc79df4e0cd909ac336749fa00b7a09876)
+
+- 任务列表渲染为可切换复选框，标签可点击并调用原生搜索。
+- 任务变更进入撤销历史，修复勾选后节点位置变化。
+
+## 0.2.7 · [5e28888](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/5e28888aea6a2c81cd6e5298dd9d015fc592017a) → [e810c2c](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/e810c2c4a4526f6f6081519498e3fd942c0a8712)
+
+- 布局改由文件属性承载，可随 Markdown 文件同步；嵌入块支持独立布局指令。
+- 统一导图声明键，界面语言切换不再改写文件属性。
+
+## 0.2.6 · [843849e](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/843849ef676c984679f534ed99cea4b1db4eb0cb) → [5e28888](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/5e28888aea6a2c81cd6e5298dd9d015fc592017a)
+
+- 新增节点/子树配色与自定义颜色，整图也可使用自定义配色。
+- 小地图跟随节点颜色，改善菜单级联与失败图片重试。
+
+## 0.2.5 · [00453da](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/00453daa793b5d8f3027ac6696a44dd68951ff81) → [843849e](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/843849ef676c984679f534ed99cea4b1db4eb0cb)
+
+- 新增自动浮出的小地图、平滑滚轮平移和 Alt 横向移动。
+- 支持无选中时复制整图，整理后保留视口，新图默认无边框。
+
+## 0.2.4 · [e73957c](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/e73957c61f2e5098167b850c08f70d4f63050ed8) → [00453da](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/00453daa793b5d8f3027ac6696a44dd68951ff81)
+
+- 操作栏移到画布右侧；连线/边框直接切换，布局/配色放入右键菜单。
+- 新增整理入口，修复数学导出裁切和语言切换改写属性问题。
+
+## 0.2.3 · [136efbd](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/136efbd07aadbffa6b0063af0df9c1aeffc3044b) → [e73957c](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/e73957c61f2e5098167b850c08f70d4f63050ed8)
+
+- 配色、边框与连线样式按文件记忆，连线收敛为折线/曲线两态。
+- 改善大图适应画布，修复图片引用、弹出窗口手柄和内联标记显示。
+
+## 0.2.2 · [8285523](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/8285523879e5e81427174ed451c730b74798114f) → [136efbd](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/136efbd07aadbffa6b0063af0df9c1aeffc3044b)
+
+- 节点复制、剪切与粘贴使用 Markdown 系统剪贴板，新增节点上移/下移及新建位置设置。
+- 支持 GFM 表格，修复 MathJax、大图视口、隐藏节点和自动保存问题。
+
+## 0.2.1 · [80ab401](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/80ab40197939eae6049481e3f686127d0cb235d9) → [8285523](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/8285523879e5e81427174ed451c730b74798114f)
+
+- 恢复笔记中的只读 mindmap 代码块嵌入，尺寸随内容适应，超限时显示大纲。
+- 未选中节点也可粘贴或拖入图片，完善重命名与复制失败提示。
+
+## 0.2.0 · [0f21697](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/0f2169710dd67effc30811387c1f99d6189853b2) → [80ab401](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/80ab40197939eae6049481e3f686127d0cb235d9)
+
+- 通过文件属性声明导图，任意 Markdown 可切换为导图，新增 SVG 导出。
+- 简化设置与入口；本版退役专用文件后缀和旧声明方式。
+
+## 0.1.9 · [bba2929](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/bba29292109f6f4dc67df23d47903ccbee2d7d9c) → [0f21697](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/0f2169710dd67effc30811387c1f99d6189853b2)
+
+- 代码块接入 Obsidian Prism 高亮，支持波浪号围栏和缩进代码。
+- 兼容新版 MathJax，修复节点底部裁切、新建目录与失败提示问题。
+
+## 0.1.8 · [d89512e](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/d89512eca017dd9de8a1ece3118325d0eb51b0eb) → [bba2929](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/bba29292109f6f4dc67df23d47903ccbee2d7d9c)
+
+- 修复性能模式下节点移动后漏渲染，以及视口外节点残留。
+- 减少平移、缩放和居中的重复渲染，补充大图性能样本。
+
+## 0.1.7 · [675346b](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/675346b6775d365b2d175ac7d761de5825bf0dd8) → [d89512e](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/d89512eca017dd9de8a1ece3118325d0eb51b0eb)
+
+- 修复文本编辑失败无提示及工具栏图标不跟随主题尺寸。
+- 优化公式重排，并将配置类型、模块边界和文档同步纳入检查。
+
+## 0.1.6 · [4c8db75](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/4c8db75873fd0f4a3d926d6706ba208ce566617b) → [675346b](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/675346b6775d365b2d175ac7d761de5825bf0dd8)
+
+- 拖入和重命名后的文件引用即时更新，修复重复附件文本与尖括号路径漂移。
+- 图片拖宽只在收尾提交，优化长行解析、内容缓存与大图适应画布。
+
+## 0.1.5 · [e75dec2](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/e75dec27f5192f872de22b1d36728041960fd1ed) → [4c8db75](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/4c8db75873fd0f4a3d926d6706ba208ce566617b)
+
+- 新增节点内联原文编辑、代码块显示与复制，保留可编辑空节点。
+- 改善图片尺寸和公式首帧布局，修复保存与 PNG 导出保真问题。
+
+## 0.1.4 · [deaab61](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/deaab6190dfb646414e128d497ae3a6bf2519bbd) → [e75dec2](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/e75dec27f5192f872de22b1d36728041960fd1ed)
+
+- 全面采用文本节点快速渲染与分片加载，大图打开时保持界面响应。
+- 优化节点编辑、布局和 SVG 更新，建立可复现的引擎补丁流程。
+
+## 0.1.3 · [c70a918](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/c70a9182e1202f3f2393fc241321a15e3ee21211) → [deaab61](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/deaab6190dfb646414e128d497ae3a6bf2519bbd)
+
+- 优化大图打开，居中时保持虚拟渲染，避免临时构建全部节点。
+- 降低图片路径解析与高频节点查询成本，补强性能验证。
+
+## 0.1.2 · [e4f9802](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/e4f980287438e1a180c2b0bfcb55c1d199d3031a) → [c70a918](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/c70a9182e1202f3f2393fc241321a15e3ee21211)
+
+- 节点内支持可点击的多链接和轻排版，新增混排双链拆分及段落图片。
+- 增强原文编辑与多 token 原位回写，修复图片、引用和文件头保真问题。
+
+## 0.1.1 · [065b356](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/065b3566a2b1f2cae6e2fa083de22d6c73205985) → [e4f9802](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/e4f980287438e1a180c2b0bfcb55c1d199d3031a)
+
+- 新增连线样式切换和右键重置缩放。
+- 扩展双链悬停预览，改善根节点连线与纯双链节点的显示和回写。
+
+## 0.1.0 · [ef49078](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/ef49078fb31208785601340b4966d812d128dbce) → [065b356](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/065b3566a2b1f2cae6e2fa083de22d6c73205985)
+
+- 支持 Canvas/Bases 文档引用，并保留附件嵌入参数。
+- 修复切换文件时保存归属错误、跨目录引用断链，以及分隔线和空白丢失。
+
+## 0.0.5 · [3fb7784](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/3fb7784b9ea78982750b94420e5fa140021fac9c) → [ef49078](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/ef49078fb31208785601340b4966d812d128dbce)
+
+- 新增 F2 编辑与重置缩放，打开时以完整内容居中。
+- 修复图片丢失或复活、新增引用未保存、中心改名断链和多窗口预览问题。
+
+## 0.0.4 · [762cefb](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/762cefbe5f40e8d3ceec5b09e30d1bc2eee4f705) → [3fb7784](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/3fb7784b9ea78982750b94420e5fa140021fac9c)
+
+- 修复 Markdown 回写、多图拖入、搜索与弹窗问题。
+- 界面语言切换即时生效，完善原生 API 使用和错误提示。
+
+## 0.0.3 · [3391a9b](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/3391a9bfd96b09574f7f6374cc1639a5d193201f) → [762cefb](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/762cefbe5f40e8d3ceec5b09e30d1bc2eee4f705)
+
+- 移除 mindmap 代码块渲染，统一使用专用导图文件入口。
+- 清理过期审计资料，保留现有编辑与保存能力。
+
+## 0.0.2 · [6cfe6c6](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/6cfe6c6a106f2014a0505b9d45e1b9b4bf180dd4) → [3391a9b](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/3391a9bfd96b09574f7f6374cc1639a5d193201f)
+
+- 新增节点邻近换父辅助、图片等比拖宽和纯图片节点。
+- 优化大图加载与保存，修复节点右键菜单为空。
+
+## 0.0.1 · 起始版本 → [6cfe6c6](https://github.com/volmodaoist/Obsidian-Mindmap-Studio/tree/6cfe6c6a106f2014a0505b9d45e1b9b4bf180dd4)
+
+- 首次交付 Markdown 思维导图编辑器，支持六种布局、节点编辑、搜索与 PNG 导出。
+- 集成双链、图片、附件和悬停预览，并保留 Markdown 往返内容。

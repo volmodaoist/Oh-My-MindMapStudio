@@ -1,7 +1,7 @@
 /** UI 组件直测：不创建导图或文件，验证局部键盘、测量、焦点与事件生命周期。 */
 import { describe, expect, it, vi } from 'vitest';
-import { NodeEditor, type NodeEditorLayout } from '../../../src/ui/node-editor/node-editor';
-import { makeDocStub, lastEl } from '../../helpers/node-editor-dom';
+import { NodeEditor, type NodeEditorLayout } from '@/src/ui/node-editor/node-editor';
+import { makeDocStub, lastEl } from '@/tests/helpers/node-editor-dom';
 
 function setup() {
 	const doc = makeDocStub();

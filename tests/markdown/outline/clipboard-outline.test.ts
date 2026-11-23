@@ -13,12 +13,12 @@
  * 依据：src/markdown/outline/md-outline.ts、src/markdown/serialize/md-serialize.ts。
  */
 import { describe, expect, it } from 'vitest';
-import { parseMdOutlineFragment } from '../../../src/markdown/outline/md-outline';
+import { parseMdOutlineFragment } from '@/src/markdown/outline/md-outline';
 import {
 	serializeMdBody,
 	serializeSubtreesToOutline,
-} from '../../../src/markdown/serialize/md-serialize';
-import type { MindMapTreeNode } from '../../../vendor/simple-mind-map.cjs';
+} from '@/src/markdown/serialize/md-serialize';
+import type { MindMapTreeNode } from '@/vendor/simple-mind-map.cjs';
 
 /** 节点 data 的字符串字段（引擎 data 的索引签名是 any，取值前先收窄） */
 function stringField(node: MindMapTreeNode, key: string): string {

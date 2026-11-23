@@ -17,11 +17,11 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import {
 	CODE_BLOCK_CLASS,
 	CODE_COPY_CLASS,
-} from '../../../src/features/content/node-inline-content';
+} from '@/src/features/content/node-inline-content';
 import {
 	hideCopyButtonsInExportSvg,
 	resolveCodeCopyTarget,
-} from '../../../src/features/content/node-codeblock';
+} from '@/src/features/content/node-codeblock';
 
 /** Element / HTMLElement 的公共桩类（stubGlobal 后 instanceof 判定成立） */
 class StubElement {}

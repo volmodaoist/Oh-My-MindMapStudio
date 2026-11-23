@@ -18,25 +18,25 @@
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 // 直接取桩模块（vitest 把 'obsidian' 别名到同一文件）：只有它带 `instances`
-import { Notice } from '../../mocks/obsidian';
+import { Notice } from '@/tests/mocks/obsidian';
 import {
 	FOOTNOTE_ID_ATTR,
 	FOOTNOTE_IDS_ATTR,
 	FOOTNOTE_REF_CLASS,
 	FOOTNOTE_SUMMARY_CLASS,
-} from '../../../src/features/content/node-inline-content';
+} from '@/src/features/content/node-inline-content';
 import {
 	collectFootnoteReferenceIds,
 	setupFootnoteInteractions,
 	type FootnoteInteractionDeps,
-} from '../../../src/features/content/view-footnote';
+} from '@/src/features/content/view-footnote';
 
 const engine = vi.hoisted(() => ({
 	collectRenderNodeData: vi.fn(),
 	revealNodeByUid: vi.fn(() => true),
 }));
 
-vi.mock('../../../src/engine', () => ({
+vi.mock('@/src/engine', () => ({
 	collectRenderNodeData: engine.collectRenderNodeData,
 	revealNodeByUid: engine.revealNodeByUid,
 }));

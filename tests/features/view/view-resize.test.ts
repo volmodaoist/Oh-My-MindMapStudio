@@ -12,7 +12,7 @@
  * 与真实实例在该路径上等价（同 `view-md-back-mode.test.ts` 的口径）。
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { MindMapView } from '../../../src/features/view/view';
+import { MindMapView } from '@/src/features/view/view';
 
 const mocks = vi.hoisted(() => ({
 	countMindMapNodes: vi.fn<(mindMap: unknown) => number>(),
@@ -20,7 +20,7 @@ const mocks = vi.hoisted(() => ({
 
 // 引擎面整体桩掉（vendor bundle 顶层访问 document；本文件只关心调度决策）。
 // 只提供本路径用到的计数入口，其余导出缺失不影响（同 view-md-back-mode 口径）。
-vi.mock('../../../src/engine', () => ({
+vi.mock('@/src/engine', () => ({
 	countMindMapNodes: mocks.countMindMapNodes,
 }));
 

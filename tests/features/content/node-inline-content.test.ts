@@ -33,11 +33,11 @@ import {
 	NODE_INLINE_CONTENT_CLASS,
 	QUOTE_BLOCK_CLASS,
 	segmentCacheStats,
-} from '../../../src/features/content/node-inline-content';
-import { CODE_BLOCK_MAX_HEIGHT_PX } from '../../../src/core/constants';
-import { nodeContentTones } from '../../../src/domain/color';
-import type { InlineSegment } from '../../../src/features/content/node-inline-content';
-import type { MindMapNode } from '../../../vendor/simple-mind-map.cjs';
+} from '@/src/features/content/node-inline-content';
+import { CODE_BLOCK_MAX_HEIGHT_PX } from '@/src/core/constants';
+import { nodeContentTones } from '@/src/domain/color';
+import type { InlineSegment } from '@/src/features/content/node-inline-content';
+import type { MindMapNode } from '@/vendor/simple-mind-map.cjs';
 
 describe('buildInlineSegments（行内原文 → 段序列）', () => {
 	it('纯文本：单段、无链接', () => {
@@ -583,7 +583,7 @@ describe('轻标记扩展（显示层，不回写）', () => {
 });
 
 /** 最小文本节点桩 */
-import { FakeTextNode, FakeElement, FakeDocument, asDocument } from '../../helpers/node-content-dom';
+import { FakeTextNode, FakeElement, FakeDocument, asDocument } from '@/tests/helpers/node-content-dom';
 
 /** 节点桩：getData() 无参返回整份 data（与引擎 MindMapNode 形态一致） */
 function fakeNode(data: Record<string, unknown> | null): MindMapNode {

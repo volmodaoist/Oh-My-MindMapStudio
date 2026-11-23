@@ -1,8 +1,8 @@
 /** 节点内容 footnote：DOM/样式内聚，保持原输出与导出保真。 */
-import { type InlineContentDocument, type InlineSegment } from '../../core/node-content-types';
+import { type InlineContentDocument, type InlineSegment } from '@/src/core/node-content-types';
 import { type BuildContentParams } from './content-context';
 import { FOOTNOTE_SUMMARY_CLASS, FOOTNOTE_IDS_ATTR, FOOTNOTE_SUMMARY_STYLES, FOOTNOTE_REF_CLASS, FOOTNOTE_SUP_STYLES, FOOTNOTE_ID_ATTR, FOOTNOTE_LINK_STYLES } from './content-footnote.styles';
-import { t } from '../../core/i18n';
+import { t } from '@/src/core/i18n';
 
 /**
  * 纯定义节点 → 汇总 chip（`span.mindmap-node-footnote-summary[data-footnote-ids]`）。

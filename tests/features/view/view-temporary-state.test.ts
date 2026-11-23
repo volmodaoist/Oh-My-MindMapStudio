@@ -1,13 +1,13 @@
 /** 临时视图仍可编辑和换布局，但外观操作不写 YAML 或按文件状态。 */
 import { describe, expect, it, vi } from 'vitest';
 import { TFile } from 'obsidian';
-import { MindMapView } from '../../../src/features/view/view';
+import { MindMapView } from '@/src/features/view/view';
 
 vi.hoisted(() => {
 	(globalThis as { document?: unknown }).document ??= { documentElement: {} };
 });
-vi.mock('../../../src/features/view/view-minimap', async (importOriginal) => {
-	const mod = await importOriginal<typeof import('../../../src/features/view/view-minimap')>();
+vi.mock('@/src/features/view/view-minimap', async (importOriginal) => {
+	const mod = await importOriginal<typeof import('@/src/features/view/view-minimap')>();
 	return { ...mod, refreshMiniMap: vi.fn(), refreshMiniMapAfterRender: vi.fn() };
 });
 

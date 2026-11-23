@@ -1,10 +1,10 @@
 /** 原生空节点接入同一补全行为；生命周期经引擎防腐面，不替换原编辑器或保存通道。 */
-import { EventBinder } from '../../core/event-binder';
-import type { MindMap } from '../../core/engine-types';
-import { observeNodeTextEditor } from '../../engine';
-import { ContenteditableInput } from '../../ui/node-editor/contenteditable-input';
+import { EventBinder } from '@/src/core/event-binder';
+import type { MindMap } from '@/src/core/engine-types';
+import { observeNodeTextEditor } from '@/src/engine';
+import { ContenteditableInput } from '@/src/ui/node-editor/contenteditable-input';
 import { NodeWikilinkCompletion } from './node-wikilink-completion';
-import type { ViewNodeEditContext } from '../view/view-context';
+import type { ViewNodeEditContext } from '@/src/features/view/view-context';
 
 export class NativeNodeWikilinkCompletion {
 	private readonly events = new EventBinder();

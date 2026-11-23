@@ -176,7 +176,7 @@ function collectTextFiles(dir: string): string[] {
 
 describe('AGENTS.md 同步契约：K 编号（区间声明与交叉引用）', () => {
 	/**
-	 * 「声明的 K 区间」只查这两份。`line-count-log.md` 里的 `K1–K152` 是**历史批次读数**
+	 * 「声明的 K 区间」只查这两份。旧记录里的 `K1–K152` 是**历史批次读数**
 	 * （那一批当时的范围），不表达当前范围，纳入会永远红灯。
 	 */
 	const RANGE_SOURCES: readonly [string, string][] = [
@@ -255,7 +255,7 @@ describe('分层索引链接解析', () => {
 			'## 参考文档', '- **docs/**',
 			'  - [standard.md](../docs/standard.md)', '  - **agents/**',
 			'    - [index.md](index.md)', '    - [decisions.md](./decisions.md)',
-			'  - `release-notes-<tag>.md`',
+			'  - `fixture-<name>.md`',
 			'```md', '- [example.md](example.md)', '```',
 			'## 其它', '- [ignored.md](ignored.md)',
 		].join('\n');
@@ -358,7 +358,7 @@ describe('AGENTS.md 同步契约：代码文件登记完备性', () => {
 			missing,
 			`以下文档在 .agents/index.md「参考文档」清单中登记，但 docs/ 下不存在：\n${missing.join('\n')}\n` +
 				'（若该文档确已废弃，请连同源码中的引用一并删除登记；' +
-				'`release-notes-<tag>.md` 属模式行，不参与本检查）',
+				'`fixture-<name>.md` 属模式行，不参与本检查）',
 		).toEqual([]);
 	});
 });

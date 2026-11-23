@@ -16,8 +16,8 @@
  * （find-node-by-dom / engine-refresh-nodes），这里只验证会话的编排逻辑。
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import type { MindMap, MindMapNode } from '../../../vendor/simple-mind-map.cjs';
-import { ContentRemeasureSession } from '../../../src/features/content/content-remeasure';
+import type { MindMap, MindMapNode } from '@/vendor/simple-mind-map.cjs';
+import { ContentRemeasureSession } from '@/src/features/content/content-remeasure';
 
 const engine = vi.hoisted(() => ({
 	resolveNodesByDoms: vi.fn(),
@@ -28,7 +28,7 @@ const engine = vi.hoisted(() => ({
 	collectRenderNodeData: vi.fn(),
 }));
 
-vi.mock('../../../src/engine', () => ({
+vi.mock('@/src/engine', () => ({
 	resolveNodesByDoms: engine.resolveNodesByDoms,
 	findNodesByContentProducts: engine.findNodesByContentProducts,
 	refreshNodesCustomContent: engine.refreshNodesCustomContent,
@@ -41,7 +41,7 @@ const plugins = vi.hoisted(() => ({
 	hasPluginContents: vi.fn(), syncPluginContents: vi.fn(), disposePluginContents: vi.fn(),
 	getEditingPluginNodeIds: vi.fn(),
 }));
-vi.mock('../../../src/platform/rendering/plugins/bridge', () => plugins);
+vi.mock('@/src/platform/rendering/plugins/bridge', () => plugins);
 
 /** 平台层（未定稿修复 / 登记面清理）：本套件只验证会话的**调用编排** */
 const platform = vi.hoisted(() => ({
@@ -50,7 +50,7 @@ const platform = vi.hoisted(() => ({
 	pruneUnsettledMathOwnedBy: vi.fn(),
 }));
 
-vi.mock('../../../src/platform/rendering/math/math-jax', () => ({
+vi.mock('@/src/platform/rendering/math/math-jax', () => ({
 	repairUnsettledMath: platform.repairUnsettledMath,
 	clearUnsettledMath: platform.clearUnsettledMath,
 	pruneUnsettledMathOwnedBy: platform.pruneUnsettledMathOwnedBy,

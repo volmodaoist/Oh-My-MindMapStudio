@@ -20,14 +20,14 @@
  * 前置：main.ts 已 registerHoverLinkSource(VIEW_TYPE)，否则 core 忽略 hover-link。
  */
 import { Keymap } from 'obsidian';
-import { HOVER_LINK_EVENT, VIEW_TYPE } from '../../core/constants';
-import { elementFromTarget } from '../../core/event-binder';
-import { isSafeAnchorHref } from '../../domain/links';
-import { formatWikilink, wikilinkLinkpath } from '../../domain/links';
-import { getNodeDataString, getNodeGroupEl } from '../../engine';
-import { MERMAID_BLOCK_CLASS } from '../content/node-inline-content';
-import type { MindMap, MindMapNode } from '../../core/engine-types';
-import type { HyperlinkOpenMode, MindMapViewContext } from '../view/view-context';
+import { HOVER_LINK_EVENT, VIEW_TYPE } from '@/src/core/constants';
+import { elementFromTarget } from '@/src/core/event-binder';
+import { isSafeAnchorHref } from '@/src/domain/links';
+import { formatWikilink, wikilinkLinkpath } from '@/src/domain/links';
+import { getNodeDataString, getNodeGroupEl } from '@/src/engine';
+import { MERMAID_BLOCK_CLASS } from '@/src/features/content/node-inline-content';
+import type { MindMap, MindMapNode } from '@/src/core/engine-types';
+import type { HyperlinkOpenMode, MindMapViewContext } from '@/src/features/view/view-context';
 
 /** 悬停防抖（与附件预览共用状态字段，互斥触发） */
 const HOVER_DEBOUNCE_MS = 400;

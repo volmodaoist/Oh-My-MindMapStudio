@@ -13,7 +13,7 @@ import {
 	type MenuItem,
 	type MenuPositionDef,
 } from 'obsidian';
-import { t, type Language, type TranslationKey } from '../core/i18n';
+import { t, type Language, type TranslationKey } from '@/src/core/i18n';
 import { openColorInputModal } from './modal-color';
 
 /**

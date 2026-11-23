@@ -13,18 +13,18 @@
  */
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { TFile, type App, type Menu, type WorkspaceLeaf } from 'obsidian';
-import MindMapStudioPlugin from '../src/main';
-import { MindMapView } from '../src/features/view/view';
-import type { MindMapStudioSettings } from '../src/settings';
+import MindMapStudioPlugin from '@/src/main';
+import { MindMapView } from '@/src/features/view/view';
+import type { MindMapStudioSettings } from '@/src/settings';
 
-vi.mock('../src/engine', () => ({}));
+vi.mock('@/src/engine', () => ({}));
 
 const mdOpen = vi.hoisted(() => ({
 	isMindMapFile: vi.fn(() => true),
 	openAsMarkdown: vi.fn(),
 	openAsMindMap: vi.fn(),
 }));
-vi.mock('../src/markdown/md-open', () => mdOpen);
+vi.mock('@/src/markdown/md-open', () => mdOpen);
 
 /** 断言基准路径（读写两侧共用；改名即全用例同步） */
 const FILE_PATH = 'a.mindmap.md';

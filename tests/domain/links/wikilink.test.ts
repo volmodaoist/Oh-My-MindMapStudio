@@ -1,6 +1,6 @@
 /** 双链解析与格式化边界。 */
 import { describe, expect, it } from 'vitest';
-import { formatWikilink, linkDisplayText, parseWikilink, wikilinkLinkpath, wikilinkTargetIsAttachment } from '../../../src/domain/links/wikilink';
+import { formatWikilink, linkDisplayText, parseWikilink, wikilinkLinkpath, wikilinkTargetIsAttachment } from '@/src/domain/links/wikilink';
 
 describe('整串判定（`parseWikilink` 的 null 契约）', () => {
 	it.each([

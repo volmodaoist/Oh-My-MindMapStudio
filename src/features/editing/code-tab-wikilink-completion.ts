@@ -1,11 +1,11 @@
 /** 向 CodeTab 的公开补全注册 Markdown 双链规则；只清理自己的注册，不改变片段保存上下文。 */
 import { FileView } from 'obsidian';
 import type { App } from 'obsidian';
-import { VIEW_TYPE } from '../../core/constants';
-import { formatWikilink, wikilinkTriggerAt } from '../../domain/links';
-import { getCodeTabApi } from '../../platform/rendering/plugins/code-tab';
-import type { CodeTabApi, CompletionItem, CompletionRule } from '../../platform/rendering/plugins/code-tab-api';
-import { wikilinkCompletions } from '../../platform/workspace/wikilink-completions';
+import { VIEW_TYPE } from '@/src/core/constants';
+import { formatWikilink, wikilinkTriggerAt } from '@/src/domain/links';
+import { getCodeTabApi } from '@/src/platform/rendering/plugins/code-tab';
+import type { CodeTabApi, CompletionItem, CompletionRule } from '@/src/platform/rendering/plugins/code-tab-api';
+import { wikilinkCompletions } from '@/src/platform/workspace/wikilink-completions';
 
 export class CodeTabWikilinkCompletion {
 	private api: CodeTabApi | null = null;

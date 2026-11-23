@@ -4,7 +4,7 @@
  * 运行时 search 插件可能未注册（引擎变体差异），搜索包装函数内部判空静默。
  * matchNodeList/currentIndex 等插件内部状态不再被 view-search 直接触碰。
  */
-import type { MindMap } from '../../../vendor/simple-mind-map.cjs';
+import type { MindMap } from '@/vendor/simple-mind-map.cjs';
 
 /** 执行关键字搜索（Search 插件未注册时静默） */
 export function searchMindMap(

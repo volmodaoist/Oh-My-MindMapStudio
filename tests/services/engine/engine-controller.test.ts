@@ -112,19 +112,19 @@ function viewStateSignatureOf(state: unknown): string | null {
 	return `${scale}|${x}|${y}`;
 }
 
-vi.mock('../../../src/engine', () => mocks);
+vi.mock('@/src/engine', () => mocks);
 // 引用更新入口 = markdown 层的「字段 + 渲染源」双层包装（links-rename）：
 // 它内部再调 links-tree 的字段改写，这里整体桩掉以控制「有无变更」分支
-vi.mock('../../../src/markdown/links/links-rename', () => ({
+vi.mock('@/src/markdown/links/links-rename', () => ({
 	renameReferencesInTree: mocks.renameReferencesInTree,
 }));
-vi.mock('../../../src/links/links-tree', () => ({
+vi.mock('@/src/links/links-tree', () => ({
 	removeReferencesOnDelete: mocks.removeReferencesOnDelete,
 }));
 
-import { EngineController } from '../../../src/services/engine/engine-controller';
-import { ViewStateStore } from '../../../src/services/view-state';
-import type { MindMapTreeNode } from '../../../vendor/simple-mind-map.cjs';
+import { EngineController } from '@/src/services/engine/engine-controller';
+import { ViewStateStore } from '@/src/services/view-state';
+import type { MindMapTreeNode } from '@/vendor/simple-mind-map.cjs';
 
 // ---------------------------------------------------------------------------
 // 全局桩：ResizeObserver / 容器 / 引擎

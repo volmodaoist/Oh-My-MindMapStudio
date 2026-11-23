@@ -21,21 +21,21 @@
  * 3) 行内轻标记（** * ` ~~ HTML）不剥离，原样保留（无损往返）。
  */
 
-import type { MarkdownDocument, MarkdownNode, MarkdownSource } from '../../domain/document';
+import type { MarkdownDocument, MarkdownNode, MarkdownSource } from '@/src/domain/document';
 import {
 	formatWikilink,
 	linkDisplayText,
 	parseWikilink,
 	wikilinkTargetIsAttachment,
-} from '../../domain/links';
-import { isUrlLikeText } from '../../domain/links';
-import { parseTaskPrefix, stripTaskPrefix } from '../../domain/content';
-import { isIndentedCodeLine } from '../../core/constants';
-import { isDirectiveLine, stripTrailingSegments } from '../../domain/relations';
-import { isColorDirectiveLine } from '../../domain/color';
-import type { MdTokenSegment } from '../../domain/document';
-import type { MdNodeData } from '../../core/node-data';
-import { isFootnoteDefinition } from '../syntax/md-footnote';
+} from '@/src/domain/links';
+import { isUrlLikeText } from '@/src/domain/links';
+import { parseTaskPrefix, stripTaskPrefix } from '@/src/domain/content';
+import { isIndentedCodeLine } from '@/src/core/constants';
+import { isDirectiveLine, stripTrailingSegments } from '@/src/domain/relations';
+import { isColorDirectiveLine } from '@/src/domain/color';
+import type { MdTokenSegment } from '@/src/domain/document';
+import type { MdNodeData } from '@/src/core/node-data';
+import { isFootnoteDefinition } from '@/src/markdown/syntax/md-footnote';
 import { classifyLines, leadingSpaces } from './md-outline-lines';
 import {
 	isImageEmbedTarget,

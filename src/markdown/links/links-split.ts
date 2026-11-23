@@ -31,27 +31,27 @@
  * 也不把运行期地址写进用户文件。
  */
 import { App } from 'obsidian';
-import { isRenderableImageTarget } from '../../core/constants';
-import { readNodeDataString } from '../../core/node-data';
+import { isRenderableImageTarget } from '@/src/core/constants';
+import { readNodeDataString } from '@/src/core/node-data';
 import {
 	buildInlineData,
 	INLINE_LINK_FIELDS,
 	isLinkReferenceDefinition,
 	tokenizeInline,
 	type InlineToken,
-} from '../outline/md-outline';
-import { composeNodeFirstLine } from '../serialize/md-serialize';
-import { parseTaskPrefix, stripTaskPrefix } from '../../domain/content';
-import { walkTree } from '../../domain/document';
-import { isAppResourceUrl } from '../../domain/links';
+} from '@/src/markdown/outline/md-outline';
+import { composeNodeFirstLine } from '@/src/markdown/serialize/md-serialize';
+import { parseTaskPrefix, stripTaskPrefix } from '@/src/domain/content';
+import { walkTree } from '@/src/domain/document';
+import { isAppResourceUrl } from '@/src/domain/links';
 import {
 	formatWikilink,
 	parseWikilink,
 	wikilinkTargetIsAttachment,
-} from '../../domain/links';
-import type { MarkdownNode } from '../../domain/document';
-import type { MdTokenSegment } from '../../domain/document';
-import type { MdNodeData } from '../../core/node-data';
+} from '@/src/domain/links';
+import type { MarkdownNode } from '@/src/domain/document';
+import type { MdTokenSegment } from '@/src/domain/document';
+import type { MdNodeData } from '@/src/core/node-data';
 
 /** 可承载子节点的行类型（plain 段落跳过，见文件头） */
 const SPLITTABLE_LINE_TYPES: ReadonlySet<string> = new Set([

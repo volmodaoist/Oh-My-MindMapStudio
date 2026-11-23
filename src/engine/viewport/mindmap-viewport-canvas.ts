@@ -6,7 +6,7 @@
  * 的换算基准、fit 的换算基准都取它，故必须与读它的那几族分开也要保持同源：
  * 拆开后 `syncCanvasGeometry` 仍是引擎几何与实时容器的**唯一**同步点。
  */
-import type { MindMap } from '../../../vendor/simple-mind-map.cjs';
+import type { MindMap } from '@/vendor/simple-mind-map.cjs';
 
 /**
  * 容器的实时矩形（left/top/width/height，CSS 像素；不可得返回 null）。

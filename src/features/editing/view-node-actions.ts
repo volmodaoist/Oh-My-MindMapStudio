@@ -21,45 +21,45 @@ import {
 	setNodeText,
 	startNodeTextEdit,
 	type SiblingMoveOutcome,
-} from '../../engine';
-import { openLinkEditorModal } from '../../ui/modal-link';
-import { openNodeTextModal } from '../../ui/modal-text';
-import { markNodeNeedLayout } from '../../engine';
-import { notifyError } from '../../core/errors';
-import { isEmbeddableAttachmentExtension } from '../../core/constants';
+} from '@/src/engine';
+import { openLinkEditorModal } from '@/src/ui/modal-link';
+import { openNodeTextModal } from '@/src/ui/modal-text';
+import { markNodeNeedLayout } from '@/src/engine';
+import { notifyError } from '@/src/core/errors';
+import { isEmbeddableAttachmentExtension } from '@/src/core/constants';
 import {
 	attachmentFields,
 	markdownDocTarget,
 	newDocLinkFor,
-} from '../navigation/view-node-link-plan';
+} from '@/src/features/navigation/view-node-link-plan';
 // 链接规划族（纯计算）已拆到 ./view-node-link-plan，此处**转出**：
 // view-dnd 等既有调用方的 import 路径不变。
-export { planAttachmentLink, planDocLink } from '../navigation/view-node-link-plan';
-import { resolvePathToFile } from '../../links/links-resolve';
-import { t, type TranslationKey } from '../../core/i18n';
-import { isHyperlinkProtocolUrl } from '../../domain/links';
-import { relationStateOf } from '../../domain/relations';
-import { composeNodeContent, isPureLinkNode } from '../../markdown';
-import { stripInboundRelations } from '../relations/view-node-relation';
-import { editSummaryText, removeSummary } from '../relations/view-node-summary';
+export { planAttachmentLink, planDocLink } from '@/src/features/navigation/view-node-link-plan';
+import { resolvePathToFile } from '@/src/links/links-resolve';
+import { t, type TranslationKey } from '@/src/core/i18n';
+import { isHyperlinkProtocolUrl } from '@/src/domain/links';
+import { relationStateOf } from '@/src/domain/relations';
+import { composeNodeContent, isPureLinkNode } from '@/src/markdown';
+import { stripInboundRelations } from '@/src/features/relations/view-node-relation';
+import { editSummaryText, removeSummary } from '@/src/features/relations/view-node-summary';
 
 import {
 	isDocumentExtension,
 	linkDisplayText,
 	parseWikilink,
 	wikilinkTargetIsAttachment,
-} from '../../domain/links';
-import { prefersMarkdownLinks } from '../../platform/workspace/vault-prefs';
-import { inlineContentPreview } from '../content/node-inline-content';
+} from '@/src/domain/links';
+import { prefersMarkdownLinks } from '@/src/platform/workspace/vault-prefs';
+import { inlineContentPreview } from '@/src/features/content/node-inline-content';
 import { openNodeInlineEditor } from './node-inline-editor';
-import { applyRawNodeContent } from '../content/node-content-write';
-import { requireActiveNode, insertChildNodeWithData, applyInlineRawMeta } from '../view/view-common';
-import { readNodeDataString, type MdNodeData } from '../../core/node-data';
-import type { MindMapNode } from '../../core/engine-types';
+import { applyRawNodeContent } from '@/src/features/content/node-content-write';
+import { requireActiveNode, insertChildNodeWithData, applyInlineRawMeta } from '@/src/features/view/view-common';
+import { readNodeDataString, type MdNodeData } from '@/src/core/node-data';
+import type { MindMapNode } from '@/src/core/engine-types';
 import type {
 	MindMapViewContext,
 	ViewNodeEditContext,
-} from '../view/view-context';
+} from '@/src/features/view/view-context';
 
 /** 删除文档双链通道字段（不重绘；调用方按需 render） */
 function clearDocWikiLink(node: MindMapNode): void {
@@ -350,7 +350,7 @@ export {
 	addImageToActiveNode,
 	applyNodeImage,
 	createImageChildNode,
-} from '../media/view-image-actions';
+} from '@/src/features/media/view-image-actions';
 
 /**
  * 给当前激活节点添加链接（无节点时提示）。

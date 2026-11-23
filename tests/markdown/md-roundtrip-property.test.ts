@@ -19,8 +19,8 @@ import { readdirSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import fc from 'fast-check';
 import { describe, expect, it } from 'vitest';
-import { parseMdOutline } from '../../src/markdown/outline/md-outline';
-import { serializeMdBody } from '../../src/markdown/serialize/md-serialize';
+import { parseMdOutline } from '@/src/markdown/outline/md-outline';
+import { serializeMdBody } from '@/src/markdown/serialize/md-serialize';
 
 // ---------------------------------------------------------------------------
 // 生成器：标题（含空标题）/ 列表（有序/无序/空项/嵌套）/ 段落 / 围栏 / 空行

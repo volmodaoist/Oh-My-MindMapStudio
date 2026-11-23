@@ -26,15 +26,15 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { App, TFile, TFolder } from 'obsidian';
 import { TFile as TFileClass } from 'obsidian';
-import { isEmbeddableAttachmentExtension } from '../../../src/core/constants';
-import type { EventBinder } from '../../../src/core/event-binder';
-import type { SaveImageOptions } from '../../../src/media/images-save';
-import type { Language, TranslationKey } from '../../../src/core/i18n';
-import { t } from '../../../src/core/i18n';
-import { formatWikilink } from '../../../src/domain/links/wikilink';
-import type { MindMap, MindMapNode } from '../../../vendor/simple-mind-map.cjs';
-import type { MindMapViewContext } from '../../../src/features/view/view-context';
-import { setupDragAndDrop } from '../../../src/features/editing/view-dnd';
+import { isEmbeddableAttachmentExtension } from '@/src/core/constants';
+import type { EventBinder } from '@/src/core/event-binder';
+import type { SaveImageOptions } from '@/src/media/images-save';
+import type { Language, TranslationKey } from '@/src/core/i18n';
+import { t } from '@/src/core/i18n';
+import { formatWikilink } from '@/src/domain/links/wikilink';
+import type { MindMap, MindMapNode } from '@/vendor/simple-mind-map.cjs';
+import type { MindMapViewContext } from '@/src/features/view/view-context';
+import { setupDragAndDrop } from '@/src/features/editing/view-dnd';
 
 const h = vi.hoisted(() => ({
 	/** Notice 文案（按调用顺序） */
@@ -101,7 +101,7 @@ vi.mock('obsidian', async (importOriginal) => {
 // 引擎模块整体以桩替换（真实模块会拉入 vendor 打包产物）。
 // ENGINE_COMMANDS 的取值与 src/engine/runtime/mindmap.ts 一致——断言用它证明插入走的是
 // 「命令名常量表」而非散落的魔法字符串。
-vi.mock('../../../src/engine', () => ({
+vi.mock('@/src/engine', () => ({
 	ENGINE_COMMANDS: {
 		INSERT_CHILD_NODE: 'INSERT_CHILD_NODE',
 		SET_NODE_IMAGE: 'SET_NODE_IMAGE',
@@ -114,9 +114,9 @@ vi.mock('../../../src/engine', () => ({
 
 // 节点挂载动作（图片/附件/文档双链）以桩替换：本文件只验证「分发到哪个函数、
 // 入参是什么」，三者内部写数据的形态由 view-node-actions 自己的用例覆盖。
-vi.mock('../../../src/features/editing/view-node-actions', async (importOriginal) => {
+vi.mock('@/src/features/editing/view-node-actions', async (importOriginal) => {
 	const actual =
-		await importOriginal<typeof import('../../../src/features/editing/view-node-actions')>();
+		await importOriginal<typeof import('@/src/features/editing/view-node-actions')>();
 	return {
 		// 载荷与提示的计划用**真实现**：本文件要验「形态跟随官方设置」的真实分支
 		// （wiki / md 两形态），桩掉就等于不测；计划里载荷与提示同源，故拖入提示
@@ -165,14 +165,14 @@ vi.mock('../../../src/features/editing/view-node-actions', async (importOriginal
 // 入库以桩替换：断言入参（sourcePath / preferredName / lang / 上限）与
 // 「是否发生写入」这一分流判据；真实入库链（串行队列、重名兜底）另有用例。
 // 图片与非图片共用同一桩形态（saveAttachmentToVault 是同通道的另一入口）。
-vi.mock('../../../src/media/images-save', () => ({
+vi.mock('@/src/media/images-save', () => ({
 	saveImageToVault: (options: SaveImageOptions): Promise<TFile | null> =>
 		h.saveImageToVault(options),
 	saveAttachmentToVault: (options: SaveImageOptions): Promise<TFile | null> =>
 		h.saveAttachmentToVault(options),
 }));
 
-vi.mock('../../../src/links/links-resolve', () => ({
+vi.mock('@/src/links/links-resolve', () => ({
 	resolveDroppedFile: (
 		dataTransfer: DataTransfer,
 		app: App,

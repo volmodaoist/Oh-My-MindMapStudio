@@ -8,6 +8,7 @@ Obsidian 社区插件（TypeScript → esbuild → `main.js`）。把「声明�
 - 发布产物三件套：`main.js` / `manifest.json` / `styles.css`（`main.js` **不入库**，CI 构建）
 - 入口 `src/main.ts`；命令 ID 表 `src/commands.ts`（**发布后永不变更**）；设置 `src/settings.ts`
 - 引擎 `vendor/simple-mind-map.cjs` = `simple-mind-map 0.14.0-fix.3`，思绪（sxmind.cn）发布的第三方修订版（fork 自 wanglin2/mind-map 0.14.0）。**不 vendor 其 CSS**——上游 dist CSS 100% 是 Quill 富文本样式（本插件不注册 RichText），引擎样式由 bundle 运行时注入 `document.head`；修订与打包流程见 `vendor/BUILD.md`
+- 源码/测试模块路径：`@/` 表示项目根，跨目录用别名，同目录保留 `./`；Node 脚本和文件 URL 保留原生有效路径（见 K223）。
 - 依赖单向 `domain → core → {links,markdown,media,engine,platform} → {ui,services} → features → 组合根`，由 eslint 强制
 
 ## 环境与安装
@@ -81,15 +82,15 @@ Obsidian 社区插件（TypeScript → esbuild → `main.js`）。把「声明�
 2. **官方优先**：`obsidian.d.ts` + 官方帮助；缺口才允许私有触点
 3. **实现**：只触碰 `.agents/decisions.md` 指定的收口点
 4. **测试**：纯逻辑直测；渲染契约交 `verify:visual`
-5. **同步**：更新 `.agents/index.md`「代码结构索引」；超 300 行则在同文件登记豁免
-6. **校验**（全绿才提交）：一条命令 `npm run check:gates`——按 git 变更集算出附加门禁并顺序执行、首败即停（`--all` 全跑、`--dry-run` 只看计划、`--fix-lines` 回填豁免表行数），顺带核对「未登记超限文件数」（硬规则 10 的机器核对）。固定先跑 `npm run build` → `npm test` → `npm run lint`；改过下列文件的再加对应项：
+5. **同步**：更新 `.agents/index.md`「代码结构索引」
+6. **校验**：全部测试通过之后，使用 .github/check-commit.py 检查 commit message 才会提交，一条命令 `npm run check:gates`——按 git 变更集算出附加门禁并顺序执行、首败即停（`--all` 全跑、`--dry-run` 只看计划、`--fix-lines` 回填豁免表行数），顺带核对「未登记超限文件数」（硬规则 10 的机器核对）。固定先跑 `npm run build` → `npm test` → `npm run lint`；改过下列文件的再加对应项：
    - CSS / `config/stylelint.config.mjs` / `config/esbuild.config.mjs` → `npm run lint:css`
    - 导出 / 文件增删 / `config/knip.json` / `config/esbuild.config.mjs` / `package.json` → `npm run check:dead-code`
    - `vendor/` → `npm run build:vendor`
    - 自绘判据 / 节点渲染 / `config/esbuild.config.mjs` / `scripts/verify-visual.mjs` → `npm run verify:visual -- --require-chrome`（2026-10-11：判据从「有链接段才接管」收敛为「段序列非空即接管」，门禁整片转红却没在提交前跑到）
    - `docs/markdown-mindmap-standard.md` → `npx vitest run tests/contracts/docs-standard.test.ts`（目录 / 章节摘要 / 指针 / 版本 / 白名单映射）
    - `src/`、`tests/` 的文件清单或豁免表 → `npx vitest run tests/contracts/agents-md-sync.test.ts`（漏登记即红；对豁免表只守**漂移阈值**，超限总数只能人工对账）
-   - `README*` / `manifest.json` / `versions.json` / `LICENSE*` → `npm run check:release`
+   - `README*` / `CHANGELOG` / `manifest.json` / `versions.json` / `LICENSE*` → `npm run check:release`
      增删门禁须同步 `scripts/check-gates.mjs`（映射由 `tests/contracts/check-gates.test.ts` 直测）
 
 ### 修改 Markdown 往返格式
@@ -107,11 +108,11 @@ Obsidian 社区插件（TypeScript → esbuild → `main.js`）。把「声明�
 
 | 用途                                                          | 命令                                                                                              |
 | ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| 迭代单测                                                      | `npx vitest run tests/<relative-path>.test.ts`                                                           |
-| 往返生成式验证                                                | `npx vitest run tests/markdown/md-roundtrip-property.test.ts`                                            |
-| 文档同步契约                                                  | `npx vitest run tests/contracts/agents-md-sync.test.ts`                                                   |
-| 标准文档一致性                                                | `npx vitest run tests/contracts/docs-standard.test.ts`                                                    |
-| 模块边界（依赖图 / 成环 / 组合根）                            | `npx vitest run tests/contracts/module-boundaries.test.ts`                                                |
+| 迭代单测                                                      | `npx vitest run tests/<relative-path>.test.ts`                                                  |
+| 往返生成式验证                                                | `npx vitest run tests/markdown/md-roundtrip-property.test.ts`                                   |
+| 文档同步契约                                                  | `npx vitest run tests/contracts/agents-md-sync.test.ts`                                         |
+| 标准文档一致性                                                | `npx vitest run tests/contracts/docs-standard.test.ts`                                          |
+| 模块边界（依赖图 / 成环 / 组合根）                            | `npx vitest run tests/contracts/module-boundaries.test.ts`                                      |
 | 全量测试                                                      | `npm test`                                                                                      |
 | 类型 + 构建                                                   | `npm run build`                                                                                 |
 | Lint（**含依赖矩阵 + domain 零依赖 + 组合根禁令**）     | `npm run lint`                                                                                  |

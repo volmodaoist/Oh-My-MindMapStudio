@@ -1,7 +1,7 @@
 /** 节点内容 quote：DOM/样式内聚，保持原输出与导出保真。 */
-import { type InlineContentDocument, type InlineSegment } from '../../core/node-content-types';
+import { type InlineContentDocument, type InlineSegment } from '@/src/core/node-content-types';
 import { type BuildContentParams, type InlineContentRenderer } from './content-context';
-import { type CalloutHeader, calloutVisualOf, type CalloutVisual } from '../../domain/content';
+import { type CalloutHeader, calloutVisualOf, type CalloutVisual } from '@/src/domain/content';
 import { CALLOUT_BLOCK_CLASS, CALLOUT_BOX_STYLES, QUOTE_BLOCK_CLASS, QUOTE_BOX_STYLES, type QuoteVariant, QUOTE_CONTENT_VARIANTS, CALLOUT_TITLE_STYLES, CALLOUT_ICON_STYLES, CALLOUT_TITLE_INNER_STYLES, CALLOUT_FOLD_STYLES } from './content-quote.styles';
 import { withDerivedBorder } from './content-common.styles';
 

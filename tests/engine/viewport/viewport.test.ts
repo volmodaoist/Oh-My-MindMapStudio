@@ -21,13 +21,13 @@
  *   改为等待回填后执行（超上限放弃）——本文件钉住「延后执行」与「上限放弃」两条。
  */
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import type { MindMap, MindMapNode } from '../../../vendor/simple-mind-map.cjs';
+import type { MindMap, MindMapNode } from '@/vendor/simple-mind-map.cjs';
 import {
 	HEAVY_FIT_NODE_THRESHOLD,
 	RESET_LAYOUT_ROOT_WAIT_INTERVAL_MS,
 	RESET_LAYOUT_ROOT_WAIT_TIMEOUT_MS,
 	RESET_LAYOUT_VIEWPORT_DELAY_MS,
-} from '../../../src/core/constants';
+} from '@/src/core/constants';
 import {
 	arrangeMindMap,
 	centerContentAtFullScale,
@@ -36,7 +36,7 @@ import {
 	isContentVisibleInCanvas,
 	measureNodesCanvasBox,
 	resetZoom,
-} from '../../../src/engine';
+} from '@/src/engine';
 
 // mindmap.ts 经 import 链加载真实 vendor bundle（顶层求值触碰 document.documentElement）；
 // 静态 import 先于模块体执行，故桩必须放进 vi.hoisted 才会先落地。

@@ -12,8 +12,8 @@
   - [Markdown 标准](../docs/markdown-mindmap-standard.md)：当前数据契约。
 - 按需查证
   - [基线](baseline-metrics.md)：历史性能读数，使用前重新测量。
-  - [批次记录](line-count-log.md)：提交摘要与验证结果，只追加。
-  - [版本映射](../docs/version-commits.md)：历史需求完成提交与标签。
+  - [检查脚本](../scripts/check-gates.mjs)：自动统计规模并执行门禁；历史变化查 Git。
+  - [CHANGELOG](../CHANGELOG)：简短版本变化和 base → feat 源码快照。
 
 规则冲突时先遵守根目录 `AGENTS.md`，数据格式以 Markdown 标准为准。
 逐文件清单和当前规模只在索引维护；实现细节写在源码契约中。

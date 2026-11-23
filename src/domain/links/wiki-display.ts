@@ -15,7 +15,7 @@
  * 不适用形态）都会让另一侧静默失配。改这里，不要改调用方。
  */
 
-import { isNodeTextEdited, type MdNodeMeta } from '../document';
+import { isNodeTextEdited, type MdNodeMeta } from '@/src/domain/document';
 import {
 	formatWikilink,
 	linkDisplayText,

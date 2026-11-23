@@ -53,9 +53,9 @@
  * 「选区 → 视口」的换算。
  */
 import { Notice } from 'obsidian';
-import { elementFromTarget } from '../../core/event-binder';
-import { FOOTNOTE_PREVIEW_CLASS } from '../../core/constants';
-import { tf } from '../../core/i18n';
+import { elementFromTarget } from '@/src/core/event-binder';
+import { FOOTNOTE_PREVIEW_CLASS } from '@/src/core/constants';
+import { tf } from '@/src/core/i18n';
 import {
 	countMindMapNodes,
 	fitMindMap,
@@ -65,9 +65,9 @@ import {
 	measureNodesCanvasBox,
 	panMindMap,
 	zoomMindMapAt,
-} from '../../engine';
-import { isAnyNodeEditing } from '../editing/node-inline-editor';
-import type { MindMapViewContext } from '../view/view-context';
+} from '@/src/engine';
+import { isAnyNodeEditing } from '@/src/features/editing/node-inline-editor';
+import type { MindMapViewContext } from '@/src/features/view/view-context';
 
 /**
  * 视口手势所需的视图面（引擎实例 + 事件绑定器 + 画布元素 + 语言）。

@@ -17,11 +17,11 @@
  * （body.createEl 造元素并记录、事件按需触发）。
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import type { MindMap, MindMapNode } from '../../../vendor/simple-mind-map.cjs';
-import type { ViewNodeEditContext } from '../../../src/features/view/view-context';
+import type { MindMap, MindMapNode } from '@/vendor/simple-mind-map.cjs';
+import type { ViewNodeEditContext } from '@/src/features/view/view-context';
 
 // 补全行为单独直测；此处验证原会话与 NodeEditor 生命周期，不模拟候选 DOM。
-vi.mock('../../../src/features/editing/node-wikilink-completion', () => ({
+vi.mock('@/src/features/editing/node-wikilink-completion', () => ({
 	NodeWikilinkCompletion: class { dispose(): void {} },
 }));
 
@@ -52,8 +52,8 @@ const {
 	ensureDefaultImageSizesMock: vi.fn(),
 }));
 
-vi.mock('../../../src/engine', async () => ({
-	hideNodeForEditing: (await import('../../../src/engine/nodes/mindmap-editor')).hideNodeForEditing,
+vi.mock('@/src/engine', async () => ({
+	hideNodeForEditing: (await import('@/src/engine/nodes/mindmap-editor')).hideNodeForEditing,
 	getNodeGroupEl: getNodeGroupElMock,
 	getDrawTransform: getDrawTransformMock,
 	readNodeEditorAppearance: readNodeEditorAppearanceMock,
@@ -63,15 +63,15 @@ vi.mock('../../../src/engine', async () => ({
 	recordHistory: vi.fn(),
 }));
 
-vi.mock('../../../src/markdown/serialize/md-serialize', () => ({
+vi.mock('@/src/markdown/serialize/md-serialize', () => ({
 	composeNodeContent: vi.fn(() => 'RAW 原文'),
 }));
 
-vi.mock('../../../src/markdown/syntax/md-line-write', () => ({
+vi.mock('@/src/markdown/syntax/md-line-write', () => ({
 	applyRawToNode: applyRawToNodeMock,
 }));
 
-vi.mock('../../../src/media/images-path', () => ({
+vi.mock('@/src/media/images-path', () => ({
 	ensureDefaultImageSizes: ensureDefaultImageSizesMock,
 	resolveImagePath: resolveImagePathMock,
 	walkImageSizeCorrections: walkImageSizeCorrectionsMock,
@@ -84,9 +84,9 @@ import {
 	isInlineNodeEditing,
 	openNodeInlineEditor,
 	resolveInlineEditKey,
-} from '../../../src/features/editing/node-inline-editor';
+} from '@/src/features/editing/node-inline-editor';
 
-import { makeDocStub, lastEl, type DocStub } from '../../helpers/node-editor-dom';
+import { makeDocStub, lastEl, type DocStub } from '@/tests/helpers/node-editor-dom';
 
 /** 引擎公开 on/off 事件桩：会话结束后的监听必须真的解绑。 */
 function makeEngineEventsStub() {

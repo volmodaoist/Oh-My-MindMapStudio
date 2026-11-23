@@ -1,8 +1,8 @@
 /** 节点内容 link：DOM/样式内聚，保持原输出与导出保真。 */
-import { type InlineContentDocument, type InlineSegment } from '../../core/node-content-types';
+import { type InlineContentDocument, type InlineSegment } from '@/src/core/node-content-types';
 import { type BuildContentParams } from './content-context';
 import { anchorStyle, UNRESOLVED_LINK_STYLES, INTERNAL_LINK_STYLES, EXTERNAL_LINK_STYLES } from './content-link.styles';
-import { isSafeAnchorHref } from '../../domain/links';
+import { isSafeAnchorHref } from '@/src/domain/links';
 
 /**
  * 锚点形态与 Obsidian MarkdownRenderer 产物一致（这是点击「零改造」的前提）：

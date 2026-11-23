@@ -37,14 +37,14 @@ import {
 	isNodeImageElement,
 	previewNodeImageSize,
 	setNodeImageSize,
-} from '../../engine';
-import type { MindMap, MindMapNode } from '../../core/engine-types';
-import type { MdNodeData } from '../../core/node-data';
-import type { MindMapViewContext } from '../view/view-context';
+} from '@/src/engine';
+import type { MindMap, MindMapNode } from '@/src/core/engine-types';
+import type { MdNodeData } from '@/src/core/node-data';
+import type { MindMapViewContext } from '@/src/features/view/view-context';
 import {
 	startWindowDragSession,
 	type WindowDragSession,
-} from '../canvas/drag-session';
+} from '@/src/features/canvas/drag-session';
 
 /** 手柄像素尺寸（屏幕 px） */
 const HANDLE_SIZE_PX = 12;

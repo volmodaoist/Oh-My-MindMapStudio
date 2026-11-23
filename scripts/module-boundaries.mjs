@@ -168,12 +168,12 @@ function forbiddenTargets(group) {
  * @param {string} names 组名，或多个组名拼成的正则交替式（`a|b|c`）
  * @returns {string} 正则源码（ESLint patterns 的 `regex` 字段语义）
  */
-function relativeSpecifierRegex(names) {
+function projectSpecifierRegex(names) {
 	// `(?:…)` 不可省：交替式必须整体成组，否则 `^…/main|commands|…` 会把
 	// `commands` 变成顶层分支——`./commands`、`x/commands` 都会被误命中
 	// （2026-10-17 重构时真实踩过：同一目录的 `./mindmap-commands` 被判成
 	// 「引用组合根」）。单组名套一层非捕获组无副作用。
-	return `^\\.\\./(?:\\.\\./)*(?:${names})(?:/|$)`;
+	return `^(?:\\.\\./(?:\\.\\./)*|@/src/)(?:${names})(?:/|$)`;
 }
 
 /**
@@ -186,7 +186,7 @@ export function forbiddenSpecifierPatterns(group) {
 	// 文案对全组相同，只算一次（permitted 列表不随 target 变化）。
 	const message = `src/${group}/ 只允许依赖 ${allowedTargets(group).join(' / ')}（依赖矩阵见 AGENTS.md K51）`;
 	return forbiddenTargets(group).map((target) => ({
-		regex: relativeSpecifierRegex(target),
+		regex: projectSpecifierRegex(target),
 		message,
 	}));
 }
@@ -200,7 +200,7 @@ export function forbiddenSpecifierPatterns(group) {
  * @type {{ regex: string, allowTypeImports: true, message: string }}
  */
 export const COMBO_ROOT_SPECIFIER_PATTERN = Object.freeze({
-	regex: relativeSpecifierRegex(COMBO_ROOT_MODULES.join('|')),
+	regex: projectSpecifierRegex(COMBO_ROOT_MODULES.join('|')),
 	allowTypeImports: true,
 	message:
 		'组合根（main/commands/settings/creation）只能被组合根本身引用（见 AGENTS.md K51）',

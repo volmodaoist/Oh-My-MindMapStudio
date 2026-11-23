@@ -30,30 +30,30 @@ import {
 	getRenderRoot,
 	paletteNodeColor,
 	topMostNodes,
-} from '../../engine';
-import type { PaletteId } from '../../core/constants';
+} from '@/src/engine';
+import type { PaletteId } from '@/src/core/constants';
 import {
 	isNodeOnlyColorScope,
 	PALETTE_OPTIONS,
-} from '../../core/constants';
-import { t, tf, type TranslationKey } from '../../core/i18n';
-import type { MindMapNode } from '../../core/engine-types';
-import type { MdNodeData } from '../../core/node-data';
+} from '@/src/core/constants';
+import { t, tf, type TranslationKey } from '@/src/core/i18n';
+import type { MindMapNode } from '@/src/core/engine-types';
+import type { MdNodeData } from '@/src/core/node-data';
 import {
 	COLOR_DIRECTIVE_NONE,
 	inheritedColorOf,
 	orphanSentinels,
 	scopeSentinels,
-} from '../../domain/color';
-import { splitDirectiveTail } from '../../domain/relations';
-import { nodeInlineSource } from '../../domain/document';
-import { walkTree } from '../../domain/document';
-import { composeNodeContent } from '../../markdown';
-import { createButton, openFormModal } from '../../ui/modal-common';
-import { applyRawNodeContents } from '../content/node-content-write';
-import { colorDirectiveOf, setColorDirective } from '../content/node-inline-tokenize';
-import { refreshMiniMapAfterRender } from '../view/view-minimap';
-import type { MindMapViewContext } from '../view/view-context';
+} from '@/src/domain/color';
+import { splitDirectiveTail } from '@/src/domain/relations';
+import { nodeInlineSource } from '@/src/domain/document';
+import { walkTree } from '@/src/domain/document';
+import { composeNodeContent } from '@/src/markdown';
+import { createButton, openFormModal } from '@/src/ui/modal-common';
+import { applyRawNodeContents } from '@/src/features/content/node-content-write';
+import { colorDirectiveOf, setColorDirective } from '@/src/features/content/node-inline-tokenize';
+import { refreshMiniMapAfterRender } from '@/src/features/view/view-minimap';
+import type { MindMapViewContext } from '@/src/features/view/view-context';
 
 /** 菜单里的一个「颜色」选项：调色板的 id + 它对应的填充色 + 文案键 */
 export interface NodeColorOption {

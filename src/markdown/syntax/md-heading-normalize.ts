@@ -1,4 +1,4 @@
-import type { MdNodeData } from '../../core/node-data';
+import type { MdNodeData } from '@/src/core/node-data';
 /**
  * 层级语法的**编辑期一致性守卫**：只修「会被解析成另一棵树」的排布，
  * 以及粘贴落点已定语法时的**插入前**换算。
@@ -36,7 +36,7 @@ import type { MdNodeData } from '../../core/node-data';
  * 没有层级表达）；标题 / 列表互转保留 `mdMarker`，`*` / `+` 不会退化成 `-`；
  * 有序编号由解析层的 `mdOrderedNumber` 保真。
  */
-import type { MarkdownNode } from '../../domain/document';
+import type { MarkdownNode } from '@/src/domain/document';
 import {
 	MAX_HEADING_LEVEL,
 	convertBranchToHeadings,

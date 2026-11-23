@@ -19,9 +19,9 @@
  * （view-node-actions）、错误上报（core/errors）全部 mock 为 spy；Notice 记录文案。
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { t, type Language } from '../../../src/core/i18n';
-import type { MindMap } from '../../../vendor/simple-mind-map.cjs';
-import type { MindMapViewContext } from '../../../src/features/view/view-context';
+import { t, type Language } from '@/src/core/i18n';
+import type { MindMap } from '@/vendor/simple-mind-map.cjs';
+import type { MindMapViewContext } from '@/src/features/view/view-context';
 
 const {
 	noticeCalls,
@@ -61,24 +61,24 @@ vi.mock('obsidian', async (importOriginal) => {
 	};
 });
 
-vi.mock('../../../src/engine', () => ({
+vi.mock('@/src/engine', () => ({
 	getActiveNode: getActiveNodeMock,
 	getRenderRoot: getRenderRootMock,
 }));
 
-vi.mock('../../../src/media/images-save', () => ({
+vi.mock('@/src/media/images-save', () => ({
 	buildPastedImageName: buildNameMock,
 	saveImageToVault: saveImageMock,
 }));
 
-vi.mock('../../../src/features/editing/view-node-actions', () => ({
+vi.mock('@/src/features/editing/view-node-actions', () => ({
 	applyNodeImage: applyImageMock,
 	createImageChildNode: createImageChildNodeMock,
 }));
 
-vi.mock('../../../src/core/errors', () => ({ notifyError: notifyErrorMock }));
+vi.mock('@/src/core/errors', () => ({ notifyError: notifyErrorMock }));
 
-import { handleWindowPaste, setupPasteHandler } from '../../../src/features/editing/view-paste';
+import { handleWindowPaste, setupPasteHandler } from '@/src/features/editing/view-paste';
 
 /** 排空 microtask 队列（粘贴处理是 void 调用的异步链） */
 async function flushAsync(): Promise<void> {

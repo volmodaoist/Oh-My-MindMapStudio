@@ -108,9 +108,9 @@
  * 名** `mjx-container`（class 是 `MathJax`，`.mjx-container` 类选择器匹配不到）。
  */
 import { finishRenderMath, loadMathJax } from 'obsidian';
-import { MATH_RENDERED_HOLDER_CLASS } from '../../../core/constants';
-import { createWarnOnce } from '../../../core/errors';
-import { formatMathPlaceholder } from '../../../core/math-placeholder';
+import { MATH_RENDERED_HOLDER_CLASS } from '@/src/core/constants';
+import { createWarnOnce } from '@/src/core/errors';
+import { formatMathPlaceholder } from '@/src/core/math-placeholder';
 // 导出 SVG 后处理链已拆至 ./math-jax-export（纯 DOM/CSSOM、零渲染态依赖，见其文件头），
 // 此处只转发其公共 API；样式表元素 id 已随字符规则族移至 ./math-jax-char-rules。
 import {

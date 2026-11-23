@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
-import { CodeTabSession, getCodeTabApi, renderCodeTab } from '../../../../src/platform/rendering/plugins/code-tab';
-import type { CodeTabApi, CodeTabHandle, CodeTabRenderOptions, CodeTabSnapshot, CodeTabUpdate } from '../../../../src/platform/rendering/plugins/code-tab-api';
+import { CodeTabSession, getCodeTabApi, renderCodeTab } from '@/src/platform/rendering/plugins/code-tab';
+import type { CodeTabApi, CodeTabHandle, CodeTabRenderOptions, CodeTabSnapshot, CodeTabUpdate } from '@/src/platform/rendering/plugins/code-tab-api';
 
 function fixture() {
 	const snapshot: CodeTabSnapshot = { source: 'original', revision: 0, tabs: [], activeIndex: null,

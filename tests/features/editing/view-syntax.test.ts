@@ -15,14 +15,14 @@
  */
 import { Notice } from 'obsidian';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { t } from '../../../src/core/i18n';
-import type { MindMapViewContext } from '../../../src/features/view/view-context';
+import { t } from '@/src/core/i18n';
+import type { MindMapViewContext } from '@/src/features/view/view-context';
 import {
 	applyDocumentSyntax,
 	resolveDocumentSyntax,
 	runSyntaxGuard,
-} from '../../../src/features/editing/view-syntax';
-import { parseMdOutline } from '../../../src/markdown/outline/md-outline';
+} from '@/src/features/editing/view-syntax';
+import { parseMdOutline } from '@/src/markdown/outline/md-outline';
 
 const { execCommandMock, replaceDataMock, renderRootRef, ENGINE } = vi.hoisted(
 	() => {
@@ -39,7 +39,7 @@ const { execCommandMock, replaceDataMock, renderRootRef, ENGINE } = vi.hoisted(
 	},
 );
 
-vi.mock('../../../src/engine', () => ({
+vi.mock('@/src/engine', () => ({
 	ENGINE_COMMANDS: ENGINE,
 	getRenderRoot: () => renderRootRef.current,
 	replaceMindMapData: (...args: unknown[]): void => {

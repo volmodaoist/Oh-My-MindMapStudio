@@ -1,6 +1,6 @@
 /** 输入边界直测：动态来源、UTF-16 范围、原生撤销通道与标准 API 回退；不触碰文件。 */
 import { describe, expect, it, vi } from 'vitest';
-import { TextareaInput } from '../../../src/ui/node-editor/textarea-input';
+import { TextareaInput } from '@/src/ui/node-editor/textarea-input';
 
 function setup(execCommand?: () => boolean) {
 	const el = {

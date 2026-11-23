@@ -19,16 +19,16 @@
  */
 import { describe, expect, it, vi } from 'vitest';
 import { App, TFile } from 'obsidian';
-import type { MindMapTreeNode } from '../../src/core/engine-types';
-import { parseMdOutline } from '../../src/markdown/outline/md-outline';
-import { isValidIndentUnit } from '../../src/markdown/outline/md-outline-lines';
-import { serializeMdBody } from '../../src/markdown/serialize/md-serialize';
+import type { MindMapTreeNode } from '@/src/core/engine-types';
+import { parseMdOutline } from '@/src/markdown/outline/md-outline';
+import { isValidIndentUnit } from '@/src/markdown/outline/md-outline-lines';
+import { serializeMdBody } from '@/src/markdown/serialize/md-serialize';
 import {
 	buildDefaultMindMapName,
 	createDefaultMarkdownContent,
 	ensureUniqueUids,
-} from '../../src/markdown/markdown';
-import { ViewStateStore } from '../../src/services/view-state';
+} from '@/src/markdown/markdown';
+import { ViewStateStore } from '@/src/services/view-state';
 
 // ---------------------------------------------------------------------------
 // 辅助

@@ -28,13 +28,13 @@
  * 内联编辑会直接改写 `data.text`，缓存字段必然过期。
  */
 
-import { normalizeHexColor } from '../color';
+import { normalizeHexColor } from '@/src/domain/color';
 import {
 	type DirectiveSegment,
 	splitDirectiveSegments,
 } from './directive';
-import { nodeInlineSource } from '../document';
-import { walkTree } from '../document';
+import { nodeInlineSource } from '@/src/domain/document';
+import { walkTree } from '@/src/domain/document';
 
 /** 端点方向（引擎 `getNodePoint(node, dir, range)` 的 dir） */
 export type RelationAnchorDir = 'left' | 'right' | 'top' | 'bottom';

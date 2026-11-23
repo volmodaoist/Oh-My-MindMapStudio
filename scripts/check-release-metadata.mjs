@@ -16,6 +16,7 @@
  * 5. **License**：缺失/空 = error、识别不出 OSI 许可 = warning
  *    （分级对齐官方 `obsidian-workflows` 的 repo-checks：
  *    "error if missing, warn if non-OSI"，见其 README「What It Checks」）。
+ * 6. CHANGELOG 覆盖版本表中的全部版本；条目不得缺失、重复或为空。
  *
  * 退出码：0 = 全部通过（warning 不阻断）；1 = 任一 error（打印 `::error::`
  * 供 Actions 标注；warning 打印 `::warning::`）。
@@ -23,6 +24,7 @@
 import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { extractReleaseNotes } from './release-notes.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const SEMVER = /^\d+\.\d+\.\d+$/;
@@ -109,6 +111,18 @@ try {
 	}
 } catch {
 	errors.push('README.md 不存在或不可读');
+}
+
+try {
+	const changelog = readFileSync(join(ROOT, 'CHANGELOG'), 'utf8');
+	if (versions && typeof versions === 'object' && !Array.isArray(versions)) {
+		for (const version of Object.keys(versions).filter(key => SEMVER.test(key))) {
+			try { extractReleaseNotes(changelog, version); }
+			catch (error) { errors.push(error.message); }
+		}
+	}
+} catch (error) {
+	errors.push(`CHANGELOG 读取失败：${error.message}`);
 }
 
 // ---- License（对齐官方 repo-checks：缺失 = error，非 OSI = warn）----

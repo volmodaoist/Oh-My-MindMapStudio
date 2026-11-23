@@ -11,7 +11,7 @@
  * 不写入 .mindmap.md 文件正文。
  */
 
-import type { TaskState } from '../content';
+import type { TaskState } from '@/src/domain/content';
 
 /** 行类型（data.mdType）：md 三种行形态 */
 type MdLineType = 'heading' | 'list' | 'plain';

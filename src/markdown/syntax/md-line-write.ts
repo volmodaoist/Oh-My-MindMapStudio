@@ -20,10 +20,10 @@ import {
 	buildInlineData,
 	INLINE_LINK_FIELDS,
 	PLAIN_IMAGE_FIELDS,
-} from '../outline/md-outline';
-import { parseTaskPrefix, stripTaskPrefix } from '../../domain/content';
-import { isDirectiveLine } from '../../domain/relations';
-import type { MdNodeData } from '../../core/node-data';
+} from '@/src/markdown/outline/md-outline';
+import { parseTaskPrefix, stripTaskPrefix } from '@/src/domain/content';
+import { isDirectiveLine } from '@/src/domain/relations';
+import type { MdNodeData } from '@/src/core/node-data';
 
 /**
  * 解析可写、需要「先清后填」的全部行内字段：链接通道 + 图片通道 + 台账 + 尺寸标记。

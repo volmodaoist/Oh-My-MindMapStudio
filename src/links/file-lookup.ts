@@ -26,8 +26,8 @@ import {
 	encodedNameForm,
 	isRemoteOrDataUrl,
 	urlComparisonForms,
-} from '../domain/links';
-import { formatLinkPath, type LinkPathFormat } from '../domain/links';
+} from '@/src/domain/links';
+import { formatLinkPath, type LinkPathFormat } from '@/src/domain/links';
 
 /**
  * 把**单个文件**的全部形态键写入索引：

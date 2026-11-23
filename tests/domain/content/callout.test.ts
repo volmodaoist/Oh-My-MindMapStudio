@@ -23,7 +23,7 @@ import {
 	normalizeCalloutType,
 	parseCalloutHeader,
 	stripQuotePrefix,
-} from '../../../src/domain/content/callout';
+} from '@/src/domain/content/callout';
 
 describe('类型归一与别名（calloutTypeOf）', () => {
 	it('归一：trim + 小写 + 空白转 `-`（与宿主同口径）', () => {

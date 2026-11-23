@@ -1,5 +1,5 @@
 /** 节点内容 table.styles：DOM/样式内聚，保持原输出与导出保真。 */
-import { type NodeContentTones } from '../../domain/color';
+import { type NodeContentTones } from '@/src/domain/color';
 
 /**
  * 表格（GFM 管道表段）的**结构样式**：内联在元素上（导出保真，理由同

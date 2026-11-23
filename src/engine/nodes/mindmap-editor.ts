@@ -6,8 +6,8 @@
  * beforeTextEdit 只有显示前拦截能力，无法覆盖后续赋值；私有方法缺失时保留原行为。
  * 适配随引擎实例回收，既不改 vendor 产物，也不使用全局 CSS 覆盖其他插件。
  */
-import type { MindMap, MindMapNode } from '../../core/engine-types';
-import { getDrawTransform } from '../viewport/mindmap-viewport';
+import type { MindMap, MindMapNode } from '@/src/core/engine-types';
+import { getDrawTransform } from '@/src/engine/viewport/mindmap-viewport';
 import { getNodeGroupEl } from './mindmap-nodes';
 
 /** 高亮与编辑面共用几何，随内容增长；不再保留旧尺寸的 SVG 选中框。 */

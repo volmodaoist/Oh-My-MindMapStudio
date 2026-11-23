@@ -1,9 +1,9 @@
 /** Markdown 标题栏快捷入口：官方 addAction，按视图归属去重并随组件卸载清理。 */
 import { MarkdownView, setTooltip } from 'obsidian';
 import type { Component, Workspace } from 'obsidian';
-import { CORE_VIEW_TYPE } from '../../core/constants';
-import { t, type Language } from '../../core/i18n';
-import { openAsMindMap } from '../../markdown';
+import { CORE_VIEW_TYPE } from '@/src/core/constants';
+import { t, type Language } from '@/src/core/i18n';
+import { openAsMindMap } from '@/src/markdown';
 
 export class MarkdownMindMapAction {
 	private readonly actions = new Map<MarkdownView, HTMLElement>();

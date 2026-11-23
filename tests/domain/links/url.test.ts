@@ -27,7 +27,7 @@ import {
 	resourceUrlPathCandidates,
 	tryDecodeUri,
 	urlComparisonForms,
-} from '../../../src/domain/links/url';
+} from '@/src/domain/links/url';
 
 describe('isHttpUrl', () => {
 	it.each([

@@ -19,10 +19,10 @@ import {
 	resolveHistoryLimit,
 	seedInitialHistory,
 	syncHistoryLimit,
-} from '../../../src/engine';
-import type { MindMap } from '../../../vendor/simple-mind-map.cjs';
+} from '@/src/engine';
+import type { MindMap } from '@/vendor/simple-mind-map.cjs';
 
-vi.mock('../../../vendor/simple-mind-map.cjs', () => ({
+vi.mock('@/vendor/simple-mind-map.cjs', () => ({
 	MindMap: class {},
 	MindMapNode: class {},
 	DoExport: class {},

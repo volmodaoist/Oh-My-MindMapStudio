@@ -18,12 +18,12 @@ import {
 	t,
 	tf,
 	type Language,
-} from '../src/core/i18n';
-import { ElementStatusBarService } from '../src/services/status-bar';
+} from '@/src/core/i18n';
+import { ElementStatusBarService } from '@/src/services/status-bar';
 import {
 	refreshCommandLabels,
 	registerCommands,
-} from '../src/commands';
+} from '@/src/commands';
 
 // commands.ts 经 view.ts 加载 vendor bundle（顶层求值触碰 document.documentElement）
 vi.hoisted(() => {

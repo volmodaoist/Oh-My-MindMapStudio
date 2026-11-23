@@ -11,7 +11,7 @@
  *   撤销」，见 K180 的差异说明）。
  */
 import { describe, expect, it, vi } from 'vitest';
-import { SessionHistory } from '../../../src/services/document/document-session-history';
+import { SessionHistory } from '@/src/services/document/document-session-history';
 
 /** 判等：测试里都是字符串快照 */
 const equals = (left: string, right: string): boolean => left === right;

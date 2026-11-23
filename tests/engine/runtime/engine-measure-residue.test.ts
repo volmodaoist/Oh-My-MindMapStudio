@@ -17,10 +17,10 @@
  */
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
-import { clearMeasureResidue } from '../../../src/engine';
-import type { MindMap } from '../../../vendor/simple-mind-map.cjs';
+import { clearMeasureResidue } from '@/src/engine';
+import type { MindMap } from '@/vendor/simple-mind-map.cjs';
 
-vi.mock('../../../vendor/simple-mind-map.cjs', () => ({
+vi.mock('@/vendor/simple-mind-map.cjs', () => ({
 	MindMap: class {},
 	MindMapNode: class {},
 	DoExport: class {},

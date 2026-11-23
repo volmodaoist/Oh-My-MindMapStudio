@@ -15,11 +15,11 @@ import {
 	applyRelationPlan,
 	collectRelationTargets,
 	type RelationPlan,
-} from '../../../src/engine/nodes/mindmap-relations';
+} from '@/src/engine/nodes/mindmap-relations';
 
 /** 渲染根（`getRenderRoot` 是唯一入口：本文件只验证读取面，不碰真实引擎） */
 const roots = vi.hoisted((): { current: unknown } => ({ current: null }));
-vi.mock('../../../src/engine/nodes/mindmap-nodes', () => ({
+vi.mock('@/src/engine/nodes/mindmap-nodes', () => ({
 	getRenderRoot: () => roots.current,
 }));
 

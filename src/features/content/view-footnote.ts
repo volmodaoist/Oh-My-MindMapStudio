@@ -17,17 +17,17 @@
  * 「同一原文 → 同一 DOM」，不能把文档上下文塞进段序列缓存。
  */
 import { Notice } from 'obsidian';
-import { FOOTNOTE_PREVIEW_CLASS } from '../../core/constants';
-import { elementFromTarget, type EventBinder } from '../../core/event-binder';
-import { tf, type Language } from '../../core/i18n';
-import type { MindMap } from '../../core/engine-types';
-import { nodeContinuationIndents, nodeInlineSource } from '../../domain/document';
-import { collectRenderNodeData, revealNodeByUid } from '../../engine';
+import { FOOTNOTE_PREVIEW_CLASS } from '@/src/core/constants';
+import { elementFromTarget, type EventBinder } from '@/src/core/event-binder';
+import { tf, type Language } from '@/src/core/i18n';
+import type { MindMap } from '@/src/core/engine-types';
+import { nodeContinuationIndents, nodeInlineSource } from '@/src/domain/document';
+import { collectRenderNodeData, revealNodeByUid } from '@/src/engine';
 import {
 	collectFootnoteDefinitions,
 	splitFootnoteDefinitions,
 	type FootnoteDefinition,
-} from '../../markdown';
+} from '@/src/markdown';
 import {
 	FOOTNOTE_ID_ATTR,
 	FOOTNOTE_IDS_ATTR,

@@ -33,7 +33,7 @@ const globalStub = globalThis as unknown as { document?: unknown };
 globalStub.document ??= { documentElement: {} };
 
 // 经 src 的 import 链加载真实 bundle（与下方 createRequire 命中同一 CJS 实例）
-const { ENGINE_COMMANDS } = await import('../../src/engine');
+const { ENGINE_COMMANDS } = await import('@/src/engine');
 
 const VENDOR_DIR = path.resolve(import.meta.dirname, '../../vendor');
 const BUNDLE_PATH = path.join(VENDOR_DIR, 'simple-mind-map.cjs');

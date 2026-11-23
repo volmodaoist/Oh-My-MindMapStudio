@@ -15,13 +15,13 @@
  * 「引擎节点 data 可独立于树 data」的桩形态见 uid 用例——这正是真实引擎行为）。
  */
 import { describe, expect, it, vi } from 'vitest';
-import type { MindMap, MindMapNode } from '../../../vendor/simple-mind-map.cjs';
+import type { MindMap, MindMapNode } from '@/vendor/simple-mind-map.cjs';
 import {
 	applyImageSizeCorrectionsToEngine,
 	findNodesByContentProducts,
-} from '../../../src/engine';
+} from '@/src/engine';
 
-vi.mock('../../../vendor/simple-mind-map.cjs', () => ({
+vi.mock('@/vendor/simple-mind-map.cjs', () => ({
 	MindMap: class {},
 	MindMapNode: class {},
 	DoExport: class {},

@@ -1,6 +1,6 @@
 /** 通用领域树的遍历顺序、短路与深树行为。 */
 import { describe, expect, it } from 'vitest';
-import { walkTree } from '../../../src/domain/document/tree';
+import { walkTree } from '@/src/domain/document/tree';
 
 interface TNode {
 	id: string;

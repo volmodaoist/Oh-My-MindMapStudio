@@ -8,8 +8,8 @@
  * popout 无官方同窗口右侧栏 API，保留该窗口原浮层，不借用主窗口 Outline。
  */
 import { ItemView, type Plugin, type WorkspaceLeaf, type WorkspaceItem } from 'obsidian';
-import { t, type Language } from '../../core/i18n';
-import { createWarnOnce } from '../../core/errors';
+import { t, type Language } from '@/src/core/i18n';
+import { createWarnOnce } from '@/src/core/errors';
 
 const VIEW_TYPE = 'mindmap-studio-minimap';
 

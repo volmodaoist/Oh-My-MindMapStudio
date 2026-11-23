@@ -14,8 +14,8 @@ import {
 	IMAGE_WIDTH,
 	normalizeLineStylePreference,
 	normalizeThemeStyle,
-} from '../../core/constants';
-import type { ThemeStyleId } from '../../core/constants';
+} from '@/src/core/constants';
+import type { ThemeStyleId } from '@/src/core/constants';
 import { resolvePaletteTheme, type ThemeTextColors } from './mindmap-palette';
 import {
 	THEME_STYLE_PRESETS,

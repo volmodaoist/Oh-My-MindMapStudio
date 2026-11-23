@@ -20,22 +20,22 @@
  */
 
 import { App } from 'obsidian';
-import type { MarkdownNode } from '../../domain/document';
+import type { MarkdownNode } from '@/src/domain/document';
 import {
 	isIndentedCodeLine,
 	isRenderableImageExtension,
 	isRenderableImageTarget,
-} from '../../core/constants';
-import { readNodeDataString } from '../../core/node-data';
+} from '@/src/core/constants';
+import { readNodeDataString } from '@/src/core/node-data';
 import {
 	isColorDirectiveLine,
 	splitTrailingColorDirective,
-} from '../../domain/color';
-import { isNodeTextEdited } from '../../domain/document';
-import { withTaskPrefix } from '../../domain/content';
-import { tokenizeInline } from '../outline/md-outline';
-import { isValidIndentUnit } from '../outline/md-outline-lines';
-import { readHeadingStart } from '../syntax/md-heading-syntax';
+} from '@/src/domain/color';
+import { isNodeTextEdited } from '@/src/domain/document';
+import { withTaskPrefix } from '@/src/domain/content';
+import { tokenizeInline } from '@/src/markdown/outline/md-outline';
+import { isValidIndentUnit } from '@/src/markdown/outline/md-outline-lines';
+import { readHeadingStart } from '@/src/markdown/syntax/md-heading-syntax';
 import {
 	anchorInsertPoint,
 	inLinkSyntax,
@@ -54,10 +54,10 @@ import {
 	formatWikilink,
 	linkDisplayText,
 	wikilinkLinkpath,
-} from '../../domain/links';
-import { isSchemeUrl } from '../../domain/links';
-import { docWikiLinkDisplay, editedWikilinkAlias, effectiveDocWikiLink } from '../../domain/links';
-import type { MdNodeData } from '../../core/node-data';
+} from '@/src/domain/links';
+import { isSchemeUrl } from '@/src/domain/links';
+import { docWikiLinkDisplay, editedWikilinkAlias, effectiveDocWikiLink } from '@/src/domain/links';
+import type { MdNodeData } from '@/src/core/node-data';
 
 /** 链接目标是否需要尖括号包裹（含空格/括号/<>/\，否则会破坏 `(…)` 闭合） */
 function needsDestBraces(dest: string): boolean {

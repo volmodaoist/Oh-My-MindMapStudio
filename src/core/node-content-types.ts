@@ -1,7 +1,7 @@
 /** 节点内容的共享数据与渲染注入契约；不依赖 features/UI/引擎实现。 */
 import type { PluginContentRenderer } from './plugin-content-types';
-import type { CalloutHeader } from '../domain/content';
-import type { PipeTable } from '../domain/content';
+import type { CalloutHeader } from '@/src/domain/content';
+import type { PipeTable } from '@/src/domain/content';
 
 export interface InlineContentDocument {
 	createElement(tag: string): HTMLElement;

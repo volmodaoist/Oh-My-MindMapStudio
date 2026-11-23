@@ -13,9 +13,9 @@
  * 比对——它同时是弹窗预填的实现，两处必须是同一份内容。
  */
 import { describe, expect, it } from 'vitest';
-import { applyRawToNode } from '../../../src/markdown/syntax/md-line-write';
-import { composeNodeContent } from '../../../src/markdown/serialize/md-serialize';
-import type { MdNodeData } from '../../../src/core/node-data';
+import { applyRawToNode } from '@/src/markdown/syntax/md-line-write';
+import { composeNodeContent } from '@/src/markdown/serialize/md-serialize';
+import type { MdNodeData } from '@/src/core/node-data';
 
 /** 一个「list 节点」的起始数据（模拟解析产物后用户改原文） */
 function baseData(patch: MdNodeData = {}): MdNodeData {

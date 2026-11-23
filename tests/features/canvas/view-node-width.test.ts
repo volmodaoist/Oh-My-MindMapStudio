@@ -9,12 +9,12 @@
  * 尺寸几何由 `npm run verify:visual` 的 inline 探针实测。
  */
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import type { MindMapNode } from '../../../vendor/simple-mind-map.cjs';
-import type { MindMapViewContext } from '../../../src/features/view/view-context';
+import type { MindMapNode } from '@/vendor/simple-mind-map.cjs';
+import type { MindMapViewContext } from '@/src/features/view/view-context';
 import {
 	gateNodeWidthHandles,
 	setupNodeWidthRefresh,
-} from '../../../src/features/canvas/view-node-width';
+} from '@/src/features/canvas/view-node-width';
 
 const mocks = vi.hoisted(() => ({
 	refreshNodeCustomContent: vi.fn<
@@ -22,7 +22,7 @@ const mocks = vi.hoisted(() => ({
 	>(),
 }));
 
-vi.mock('../../../src/engine', () => ({
+vi.mock('@/src/engine', () => ({
 	refreshNodeCustomContent: mocks.refreshNodeCustomContent,
 	// 与生产同语义的桩：读节点运行时事实（nodeCreateContents.isUseCustomNodeContent
 	// 的 `!!this._customNodeContent`；防腐层对无该方法的目标回退 false）

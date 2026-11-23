@@ -1,4 +1,4 @@
-import type { MdNodeData } from '../../core/node-data';
+import type { MdNodeData } from '@/src/core/node-data';
 /**
  * 文档会话：**一个文件一份权威树 + 一条撤销时间线 + 一条保存管线**（Level B）。
  *
@@ -35,12 +35,12 @@ import type { MdNodeData } from '../../core/node-data';
  * 静默。草稿找回后照常排保存，与官方「撤销后写回」一致。
  */
 import { App, TFile } from 'obsidian';
-import { createDebouncer, type Debouncer } from '../../core/concurrency';
-import type { MarkdownNode } from '../../domain/document';
-import { cloneTree as cloneJsonTree, walkTree } from '../../domain/document';
-import { resolveHistoryLimit } from '../../core/history-budget';
-import { splitFrontmatter } from '../../markdown';
-import { withDefaultImageSizes } from '../../media/images-path';
+import { createDebouncer, type Debouncer } from '@/src/core/concurrency';
+import type { MarkdownNode } from '@/src/domain/document';
+import { cloneTree as cloneJsonTree, walkTree } from '@/src/domain/document';
+import { resolveHistoryLimit } from '@/src/core/history-budget';
+import { splitFrontmatter } from '@/src/markdown';
+import { withDefaultImageSizes } from '@/src/media/images-path';
 import {
 	DocumentService,
 	SavePipeline,

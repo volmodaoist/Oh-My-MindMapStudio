@@ -1,11 +1,11 @@
 /** 双链输入扩展：候选与显示分离，范围替换经共同输入接口，不保存文件。 */
 import type { App } from 'obsidian';
-import { EventBinder } from '../../core/event-binder';
-import type { EditorInputBehavior, EditorInputSurface } from '../../core/editor-input';
-import { formatWikilink, wikilinkTriggerAt } from '../../domain/links';
-import type { WikilinkSuggestion } from '../../domain/links';
-import { wikilinkCompletions } from '../../platform/workspace/wikilink-completions';
-import { WikilinkSuggestions } from '../../ui/node-editor/wikilink-suggestions';
+import { EventBinder } from '@/src/core/event-binder';
+import type { EditorInputBehavior, EditorInputSurface } from '@/src/core/editor-input';
+import { formatWikilink, wikilinkTriggerAt } from '@/src/domain/links';
+import type { WikilinkSuggestion } from '@/src/domain/links';
+import { wikilinkCompletions } from '@/src/platform/workspace/wikilink-completions';
+import { WikilinkSuggestions } from '@/src/ui/node-editor/wikilink-suggestions';
 
 export class NodeWikilinkCompletion implements EditorInputBehavior {
 	private readonly events = new EventBinder();

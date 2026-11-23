@@ -10,7 +10,7 @@
  * `insertionForm` 消费，任一处单独改动都会让占用区间与空白补回失配，故必须同文件。
  * 依赖只有 `MdTokenSegment` 类型（`domain/md-meta`），无运行时依赖。
  */
-import type { MdTokenSegment } from '../../domain/document';
+import type { MdTokenSegment } from '@/src/domain/document';
 
 /**
  * 命中的显示名是否落在**用户手输的链接语法内部**（`[[…]]` / `[text](…)`）。

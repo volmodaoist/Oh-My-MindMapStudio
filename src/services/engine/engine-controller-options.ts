@@ -13,7 +13,7 @@
  * 脱离对象会触发 `@typescript-eslint/unbound-method`，且运行时 `this` 语义也
  * 会变（deps 未持有 this）。故逐个包一层箭头，勿「简化」成方法引用。
  */
-import type { CreateMindMapOptions } from '../../engine';
+import type { CreateMindMapOptions } from '@/src/engine';
 import type {
 	EngineControllerDeps,
 	EngineSetupOptions,

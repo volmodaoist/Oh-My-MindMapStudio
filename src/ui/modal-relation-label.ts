@@ -9,8 +9,8 @@
  * 空串是**合法**输入（= 无标签的线）；取消返回 null。
  */
 import { App } from 'obsidian';
-import { t, type Language } from '../core/i18n';
-import { isWritableRelationLabel } from '../domain/relations';
+import { t, type Language } from '@/src/core/i18n';
+import { isWritableRelationLabel } from '@/src/domain/relations';
 import { createButton, openFormModal } from './modal-common';
 
 /** 标签长度上限（仅输入侧限制；解析不截断，保真优先） */

@@ -31,8 +31,8 @@ import {
 	type MiniMapGeometryNode,
 	type MiniMapLinkMode,
 	type MiniMapMark,
-} from '../../src/core/minimap-geometry';
-import { MINIMAP_LINK_MAX_DEPTH, MINIMAP_MAX_MARKS } from '../../src/core/constants';
+} from '@/src/core/minimap-geometry';
+import { MINIMAP_LINK_MAX_DEPTH, MINIMAP_MAX_MARKS } from '@/src/core/constants';
 
 describe('computeMiniMapSize：宽度随比例收窄、高度随比例', () => {
 	it('侧栏使用完整可用面板，SVG/投影/导航仍沿用等比坐标系', () => {

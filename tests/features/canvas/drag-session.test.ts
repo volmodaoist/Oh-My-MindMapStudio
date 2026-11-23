@@ -14,7 +14,7 @@
  * 不依赖 jsdom：环境是 node（vitest.config.ts 固定），故用最小假 Window。
  */
 import { describe, expect, it } from 'vitest';
-import { startWindowDragSession } from '../../../src/features/canvas/drag-session';
+import { startWindowDragSession } from '@/src/features/canvas/drag-session';
 
 /** 假 Window：只实现本原语用到的事件与 rAF 面，附调用记录供断言 */
 interface FakeWin {

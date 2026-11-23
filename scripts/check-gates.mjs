@@ -255,7 +255,7 @@ export function buildPlan(changed, { all } = { all: false }) {
 		{
 			args: ['run', 'check:release'],
 			label: 'npm run check:release',
-			match: (f) => f === 'manifest.json' || f === 'versions.json' || f === 'README.md' || f === 'README.zh-CN.md' || f.startsWith('LICENSE') || f.startsWith('docs/release-notes-'),
+			match: (f) => f === 'manifest.json' || f === 'versions.json' || f === 'README.md' || f === 'README.zh-CN.md' || f === 'CHANGELOG' || f === 'scripts/release-notes.mjs' || f === 'scripts/check-release-metadata.mjs' || f.startsWith('LICENSE'),
 			why: (hit) => `发布元数据在变更集：${hit.join('、')}`,
 			skipNote: '发布元数据未变更',
 		},
@@ -361,7 +361,7 @@ function main() {
 	}
 	// 规模观察（**不是门禁**）：超限总数 / 总行数 / 最大 5 个只打印，不红灯。
 	// 机械拆分不是目标（AGENTS「不做机械拆分」），硬指标只会逼出坏拆分；
-	// 趋势交给发布前人工看这一行 + line-count-log 的批次记录（2026-11-09）。
+	// 当前规模直接读取本轮输出，历史趋势通过 Git 的索引变更查证。
 	if (overLimit.length > 0) {
 		const measured = overLimit
 			.map((rel) => ({ rel, lines: countSourceLines(join(ROOT, rel)) ?? 0 }))

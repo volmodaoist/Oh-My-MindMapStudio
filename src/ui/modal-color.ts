@@ -9,8 +9,8 @@
  * 返回值**恒为归一后的 `#rrggbb`**（或 null = 取消），调用方不重复解析。
  */
 import { App } from 'obsidian';
-import { t, type Language } from '../core/i18n';
-import { parseColorInput } from '../domain/color';
+import { t, type Language } from '@/src/core/i18n';
+import { parseColorInput } from '@/src/domain/color';
 import { createButton, openFormModal } from './modal-common';
 
 export function openColorInputModal(

@@ -12,15 +12,15 @@
  * 节点数据来自**真实解析**（parseMdOutline），拆分逻辑走真实 links-split。
  */
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import type { MindMapNode } from '../../../vendor/simple-mind-map.cjs';
-import type { MindMapViewContext } from '../../../src/features/view/view-context';
+import type { MindMapNode } from '@/vendor/simple-mind-map.cjs';
+import type { MindMapViewContext } from '@/src/features/view/view-context';
 import {
 	autoSplitNode,
 	captureAutoSplitCandidate,
 	runAutoSplitCheck,
 	splitAllLinks,
-} from '../../../src/features/navigation/view-split-links';
-import { parseMdOutline } from '../../../src/markdown/outline/md-outline';
+} from '@/src/features/navigation/view-split-links';
+import { parseMdOutline } from '@/src/markdown/outline/md-outline';
 
 const {
 	execCommandMock,
@@ -41,7 +41,7 @@ const {
 	},
 }));
 
-vi.mock('../../../src/engine', () => ({
+vi.mock('@/src/engine', () => ({
 	ENGINE_COMMANDS: ENGINE,
 	setNodeText: (...args: unknown[]): void => {
 		setNodeTextMock(...args);

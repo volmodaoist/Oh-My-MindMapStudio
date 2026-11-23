@@ -1,7 +1,7 @@
 /** 当前文档契约：源文件分段保真、结构语义与投影字段不越过写回边界。 */
 import { describe, expect, expectTypeOf, it } from 'vitest';
-import type { MarkdownDocument, MarkdownNode, MarkdownNodeData } from '../../src/domain/document';
-import { parseMdOutline, serializeMdBody, splitFrontmatter } from '../../src/markdown';
+import type { MarkdownDocument, MarkdownNode, MarkdownNodeData } from '@/src/domain/document';
+import { parseMdOutline, serializeMdBody, splitFrontmatter } from '@/src/markdown';
 
 describe('原始文件分段', () => {
 	it.each([

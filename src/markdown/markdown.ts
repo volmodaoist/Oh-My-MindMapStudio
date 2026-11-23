@@ -1,15 +1,15 @@
-import type { MdNodeData } from '../core/node-data';
+import type { MdNodeData } from '@/src/core/node-data';
 /**
  * Markdown 渲染模式工具：新建文件名/默认正文/uid 修复。
  *
  * 解析（正文 → 导图树）与序列化（树 → md）见 md-outline.ts / md-serialize.ts；
  * 行内 wikilink 交互见 view-wikilink.ts。本文件不含任何专有格式逻辑。
  */
-import { generateUid } from '../core/constants';
-import { t, type Language } from '../core/i18n';
-import { buildMindMapFrontmatter } from '../domain/document';
-import { walkTree } from '../domain/document';
-import type { MarkdownNode } from '../domain/document';
+import { generateUid } from '@/src/core/constants';
+import { t, type Language } from '@/src/core/i18n';
+import { buildMindMapFrontmatter } from '@/src/domain/document';
+import { walkTree } from '@/src/domain/document';
+import type { MarkdownNode } from '@/src/domain/document';
 
 /**
  * 新建思维导图的默认内容：**属性声明块 + 空正文**，只显示文件名对应的中心节点。

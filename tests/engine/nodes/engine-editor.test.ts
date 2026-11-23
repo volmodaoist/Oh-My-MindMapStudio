@@ -1,12 +1,12 @@
 /** 编辑框跟随节点/画布底色，并保持引擎显示与提交入口不变。 */
 import { describe, expect, it, vi } from 'vitest';
-import type { MindMap, MindMapNode } from '../../../src/core/engine-types';
+import type { MindMap, MindMapNode } from '@/src/core/engine-types';
 
 vi.hoisted(() => {
 	(globalThis as { document?: unknown }).document ??= { documentElement: {} };
 });
 
-import { hideNodeForEditing, installNodeEditorAppearance, readNodeEditorAppearance, observeNodeTextEditor } from '../../../src/engine/nodes/mindmap-editor';
+import { hideNodeForEditing, installNodeEditorAppearance, readNodeEditorAppearance, observeNodeTextEditor } from '@/src/engine/nodes/mindmap-editor';
 
 function groupStub() {
 	const attributes = new Map<string, string>();

@@ -24,7 +24,7 @@
  *   需要「引擎已存在」（前者取树快照、后者绑首帧事件），而 0 尺寸等待期恰好
  *   没有引擎；文件切换/卸载时丢弃。
  */
-import type { ImageSizeCorrection } from '../../media/images-path';
+import type { ImageSizeCorrection } from '@/src/media/images-path';
 
 export class LoadSession {
 	/**

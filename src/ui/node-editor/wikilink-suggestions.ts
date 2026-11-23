@@ -1,7 +1,7 @@
 /** 双链候选的轻量视图：沿用宿主建议样式/图标，不读取 Vault 或编辑业务。 */
 import { setIcon } from 'obsidian';
-import { EventBinder, elementFromTarget } from '../../core/event-binder';
-import type { WikilinkSuggestion } from '../../domain/links';
+import { EventBinder, elementFromTarget } from '@/src/core/event-binder';
+import type { WikilinkSuggestion } from '@/src/domain/links';
 
 function renderWikilinkSuggestion(item: WikilinkSuggestion, element: HTMLElement): void {
 	setIcon(element.createSpan({ cls: 'suggestion-flair' }), item.icon);

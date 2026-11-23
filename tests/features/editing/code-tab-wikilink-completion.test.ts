@@ -1,13 +1,13 @@
 import { describe, expect, it, vi } from 'vitest';
 import { FileView } from 'obsidian';
 import type { App } from 'obsidian';
-import { CodeTabWikilinkCompletion } from '../../../src/features/editing/code-tab-wikilink-completion';
-import type { CompletionRule } from '../../../src/platform/rendering/plugins/code-tab-api';
-import { wikilinkCompletions } from '../../../src/platform/workspace/wikilink-completions';
+import { CodeTabWikilinkCompletion } from '@/src/features/editing/code-tab-wikilink-completion';
+import type { CompletionRule } from '@/src/platform/rendering/plugins/code-tab-api';
+import { wikilinkCompletions } from '@/src/platform/workspace/wikilink-completions';
 
 const discover = vi.hoisted(() => vi.fn());
-vi.mock('../../../src/platform/rendering/plugins/code-tab', () => ({ getCodeTabApi: discover }));
-vi.mock('../../../src/platform/workspace/wikilink-completions', () => ({ wikilinkCompletions: vi.fn(() => [{ label: 'Target', detail: 'Target.md', linkpath: 'Target', icon: 'file-text' }]) }));
+vi.mock('@/src/platform/rendering/plugins/code-tab', () => ({ getCodeTabApi: discover }));
+vi.mock('@/src/platform/workspace/wikilink-completions', () => ({ wikilinkCompletions: vi.fn(() => [{ label: 'Target', detail: 'Target.md', linkpath: 'Target', icon: 'file-text' }]) }));
 
 function fixture() {
 	const active = { closest: vi.fn(() => ({})) };

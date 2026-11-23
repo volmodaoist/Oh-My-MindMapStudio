@@ -17,8 +17,8 @@
  * - 反例代价：增量维护要覆盖引擎**自带快捷键**（Tab/Enter/Shift+Tab/Del/Backspace
  *   直接 execCommand 插入删除，绕过插件包装）与整树替换路径，漏一处即长期漂移。
  */
-import { countMindMapNodes } from '../../engine';
-import { createThrottler, type Throttler } from '../../core/concurrency';
+import { countMindMapNodes } from '@/src/engine';
+import { createThrottler, type Throttler } from '@/src/core/concurrency';
 import type { MindMapViewContext } from './view-context';
 
 /**

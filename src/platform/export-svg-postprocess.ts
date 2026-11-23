@@ -17,7 +17,7 @@
  * 是二者共用的注入原语，返回 boolean。
  */
 
-import { CALLOUT_CSS_VARS } from '../domain/content';
+import { CALLOUT_CSS_VARS } from '@/src/domain/content';
 
 // ---------------------------------------------------------------------------
 // 共用：克隆 SVG 根收窄 + `<style>` 注入原语

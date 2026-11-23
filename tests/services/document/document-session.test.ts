@@ -16,17 +16,17 @@
  */
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { App, TFile } from 'obsidian';
-import { IMAGE_HEIGHT, IMAGE_WIDTH } from '../../../src/core/constants';
+import { IMAGE_HEIGHT, IMAGE_WIDTH } from '@/src/core/constants';
 import {
 	DocumentSession,
 	SESSION_BROADCAST_DELAY_MS,
 	computeBroadcastDelayMs,
-} from '../../../src/services/document/document-session';
-import { DocumentSessionRegistry } from '../../../src/services/document/document-session-registry';
-import type { DocumentLoadResult } from '../../../src/services/document/document-service';
-import type { MindMapTreeNode } from '../../../src/core/engine-types';
-import type { SessionViewPort } from '../../../src/services/document/document-session';
-import type { SaveState } from '../../../src/services/status-bar';
+} from '@/src/services/document/document-session';
+import { DocumentSessionRegistry } from '@/src/services/document/document-session-registry';
+import type { DocumentLoadResult } from '@/src/services/document/document-service';
+import type { MindMapTreeNode } from '@/src/core/engine-types';
+import type { SessionViewPort } from '@/src/services/document/document-session';
+import type { SaveState } from '@/src/services/status-bar';
 
 const FILE_PATH = 'notes/session.mindmap.md';
 const delay = (ms: number): Promise<void> =>

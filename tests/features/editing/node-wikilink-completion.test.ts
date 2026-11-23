@@ -1,13 +1,13 @@
 /** 共享输入扩展直测；弹层 DOM 交真实宿主，业务不自行替换文本或保存。 */
 import { describe, expect, it, vi } from 'vitest';
 import type { App } from 'obsidian';
-import type { EditorInputContext, EditorInputSurface } from '../../../src/core/editor-input';
-import { NodeWikilinkCompletion } from '../../../src/features/editing/node-wikilink-completion';
+import type { EditorInputContext, EditorInputSurface } from '@/src/core/editor-input';
+import { NodeWikilinkCompletion } from '@/src/features/editing/node-wikilink-completion';
 
 const popup = vi.hoisted(() => ({ show: vi.fn(), close: vi.fn(), dispose: vi.fn(), handleKey: vi.fn(), contains: vi.fn(), choose: (_item: unknown) => {} }));
 const candidates = vi.hoisted(() => vi.fn(() => [{ label: 'Target', linkpath: 'Target', detail: 'Target.md', icon: 'file-text' }]));
-vi.mock('../../../src/platform/workspace/wikilink-completions', () => ({ wikilinkCompletions: candidates }));
-vi.mock('../../../src/ui/node-editor/wikilink-suggestions', () => ({ WikilinkSuggestions: class {
+vi.mock('@/src/platform/workspace/wikilink-completions', () => ({ wikilinkCompletions: candidates }));
+vi.mock('@/src/ui/node-editor/wikilink-suggestions', () => ({ WikilinkSuggestions: class {
 	constructor(_doc: Document, choose: (item: unknown) => void) { popup.choose = choose; }
 	show = popup.show; close = popup.close; dispose = popup.dispose; handleKey = popup.handleKey; contains = popup.contains;
 } }));

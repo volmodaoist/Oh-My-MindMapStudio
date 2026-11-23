@@ -10,8 +10,8 @@
  * 合成期的原位定位）——两者都只用 token 的 `kind` / `target` / `label` /
  * `sizeWidth` / 位置区间，故本文件不导出写回逻辑。
  */
-import { isRenderableImageExtension } from '../../core/constants';
-import type { MdTokenSegment } from '../../domain/document';
+import { isRenderableImageExtension } from '@/src/core/constants';
+import type { MdTokenSegment } from '@/src/domain/document';
 type InlineTokenKind =
 	| 'wikiImg'
 	| 'wiki'

@@ -1,9 +1,9 @@
 /** K216：手势判据直测；真实 Event/View/Select 互斥链由 Chrome 门禁覆盖。 */
 import { createRequire } from 'node:module';
 import { describe, expect, it, vi } from 'vitest';
-import type { MindMap } from '../../../vendor/simple-mind-map.cjs';
-import { canvasDragAction } from '../../../vendor/patches/canvas-drag.js';
-import { applyCanvasDragMode } from '../../../src/engine';
+import type { MindMap } from '@/vendor/simple-mind-map.cjs';
+import { canvasDragAction } from '@/vendor/patches/canvas-drag.js';
+import { applyCanvasDragMode } from '@/src/engine';
 
 vi.hoisted(() => { (globalThis as { document?: unknown }).document ??= { documentElement: {} }; });
 const { Drag } = createRequire(import.meta.url)('../../../vendor/simple-mind-map.cjs') as {

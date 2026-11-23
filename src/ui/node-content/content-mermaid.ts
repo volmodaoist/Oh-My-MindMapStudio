@@ -1,6 +1,6 @@
 /** 节点内容 mermaid：DOM/样式内聚，保持原输出与导出保真。 */
-import { type InlineContentDocument, type InlineSegment, type InlineContentOptions } from '../../core/node-content-types';
-import { type Language, t } from '../../core/i18n';
+import { type InlineContentDocument, type InlineSegment, type InlineContentOptions } from '@/src/core/node-content-types';
+import { type Language, t } from '@/src/core/i18n';
 import { MERMAID_BLOCK_CLASS, MERMAID_STYLES, MERMAID_FIGURE_STYLE, MERMAID_ANCHOR_STYLE, MERMAID_COPY_HIT_STYLE } from './content-mermaid.styles';
 import { CODE_COPY_CLASS, CODE_COPY_BUTTON_STYLES } from './content-copy.styles';
 

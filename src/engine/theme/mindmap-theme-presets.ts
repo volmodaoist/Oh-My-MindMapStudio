@@ -22,8 +22,8 @@
  *    直接编译失败，杜绝「选项存在但渲染无感」的静默退化；
  * 5. id 发布即冻结——它会写进 `data.json`，改名等于让用户的设置失效。
  */
-import type { PaletteId, ThemeStyleId } from '../../core/constants';
-import { hexToHsl, hslToHex } from '../../domain/color';
+import type { PaletteId, ThemeStyleId } from '@/src/core/constants';
+import { hexToHsl, hslToHex } from '@/src/domain/color';
 
 /**
  * 边框可覆盖的节点外观键（其余键一律沿用主题色板）。

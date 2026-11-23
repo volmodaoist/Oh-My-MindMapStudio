@@ -52,8 +52,8 @@
  * - **不接管数学**：图内的 `$$…$$` 由 Pele 按普通文本处理，与阅读视图一致。
  */
 import { PeleError, render as renderPele } from 'pele';
-import { createWarnOnce } from '../../core/errors';
-import { isSafeAnchorHref } from '../../domain/links';
+import { createWarnOnce } from '@/src/core/errors';
+import { isSafeAnchorHref } from '@/src/domain/links';
 
 /**
  * 源码长度上限（字符）：超过即**不渲染**、回落代码块。

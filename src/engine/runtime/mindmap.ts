@@ -11,27 +11,27 @@ import {
 	Search,
 	Select,
 	TouchEvent,
-} from '../../../vendor/simple-mind-map.cjs';
-import { getDocIconColor } from '../theme/mindmap-palette';
-import { getThemeConfig, isDarkTheme } from '../theme/mindmap-theme';
-import type { Language } from '../../core/i18n';
-import { docWikiLinkDisplay, type WikiAliasSource } from '../../domain/links';
+} from '@/vendor/simple-mind-map.cjs';
+import { getDocIconColor } from '@/src/engine/theme/mindmap-palette';
+import { getThemeConfig, isDarkTheme } from '@/src/engine/theme/mindmap-theme';
+import type { Language } from '@/src/core/i18n';
+import { docWikiLinkDisplay, type WikiAliasSource } from '@/src/domain/links';
 import {
 	RENDER_ASYNC_NODE_THRESHOLD,
 	shouldEnablePerformanceMode,
-} from '../../core/constants';
+} from '@/src/core/constants';
 import {
 	removeEngineShortcut,
 	shortcutGateAllows,
 } from './mindmap-commands';
-import { applyHistoryLimitOnCreate, seedInitialHistory } from '../nodes/mindmap-history';
-import { countTreeNodes, getRenderRoot } from '../nodes/mindmap-nodes';
-import { installNodeEditorAppearance } from '../nodes/mindmap-editor';
+import { applyHistoryLimitOnCreate, seedInitialHistory } from '@/src/engine/nodes/mindmap-history';
+import { countTreeNodes, getRenderRoot } from '@/src/engine/nodes/mindmap-nodes';
+import { installNodeEditorAppearance } from '@/src/engine/nodes/mindmap-editor';
 import {
 	applyLiveColorDirectives,
 	type ColorDirectiveReader,
-} from '../theme/mindmap-colors';
-import { buildWikiDocIcon, WIKI_DOC_ICON_SIZE } from '../theme/mindmap-icons';
+} from '@/src/engine/theme/mindmap-colors';
+import { buildWikiDocIcon, WIKI_DOC_ICON_SIZE } from '@/src/engine/theme/mindmap-icons';
 
 export interface CreateMindMapOptions {
 	layout: string;

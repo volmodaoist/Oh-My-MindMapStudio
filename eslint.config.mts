@@ -239,8 +239,12 @@ export default defineConfig(
 						...forbiddenSpecifierPatterns('domain'),
 						{ ...COMBO_ROOT_SPECIFIER_PATTERN, allowTypeImports: false },
 						{
-							regex: '^\\.\\./(?:\\.\\./)*vendor(?:/|$)',
+							regex: '^(?:\\.\\./(?:\\.\\./)*|@/)vendor(?:/|$)',
 							message: 'domain 不得依赖 vendor（类型适配放 core）',
+						},
+						{
+							regex: '^@/(?!src/domain(?:/|$)).+',
+							message: 'domain 的项目根别名只能指向领域层',
 						},
 						{
 							group: ['obsidian', 'obsidian/*'],
@@ -258,7 +262,7 @@ export default defineConfig(
 							// `./md-meta` 这类组内相对引用（曾据此误报 2 处）。故用正则
 							// 排除「相对 / 绝对 / obsidian」三种前缀，只留裸说明符——
 							// 覆盖 `lodash`、`node:fs/promises` 等。
-							regex: '^(?!\\.)(?!/)(?!obsidian(?:/|$)).+$',
+							regex: '^(?!\\.)(?!/)(?!@/)(?!obsidian(?:/|$)).+$',
 							message:
 								'domain 是零依赖层：不得导入任何外部包（npm 包 / node 内建）',
 						},

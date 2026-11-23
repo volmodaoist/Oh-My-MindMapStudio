@@ -25,31 +25,31 @@ import {
 	isIndentedCodeLine,
 	isRenderableImageTarget,
 	normalizeFenceLanguage,
-} from '../../core/constants';
-import type { InlineTextStyle, InlineSegment } from '../../core/node-content-types';
-import { tf, type Language } from '../../core/i18n';
-import { readNodeDataString } from '../../core/node-data';
+} from '@/src/core/constants';
+import type { InlineTextStyle, InlineSegment } from '@/src/core/node-content-types';
+import { tf, type Language } from '@/src/core/i18n';
+import { readNodeDataString } from '@/src/core/node-data';
 import {
 	isCalloutHeaderLine,
 	parseCalloutHeader,
 	stripQuotePrefix,
-} from '../../domain/content';
-import { colorDirectiveValueOf } from '../../domain/color';
-import { matchPipeTable, type PipeTable } from '../../domain/content';
-import { isSchemeUrl, isUrlLikeText } from '../../domain/links';
-import { nodeContinuationIndents, nodeInlineSource } from '../../domain/document';
-import { stripTaskPrefix } from '../../domain/content';
+} from '@/src/domain/content';
+import { colorDirectiveValueOf } from '@/src/domain/color';
+import { matchPipeTable, type PipeTable } from '@/src/domain/content';
+import { isSchemeUrl, isUrlLikeText } from '@/src/domain/links';
+import { nodeContinuationIndents, nodeInlineSource } from '@/src/domain/document';
+import { stripTaskPrefix } from '@/src/domain/content';
 import {
 	FOOTNOTE_ID_SOURCE,
 	splitFootnoteDefinitions,
-} from '../../markdown';
+} from '@/src/markdown';
 import {
 	fenceMarker,
 	isFenceCloseLine,
 	isSelfClosedFenceLine,
-} from '../../markdown';
-import { tokenDisplay, tokenizeInline, type InlineToken } from '../../markdown';
-import type { MindMapNode } from '../../core/engine-types';
+} from '@/src/markdown';
+import { tokenDisplay, tokenizeInline, type InlineToken } from '@/src/markdown';
+import type { MindMapNode } from '@/src/core/engine-types';
 
 
 
@@ -1723,4 +1723,4 @@ export function inlineContentPreview(
 // 2026-10-15 删除；该语句随 `resolveSelfDrawSource` 迁入本模块）。
 
 // 类型唯一源在 core；保留现有 barrel 的类型出口。
-export type { InlineContentOptions, InlineSegment } from '../../core/node-content-types';
+export type { InlineContentOptions, InlineSegment } from '@/src/core/node-content-types';

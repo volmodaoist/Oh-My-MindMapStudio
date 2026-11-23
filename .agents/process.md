@@ -24,15 +24,16 @@
 | 新增、删除文档 | `index.md` 参考文档；链接必须真实存在 |
 | 跨文件行为与架构决策 | `decisions.md` 的结论、`conventions.md` 的简短摘要 |
 | 单文件实现细节 | 源码文件头或函数契约 |
-| Markdown 数据格式 | `docs/markdown-mindmap-standard.md`；修订说明记同目录 history |
+| Markdown 数据格式 | `docs/markdown-mindmap-standard.md`；用户可见变化写 CHANGELOG，历史细节查 Git |
 | 固定规则、读取入口或门禁命令 | `AGENTS.md`；门禁映射同步 `scripts/check-gates.mjs` 与测试 |
 | 新增 K 条目 | 保留稳定编号，更新 conventions 与 index 的最大编号；不复用编号 |
 | 超过 300 行文件 | `index.md` 豁免表，使用 `--fix-lines` 回填 |
 | vendor 补丁 | patches → build:vendor → BUILD.md 与 vendor 契约的 sha256 |
-| 批次收尾 | `line-count-log.md` 追加提交摘要、依据、真实检查结果 |
+| 批次收尾 | 运行 check:gates 获取实际结果；摘要与依据写提交说明，用户可见变化写 CHANGELOG |
 
 - 文档写法：主题 → 结论 → 必要边界，使用分层 bullet。
 - 同一事实只展开一次；其它文件给指针，避免复制代码与排查过程。
+- 不再维护人工批次台账；统计与检查使用现有脚本，历史变更查 Git，人工验收结论写交接或 PR 描述。
 - 当前契约允许破坏性演进；加载不自动迁移或清洗文件，Markdown 保真继续有效。
 
 ## 本地安装
@@ -46,15 +47,16 @@
 ## 发布
 
 - 更新版本
-  - `npm version patch|minor|major` 同步 package、manifest、versions 与 lockfile。
-  - 同步 Markdown 标准的版本指针和 `docs/release-notes-<tag>.md` 双语发布说明。
+  - `npm version patch --no-git-tag-version` 同步 package、manifest、versions 与 lockfile；minor/major 同理，先不生成提交或 tag。
+  - 同步 Markdown 标准的版本指针和 CHANGELOG；使用 `## x.y.z` 版本标题，每版写 2～3 条短说明，标题附 base → feat 快照链接。
   - 不用 `npm version --dry-run`：生命周期仍可能写盘。
 - 检查与产物
   - 发布前完成门禁与本地视觉验证；CI 以实际 workflow 为准。
+  - 发布正文由 `scripts/release-notes.mjs` 从 CHANGELOG 提取，缺失、重复或空条目直接失败。
   - `.npmrc` 的 tag-version-prefix 为空；Release tag 必须等于 manifest.version。
   - 分发 `main.js`、`manifest.json`、`styles.css`、LICENSE 与第三方许可声明。
 - 发布操作
-  - tag 触发 release workflow 创建草稿，由用户 Publish。
+  - CHANGELOG 与版本文件齐备、门禁通过并提交后，再创建与 manifest.version 一致的 tag；tag 触发 release workflow 创建草稿，由用户 Publish。
   - 保留作者版权和第三方许可；本地优先，无遥测或 vault 内容上传。
 
 提交标题沿用项目习惯：版本提交为版本号，功能/修复可用简短 K 编号，文档/工程可用 docs/chore。

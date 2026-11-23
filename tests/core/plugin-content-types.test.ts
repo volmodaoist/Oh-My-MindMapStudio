@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { isPluginContentTarget, PLUGIN_LIVE_CLASS } from '../../src/core/plugin-content-types';
+import { isPluginContentTarget, PLUGIN_LIVE_CLASS } from '@/src/core/plugin-content-types';
 
 describe('插件活动组件事件归属', () => {
 	it('空目标与普通画布事件留给导图', () => {

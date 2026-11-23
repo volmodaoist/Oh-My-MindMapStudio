@@ -27,10 +27,10 @@
  * - 幂等：重建后 mdRaw 不再含旧目标，二次运行 no-op。
  */
 import { App, TFile } from 'obsidian';
-import { isRenderableImageTarget } from '../../core/constants';
-import { walkTree } from '../../domain/document';
-import { isNodeTextEdited } from '../../domain/document';
-import { parseWikilink } from '../../domain/links';
+import { isRenderableImageTarget } from '@/src/core/constants';
+import { walkTree } from '@/src/domain/document';
+import { isNodeTextEdited } from '@/src/domain/document';
+import { parseWikilink } from '@/src/domain/links';
 import {
 	isTrashedPath,
 	renameTargets,
@@ -38,11 +38,11 @@ import {
 	renamedWikilink,
 	updateReferencesOnRename,
 	type ReferenceTargets,
-} from '../../links/links-tree';
-import { buildInlineData, tokenizeInline } from '../outline/md-outline';
-import type { MdNodeData } from '../../core/node-data';
-import type { InlineToken } from '../outline/md-outline';
-import type { MarkdownNode } from '../../domain/document';
+} from '@/src/links/links-tree';
+import { buildInlineData, tokenizeInline } from '@/src/markdown/outline/md-outline';
+import type { MdNodeData } from '@/src/core/node-data';
+import type { InlineToken } from '@/src/markdown/outline/md-outline';
+import type { MarkdownNode } from '@/src/domain/document';
 
 /**
  * 重命名引用（字段 + 渲染源）。返回是否有变更（由调用方触发保存）。

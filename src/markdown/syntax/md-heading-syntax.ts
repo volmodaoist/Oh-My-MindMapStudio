@@ -32,10 +32,10 @@
  *   `# 甲` + `%%rel:…%%`）。故判据是「去掉末尾指令行后仍是单行」，不是
  *   「`mdRaw` 没有换行」——否则带概要/联系/块 id 的节点全被挡，还会拖累整层。
  */
-import type { MarkdownNode } from '../../domain/document';
-import { readNodeDataString, type MdNodeData } from '../../core/node-data';
-import { stripTrailingColorDirectiveLines } from '../../domain/color';
-import { splitDirectiveTail } from '../../domain/relations';
+import type { MarkdownNode } from '@/src/domain/document';
+import { readNodeDataString, type MdNodeData } from '@/src/core/node-data';
+import { stripTrailingColorDirectiveLines } from '@/src/domain/color';
+import { splitDirectiveTail } from '@/src/domain/relations';
 
 /** Markdown 只有 6 级标题 */
 export const MAX_HEADING_LEVEL = 6;

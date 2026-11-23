@@ -8,12 +8,12 @@ import type {
 	MindMap,
 	MindMapNode,
 	MindMapTreeNode,
-} from '../../../vendor/simple-mind-map.cjs';
-import { walkTree } from '../../domain/document';
-import { createWarnOnce } from '../../core/errors';
-import { readNodeDataString } from '../../core/node-data';
-import { ENGINE_COMMANDS } from '../runtime/mindmap-commands';
-import { scheduleEngineTimer } from '../runtime/mindmap-timers';
+} from '@/vendor/simple-mind-map.cjs';
+import { walkTree } from '@/src/domain/document';
+import { createWarnOnce } from '@/src/core/errors';
+import { readNodeDataString } from '@/src/core/node-data';
+import { ENGINE_COMMANDS } from '@/src/engine/runtime/mindmap-commands';
+import { scheduleEngineTimer } from '@/src/engine/runtime/mindmap-timers';
 
 /** 当前激活（选中）的节点；无则返回 null */
 export function getActiveNode(mindMap: MindMap | null): MindMapNode | null {

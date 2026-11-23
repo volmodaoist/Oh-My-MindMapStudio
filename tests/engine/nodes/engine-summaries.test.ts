@@ -15,12 +15,12 @@ import {
 	applySummaryPlan,
 	generalizationsOf,
 	syncLiveSummaries,
-} from '../../../src/engine/nodes/mindmap-summaries';
-import type { MindMapTreeNode } from '../../../src/core/engine-types';
+} from '@/src/engine/nodes/mindmap-summaries';
+import type { MindMapTreeNode } from '@/src/core/engine-types';
 
 /** 渲染根（`getRenderRoot` 是唯一入口：本文件只验证读取面，不碰真实引擎） */
 const roots = vi.hoisted((): { current: unknown } => ({ current: null }));
-vi.mock('../../../src/engine/nodes/mindmap-nodes', () => ({
+vi.mock('@/src/engine/nodes/mindmap-nodes', () => ({
 	getRenderRoot: () => roots.current,
 }));
 

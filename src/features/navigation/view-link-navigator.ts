@@ -4,19 +4,19 @@
  * 委托 view-context.ts 的 MindMapViewContext 接口（openHyperlink 声明保持不变）。
  */
 import { TFile } from 'obsidian';
-import { canOpenInObsidian } from '../../core/constants';
+import { canOpenInObsidian } from '@/src/core/constants';
 import {
 	absolutePathFromFileUrl,
 	isHttpUrl,
-} from '../../domain/links';
-import { parseWikilink } from '../../domain/links';
-import { resolvePathToFile } from '../../links/links-resolve';
+} from '@/src/domain/links';
+import { parseWikilink } from '@/src/domain/links';
+import { resolvePathToFile } from '@/src/links/links-resolve';
 import {
 	openAbsolutePathWithSystemApp,
 	openFileWithSystemApp,
-} from '../../platform/system/system-open';
-import type { Language } from '../../core/i18n';
-import type { HyperlinkOpenMode, MindMapLinkHost } from '../view/view-context';
+} from '@/src/platform/system/system-open';
+import type { Language } from '@/src/core/i18n';
+import type { HyperlinkOpenMode, MindMapLinkHost } from '@/src/features/view/view-context';
 
 /**
  * 打开节点超链接（wiki 链接 / http / 库内路径 / 库外 file://）。

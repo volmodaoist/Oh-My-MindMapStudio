@@ -15,7 +15,7 @@
 | 依赖与规范 | `npm run lint`，在插件根目录执行 |
 | CSS | `npm run lint:css`，检查源样式与发布 styles.css |
 | 文件与导出 | `npm run check:dead-code`，检查未使用文件、导出和类型 |
-| 发布元数据 | `npm run check:release`，版本、README 与许可 |
+| 发布元数据 | `npm run check:release`，版本、CHANGELOG、README 与许可 |
 | vendor | `npm run build:vendor -- --check`，补丁与 sha256 契约 |
 | 真浏览器渲染 | `npm run verify:visual -- --require-chrome` |
 
@@ -62,5 +62,5 @@
 
 - lint workflow：发布元数据、构建、测试/覆盖率、lint、CSS、死代码和 scanner；具体顺序以 workflow 为准。
 - 视觉 CI 当前为非阻断，但要求 Chrome 且归档失败日志；本地渲染变更仍必须通过视觉门禁。
-- release workflow 自带 tag/发布说明检查与发布门禁，不能依赖 branch workflow 替代。
+- release workflow 自带 tag/CHANGELOG 条目检查与发布门禁，不能依赖 branch workflow 替代。
 - 未运行的测试不标为通过；自动化结果与人工验收分别记录。

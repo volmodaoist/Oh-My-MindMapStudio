@@ -21,16 +21,16 @@
  */
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
-import { CODE_BLOCK_LANGUAGE, CODE_BLOCK_MAX_NODES } from '../../src/core/constants';
-import { t, tf } from '../../src/core/i18n';
+import { CODE_BLOCK_LANGUAGE, CODE_BLOCK_MAX_NODES } from '@/src/core/constants';
+import { t, tf } from '@/src/core/i18n';
 import {
 	applyThemeConfig,
 	createMindMap,
 	getThemeConfig,
 	isDarkTheme,
 	measureContentFitToWidth,
-} from '../../src/engine';
-import { parseMdOutline } from '../../src/markdown/outline/md-outline';
+} from '@/src/engine';
+import { parseMdOutline } from '@/src/markdown/outline/md-outline';
 import {
 	EMBED_CANVAS_CLASS,
 	EMBED_CONTAINER_CLASS,
@@ -40,15 +40,15 @@ import {
 	embedDisplayTree,
 	parseEmbedLayoutDirective,
 	shouldRenderOutline,
-} from '../../src/features/mindmap-codeblock';
-import type { MindMapTreeNode } from '../../vendor/simple-mind-map.cjs';
+} from '@/src/features/mindmap-codeblock';
+import type { MindMapTreeNode } from '@/vendor/simple-mind-map.cjs';
 
 /** 引擎桩：记录构造选项与 addPlugin 序列（实例经 `vendor.instances` 取出） */
 const vendor = vi.hoisted(() => ({
 	instances: [] as { options: Record<string, unknown>; added: string[] }[],
 }));
 
-vi.mock('../../vendor/simple-mind-map.cjs', () => {
+vi.mock('@/vendor/simple-mind-map.cjs', () => {
 	class FakeMindMap {
 		options: Record<string, unknown>;
 		added: string[] = [];

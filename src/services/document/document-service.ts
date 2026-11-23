@@ -1,4 +1,4 @@
-import type { MdNodeData } from '../../core/node-data';
+import type { MdNodeData } from '@/src/core/node-data';
 /**
  * Markdown 文档服务：导图文件的读取/解析与保存管线（渲染层数据面）。
  * 从 view.ts 拆出（第 4 步）。
@@ -22,16 +22,16 @@ import type { MdNodeData } from '../../core/node-data';
  * 树快照（`save(file, treeHint)`）。违反该不变式会把新文档正文写进旧文件、
  * 或让旧文件丢掉 frontmatter。
  */
-import { mindMapFileTitle } from '../../domain/document';
+import { mindMapFileTitle } from '@/src/domain/document';
 import { App, TFile } from 'obsidian';
-import { AUTO_SAVE_DEBOUNCE_MS } from '../../core/constants';
-import { createDebouncer, createSerialQueue } from '../../core/concurrency';
-import { createWarnOnce } from '../../core/errors';
-import { walkTree } from '../../domain/document';
-import { parseMdOutline, splitFrontmatter, UTF8_BOM } from '../../markdown';
-import { serializeMdBody } from '../../markdown';
-import { forgetImageFail, walkResolveImagePaths } from '../../media/images-path';
-import type { MarkdownDocument, MarkdownNode } from '../../domain/document';
+import { AUTO_SAVE_DEBOUNCE_MS } from '@/src/core/constants';
+import { createDebouncer, createSerialQueue } from '@/src/core/concurrency';
+import { createWarnOnce } from '@/src/core/errors';
+import { walkTree } from '@/src/domain/document';
+import { parseMdOutline, splitFrontmatter, UTF8_BOM } from '@/src/markdown';
+import { serializeMdBody } from '@/src/markdown';
+import { forgetImageFail, walkResolveImagePaths } from '@/src/media/images-path';
+import type { MarkdownDocument, MarkdownNode } from '@/src/domain/document';
 
 /**
  * 收尾一致性补排的次数上限：超过即判定「每轮都在变」（抖动），只留痕不再补排。

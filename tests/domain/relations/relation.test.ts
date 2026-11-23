@@ -20,7 +20,7 @@ import {
 	splitDirectiveTail,
 	stripDirectiveTail,
 	stripTrailingSegments,
-} from '../../../src/domain/relations/directive';
+} from '@/src/domain/relations/directive';
 import {
 	normalizeRelationId,
 	relationSegmentsOf,
@@ -28,11 +28,11 @@ import {
 	relationStateOfSource,
 	resolveRelationGraph,
 	type RelationState,
-} from '../../../src/domain/relations/relation';
-import { parseMdOutline } from '../../../src/markdown/outline/md-outline';
-import { serializeMdBody } from '../../../src/markdown/serialize/md-serialize';
-import { applyRawToNode } from '../../../src/markdown/syntax/md-line-write';
-import type { MdNodeData } from '../../../src/core/node-data';
+} from '@/src/domain/relations/relation';
+import { parseMdOutline } from '@/src/markdown/outline/md-outline';
+import { serializeMdBody } from '@/src/markdown/serialize/md-serialize';
+import { applyRawToNode } from '@/src/markdown/syntax/md-line-write';
+import type { MdNodeData } from '@/src/core/node-data';
 
 /** 构造一个"未编辑"的节点 data（rawOk 走 mdRaw 逐字回写） */
 function rawData(text: string, mdRaw = text): MdNodeData {

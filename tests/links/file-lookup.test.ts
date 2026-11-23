@@ -20,7 +20,7 @@ import {
 	lookupIndexedFile,
 	newReferencePath,
 	VALIDATE_MIN_INTERVAL_MS,
-} from '../../src/links/file-lookup';
+} from '@/src/links/file-lookup';
 
 /** 资源地址前缀：fake vault 的 getResourcePath 输出形态 */
 const RESOURCE_PREFIX = 'app://fake/';

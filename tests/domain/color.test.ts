@@ -16,7 +16,7 @@
  * 用一个最小替身验证「有变化才重渲染」）。
  */
 import { describe, expect, it, vi } from 'vitest';
-import type { MindMap, MindMapNode, MindMapTreeNode } from '../../vendor/simple-mind-map.cjs';
+import type { MindMap, MindMapNode, MindMapTreeNode } from '@/vendor/simple-mind-map.cjs';
 import {
 	contrastRatio,
 	contrastTextColor,
@@ -33,22 +33,22 @@ import {
 	scopeSentinels,
 	splitTrailingColorDirective,
 	walkColorDirectives,
-} from '../../src/domain/color';
-import { branchLayerOf, topMostNodes } from '../../src/engine/nodes/mindmap-nodes';
-import { NODE_COLORS } from '../../src/engine/theme/mindmap-theme-presets';
+} from '@/src/domain/color';
+import { branchLayerOf, topMostNodes } from '@/src/engine/nodes/mindmap-nodes';
+import { NODE_COLORS } from '@/src/engine/theme/mindmap-theme-presets';
 import {
 	colorDirectiveOf,
 	setColorDirective,
-} from '../../src/features/content/node-inline-tokenize';
+} from '@/src/features/content/node-inline-tokenize';
 import {
 	applyColorDirectivesToTree,
 	applyLiveColorDirectives,
-} from '../../src/engine/theme/mindmap-colors';
-import { syncNodeColorDirectives } from '../../src/engine';
+} from '@/src/engine/theme/mindmap-colors';
+import { syncNodeColorDirectives } from '@/src/engine';
 
 // `engine/mindmap` barrel 会加载 vendor cjs（Node 下顶层求值触碰 document），
 // 与 engine-history-limit 同款桩面；本文件不测引擎行为，只需模块可加载。
-vi.mock('../../vendor/simple-mind-map.cjs', () => ({
+vi.mock('@/vendor/simple-mind-map.cjs', () => ({
 	MindMap: class {},
 	MindMapNode: class {},
 	DoExport: class {},

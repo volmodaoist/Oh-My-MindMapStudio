@@ -19,15 +19,15 @@
  * 右键菜单**刻意没有**任务条目（用户裁决 2026-10-28）：勾选只有「点复选框」这一个
  * 入口，因此也没有多选批量切换；图片节点不渲染复选框（同一裁决）。
  */
-import { findNodeByDom } from '../../engine';
-import { composeNodeContent } from '../../markdown';
-import { setTaskTokenInRaw, toggleTaskToken } from '../../domain/content';
-import { elementFromTarget } from '../../core/event-binder';
-import type { MdNodeData } from '../../core/node-data';
+import { findNodeByDom } from '@/src/engine';
+import { composeNodeContent } from '@/src/markdown';
+import { setTaskTokenInRaw, toggleTaskToken } from '@/src/domain/content';
+import { elementFromTarget } from '@/src/core/event-binder';
+import type { MdNodeData } from '@/src/core/node-data';
 import { applyRawNodeContent } from './node-content-write';
 import { NODE_TASK_CLASS } from './node-inline-html';
 import { taskStateOf } from './node-inline-tokenize';
-import type { MindMapViewContext } from '../view/view-context';
+import type { MindMapViewContext } from '@/src/features/view/view-context';
 
 /** 复选框的命中选择器（类名唯一来源在 `node-inline-html`） */
 const TASK_SELECTOR = `.${NODE_TASK_CLASS}`;

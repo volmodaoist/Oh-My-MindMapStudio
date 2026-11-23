@@ -1,6 +1,6 @@
 /** 节点内容 code.styles：DOM/样式内聚，保持原输出与导出保真。 */
-import { CODE_BLOCK_MAX_HEIGHT_PX } from '../../core/constants';
-import { type NodeContentTones } from '../../domain/color';
+import { CODE_BLOCK_MAX_HEIGHT_PX } from '@/src/core/constants';
+import { type NodeContentTones } from '@/src/domain/color';
 import { withDerivedBorder } from './content-common.styles';
 
 /** 块级代码块容器类名（styles.css 的 hover/按钮规则与 verify:visual 断言共用） */

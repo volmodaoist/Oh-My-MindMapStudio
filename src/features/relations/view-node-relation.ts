@@ -38,17 +38,17 @@
  */
 
 import { Menu, Notice, type App } from 'obsidian';
-import type { MindMapNode } from '../../core/engine-types';
-import type { MdNodeData } from '../../core/node-data';
+import type { MindMapNode } from '@/src/core/engine-types';
+import type { MdNodeData } from '@/src/core/node-data';
 import {
 	generateRelationId,
 	RELATION_GEOMETRY_PERSIST_DELAY_MS,
-} from '../../core/constants';
-import { t } from '../../core/i18n';
+} from '@/src/core/constants';
+import { t } from '@/src/core/i18n';
 import {
 	applyDirectiveBlock,
 	splitDirectiveSegments,
-} from '../../domain/relations';
+} from '@/src/domain/relations';
 import {
 	relationSegmentsOf,
 	relationStateOf,
@@ -56,8 +56,8 @@ import {
 	type RelationGeometry,
 	type RelationRef,
 	type RelationState,
-} from '../../domain/relations';
-import { walkTree } from '../../domain/document';
+} from '@/src/domain/relations';
+import { walkTree } from '@/src/domain/document';
 import {
 	activeRelationLine,
 	clearActiveRelationLine,
@@ -68,12 +68,12 @@ import {
 	markNodeNeedLayout,
 	relationLineAt,
 	type RelationLineHit,
-} from '../../engine';
-import { composeNodeContent } from '../../markdown';
-import { applyRawToNode } from '../../markdown';
-import { applyRawNodeContents } from '../content/node-content-write';
+} from '@/src/engine';
+import { composeNodeContent } from '@/src/markdown';
+import { applyRawToNode } from '@/src/markdown';
+import { applyRawNodeContents } from '@/src/features/content/node-content-write';
 import { cancelNodePick, startNodePick } from './node-pick';
-import type { MindMapViewContext, ViewNodeEditContext } from '../view/view-context';
+import type { MindMapViewContext, ViewNodeEditContext } from '@/src/features/view/view-context';
 import {
 	cancelRelationAnchor,
 	startRelationAnchor,
@@ -83,9 +83,9 @@ import {
 	addCascadingMenu,
 	addCustomColorItem,
 	showExclusiveMenu,
-} from '../../ui/menu-submenu';
-import { openRelationLabelModal } from '../../ui/modal-relation-label';
-import { nodeColorOptions } from '../editing/view-node-color';
+} from '@/src/ui/menu-submenu';
+import { openRelationLabelModal } from '@/src/ui/modal-relation-label';
+import { nodeColorOptions } from '@/src/features/editing/view-node-color';
 
 /**
  * 点选模式（「联系」后等待用户点目标节点）——交给 `features/relations/node-pick` 的统一会话。

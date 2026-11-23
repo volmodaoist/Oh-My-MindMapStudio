@@ -59,12 +59,12 @@
  * 判据 `containerEl.isShown()` 已具备。
  */
 import { App, Keymap, MarkdownRenderChild } from 'obsidian';
-import { CODE_BLOCK_MAX_NODES, DEFAULT_PALETTE } from '../core/constants';
-import { createThrottler } from '../core/concurrency';
-import { EventBinder, elementFromTarget } from '../core/event-binder';
-import { isSafeAnchorHref } from '../domain/links';
-import { formatWikilink } from '../domain/links';
-import { t, tf, type Language } from '../core/i18n';
+import { CODE_BLOCK_MAX_NODES, DEFAULT_PALETTE } from '@/src/core/constants';
+import { createThrottler } from '@/src/core/concurrency';
+import { EventBinder, elementFromTarget } from '@/src/core/event-binder';
+import { isSafeAnchorHref } from '@/src/domain/links';
+import { formatWikilink } from '@/src/domain/links';
+import { t, tf, type Language } from '@/src/core/i18n';
 import {
 	applyColorDirectivesToTree,
 	applyRelationsToTree,
@@ -77,28 +77,28 @@ import {
 	destroyMindMap,
 	measureContentFitToWidth,
 	resizeMindMap,
-} from '../engine';
-import { layoutIdOfPropertyValue } from '../domain/document';
-import { parseMdOutline } from '../markdown';
-import { ensureUniqueUids } from '../markdown';
+} from '@/src/engine';
+import { layoutIdOfPropertyValue } from '@/src/domain/document';
+import { parseMdOutline } from '@/src/markdown';
+import { ensureUniqueUids } from '@/src/markdown';
 import {
 	ensureDefaultImageSizes,
 	walkResolveImagePaths,
-} from '../media/images-path';
-import { refreshPrismTokenColors } from '../platform/rendering/code/prism-code';
-import { ContentRemeasureSession } from './content/content-remeasure';
-import { registerCodeBlockInteractions } from './content/node-codeblock';
-import { createInlineContentOptions } from './content/node-content-factory';
+} from '@/src/media/images-path';
+import { refreshPrismTokenColors } from '@/src/platform/rendering/code/prism-code';
+import { ContentRemeasureSession } from '@/src/features/content/content-remeasure';
+import { registerCodeBlockInteractions } from '@/src/features/content/node-codeblock';
+import { createInlineContentOptions } from '@/src/features/content/node-content-factory';
 import {
 	buildInlineNodeContent,
 	type InlineContentOptions,
-} from './content/node-inline-content';
-import { colorDirectiveOf } from './content/node-inline-tokenize';
-import { isResolvedWikiLinkpath, openHyperlink } from './navigation/view-link-navigator';
-import { registerTagClicks } from './content/view-tag';
-import { setupFootnoteInteractions } from './content/view-footnote';
-import type { HyperlinkOpenMode, MindMapLinkHost } from './view/view-context';
-import type { MindMap, MindMapTreeNode } from '../core/engine-types';
+} from '@/src/features/content/node-inline-content';
+import { colorDirectiveOf } from '@/src/features/content/node-inline-tokenize';
+import { isResolvedWikiLinkpath, openHyperlink } from '@/src/features/navigation/view-link-navigator';
+import { registerTagClicks } from '@/src/features/content/view-tag';
+import { setupFootnoteInteractions } from '@/src/features/content/view-footnote';
+import type { HyperlinkOpenMode, MindMapLinkHost } from '@/src/features/view/view-context';
+import type { MindMap, MindMapTreeNode } from '@/src/core/engine-types';
 
 /** 外层容器类名（styles.css 的尺寸规则与 verify:visual 断言共用） */
 export const EMBED_CONTAINER_CLASS = 'tmm-embed';

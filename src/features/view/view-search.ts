@@ -1,7 +1,7 @@
 /** 搜索业务适配：防抖、引擎查询、结果跳转与计数；DOM/键盘/焦点由 UI 组件持有。 */
-import { SearchBar, type SearchBarLabels } from '../../ui/search/search-bar';
-import { createDebouncer, type Debouncer } from '../../core/concurrency';
-import { t } from '../../core/i18n';
+import { SearchBar, type SearchBarLabels } from '@/src/ui/search/search-bar';
+import { createDebouncer, type Debouncer } from '@/src/core/concurrency';
+import { t } from '@/src/core/i18n';
 import {
 	endMindMapSearch,
 	getSearchCurrentIndex,
@@ -9,7 +9,7 @@ import {
 	jumpToSearchIndex,
 	searchMindMap,
 	searchNextInMindMap,
-} from '../../engine';
+} from '@/src/engine';
 import type { MindMapViewContext, ViewDomContext, ViewEngineContext } from './view-context';
 
 /**

@@ -16,12 +16,12 @@ import { App, TFile } from 'obsidian';
 import {
 	SavePipeline,
 	type SavePipelineDeps,
-} from '../../../src/services/document/document-service';
-import { AUTO_SAVE_DEBOUNCE_MS } from '../../../src/core/constants';
-import { UTF8_BOM, parseMdOutline } from '../../../src/markdown/outline/md-outline';
-import { createDefaultMarkdownContent } from '../../../src/markdown/markdown';
-import { seedHeadingStart } from '../../../src/markdown/syntax/md-heading-syntax';
-import type { MindMapTreeNode } from '../../../vendor/simple-mind-map.cjs';
+} from '@/src/services/document/document-service';
+import { AUTO_SAVE_DEBOUNCE_MS } from '@/src/core/constants';
+import { UTF8_BOM, parseMdOutline } from '@/src/markdown/outline/md-outline';
+import { createDefaultMarkdownContent } from '@/src/markdown/markdown';
+import { seedHeadingStart } from '@/src/markdown/syntax/md-heading-syntax';
+import type { MindMapTreeNode } from '@/vendor/simple-mind-map.cjs';
 
 const FILE_PATH = 'notes/a.mindmap.md';
 

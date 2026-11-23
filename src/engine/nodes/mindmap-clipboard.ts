@@ -14,8 +14,8 @@ import type {
 	MindMap,
 	MindMapNode,
 	MindMapTreeNode,
-} from '../../../vendor/simple-mind-map.cjs';
-import { ENGINE_COMMANDS } from '../runtime/mindmap-commands';
+} from '@/vendor/simple-mind-map.cjs';
+import { ENGINE_COMMANDS } from '@/src/engine/runtime/mindmap-commands';
 import { getActiveNodes, getRenderRoot, topMostNodes } from './mindmap-nodes';
 
 /**

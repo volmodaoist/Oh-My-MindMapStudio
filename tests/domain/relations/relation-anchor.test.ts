@@ -16,8 +16,8 @@ import {
 	moveAnchorSession,
 	previewOf,
 	type RelationAnchorSession,
-} from '../../../src/domain/relations/relation-anchor';
-import type { RelationRect } from '../../../src/domain/relations/relation';
+} from '@/src/domain/relations/relation-anchor';
+import type { RelationRect } from '@/src/domain/relations/relation';
 
 const rect = (left: number, top: number, width = 100, height = 20): RelationRect => ({
 	left,

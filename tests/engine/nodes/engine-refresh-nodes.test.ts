@@ -10,11 +10,11 @@
  * ＋ **恰好一次** `mindMap.render()`；异常不中断、不吞掉其它节点。
  */
 import { describe, expect, it, vi } from 'vitest';
-import { refreshNodesCustomContent } from '../../../src/engine';
+import { refreshNodesCustomContent } from '@/src/engine';
 
 // vendor cjs 以 vi.mock 桩替代真实模块（同 engine-history-limit.test.ts）：
 // 本文件只验纯函数，不需要真实引擎；真实模块在 Node 下顶层求值会触碰 document。
-vi.mock('../../../vendor/simple-mind-map.cjs', () => ({
+vi.mock('@/vendor/simple-mind-map.cjs', () => ({
 	MindMap: class {},
 	MindMapNode: class {},
 	DoExport: class {},

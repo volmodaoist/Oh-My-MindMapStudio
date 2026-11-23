@@ -11,15 +11,15 @@
  * 不需要真实引擎（也避免 Node 下引擎顶层求值触碰 document）。
  */
 import { describe, expect, it, vi } from 'vitest';
-import type { MindMap, MindMapNode } from '../../../vendor/simple-mind-map.cjs';
+import type { MindMap, MindMapNode } from '@/vendor/simple-mind-map.cjs';
 import {
 	collectRenderNodeData,
 	findNodeByDom,
 	resolveNodesByDoms,
 	revealNodeByUid,
-} from '../../../src/engine';
+} from '@/src/engine';
 
-vi.mock('../../../vendor/simple-mind-map.cjs', () => ({
+vi.mock('@/vendor/simple-mind-map.cjs', () => ({
 	MindMap: class {},
 	MindMapNode: class {},
 	DoExport: class {},

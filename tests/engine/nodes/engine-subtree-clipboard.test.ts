@@ -18,7 +18,7 @@ import type {
 	MindMap,
 	MindMapNode,
 	MindMapTreeNode,
-} from '../../../vendor/simple-mind-map.cjs';
+} from '@/vendor/simple-mind-map.cjs';
 import {
 	collectSelectedSubtrees,
 	collectWholeTreeSubtrees,
@@ -27,7 +27,7 @@ import {
 	insertSubtreesAsChildren,
 	isNodeCollapsed,
 	shortcutGateAllows,
-} from '../../../src/engine';
+} from '@/src/engine';
 
 // mindmap.ts 经 import 链加载真实 vendor bundle（顶层求值触碰
 // document.documentElement）；静态 import 先于模块体执行，故桩必须放进

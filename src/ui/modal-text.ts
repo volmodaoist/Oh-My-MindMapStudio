@@ -24,7 +24,7 @@
  * @returns 新的内容（别名或原文，按模式）；取消/直接关闭返回 null
  */
 import { App } from 'obsidian';
-import { t, type Language } from '../core/i18n';
+import { t, type Language } from '@/src/core/i18n';
 import { createButton, openFormModal } from './modal-common';
 
 /** 弹窗模式选项（别名模式即缺省，行为与历史一致） */

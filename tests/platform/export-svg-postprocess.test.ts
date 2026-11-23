@@ -21,7 +21,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import {
 	padForeignObjectsForExport,
 	postProcessExportSvg,
-} from '../../src/platform/export-svg-postprocess';
+} from '@/src/platform/export-svg-postprocess';
 
 /** 伪造 FO 元素（getAttribute/setAttribute 基于内存 store，写入可断言） */
 function makeFO(attrs: Record<string, string | null>) {

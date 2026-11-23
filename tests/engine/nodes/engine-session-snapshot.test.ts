@@ -9,8 +9,8 @@
  * 负向自检思路：把实现换回 `updateData`，本文件前两条断言即红灯。
  */
 import { describe, expect, it, vi } from 'vitest';
-import type { MindMap, MindMapTreeNode } from '../../../vendor/simple-mind-map.cjs';
-import { applySessionSnapshot } from '../../../src/engine/nodes/mindmap-snapshot';
+import type { MindMap, MindMapTreeNode } from '@/vendor/simple-mind-map.cjs';
+import { applySessionSnapshot } from '@/src/engine/nodes/mindmap-snapshot';
 
 interface FakeEngine {
 	mindMap: MindMap;

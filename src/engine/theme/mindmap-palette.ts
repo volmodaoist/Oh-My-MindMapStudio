@@ -11,9 +11,9 @@
 import {
 	normalizeCustomPaletteColor,
 	normalizePalette,
-} from '../../core/constants';
-import type { PaletteId } from '../../core/constants';
-import { contrastTextColor, hexToHsl, hslToHex } from '../../domain/color';
+} from '@/src/core/constants';
+import type { PaletteId } from '@/src/core/constants';
+import { contrastTextColor, hexToHsl, hslToHex } from '@/src/domain/color';
 import {
 	NODE_COLORS,
 	PALETTES,

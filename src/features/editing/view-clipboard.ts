@@ -28,16 +28,16 @@ import {
 	getActiveNode,
 	getRenderRoot,
 	insertSubtreesAsChildren,
-} from '../../engine';
-import { readClipboardText, writeClipboardText } from '../../platform/system/clipboard';
-import { adaptSubtreesToGroup } from '../../markdown';
-import { liveNodeTree } from '../../markdown';
-import { parseMdOutlineFragment } from '../../markdown';
-import { serializeSubtreesToOutline } from '../../markdown';
-import { t, type Language, type TranslationKey } from '../../core/i18n';
-import { isTextEntryTarget, type PasteClipboardHost } from '../view/view-common';
+} from '@/src/engine';
+import { readClipboardText, writeClipboardText } from '@/src/platform/system/clipboard';
+import { adaptSubtreesToGroup } from '@/src/markdown';
+import { liveNodeTree } from '@/src/markdown';
+import { parseMdOutlineFragment } from '@/src/markdown';
+import { serializeSubtreesToOutline } from '@/src/markdown';
+import { t, type Language, type TranslationKey } from '@/src/core/i18n';
+import { isTextEntryTarget, type PasteClipboardHost } from '@/src/features/view/view-common';
 import { isAnyNodeEditing } from './node-inline-editor';
-import type { MindMapNode } from '../../core/engine-types';
+import type { MindMapNode } from '@/src/core/engine-types';
 
 /**
  * 复制到系统剪贴板（Markdown 大纲）。

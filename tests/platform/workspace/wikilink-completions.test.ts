@@ -1,14 +1,14 @@
 import { describe, expect, it, vi } from 'vitest';
 import { TFile } from 'obsidian';
 import type { App } from 'obsidian';
-import { wikilinkCompletions } from '../../../src/platform/workspace/wikilink-completions';
+import { wikilinkCompletions } from '@/src/platform/workspace/wikilink-completions';
 
 vi.mock('obsidian', async importOriginal => ({ ...await importOriginal<typeof import('obsidian')>(),
 	parseFrontMatterAliases: (frontmatter: { aliases?: string[] } | null) => frontmatter?.aliases ?? [],
 	prepareFuzzySearch: (query: string) => (text: string) => text.toLowerCase().includes(query.toLowerCase()) ? { score: 0 } : null,
 	stripHeadingForLink: (heading: string) => heading.replace(/#/g, ''),
 }));
-vi.mock('../../../src/links/links-resolve', () => ({ resolvePathToFile: vi.fn((_input: string, app: App) => app.vault.getFiles()[0]) }));
+vi.mock('@/src/links/links-resolve', () => ({ resolvePathToFile: vi.fn((_input: string, app: App) => app.vault.getFiles()[0]) }));
 
 function fixture() {
 	const file = Object.assign(new TFile(), { path: 'Topics/Target.md', basename: 'Target', name: 'Target.md', extension: 'md' });

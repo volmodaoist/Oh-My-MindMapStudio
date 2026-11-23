@@ -15,7 +15,7 @@ import type {
 	MindMapNode,
 	MindMapNodeData,
 	MindMapTreeNode,
-} from '../../core/engine-types';
+} from '@/src/core/engine-types';
 import {
 	applyThemeConfig,
 	applyViewportState,
@@ -36,17 +36,17 @@ import {
 	resizeMindMap,
 	syncHistoryLimit,
 	viewStateSignature,
-} from '../../engine';
-import { createThrottler } from '../../core/concurrency';
-import { notifyError } from '../../core/errors';
-import { ensureUniqueUids } from '../../markdown';
-import { nodeReferenceMatches } from '../../core/node-data';
-import { encodedNameForm } from '../../domain/links';
-import { removeReferencesOnDelete } from '../../links/links-tree';
-import { renameReferencesInTree } from '../../markdown';
-import { walkTree } from '../../domain/document';
-import { EventBinder } from '../../core/event-binder';
-import { t } from '../../core/i18n';
+} from '@/src/engine';
+import { createThrottler } from '@/src/core/concurrency';
+import { notifyError } from '@/src/core/errors';
+import { ensureUniqueUids } from '@/src/markdown';
+import { nodeReferenceMatches } from '@/src/core/node-data';
+import { encodedNameForm } from '@/src/domain/links';
+import { removeReferencesOnDelete } from '@/src/links/links-tree';
+import { renameReferencesInTree } from '@/src/markdown';
+import { walkTree } from '@/src/domain/document';
+import { EventBinder } from '@/src/core/event-binder';
+import { t } from '@/src/core/i18n';
 import type { TFile } from 'obsidian';
 import type {
 	EngineControllerDeps,

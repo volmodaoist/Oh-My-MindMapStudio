@@ -14,11 +14,11 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import {
 	MINIMAP_LINK_MAX_DEPTH,
 	MINIMAP_LINK_NODE_LIMIT,
-} from '../../../src/core/constants';
-import { captureMiniMap, measureMiniMapContent } from '../../../src/engine';
-import type { MindMap } from '../../../vendor/simple-mind-map.cjs';
+} from '@/src/core/constants';
+import { captureMiniMap, measureMiniMapContent } from '@/src/engine';
+import type { MindMap } from '@/vendor/simple-mind-map.cjs';
 
-vi.mock('../../../vendor/simple-mind-map.cjs', () => ({
+vi.mock('@/vendor/simple-mind-map.cjs', () => ({
 	MindMap: class {},
 	MindMapNode: class {},
 	DoExport: class {},

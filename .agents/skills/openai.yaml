@@ -1,0 +1,4 @@
+interface:
+  display_name: "README Media"
+  short_description: "Record Obsidian demos, optimize GIFs and preview Markdown"
+  default_prompt: "Use $readme-media to refresh this README, record real Obsidian demos, build GIF assets and provide a local preview without committing."

@@ -24,9 +24,9 @@ import {
 	summarySegmentsOf,
 	summariesOfSource,
 	type SummaryEntry,
-} from '../../../src/domain/relations/summary';
-import { parseMdOutline } from '../../../src/markdown/outline/md-outline';
-import { serializeMdBody } from '../../../src/markdown/serialize/md-serialize';
+} from '@/src/domain/relations/summary';
+import { parseMdOutline } from '@/src/markdown/outline/md-outline';
+import { serializeMdBody } from '@/src/markdown/serialize/md-serialize';
 
 describe('sum 段语法', () => {
 	it('值：`<count>` 与 `<count> | <文字>` 都认', () => {

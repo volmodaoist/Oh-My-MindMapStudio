@@ -24,7 +24,7 @@
  * 回退到「剥离 @font-face + 放宽字形裁切」的旧行为（不比现状差）。
  */
 import { requestUrl } from 'obsidian';
-import { createWarnOnce } from '../../../core/errors';
+import { createWarnOnce } from '@/src/core/errors';
 
 /** 一条 `@font-face` 的来源（`family` 为 MathJax 的 `MJX-*` 名） */
 export interface MathFontFace {

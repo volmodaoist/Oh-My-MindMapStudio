@@ -13,18 +13,18 @@
  */
 import { App, TFile } from 'obsidian';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { fileLookupIndex } from '../../../src/links/file-lookup';
-import { parseMdOutline } from '../../../src/markdown/outline/md-outline';
-import { serializeMdBody } from '../../../src/markdown/serialize/md-serialize';
+import { fileLookupIndex } from '@/src/links/file-lookup';
+import { parseMdOutline } from '@/src/markdown/outline/md-outline';
+import { serializeMdBody } from '@/src/markdown/serialize/md-serialize';
 import {
 	planSplitLinks,
 	splitAllLinksInTree,
 	writeSplitPlanToData,
-} from '../../../src/markdown/links/links-split';
-import type { MdNodeData } from '../../../src/core/node-data';
+} from '@/src/markdown/links/links-split';
+import type { MdNodeData } from '@/src/core/node-data';
 import type {
 	MindMapTreeNode,
-} from '../../../vendor/simple-mind-map.cjs';
+} from '@/vendor/simple-mind-map.cjs';
 
 type MdData = Record<string, unknown>;
 type Plan = NonNullable<ReturnType<typeof planSplitLinks>>;

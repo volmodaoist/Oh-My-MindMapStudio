@@ -1,9 +1,9 @@
 /** 双链候选：Obsidian 文件/别名/标题/块缓存及原生路径生成；不创建文件或写 Vault。 */
 import { parseFrontMatterAliases, prepareFuzzySearch, stripHeadingForLink } from 'obsidian';
 import type { App } from 'obsidian';
-import { formatWikilink, parseWikilink } from '../../domain/links';
-import type { WikilinkSuggestion } from '../../domain/links';
-import { resolvePathToFile } from '../../links/links-resolve';
+import { formatWikilink, parseWikilink } from '@/src/domain/links';
+import type { WikilinkSuggestion } from '@/src/domain/links';
+import { resolvePathToFile } from '@/src/links/links-resolve';
 
 export function wikilinkCompletions(app: App, query: string, sourcePath: string, limit = 30): WikilinkSuggestion[] {
 	const parts = parseWikilink(formatWikilink(query));

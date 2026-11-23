@@ -34,6 +34,13 @@
 原综合 domain 用例按现有 describe 边界拆成双链测试与树测试，断言保持；任务测试归入 content。
 领域根叶子与能力入口统一登记到 `scripts/module-boundaries.mjs`，新文件不能无登记继续堆在根目录。
 
+## 项目根路径
+
+- `@/` 对应项目根目录，例：`@/src/domain/document`、`@/tests/helpers/node-content-dom`。
+- 源码/测试跨目录模块引用使用根别名，同目录保留 `./`；公共入口与内部访问边界照常执行。
+- TypeScript 在 tsconfig paths 中定义，esbuild 按项目 tsconfig 解析，Vitest 配置相同根目录。
+- Node 直接执行的脚本、文件读取/URL 和 Markdown 可点击链接仍使用其原生支持的路径。
+
 ## 当前公共入口
 
 - `domain/document/index.ts`：文档模型、来源、声明、文件身份与树操作。
@@ -60,4 +67,4 @@
 - 拆分按职责和共享状态判断，避免把同一判定摊到多个实现。
 - 超过 300 行的源文件在 [索引豁免表](index.md#文件规模与豁免) 登记理由；未登记超限只允许减少。
 - `check:gates` 核对未登记超限；索引测试核对登记漂移，阈值为双向 `min(15%, 50 行)`。
-- `npm run check:gates -- --fix-lines` 回填当前行数；历史记录追加到 `line-count-log.md`。
+- `npm run check:gates -- --fix-lines` 回填当前行数；规模和执行结果由同一检查脚本输出，历史详情查 Git。

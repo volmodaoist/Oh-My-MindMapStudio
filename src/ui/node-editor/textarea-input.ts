@@ -1,5 +1,5 @@
 /** textarea 的输入适配：保留原生文本、选区和撤销；替换完成只派发 input，不保存。 */
-import type { EditorInputContext, EditorInputSurface, EditorTextRange } from '../../core/editor-input';
+import type { EditorInputContext, EditorInputSurface, EditorTextRange } from '@/src/core/editor-input';
 import { insertNativeEditorText, notifyEditorInput } from './native-input';
 
 export class TextareaInput implements EditorInputSurface {

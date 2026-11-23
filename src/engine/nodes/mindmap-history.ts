@@ -3,9 +3,9 @@
  *
  * 依赖 `mindmap-nodes` 的 `getRenderRoot` / `countTreeNodes`（会话内同步需计数）。
  */
-import type { MindMap } from '../../../vendor/simple-mind-map.cjs';
+import type { MindMap } from '@/vendor/simple-mind-map.cjs';
 import { countTreeNodes, getRenderRoot } from './mindmap-nodes';
-import { HISTORY_DEFAULT_MAX_COUNT, resolveHistoryLimit } from '../../core/history-budget';
+import { HISTORY_DEFAULT_MAX_COUNT, resolveHistoryLimit } from '@/src/core/history-budget';
 
 /**
  * 把**当前整树**记为一条撤销快照。

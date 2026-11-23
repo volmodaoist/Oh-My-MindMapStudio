@@ -12,13 +12,16 @@
 		"noUncheckedIndexedAccess": true,
 		"noImplicitOverride": true,
 		// 模块解析用 `bundler` 而非已弃用的 `node`(node10)：TS 6 起该选项报
-		// deprecation（TS 7 移除）。`bundler` 与本项目写法完全兼容——实测
-		// `tsc --noEmit` 0 错误，它同样允许无扩展名相对 import（`./concurrency`
-		// 而非 `./concurrency.js`），故 src/ 的 400+ 处 import 无需改动。
+		// deprecation（TS 7 移除）。`bundler` 与 esbuild 的模块解析一致，
+		// 支持项目根别名与同目录的无扩展名相对导入。
 		// 官方 sample-plugin 仍是 `node`（模板未跟进），本项目主动迁移。
 		// ⚠ 不要改回 `node`，也不要用 `ignoreDeprecations` 静音——后者在
 		// 当前锁定的 TypeScript 5.9.3 下会报 `TS5103: Invalid value`。
 		"moduleResolution": "bundler",
+		// @/ 从项目根解析：@/src、@/tests、@/scripts；不依赖已弃用的 baseUrl。
+		"paths": {
+			"@/*": ["./*"]
+		},
 		"isolatedModules": true,
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true,

@@ -9,14 +9,14 @@
  * - MindMapView 结构化实现（implements），无运行时改动。
  */
 import type { App, TFile, WorkspaceLeaf } from 'obsidian';
-import type { MindMap, MindMapNode } from '../../core/engine-types';
-import type { EventBinder } from '../../core/event-binder';
-import type { Language } from '../../core/i18n';
-import type { SaveState, StatusBarService } from '../../services/status-bar';
-import type { DocumentSessionRegistry } from '../../services/document';
-import type { DocumentSyntax } from '../../markdown';
-import type { MindMapStudioSettings } from '../../settings';
-import type { PreferenceKey, ViewStateStore } from '../../services/view-state';
+import type { MindMap, MindMapNode } from '@/src/core/engine-types';
+import type { EventBinder } from '@/src/core/event-binder';
+import type { Language } from '@/src/core/i18n';
+import type { SaveState, StatusBarService } from '@/src/services/status-bar';
+import type { DocumentSessionRegistry } from '@/src/services/document';
+import type { DocumentSyntax } from '@/src/markdown';
+import type { MindMapStudioSettings } from '@/src/settings';
+import type { PreferenceKey, ViewStateStore } from '@/src/services/view-state';
 
 /**
  * view-* 模块所需的插件能力窄化视图（结构化匹配，不依赖 main.ts 插件类）。

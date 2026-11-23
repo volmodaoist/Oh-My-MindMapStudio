@@ -4,7 +4,7 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { copyBuiltPlugin, validateVault, DEFAULT_CONFIG_DIR } from '../../scripts/install.mjs';
+import { copyBuiltPlugin, validateVault, DEFAULT_CONFIG_DIR } from '@/scripts/install.mjs';
 
 const cleanup: string[] = [];
 function fixture() {

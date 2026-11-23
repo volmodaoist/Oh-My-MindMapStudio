@@ -1,5 +1,5 @@
 /** 节点内容 common.styles：DOM/样式内聚，保持原输出与导出保真。 */
-import { type NodeContentTones } from '../../domain/color';
+import { type NodeContentTones } from '@/src/domain/color';
 
 /**
  * **主题链接色链**：内链 / 标签 pill / 任务复选框的**唯一基色来源**。

@@ -20,8 +20,8 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import {
 	resolveFilePreferences,
 	ViewStateStore,
-} from '../../src/services/view-state';
-import { VIEW_STATE_PERSIST_MS } from '../../src/core/constants';
+} from '@/src/services/view-state';
+import { VIEW_STATE_PERSIST_MS } from '@/src/core/constants';
 
 const PATH_A = 'notes/a.mindmap.md';
 const PATH_B = 'notes/b.mindmap.md';

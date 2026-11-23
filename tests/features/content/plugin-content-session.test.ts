@@ -1,13 +1,13 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { commitPluginBlock } from '../../../src/features/content/plugin-content-session';
-import type { ViewNodeEditContext } from '../../../src/features/view/view-context';
+import { commitPluginBlock } from '@/src/features/content/plugin-content-session';
+import type { ViewNodeEditContext } from '@/src/features/view/view-context';
 
 const engine = vi.hoisted(() => ({ findRenderNodeByUid: vi.fn(), getRenderRoot: vi.fn(),
 	renderWithCallback: vi.fn(), refreshNodesCustomContent: vi.fn() }));
 const write = vi.hoisted(() => vi.fn());
-vi.mock('../../../src/engine', () => engine);
-vi.mock('../../../src/features/content/node-content-write', () => ({ applyRawNodeContent: write }));
-vi.mock('../../../src/platform/rendering/plugins/bridge', () => ({ preparePluginContents: vi.fn() }));
+vi.mock('@/src/engine', () => engine);
+vi.mock('@/src/features/content/node-content-write', () => ({ applyRawNodeContent: write }));
+vi.mock('@/src/platform/rendering/plugins/bridge', () => ({ preparePluginContents: vi.fn() }));
 
 const original = '````tab\ntab: A\nhello\n````\n';
 function context() {

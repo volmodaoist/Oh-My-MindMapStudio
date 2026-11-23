@@ -12,11 +12,11 @@
  * `left/top/width/height`（vendor `MindMapNode` 字段，性能模式下视口外节点
  * 只是被摘下 group，几何仍在），零装配即可取用。
  */
-import type { MindMap } from '../../../vendor/simple-mind-map.cjs';
+import type { MindMap } from '@/vendor/simple-mind-map.cjs';
 import {
 	MINIMAP_LINK_NODE_LIMIT,
 	MINIMAP_MAX_HEIGHT_RATIO,
-} from '../../core/constants';
+} from '@/src/core/constants';
 import {
 	buildMiniMapMarks,
 	buildMiniMapFrameLinks,
@@ -35,9 +35,9 @@ import {
 	type MiniMapMeasure,
 	type MiniMapSize,
 	type MiniMapPanelSize,
-} from '../../core/minimap-geometry';
-import { createWarnOnce } from '../../core/errors';
-import { getRenderRoot } from '../nodes/mindmap-nodes';
+} from '@/src/core/minimap-geometry';
+import { createWarnOnce } from '@/src/core/errors';
+import { getRenderRoot } from '@/src/engine/nodes/mindmap-nodes';
 import { getCanvasSize } from './mindmap-viewport-canvas';
 
 /** 取样失败只告警一次（每帧/每 30s 都可能走到 catch） */

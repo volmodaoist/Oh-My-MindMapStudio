@@ -22,8 +22,8 @@ import {
 	LINE_STYLE_OPTIONS,
 	normalizeLineStylePreference,
 	shouldEnablePerformanceMode,
-} from '../../src/core/constants';
-import { isDocumentExtension, wikilinkTargetIsAttachment } from '../../src/domain/links/wikilink';
+} from '@/src/core/constants';
+import { isDocumentExtension, wikilinkTargetIsAttachment } from '@/src/domain/links/wikilink';
 
 describe('isDocumentExtension / wikilinkTargetIsAttachment — 文档 vs 附件', () => {
 	it.each([

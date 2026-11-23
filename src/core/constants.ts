@@ -7,8 +7,8 @@
  * （`canOpenInObsidian` / `isRenderableImageExtension` / `isEmbeddableAttachmentExtension`），
  * 不再维护「可链接附件」白名单（比解析侧窄，会造成「拖入被拒、手写却行」）。
  */
-import { normalizeHexColor } from '../domain/color';
-import type { MindMapLayoutId } from '../domain/document';
+import { normalizeHexColor } from '@/src/domain/color';
+import type { MindMapLayoutId } from '@/src/domain/document';
 import type { TranslationKey } from './i18n';
 
 /** 自定义视图类型标识 */

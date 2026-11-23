@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { FencedBlockConflictError, fencedNodeBlocks, replaceFencedNodeBlock } from '../../../src/markdown/syntax/md-codeblocks';
+import { FencedBlockConflictError, fencedNodeBlocks, replaceFencedNodeBlock } from '@/src/markdown/syntax/md-codeblocks';
 
 describe('插件围栏定位与原文回写', () => {
 	it('四反引号 tab 保留内层 shell，多个相同块由顺序区分', () => {

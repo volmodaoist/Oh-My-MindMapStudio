@@ -18,14 +18,14 @@
  *   （顺序颠倒时平移量算的是旧比例下的坐标）。
  */
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import type { MindMap } from '../../../vendor/simple-mind-map.cjs';
+import type { MindMap } from '@/vendor/simple-mind-map.cjs';
 import {
 	altWheelPanDelta,
 	fitToScreen,
 	setupViewportGestures,
 	zoomToSelection,
 	type ViewportContext,
-} from '../../../src/features/canvas/view-viewport';
+} from '@/src/features/canvas/view-viewport';
 
 const mocks = vi.hoisted(() => ({
 	fitMindMap: vi.fn(),
@@ -50,7 +50,7 @@ const mocks = vi.hoisted(() => ({
 	isAnyNodeEditing: vi.fn((): boolean => false),
 }));
 
-vi.mock('../../../src/engine', () => ({
+vi.mock('@/src/engine', () => ({
 	fitMindMap: mocks.fitMindMap,
 	getActiveNodes: mocks.getActiveNodes,
 	getCanvasSize: mocks.getCanvasSize,
@@ -61,7 +61,7 @@ vi.mock('../../../src/engine', () => ({
 	countMindMapNodes: mocks.countMindMapNodes,
 }));
 
-vi.mock('../../../src/features/editing/node-inline-editor', () => ({
+vi.mock('@/src/features/editing/node-inline-editor', () => ({
 	isAnyNodeEditing: mocks.isAnyNodeEditing,
 }));
 

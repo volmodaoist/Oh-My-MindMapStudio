@@ -16,24 +16,24 @@ import {
 	DEFAULT_THEME_STYLE,
 	normalizePalette,
 	PALETTE_OPTIONS,
-} from '../../../src/core/constants';
+} from '@/src/core/constants';
 import {
 	contrastRatio,
 	hexToHsl,
 	nodeColorScale,
 	relativeLuminance,
-} from '../../../src/domain/color';
-import { paletteNodeColor } from '../../../src/engine/theme/mindmap-palette';
+} from '@/src/domain/color';
+import { paletteNodeColor } from '@/src/engine/theme/mindmap-palette';
 import {
 	getThemeConfig,
 	resolveLineStyle,
 	supportsLineStyleSwitch,
-} from '../../../src/engine/theme/mindmap-theme';
+} from '@/src/engine/theme/mindmap-theme';
 import {
 	NODE_COLORS,
 	nodeLineColorOf,
 	PALETTES,
-} from '../../../src/engine/theme/mindmap-theme-presets';
+} from '@/src/engine/theme/mindmap-theme-presets';
 
 /** 读取 getThemeConfig 返回值中某一层级的节点 token */
 function tokenOf(

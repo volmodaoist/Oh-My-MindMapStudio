@@ -7,14 +7,14 @@
  * （view.ts，持有类引用）完成后才调用 handleWindowPaste。
  */
 import { Notice } from 'obsidian';
-import { getActiveNode, getRenderRoot } from '../../engine';
-import { buildPastedImageName, saveImageToVault } from '../../media/images-save';
-import { notifyError } from '../../core/errors';
+import { getActiveNode, getRenderRoot } from '@/src/engine';
+import { buildPastedImageName, saveImageToVault } from '@/src/media/images-save';
+import { notifyError } from '@/src/core/errors';
 import { applyNodeImage, createImageChildNode } from './view-node-actions';
 import { pasteFromClipboardEvent } from './view-clipboard';
-import { isTextEntryTarget } from '../view/view-common';
-import { t } from '../../core/i18n';
-import type { MindMapViewContext } from '../view/view-context';
+import { isTextEntryTarget } from '@/src/features/view/view-common';
+import { t } from '@/src/core/i18n';
+import type { MindMapViewContext } from '@/src/features/view/view-context';
 
 /** 注册画布容器粘贴监听（引擎重建时随 initMindMap 调用） */
 export function setupPasteHandler(view: MindMapViewContext): void {

@@ -19,16 +19,16 @@
  * obsidian 的 setIcon、Notice 全部 vi.mock；本文件不触碰 vendor bundle。
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import type { MindMap } from '../../../vendor/simple-mind-map.cjs';
-import { t } from '../../../src/core/i18n';
+import type { MindMap } from '@/vendor/simple-mind-map.cjs';
+import { t } from '@/src/core/i18n';
 import {
 	arrangeMindMap,
 	buildToolbar,
 	disposeToolbar,
 	syncHistoryButtons,
 	refreshToolbar,
-} from '../../../src/features/view/view-toolbar';
-import type { MindMapViewContext } from '../../../src/features/view/view-context';
+} from '@/src/features/view/view-toolbar';
+import type { MindMapViewContext } from '@/src/features/view/view-context';
 
 const engineMocks = vi.hoisted(() => ({
 	arrangeMindMap: vi.fn<(mindMap: unknown) => boolean>(),
@@ -72,7 +72,7 @@ vi.mock('obsidian', async (importOriginal) => {
 	};
 });
 
-vi.mock('../../../src/engine', () => ({
+vi.mock('@/src/engine', () => ({
 	// ENGINE_COMMANDS 是常量表：保留真实值才能断言「命令名真的用对了」
 	ENGINE_COMMANDS: {
 		BACK: 'BACK',
@@ -91,11 +91,11 @@ vi.mock('../../../src/engine', () => ({
 	readHistoryAvailability: () => ({ canUndo: false, canRedo: false }),
 }));
 
-vi.mock('../../../src/features/view-export', () => ({
+vi.mock('@/src/features/view-export', () => ({
 	exportImage: siblingMocks.exportImage,
 }));
 
-vi.mock('../../../src/features/view/view-minimap', () => ({
+vi.mock('@/src/features/view/view-minimap', () => ({
 	refreshMiniMapAfterRender: minimapMocks.refreshMiniMapAfterRender,
 }));
 

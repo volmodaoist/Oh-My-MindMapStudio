@@ -10,7 +10,7 @@
  * 「usable=false 时退回宽度判据」这条约定散成两处。消费方 `isProductReady`
  * 仍留在 `math-jax.ts`（它是渲染就绪判据，不属于规则读取）。
  */
-import { createWarnOnce } from '../../../core/errors';
+import { createWarnOnce } from '@/src/core/errors';
 import { CHTML_STYLES_ID } from './math-jax-export';
 
 /**

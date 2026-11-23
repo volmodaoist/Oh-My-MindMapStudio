@@ -14,9 +14,9 @@
  */
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { App, TFile } from 'obsidian';
-import { fileLookupIndex } from '../../../src/links/file-lookup';
-import { renameReferencesInTree } from '../../../src/markdown/links/links-rename';
-import type { MindMapTreeNode } from '../../../vendor/simple-mind-map.cjs';
+import { fileLookupIndex } from '@/src/links/file-lookup';
+import { renameReferencesInTree } from '@/src/markdown/links/links-rename';
+import type { MindMapTreeNode } from '@/vendor/simple-mind-map.cjs';
 
 const RESOURCE_PREFIX = 'app://fake/';
 

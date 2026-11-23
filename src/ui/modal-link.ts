@@ -7,14 +7,14 @@
  *   label 为可见文本（笔记名/别名/文件名），供导图节点文本对齐。
  */
 import { App, type TFile } from 'obsidian';
-import { t, type Language } from '../core/i18n';
+import { t, type Language } from '@/src/core/i18n';
 import { createButton, openFormModal, VaultFileSuggest } from './modal-common';
-import { isRenderableImageExtension } from '../core/constants';
+import { isRenderableImageExtension } from '@/src/core/constants';
 import {
 	formatWikilink,
 	isDocumentExtension,
 	parseWikilink,
-} from '../domain/links';
+} from '@/src/domain/links';
 
 /**
  * 文档类文件作为双链目标时的写串与可见名：`.md` 省略扩展名（官方等价写法），

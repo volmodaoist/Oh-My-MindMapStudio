@@ -7,18 +7,18 @@
  * 另把 `mindmap-viewport-canvas.getCanvasSize` 转出（视图层小地图的唯一画布尺寸
  * 来源，见下方 export 处的说明）。
  */
-import type { MindMap, MindMapNode } from '../../../vendor/simple-mind-map.cjs';
-import { HEAVY_FIT_NODE_THRESHOLD } from '../../core/constants';
-import { createWarnOnce } from '../../core/errors';
+import type { MindMap, MindMapNode } from '@/vendor/simple-mind-map.cjs';
+import { HEAVY_FIT_NODE_THRESHOLD } from '@/src/core/constants';
+import { createWarnOnce } from '@/src/core/errors';
 import {
 	contentExceedsCanvas,
 	measureMiniMapBounds,
 	readNodeLayoutBox,
 	type MiniMapMeasure,
 	type MiniMapSize,
-} from '../../core/minimap-geometry';
-import { countMindMapNodes, getRenderRoot } from '../nodes/mindmap-nodes';
-import { scheduleEngineTimer } from '../runtime/mindmap-timers';
+} from '@/src/core/minimap-geometry';
+import { countMindMapNodes, getRenderRoot } from '@/src/engine/nodes/mindmap-nodes';
+import { scheduleEngineTimer } from '@/src/engine/runtime/mindmap-timers';
 import {
 	getCanvasOrigin,
 	getCanvasSize,

@@ -10,8 +10,8 @@
  * 在画布上只是一个没有信息量的方框。取消返回 null。
  */
 import { App } from 'obsidian';
-import { t, type Language } from '../core/i18n';
-import { isWritableSummaryText } from '../domain/relations';
+import { t, type Language } from '@/src/core/i18n';
+import { isWritableSummaryText } from '@/src/domain/relations';
 import { createButton, openFormModal } from './modal-common';
 
 /** 文字长度上限（仅输入侧限制；解析不截断，保真优先） */

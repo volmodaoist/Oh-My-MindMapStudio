@@ -19,4 +19,4 @@ export type {
 	MindMapNodeData,
 	MindMapTreeNode,
 	SetNodeImageOptions,
-} from '../../vendor/simple-mind-map.cjs';
+} from '@/vendor/simple-mind-map.cjs';

@@ -17,9 +17,9 @@
  * 断言「1s 后才回收」。
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import type { MindMap } from '../../vendor/simple-mind-map.cjs';
-import type { ExportImageFormat } from '../../src/core/constants';
-import type { MindMapViewContext } from '../../src/features/view/view-context';
+import type { MindMap } from '@/vendor/simple-mind-map.cjs';
+import type { ExportImageFormat } from '@/src/core/constants';
+import type { MindMapViewContext } from '@/src/features/view/view-context';
 
 const { exportMock, notifyErrorMock } = vi.hoisted(() => ({
 	exportMock: vi.fn<
@@ -33,8 +33,8 @@ const { exportMock, notifyErrorMock } = vi.hoisted(() => ({
 	notifyErrorMock: vi.fn<(lang: unknown, key: unknown, error: unknown) => void>(),
 }));
 
-vi.mock('../../src/engine', () => ({ exportMindMapImage: exportMock }));
-vi.mock('../../src/core/errors', () => ({
+vi.mock('@/src/engine', () => ({ exportMindMapImage: exportMock }));
+vi.mock('@/src/core/errors', () => ({
 	notifyError: notifyErrorMock,
 	// view-export → platform/rendering/math/math-jax → math-jax-fonts 依赖它做「告警一次」；
 	// 本套件只关心导出分流，不关心告警去重 ⇒ 返回恒空操作。
@@ -68,8 +68,8 @@ vi.mock('obsidian', async (importOriginal) => {
 	};
 });
 
-import { exportImage, exportImageAs } from '../../src/features/view-export';
-import { injectObsidianCssVarsIntoExportSvg } from '../../src/platform/export-svg-postprocess';
+import { exportImage, exportImageAs } from '@/src/features/view-export';
+import { injectObsidianCssVarsIntoExportSvg } from '@/src/platform/export-svg-postprocess';
 
 /** 下载锚点桩：createEl('a') 返回它，记录 href/download/click */
 const anchor = { href: '', download: '', click: vi.fn<() => void>() };

@@ -9,18 +9,18 @@
  * 源码依据：src/domain/content/md-task.ts、src/markdown/{md-outline,md-serialize,md-line-write,links-split}.ts。
  */
 import { describe, expect, it } from 'vitest';
-import { parseMdOutline } from '../../../src/markdown/outline/md-outline';
-import { composeNodeContent, serializeMdBody } from '../../../src/markdown/serialize/md-serialize';
-import { applyRawToNode } from '../../../src/markdown/syntax/md-line-write';
-import { splitAllLinksInTree } from '../../../src/markdown/links/links-split';
+import { parseMdOutline } from '@/src/markdown/outline/md-outline';
+import { composeNodeContent, serializeMdBody } from '@/src/markdown/serialize/md-serialize';
+import { applyRawToNode } from '@/src/markdown/syntax/md-line-write';
+import { splitAllLinksInTree } from '@/src/markdown/links/links-split';
 import {
 	parseTaskPrefix,
 	setTaskTokenInRaw,
 	stripTaskPrefix,
 	toggleTaskToken,
-} from '../../../src/domain/content/md-task';
-import type { MdNodeData } from '../../../src/core/node-data';
-import type { MindMapTreeNode } from '../../../src/core/engine-types';
+} from '@/src/domain/content/md-task';
+import type { MdNodeData } from '@/src/core/node-data';
+import type { MindMapTreeNode } from '@/src/core/engine-types';
 
 /** 解析正文 → 虚拟根（frontmatter 不用） */
 function parse(body: string): MindMapTreeNode {

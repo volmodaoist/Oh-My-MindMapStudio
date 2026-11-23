@@ -12,9 +12,9 @@ import { spawnSync } from 'node:child_process';
 import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { buildPlan, parseExemptionRows } from '../../scripts/check-gates.mjs';
-import type { ExemptionRow, GatesPlan } from '../../scripts/check-gates.mjs';
-import { buildNodeContentCompareSource } from '../../scripts/visual-node-content.mjs';
+import { buildPlan, parseExemptionRows } from '@/scripts/check-gates.mjs';
+import type { ExemptionRow, GatesPlan } from '@/scripts/check-gates.mjs';
+import { buildNodeContentCompareSource } from '@/scripts/visual-node-content.mjs';
 
 const labelsOf = (plan: GatesPlan): string[] =>
 	plan.gates.map((gate) => gate.label);
@@ -100,14 +100,16 @@ describe('buildPlan（变更集 → 门禁清单）', () => {
 		}
 	});
 
-	it('发布元数据 → 加跑 check:release（README / manifest / versions / LICENSE / release-notes）', () => {
+	it('发布元数据 → 加跑 check:release（README / manifest / versions / LICENSE / CHANGELOG）', () => {
 		for (const file of [
 			'README.md',
 			'README.zh-CN.md',
 			'manifest.json',
 			'versions.json',
 			'LICENSE',
-			'docs/release-notes-0.2.4.md',
+			'CHANGELOG',
+			'scripts/release-notes.mjs',
+			'scripts/check-release-metadata.mjs',
 		]) {
 			expect(labelsOf(buildPlan([file]))).toContain('npm run check:release');
 		}

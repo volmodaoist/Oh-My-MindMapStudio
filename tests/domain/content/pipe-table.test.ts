@@ -10,7 +10,7 @@
  * 与 `npm run verify:visual` 的 table 场景覆盖。
  */
 import { describe, expect, it } from 'vitest';
-import { matchPipeTable } from '../../../src/domain/content/pipe-table';
+import { matchPipeTable } from '@/src/domain/content/pipe-table';
 
 /** 便于复用的调用包装：整段文本按行切分后从第 0 行识别 */
 function match(text: string) {

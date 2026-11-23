@@ -6,13 +6,13 @@
  * 迁出后两侧都依赖本文件，消除循环。
  */
 import { Notice } from 'obsidian';
-import { ENGINE_COMMANDS, getActiveNode } from '../../engine';
-import { t, type Language } from '../../core/i18n';
-import { composeNodeContent } from '../../markdown';
-import { formatWikilink, linkDisplayText } from '../../domain/links';
+import { ENGINE_COMMANDS, getActiveNode } from '@/src/engine';
+import { t, type Language } from '@/src/core/i18n';
+import { composeNodeContent } from '@/src/markdown';
+import { formatWikilink, linkDisplayText } from '@/src/domain/links';
 import type { App } from 'obsidian';
-import type { MdNodeData } from '../../core/node-data';
-import type { MindMap, MindMapNode } from '../../core/engine-types';
+import type { MdNodeData } from '@/src/core/node-data';
+import type { MindMap, MindMapNode } from '@/src/core/engine-types';
 import type { MindMapViewContext, ViewNodeEditContext } from './view-context';
 
 /**

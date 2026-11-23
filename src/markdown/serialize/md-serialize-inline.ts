@@ -11,11 +11,11 @@
  * （`md-serialize.ts`）共用它，由后者反向 import——依赖方向单向，无循环。
  */
 import type { App } from 'obsidian';
-import { readNodeDataString, type MdNodeData } from '../../core/node-data';
-import { resolvePathToFile } from '../../links/links-resolve';
-import { isExternalImageRef } from '../../domain/links';
-import { formatEmbedWikilink } from '../../domain/links';
-import { tokenizeInline } from '../outline/md-outline';
+import { readNodeDataString, type MdNodeData } from '@/src/core/node-data';
+import { resolvePathToFile } from '@/src/links/links-resolve';
+import { isExternalImageRef } from '@/src/domain/links';
+import { formatEmbedWikilink } from '@/src/domain/links';
+import { tokenizeInline } from '@/src/markdown/outline/md-outline';
 
 /** 目标/地址的 `<>` 包裹剥壳（md 链接与图片目标都可能写作 `<路径 带空格>`） */
 export function stripAngleBrackets(value: string): string {

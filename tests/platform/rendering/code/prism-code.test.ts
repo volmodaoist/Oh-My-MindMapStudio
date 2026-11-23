@@ -176,7 +176,7 @@ function token(type: string, content: unknown, alias?: string | string[]) {
 /** 逐例重置模块级状态（两张缓存 + 告警去重标记） */
 async function freshModule() {
 	vi.resetModules();
-	return import('../../../../src/platform/rendering/code/prism-code');
+	return import('@/src/platform/rendering/code/prism-code');
 }
 
 /**

@@ -7,18 +7,18 @@ export {
 	collectWholeTreeSubtrees,
 	cutSelectedSubtrees,
 	insertSubtreesAsChildren,
-} from './nodes/mindmap-clipboard';
+} from '@/src/engine/nodes/mindmap-clipboard';
 export {
 	hideNodeForEditing,
 	observeNodeTextEditor,
 	readNodeEditorAppearance,
-} from './nodes/mindmap-editor';
+} from '@/src/engine/nodes/mindmap-editor';
 export {
 	readHistoryAvailability,
 	recordHistory,
 	seedInitialHistory,
 	syncHistoryLimit,
-} from './nodes/mindmap-history';
+} from '@/src/engine/nodes/mindmap-history';
 export {
 	applyImageSizeCorrectionsToEngine,
 	branchLayerOf,
@@ -54,10 +54,10 @@ export {
 	siblingMoveBlocker,
 	startNodeTextEdit,
 	topMostNodes,
-} from './nodes/mindmap-nodes';
+} from '@/src/engine/nodes/mindmap-nodes';
 export type {
 	SiblingMoveOutcome,
-} from './nodes/mindmap-nodes';
+} from '@/src/engine/nodes/mindmap-nodes';
 export {
 	activeRelationLine,
 	applyRelationsToTree,
@@ -70,10 +70,10 @@ export {
 	relationLineAt,
 	relationNodeBox,
 	syncLiveRelations,
-} from './nodes/mindmap-relations';
+} from '@/src/engine/nodes/mindmap-relations';
 export type {
 	RelationLineHit,
-} from './nodes/mindmap-relations';
+} from '@/src/engine/nodes/mindmap-relations';
 export {
 	endMindMapSearch,
 	getSearchCurrentIndex,
@@ -81,26 +81,26 @@ export {
 	jumpToSearchIndex,
 	searchMindMap,
 	searchNextInMindMap,
-} from './nodes/mindmap-search';
+} from '@/src/engine/nodes/mindmap-search';
 export {
 	applySessionSnapshot,
-} from './nodes/mindmap-snapshot';
+} from '@/src/engine/nodes/mindmap-snapshot';
 export {
 	applySummariesToTree,
 	isSummaryNode,
 	summaryAnchorOf,
 	syncLiveSummaries,
-} from './nodes/mindmap-summaries';
+} from '@/src/engine/nodes/mindmap-summaries';
 export {
 	arrangeMindMap,
-} from './runtime/mindmap-arrange';
+} from '@/src/engine/runtime/mindmap-arrange';
 export {
 	ENGINE_COMMANDS,
 	shortcutGateAllows,
-} from './runtime/mindmap-commands';
+} from '@/src/engine/runtime/mindmap-commands';
 export {
 	cancelEngineTimers,
-} from './runtime/mindmap-timers';
+} from '@/src/engine/runtime/mindmap-timers';
 export {
 	applyThemeConfig,
 	clearMeasureResidue,
@@ -108,32 +108,32 @@ export {
 	destroyMindMap,
 	resizeMindMap,
 	syncNodeColorDirectives,
-} from './runtime/mindmap';
+} from '@/src/engine/runtime/mindmap';
 export type {
 	CreateMindMapOptions,
 	NodeContentStyle,
-} from './runtime/mindmap';
+} from '@/src/engine/runtime/mindmap';
 export {
 	applyColorDirectivesToTree,
-} from './theme/mindmap-colors';
+} from '@/src/engine/theme/mindmap-colors';
 export {
 	paletteNodeColor,
-} from './theme/mindmap-palette';
+} from '@/src/engine/theme/mindmap-palette';
 export {
 	getThemeConfig,
 	isDarkTheme,
 	supportsLineStyleSwitch,
-} from './theme/mindmap-theme';
+} from '@/src/engine/theme/mindmap-theme';
 export {
 	captureMiniMap,
 	measureMiniMapContent,
-} from './viewport/mindmap-minimap';
+} from '@/src/engine/viewport/mindmap-minimap';
 export type {
 	MiniMapFrame,
-} from './viewport/mindmap-minimap';
+} from '@/src/engine/viewport/mindmap-minimap';
 export {
 	getCanvasSize,
-} from './viewport/mindmap-viewport-canvas';
+} from '@/src/engine/viewport/mindmap-viewport-canvas';
 export {
 	applyCanvasDragMode,
 	applyViewportState,
@@ -153,7 +153,7 @@ export {
 	zoomInMindMap,
 	zoomMindMapAt,
 	zoomOutMindMap,
-} from './viewport/mindmap-viewport';
-export { HISTORY_BUDGET_BYTES, HISTORY_SNAPSHOT_BYTES_PER_NODE, resolveHistoryLimit } from '../core/history-budget';
+} from '@/src/engine/viewport/mindmap-viewport';
+export { HISTORY_BUDGET_BYTES, HISTORY_SNAPSHOT_BYTES_PER_NODE, resolveHistoryLimit } from '@/src/core/history-budget';
 /** @public 浏览器回归探针通过生成的模块字符串调用。 */
-export { applyPerformanceMode } from './runtime/mindmap';
+export { applyPerformanceMode } from '@/src/engine/runtime/mindmap';

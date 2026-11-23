@@ -18,14 +18,14 @@
  * onunload 置空后静默跳过），这一层被上面的用例以桩服务替代。
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import type { MindMap } from '../../../vendor/simple-mind-map.cjs';
-import type { Language } from '../../../src/core/i18n';
-import { ElementStatusBarService } from '../../../src/services/status-bar';
-import type { MindMapViewContext } from '../../../src/features/view/view-context';
+import type { MindMap } from '@/vendor/simple-mind-map.cjs';
+import type { Language } from '@/src/core/i18n';
+import { ElementStatusBarService } from '@/src/services/status-bar';
+import type { MindMapViewContext } from '@/src/features/view/view-context';
 import {
 	cancelStatusBarUpdate,
 	updateStatusBar,
-} from '../../../src/features/view/view-status';
+} from '@/src/features/view/view-status';
 
 const { countMindMapNodesMock } = vi.hoisted(() => ({
 	// 唯一计数入口（`engine/mindmap.countMindMapNodes`）：桩它即同时覆盖
@@ -33,7 +33,7 @@ const { countMindMapNodesMock } = vi.hoisted(() => ({
 	countMindMapNodesMock: vi.fn<(mindMap: unknown) => number>(),
 }));
 
-vi.mock('../../../src/engine', () => ({
+vi.mock('@/src/engine', () => ({
 	countMindMapNodes: countMindMapNodesMock,
 }));
 

@@ -1,9 +1,9 @@
 /** 单引擎插件会话：惰性挂载、活动组件迁移、冻结测量与编辑保护。 */
 import { Component } from 'obsidian';
 import type { App, EventRef } from 'obsidian';
-import { PLUGIN_SLOT_CLASS, PLUGIN_SLOT_ID, PLUGIN_LIVE_CLASS, PLUGIN_INTERACTIVE_ATTR, PLUGIN_AUTO_WIDTH_ATTR } from '../../../core/plugin-content-types';
-import type { PluginBlockRequest } from '../../../core/plugin-content-types';
-import { fencedNodeBlocks, normalizeBlockSource } from '../../../markdown';
+import { PLUGIN_SLOT_CLASS, PLUGIN_SLOT_ID, PLUGIN_LIVE_CLASS, PLUGIN_INTERACTIVE_ATTR, PLUGIN_AUTO_WIDTH_ATTR } from '@/src/core/plugin-content-types';
+import type { PluginBlockRequest } from '@/src/core/plugin-content-types';
+import { fencedNodeBlocks, normalizeBlockSource } from '@/src/markdown';
 import { pluginPresentation } from './snapshot';
 import { renderNativePlugin } from './native';
 import type { PluginRenderRequest, PluginAdapter } from './native';

@@ -18,7 +18,7 @@ import {
 	buildInlineData,
 	splitFrontmatter,
 	tokenizeInline,
-} from '../../../src/markdown/outline/md-outline';
+} from '@/src/markdown/outline/md-outline';
 
 describe('tokenizeInline — 入口短路（防长行正则回溯）', () => {
 	// 2026-10-02：INLINE_RE 第二备选的 `[^\]]*` 在「大量 `[` 起点但无闭合」

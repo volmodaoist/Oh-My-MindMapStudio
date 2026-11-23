@@ -15,8 +15,8 @@
  * target/emitter 都是结构化类型，故用普通对象桩即可，无需 DOM 环境。
  */
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { EventBinder, elementFromTarget } from '../../src/core/event-binder';
-import type { EventTargetLike } from '../../src/core/event-binder';
+import { EventBinder, elementFromTarget } from '@/src/core/event-binder';
+import type { EventTargetLike } from '@/src/core/event-binder';
 
 interface DomCall {
 	type: string;

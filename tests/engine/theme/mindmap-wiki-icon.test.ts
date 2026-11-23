@@ -17,8 +17,8 @@
  * （空文本 / 含图 + `mdWikiLinkpath`）上出现。
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import type { MindMapNode, MindMapTreeNode } from '../../../vendor/simple-mind-map.cjs';
-import { createMindMap, type CreateMindMapOptions } from '../../../src/engine';
+import type { MindMapNode, MindMapTreeNode } from '@/vendor/simple-mind-map.cjs';
+import { createMindMap, type CreateMindMapOptions } from '@/src/engine';
 
 /** 图标构造签名（引擎 createNodePrefixContent 的最小契约面） */
 type PrefixFn = (
@@ -33,7 +33,7 @@ const captured = vi.hoisted(() => ({
 		| undefined,
 }));
 
-vi.mock('../../../vendor/simple-mind-map.cjs', () => ({
+vi.mock('@/vendor/simple-mind-map.cjs', () => ({
 	MindMap: class {
 		resize = (): void => {};
 		constructor(options: {

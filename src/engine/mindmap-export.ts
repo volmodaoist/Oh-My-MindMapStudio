@@ -4,8 +4,8 @@
  * 两个入口同处一文件：公开的 `exportMindMapImage` 与私有的 `runWithExportScale`
  * ——后者承载「临时倍率进入 → 任务 → **无论成败恢复**」这一对不变式。
  */
-import type { MindMap } from '../../vendor/simple-mind-map.cjs';
-import type { ExportImageFormat } from '../core/constants';
+import type { MindMap } from '@/vendor/simple-mind-map.cjs';
+import type { ExportImageFormat } from '@/src/core/constants';
 
 /**
  * 以临时导出倍率执行导出任务：进入时写入 minExportImgCanvasScale，

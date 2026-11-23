@@ -3,7 +3,7 @@
  * 从 view-attachments.ts 拆出（该文件其余能力已并入 view-node-actions.ts）。
  */
 import { App, FileSystemAdapter, Notice, Platform, TFile } from 'obsidian';
-import { t, type Language } from '../../core/i18n';
+import { t, type Language } from '@/src/core/i18n';
 
 /**
  * 把 `shell.openPath` 的结果面化（两处调用点共用）。

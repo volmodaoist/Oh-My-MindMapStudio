@@ -1,8 +1,8 @@
 /** 通用插件渲染桥：适配器可扩展，组件会话与引擎归属由这里唯一登记。 */
 import { embedPluginFonts } from './fonts';
 import type { App } from 'obsidian';
-import { PLUGIN_SLOT_CLASS, PLUGIN_SLOT_ID } from '../../../core/plugin-content-types';
-import type { PluginBlockRequest, PluginContentRenderer } from '../../../core/plugin-content-types';
+import { PLUGIN_SLOT_CLASS, PLUGIN_SLOT_ID } from '@/src/core/plugin-content-types';
+import type { PluginBlockRequest, PluginContentRenderer } from '@/src/core/plugin-content-types';
 import { DEFAULT_PLUGIN_ADAPTERS } from './native';
 import type { PluginAdapter } from './native';
 import { PluginOwnerSession } from './owner';

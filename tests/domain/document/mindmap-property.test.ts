@@ -31,8 +31,8 @@ import {
 	setMindMapDisabled,
 	setMindMapEnabled,
 	setMindMapLayout,
-} from '../../../src/domain/document/mindmap-property';
-import { LAYOUT_OPTIONS } from '../../../src/core/constants';
+} from '@/src/domain/document/mindmap-property';
+import { LAYOUT_OPTIONS } from '@/src/core/constants';
 
 describe('isMindMapEnabled（唯一启用信号）', () => {
 	it.each([

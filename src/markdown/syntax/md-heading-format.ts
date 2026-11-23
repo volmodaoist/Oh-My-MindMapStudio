@@ -1,4 +1,4 @@
-import type { MdNodeData } from '../../core/node-data';
+import type { MdNodeData } from '@/src/core/node-data';
 /**
  * 层级语法的**整篇重排**（右键「层级语法」级联）：把整棵树按 (语法, 起点) 归一，
  * 双向可逆——列表 ⇄ 标题、一级 ⇄ 二级。
@@ -21,7 +21,7 @@ import type { MdNodeData } from '../../core/node-data';
  * 转标题保留 `mdMarker`（转回列表恢复 `*` / `+`），有序编号由解析层的
  * `mdOrderedNumber` 保真（不再重排为 1..n）。
  */
-import type { MarkdownNode } from '../../domain/document';
+import type { MarkdownNode } from '@/src/domain/document';
 import {
 	MAX_HEADING_LEVEL,
 	convertBranchToList,

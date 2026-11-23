@@ -35,13 +35,13 @@
  * 第二轮同步发现无变化即停（不会自激）。
  */
 
-import type { MindMap, MindMapNode, MindMapTreeNode } from '../../core/engine-types';
+import type { MindMap, MindMapNode, MindMapTreeNode } from '@/src/core/engine-types';
 import {
 	planSummaryRanges,
 	summariesOf,
 	type SummaryRange,
-} from '../../domain/relations';
-import { walkTree } from '../../domain/document';
+} from '@/src/domain/relations';
+import { walkTree } from '@/src/domain/document';
 import { getRenderRoot } from './mindmap-nodes';
 
 /** 本模块拥有的节点 data 键（清除分支遍历的就是它，勿另列一份） */

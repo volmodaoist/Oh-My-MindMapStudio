@@ -7,11 +7,11 @@
  *   外链 → 原样 URL。
  */
 import { App, TFile } from 'obsidian';
-import { isImageExtension, MAX_IMAGE_SIZE_MB } from '../core/constants';
-import { isExternalImageRef, resourceUrlPathCandidates } from '../domain/links';
-import { t, type Language } from '../core/i18n';
-import { buildPastedImageName } from '../media/images-save';
-import { resolvePathToFile } from '../links/links-resolve';
+import { isImageExtension, MAX_IMAGE_SIZE_MB } from '@/src/core/constants';
+import { isExternalImageRef, resourceUrlPathCandidates } from '@/src/domain/links';
+import { t, type Language } from '@/src/core/i18n';
+import { buildPastedImageName } from '@/src/media/images-save';
+import { resolvePathToFile } from '@/src/links/links-resolve';
 import { createButton, openFormModal, VaultFileSuggest } from './modal-common';
 
 /** 输入是否为外链/数据地址（无需库内解析）：domain/links/url 单一权威 */

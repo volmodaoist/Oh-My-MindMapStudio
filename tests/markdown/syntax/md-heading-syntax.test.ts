@@ -14,15 +14,15 @@
  */
 import fc from 'fast-check';
 import { describe, expect, it } from 'vitest';
-import type { MindMapTreeNode } from '../../../src/core/engine-types';
+import type { MindMapTreeNode } from '@/src/core/engine-types';
 import {
 	currentDocumentSyntax,
 	planDocumentSyntax,
-} from '../../../src/markdown/syntax/md-heading-format';
+} from '@/src/markdown/syntax/md-heading-format';
 import {
 	adaptSubtreesToGroup,
 	normalizeSiblingSyntax,
-} from '../../../src/markdown/syntax/md-heading-normalize';
+} from '@/src/markdown/syntax/md-heading-normalize';
 import {
 	convertBranchToHeadings,
 	convertBranchToList,
@@ -30,9 +30,9 @@ import {
 	liveNodeTree,
 	readHeadingStart,
 	seedHeadingStart,
-} from '../../../src/markdown/syntax/md-heading-syntax';
-import { parseMdOutline } from '../../../src/markdown/outline/md-outline';
-import { serializeMdBody } from '../../../src/markdown/serialize/md-serialize';
+} from '@/src/markdown/syntax/md-heading-syntax';
+import { parseMdOutline } from '@/src/markdown/outline/md-outline';
+import { serializeMdBody } from '@/src/markdown/serialize/md-serialize';
 
 type MNode = MindMapTreeNode;
 

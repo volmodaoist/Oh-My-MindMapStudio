@@ -14,8 +14,8 @@
  *   「该视图一次」，两种既有语义都必须能表达，故实例之间互不影响。
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { createWarnOnce, notifyError } from '../../src/core/errors';
-import { t } from '../../src/core/i18n';
+import { createWarnOnce, notifyError } from '@/src/core/errors';
+import { t } from '@/src/core/i18n';
 
 const h = vi.hoisted(() => ({ noticeCalls: [] as string[] }));
 

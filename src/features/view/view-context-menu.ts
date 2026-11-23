@@ -25,28 +25,28 @@ import {
 	resetZoom,
 	setActiveNodes,
 	siblingMoveBlocker,
-} from '../../engine';
+} from '@/src/engine';
 import {
 	isCustomPaletteValue,
 	LAYOUT_OPTIONS,
 	PALETTE_OPTIONS,
-} from '../../core/constants';
-import { COLOR_DIRECTIVE_NONE } from '../../domain/color';
-import type { DocumentSyntax } from '../../markdown';
+} from '@/src/core/constants';
+import { COLOR_DIRECTIVE_NONE } from '@/src/domain/color';
+import type { DocumentSyntax } from '@/src/markdown';
 import {
 	addCascadingMenu,
 	addCustomColorItem,
 	closeOpenMenu,
 	showExclusiveMenu,
-} from '../../ui/menu-submenu';
+} from '@/src/ui/menu-submenu';
 import {
 	applyBranchColors,
 	applyNodeColor,
 	effectiveNodeColorOf,
 	hasBranchLayer,
 	nodeColorOptions,
-} from '../editing/view-node-color';
-import { fitToScreen } from '../canvas/view-viewport';
+} from '@/src/features/editing/view-node-color';
+import { fitToScreen } from '@/src/features/canvas/view-viewport';
 import {
 	addImageToActiveNode,
 	addLinkToActiveNode,
@@ -59,21 +59,21 @@ import {
 	moveNodeUp,
 	removeNodeImage,
 	removeNodeText,
-} from '../editing/view-node-actions';
+} from '@/src/features/editing/view-node-actions';
 import {
 	copySelectedNodes,
 	pasteClipboardIntoNode,
-} from '../editing/view-clipboard';
-import { openNodeImageFullscreen } from '../media/view-image-fullscreen';
-import { startRelationPicking } from '../relations/view-node-relation';
-import { addSummaryItem, showSummaryMenu } from '../relations/view-node-summary';
-import { nodeLink } from '../navigation/view-wikilink';
+} from '@/src/features/editing/view-clipboard';
+import { openNodeImageFullscreen } from '@/src/features/media/view-image-fullscreen';
+import { startRelationPicking } from '@/src/features/relations/view-node-relation';
+import { addSummaryItem, showSummaryMenu } from '@/src/features/relations/view-node-summary';
+import { nodeLink } from '@/src/features/navigation/view-wikilink';
 import { arrangeMindMap } from './view-toolbar';
-import { t, tf, type TranslationKey } from '../../core/i18n';
-import { writeClipboardText } from '../../platform/system/clipboard';
-import { renderHyperlink } from '../../markdown';
-import type { MdNodeData } from '../../core/node-data';
-import type { MindMapNode } from '../../core/engine-types';
+import { t, tf, type TranslationKey } from '@/src/core/i18n';
+import { writeClipboardText } from '@/src/platform/system/clipboard';
+import { renderHyperlink } from '@/src/markdown';
+import type { MdNodeData } from '@/src/core/node-data';
+import type { MindMapNode } from '@/src/core/engine-types';
 import type { MindMapViewContext } from './view-context';
 
 /** 「勾选当前值」的单值级联菜单（布局用；配色两态见下方两个专用构建） */

@@ -21,7 +21,7 @@
  * 仍需发 `before_update_data` / `update_data`：它们是引擎插件（协作 / 演示）
  * 依赖的生命周期事件，且**不产生**插件侧编排。
  */
-import type { MindMap, MindMapTreeNode } from '../../../vendor/simple-mind-map.cjs';
+import type { MindMap, MindMapTreeNode } from '@/vendor/simple-mind-map.cjs';
 
 /** 引擎上本模块用到的私有面（防御式读取：版本差异只降级、不抛错） */
 interface SnapshotCapableMindMap {

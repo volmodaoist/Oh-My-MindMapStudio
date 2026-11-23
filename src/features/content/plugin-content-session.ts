@@ -1,12 +1,12 @@
 /** 插件正文更新仍走节点原文提交管线，不另起 Vault 保存或撤销时间线。 */
-import { readNodeDataString } from '../../core/node-data';
-import { t } from '../../core/i18n';
-import { findRenderNodeByUid, getRenderRoot, refreshNodesCustomContent, renderWithCallback } from '../../engine';
-import { FencedBlockConflictError, replaceFencedNodeBlock } from '../../markdown';
+import { readNodeDataString } from '@/src/core/node-data';
+import { t } from '@/src/core/i18n';
+import { findRenderNodeByUid, getRenderRoot, refreshNodesCustomContent, renderWithCallback } from '@/src/engine';
+import { FencedBlockConflictError, replaceFencedNodeBlock } from '@/src/markdown';
 import { applyRawNodeContent } from './node-content-write';
-import { preparePluginContents } from '../../platform/rendering/plugins/bridge';
-import type { ViewNodeEditContext } from '../view/view-context';
-import type { MindMap } from '../../core/engine-types';
+import { preparePluginContents } from '@/src/platform/rendering/plugins/bridge';
+import type { ViewNodeEditContext } from '@/src/features/view/view-context';
+import type { MindMap } from '@/src/core/engine-types';
 
 export async function commitPluginBlock(
 	view: ViewNodeEditContext, nodeId: string, index: number, expected: string, next: string | null,

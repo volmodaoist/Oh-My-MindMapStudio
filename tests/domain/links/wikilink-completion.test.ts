@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { wikilinkTriggerAt } from '../../../src/domain/links/wikilink';
+import { wikilinkTriggerAt } from '@/src/domain/links/wikilink';
 
 describe('wikilink completion trigger', () => {
 	it.each(['[[', 'text [[Target', '![[Image', '[[Target#Head', '[[Target#^block'])('finds the incomplete token in %s', value => {

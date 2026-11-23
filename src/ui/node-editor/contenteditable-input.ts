@@ -1,5 +1,5 @@
 /** 引擎纯文本 contenteditable 的薄适配；文本节点 + BR 的 UTF-16 口径与引擎 getEditText 一致。 */
-import type { EditorInputContext, EditorInputSurface, EditorTextRange } from '../../core/editor-input';
+import type { EditorInputContext, EditorInputSurface, EditorTextRange } from '@/src/core/editor-input';
 import { insertNativeEditorText, notifyEditorInput } from './native-input';
 
 function textOf(node: Node): string {

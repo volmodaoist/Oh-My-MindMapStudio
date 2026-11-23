@@ -18,7 +18,7 @@ import {
 	preferredLinkPathFormat,
 	prefersMarkdownLinks,
 	updatesInternalLinksOnRename,
-} from '../../../src/platform/workspace/vault-prefs';
+} from '@/src/platform/workspace/vault-prefs';
 
 /** 伪造宿主：只提供 vault.getConfig（缺失 / 抛错两种退化由用例单独构造） */
 function fakeApp(getConfig: ((key: string) => unknown) | undefined): App {

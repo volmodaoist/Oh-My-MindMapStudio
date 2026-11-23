@@ -12,12 +12,12 @@
  */
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { App, FileSystemAdapter, TFile } from 'obsidian';
-import { fileLookupIndex } from '../../src/links/file-lookup';
+import { fileLookupIndex } from '@/src/links/file-lookup';
 import {
 	filesUnderFolder,
 	resolveDroppedFile,
 	resolvePathToFile,
-} from '../../src/links/links-resolve';
+} from '@/src/links/links-resolve';
 
 /** 资源地址前缀：fake vault 的 getResourcePath 输出形态 */
 const RESOURCE_PREFIX = 'app://fake/';

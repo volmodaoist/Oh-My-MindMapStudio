@@ -12,12 +12,12 @@ import {
 	RESET_LAYOUT_ROOT_WAIT_INTERVAL_MS,
 	RESET_LAYOUT_ROOT_WAIT_TIMEOUT_MS,
 	RESET_LAYOUT_VIEWPORT_DELAY_MS,
-} from '../../core/constants';
-import type { MindMap } from '../../core/engine-types';
+} from '@/src/core/constants';
+import type { MindMap } from '@/src/core/engine-types';
 import { ENGINE_COMMANDS } from './mindmap-commands';
-import { getRenderRoot } from '../nodes/mindmap-nodes';
+import { getRenderRoot } from '@/src/engine/nodes/mindmap-nodes';
 import { scheduleEngineTimer } from './mindmap-timers';
-import { fitMindMap } from '../viewport/mindmap-viewport';
+import { fitMindMap } from '@/src/engine/viewport/mindmap-viewport';
 
 /** 整理选项（不导出：调用方传对象字面量，对外只留 `arrangeMindMap` 一个符号） */
 interface ArrangeMindMapOptions {

@@ -17,7 +17,7 @@ import {
 	isRemoteOrDataUrl,
 	resourceUrlPathCandidates,
 	tryDecodeUri,
-} from '../domain/links';
+} from '@/src/domain/links';
 import { fileLookupIndex, lookupIndexedFile } from './file-lookup';
 
 /**

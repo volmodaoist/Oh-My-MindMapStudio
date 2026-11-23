@@ -14,8 +14,8 @@
  * 引擎无 ENTER_TEXT_EDIT 命令，`node_dblclick` 事件是文本编辑的官方入口。
  */
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import type { MindMap, MindMapNode } from '../../../vendor/simple-mind-map.cjs';
-import { startNodeTextEdit } from '../../../src/engine';
+import type { MindMap, MindMapNode } from '@/vendor/simple-mind-map.cjs';
+import { startNodeTextEdit } from '@/src/engine';
 
 // mindmap.ts 经 import 链加载真实 vendor bundle（顶层求值触碰 document.documentElement）；
 // 静态 import 先于模块体执行，故桩必须放进 vi.hoisted 才会先落地。

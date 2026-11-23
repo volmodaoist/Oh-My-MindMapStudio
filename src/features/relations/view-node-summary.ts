@@ -24,27 +24,27 @@
  * `%%id%%` / `%%rel%%` 逐字带回。
  */
 import { Menu, Notice } from 'obsidian';
-import type { MindMapNode } from '../../core/engine-types';
-import type { MdNodeData } from '../../core/node-data';
-import { t, tf } from '../../core/i18n';
+import type { MindMapNode } from '@/src/core/engine-types';
+import type { MdNodeData } from '@/src/core/node-data';
+import { t, tf } from '@/src/core/i18n';
 import {
 	applySummaries,
 	planSummaryRanges,
 	summariesOf,
 	summaryEntryIndexOfRange,
 	type SummaryEntry,
-} from '../../domain/relations';
+} from '@/src/domain/relations';
 import {
 	getNodeDataString,
 	isSummaryNode,
 	summaryAnchorOf,
-} from '../../engine';
-import { composeNodeContent } from '../../markdown';
-import { showExclusiveMenu } from '../../ui/menu-submenu';
-import { openSummaryTextModal } from '../../ui/modal-summary-text';
-import { applyRawNodeContents } from '../content/node-content-write';
+} from '@/src/engine';
+import { composeNodeContent } from '@/src/markdown';
+import { showExclusiveMenu } from '@/src/ui/menu-submenu';
+import { openSummaryTextModal } from '@/src/ui/modal-summary-text';
+import { applyRawNodeContents } from '@/src/features/content/node-content-write';
 import { startNodePick } from './node-pick';
-import type { ViewNodeEditContext } from '../view/view-context';
+import type { ViewNodeEditContext } from '@/src/features/view/view-context';
 
 /** 同一个父节点下、下标连续的一段兄弟（一次「概要」= 每个分支一条） */
 interface SiblingRun {

@@ -1,7 +1,7 @@
 /** 节点内容 context：DOM/样式内聚，保持原输出与导出保真。 */
-import { type InlineContentOptions, type InlineSegment, type InlineContentDocument } from '../../core/node-content-types';
-import { type Language } from '../../core/i18n';
-import { type NodeContentTones } from '../../domain/color';
+import { type InlineContentOptions, type InlineSegment, type InlineContentDocument } from '@/src/core/node-content-types';
+import { type Language } from '@/src/core/i18n';
+import { type NodeContentTones } from '@/src/domain/color';
 
 /** `buildContentElement` 的构建参数（一次装配读一次的取值，随段递归下传） */
 export interface BuildContentParams {

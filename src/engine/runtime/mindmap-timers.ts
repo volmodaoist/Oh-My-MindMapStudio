@@ -4,7 +4,7 @@
  * 本模块是**叶子**：`mindmap-viewport` / `mindmap-nodes` / `mindmap.ts`（整理）
  * 共用 `scheduleEngineTimer`——留在 `mindmap.ts` 会与拆分后的子模块构成环。
  */
-import type { MindMap } from '../../../vendor/simple-mind-map.cjs';
+import type { MindMap } from '@/vendor/simple-mind-map.cjs';
 
 /**
  * 引擎侧延时任务登记表（`execResetLayoutAndFit` 的延时 fit、

@@ -18,9 +18,9 @@
  * 已知边界（引擎行为，非缺陷）：**拖拽过程中**高度滞后一拍——引擎每帧的
  * `reRender([])` 不重建自绘内容，故松手时才校正；宽度本身是实时跟随的。
  */
-import { isCustomNodeContent, refreshNodeCustomContent } from '../../engine';
-import type { MindMapNode } from '../../core/engine-types';
-import type { MindMapViewContext } from '../view/view-context';
+import { isCustomNodeContent, refreshNodeCustomContent } from '@/src/engine';
+import type { MindMapNode } from '@/src/core/engine-types';
+import type { MindMapViewContext } from '@/src/features/view/view-context';
 
 /**
  * 安装**每节点**的宽度手柄门禁（幂等；在首个节点内容回调里调用即可装上）。

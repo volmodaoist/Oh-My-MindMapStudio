@@ -27,14 +27,14 @@
  * 围栏代码块内的同形行、缩进代码行（≥4 空格 / Tab）、列表续行里的缩进写法都不是
  * 定义；同一 id 出现多次时取**文档序第一个**（GFM 的「首个定义生效」）。
  */
-import { isIndentedCodeLine } from '../../core/constants';
-import { nodeContinuationIndents, nodeInlineSource } from '../../domain/document';
+import { isIndentedCodeLine } from '@/src/core/constants';
+import { nodeContinuationIndents, nodeInlineSource } from '@/src/domain/document';
 import {
 	fenceMarker,
 	isFenceCloseLine,
 	isSelfClosedFenceLine,
 	type FenceBoundary,
-} from '../outline/md-outline-lines';
+} from '@/src/markdown/outline/md-outline-lines';
 
 /**
  * 脚注 id 的字符类（**唯一定义**：定义行与行内引用两处正则都从这里拼）。

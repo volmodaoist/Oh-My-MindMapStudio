@@ -1,8 +1,8 @@
 import { describe, expect, it, vi } from 'vitest';
-import { FakeDocument, FakeElement, asDocument } from '../../helpers/node-content-dom';
-import type { PluginBlockRequest } from '../../../src/core/plugin-content-types';
-import { PLUGIN_AUTO_WIDTH_ATTR } from '../../../src/core/plugin-content-types';
-import { buildPluginBlock } from '../../../src/ui/node-content/content-plugin';
+import { FakeDocument, FakeElement, asDocument } from '@/tests/helpers/node-content-dom';
+import type { PluginBlockRequest } from '@/src/core/plugin-content-types';
+import { PLUGIN_AUTO_WIDTH_ATTR } from '@/src/core/plugin-content-types';
+import { buildPluginBlock } from '@/src/ui/node-content/content-plugin';
 
 describe('插件节点测量槽位', () => {
 	it('构建期间只登记槽位与来源，不自行创建或克隆活动组件', () => {
