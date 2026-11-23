@@ -11,7 +11,7 @@
  * `sizeWidth` / 位置区间，故本文件不导出写回逻辑。
  */
 import { isRenderableImageExtension } from '../../core/constants';
-import type { MdTokenSegment } from '../../domain/md-meta';
+import type { MdTokenSegment } from '../../domain/document';
 type InlineTokenKind =
 	| 'wikiImg'
 	| 'wiki'

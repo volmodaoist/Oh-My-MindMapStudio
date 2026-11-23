@@ -1,3 +1,4 @@
+import type { MdNodeData } from '../../core/node-data';
 /**
  * 层级语法的**编辑期一致性守卫**：只修「会被解析成另一棵树」的排布，
  * 以及粘贴落点已定语法时的**插入前**换算。
@@ -35,7 +36,7 @@
  * 没有层级表达）；标题 / 列表互转保留 `mdMarker`，`*` / `+` 不会退化成 `-`；
  * 有序编号由解析层的 `mdOrderedNumber` 保真。
  */
-import type { MindMapTreeNode } from '../../core/engine-types';
+import type { MarkdownNode } from '../../domain/document';
 import {
 	MAX_HEADING_LEVEL,
 	convertBranchToHeadings,
@@ -97,9 +98,9 @@ export interface SubtreeAdaptResult {
 }
 
 /** 一支里还有多少个标题节点（降级前数：降级后 mdType 就没了） */
-function countHeadings(node: MindMapTreeNode): number {
+function countHeadings(node: MarkdownNode<MdNodeData>): number {
 	let count = 0;
-	const stack: MindMapTreeNode[] = [node];
+	const stack: MarkdownNode<MdNodeData>[] = [node];
 	while (stack.length > 0) {
 		const current = stack.pop()!;
 		if (isHeadingNode(dataOf(current))) {
@@ -122,7 +123,7 @@ function countHeadings(node: MindMapTreeNode): number {
  * 编辑（`BACK`），用户的 `Ctrl+Z` 因此仍是「一步撤掉拖拽 + 语法换算」。
  */
 export function normalizeSiblingSyntax(
-	root: MindMapTreeNode,
+	root: MarkdownNode<MdNodeData>,
 ): SyntaxNormalizeResult {
 	const result: SyntaxNormalizeResult = {
 		converted: 0,
@@ -133,7 +134,7 @@ export function normalizeSiblingSyntax(
 		demotedHeadings: 0,
 		blocked: [],
 	};
-	const parents: { node: MindMapTreeNode; isRoot: boolean }[] = [
+	const parents: { node: MarkdownNode<MdNodeData>; isRoot: boolean }[] = [
 		{ node: root, isRoot: true },
 	];
 	while (parents.length > 0) {
@@ -266,8 +267,8 @@ export function normalizeSiblingSyntax(
  * 插入前换算就是必需的，不是优化。
  */
 export function adaptSubtreesToGroup(
-	parent: MindMapTreeNode,
-	subtrees: readonly MindMapTreeNode[],
+	parent: MarkdownNode<MdNodeData>,
+	subtrees: readonly MarkdownNode<MdNodeData>[],
 ): SubtreeAdaptResult {
 	const result: SubtreeAdaptResult = { converted: 0, blocked: [] };
 	const siblings = parent.children ?? [];

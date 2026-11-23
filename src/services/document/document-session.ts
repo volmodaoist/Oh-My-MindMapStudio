@@ -1,3 +1,4 @@
+import type { MdNodeData } from '../../core/node-data';
 /**
  * 文档会话：**一个文件一份权威树 + 一条撤销时间线 + 一条保存管线**（Level B）。
  *
@@ -35,7 +36,7 @@
  */
 import { App, TFile } from 'obsidian';
 import { createDebouncer, type Debouncer } from '../../core/concurrency';
-import type { MindMapTreeNode } from '../../core/engine-types';
+import type { MarkdownNode } from '../../domain/document';
 import { cloneTree as cloneJsonTree, walkTree } from '../../domain/tree';
 import { resolveHistoryLimit } from '../../core/history-budget';
 import { splitFrontmatter } from '../../markdown';
@@ -96,7 +97,7 @@ export interface SessionViewPort {
 	 * @returns 是否真的应用（引擎尚未创建 / 已销毁时 false）：会话据此决定
 	 *   「已应用版本」，未应用的下一次 `onViewReady` 会补。
 	 */
-	applySnapshot(tree: MindMapTreeNode): boolean;
+	applySnapshot(tree: MarkdownNode<MdNodeData>): boolean;
 	/** 应用快照后：只刷新界面（状态栏 / 小地图 / 历史按钮），**不排保存** */
 	afterApplySnapshot(): void;
 	/** 保存状态（写本视图字段；是否推给共享状态栏由视图按活动态决定） */
@@ -129,12 +130,12 @@ export interface DocumentSessionOptions {
 }
 
 /** 判等：引擎数据树是纯 JSON，逐字比较即可（与 `addHistory` 同口径） */
-function sameTree(left: MindMapTreeNode, right: MindMapTreeNode): boolean {
+function sameTree(left: MarkdownNode<MdNodeData>, right: MarkdownNode<MdNodeData>): boolean {
 	return JSON.stringify(left) === JSON.stringify(right);
 }
 
 /** 树的节点数（历史上限预算用） */
-function countNodes(tree: MindMapTreeNode): number {
+function countNodes(tree: MarkdownNode<MdNodeData>): number {
 	let count = 0;
 	walkTree(tree, () => {
 		count++;
@@ -151,7 +152,7 @@ export class DocumentSession {
 		file: TFile,
 	) => DocumentLoadResult;
 	private readonly savePipeline: SavePipeline;
-	private readonly history: SessionHistory<MindMapTreeNode>;
+	private readonly history: SessionHistory<MarkdownNode<MdNodeData>>;
 	private readonly views = new Set<SessionViewPort>();
 	/** 每个视图已应用的会话版本（`onViewReady` 补一次「落后」的视图） */
 	private readonly appliedVersions = new WeakMap<SessionViewPort, number>();
@@ -167,7 +168,7 @@ export class DocumentSession {
 	/** 首次加载的进行中 Promise（并发 acquire 必须等同一份，不能各自返回空树） */
 	private loadPromise: Promise<void> | null = null;
 
-	private treeValue: MindMapTreeNode | null = null;
+	private treeValue: MarkdownNode<MdNodeData> | null = null;
 	private frontmatterValue: string | null = null;
 	private rawBodyValue = '';
 	/** 会话内容版本：每次 tree 变更 +1（用于视图就绪时补同步） */
@@ -199,7 +200,7 @@ export class DocumentSession {
 			this.visibilityListener = () => this.handleVisibilityChange();
 			document.addEventListener('visibilitychange', this.visibilityListener);
 		}
-		this.history = new SessionHistory<MindMapTreeNode>(() =>
+		this.history = new SessionHistory<MarkdownNode<MdNodeData>>(() =>
 			resolveHistoryLimit(this.treeValue ? countNodes(this.treeValue) : 1),
 		);
 		this.savePipeline = new SavePipeline({
@@ -233,7 +234,7 @@ export class DocumentSession {
 	}
 
 	/** 权威树（只读；调用方需要写时先深拷贝） */
-	get tree(): MindMapTreeNode | null {
+	get tree(): MarkdownNode<MdNodeData> | null {
 		return this.treeValue;
 	}
 
@@ -279,7 +280,7 @@ export class DocumentSession {
 	}
 
 	/** 深拷贝一份权威树（视图建引擎 / 广播用；避免跨视图串改） */
-	cloneTree(): MindMapTreeNode | null {
+	cloneTree(): MarkdownNode<MdNodeData> | null {
 		return this.treeValue ? cloneJsonTree(this.treeValue) : null;
 	}
 
@@ -371,7 +372,7 @@ export class DocumentSession {
 	 *
 	 * 接收视图的应用通道**不产生 `data_change`**，故同一次编辑只会进这里一次。
 	 */
-	commit(tree: MindMapTreeNode, origin?: SessionViewPort): boolean {
+	commit(tree: MarkdownNode<MdNodeData>, origin?: SessionViewPort): boolean {
 		if (!this.loaded || this.loading || this.applying || this.destroyed) {
 			return false;
 		}
@@ -414,7 +415,7 @@ export class DocumentSession {
 	 * （2026-11-09 实机：`# 甲` + `- 列表乙` 升级成两个一级标题，屏上对、
 	 * 文件没写）。
 	 */
-	updateCurrent(tree: MindMapTreeNode, origin?: SessionViewPort): boolean {
+	updateCurrent(tree: MarkdownNode<MdNodeData>, origin?: SessionViewPort): boolean {
 		if (!this.loaded || this.loading || this.applying || this.destroyed) {
 			return false;
 		}
@@ -498,7 +499,7 @@ export class DocumentSession {
 	 * 引擎快照替换），两边才逐字可比。只记一次——设置刷新重建引擎不重记
 	 * （K156④ 的教训：重记会把未落盘编辑误标成基线）。
 	 */
-	markLoadedFromEngine(snapshot: MindMapTreeNode | null): void {
+	markLoadedFromEngine(snapshot: MarkdownNode<MdNodeData> | null): void {
 		if (!snapshot || this.baselineRecorded || !this.loaded) {
 			return;
 		}
@@ -623,7 +624,7 @@ export class DocumentSession {
 
 	// ---- 内部：广播 ----
 
-	private replaceTree(tree: MindMapTreeNode): void {
+	private replaceTree(tree: MarkdownNode<MdNodeData>): void {
 		this.treeValue = tree;
 		this.versionValue++;
 	}
@@ -734,7 +735,7 @@ export class DocumentSession {
 		}
 	}
 
-	private applyToPort(port: SessionViewPort, tree?: MindMapTreeNode): void {
+	private applyToPort(port: SessionViewPort, tree?: MarkdownNode<MdNodeData>): void {
 		const source = tree ?? this.treeValue;
 		if (!source) {
 			return;

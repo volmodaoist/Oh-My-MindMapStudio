@@ -337,8 +337,8 @@ describe('矩阵定义（scripts/module-boundaries.mjs）', () => {
 		expect(forbiddenFromCore('../../features/view')).toBe(true);
 		expect(forbiddenFromCore('../../../ui/modal-common')).toBe(true);
 		// 许可集内与组内相对引用不得被拦
-		expect(forbiddenFromCore('../domain/md-meta')).toBe(false);
-		expect(forbiddenFromCore('./md-meta')).toBe(false);
+		expect(forbiddenFromCore('../domain/document')).toBe(false);
+		expect(forbiddenFromCore('./document')).toBe(false);
 		// 组名前缀相同的**非**该组路径不得被误命中（`(?:/|$)` 的边界作用）
 		expect(forbiddenFromCore('../core-utils/x')).toBe(false);
 
@@ -526,5 +526,12 @@ describe('模块边界（K51）：依赖图性质', () => {
 				.map(({ specifier }) => `${relPath(file)} → ${specifier}`),
 		);
 		expect(violations).toEqual([]);
+	});
+
+	it('domain 的相对依赖只落在领域层内（含类型边，不因子目录放宽到 vendor）', () => {
+		const violations = IMPORT_EDGES.filter(edge =>
+			moduleGroupOf(edge.from) === 'domain' && moduleGroupOf(edge.to) !== 'domain',
+		);
+		expect(violations.map(edge => `${relPath(edge.from)} → ${relPath(edge.to)}`)).toEqual([]);
 	});
 });

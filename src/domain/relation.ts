@@ -33,7 +33,7 @@ import {
 	type DirectiveSegment,
 	splitDirectiveSegments,
 } from './directive';
-import { nodeInlineSource } from './md-meta';
+import { nodeInlineSource } from './document';
 import { walkTree } from './tree';
 
 /** 端点方向（引擎 `getNodePoint(node, dir, range)` 的 dir） */

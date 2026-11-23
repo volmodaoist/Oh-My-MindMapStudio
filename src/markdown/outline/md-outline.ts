@@ -21,7 +21,7 @@
  * 3) 行内轻标记（** * ` ~~ HTML）不剥离，原样保留（无损往返）。
  */
 
-import type { MindMapTreeNode } from '../../core/engine-types';
+import type { MarkdownDocument, MarkdownNode, MarkdownSource } from '../../domain/document';
 import {
 	formatWikilink,
 	linkDisplayText,
@@ -33,7 +33,7 @@ import { parseTaskPrefix, stripTaskPrefix } from '../../domain/md-task';
 import { isIndentedCodeLine } from '../../core/constants';
 import { isDirectiveLine, stripTrailingSegments } from '../../domain/directive';
 import { isColorDirectiveLine } from '../../domain/color';
-import type { MdTokenSegment } from '../../domain/md-meta';
+import type { MdTokenSegment } from '../../domain/document';
 import type { MdNodeData } from '../../core/node-data';
 import { isFootnoteDefinition } from '../syntax/md-footnote';
 import { classifyLines, leadingSpaces } from './md-outline-lines';
@@ -44,6 +44,8 @@ import {
 	tokenizeInline,
 } from './md-outline-inline';
 
+type ParsedNode = MarkdownNode<MdNodeData>;
+
 /**
  * 行内 token 族已拆到 `md-outline-inline`，此处**转出**同一符号：既有引用方
  * （`md-serialize` / `md-serialize-inline` / `tests/md-inline`）无需改 import 路径，
@@ -51,20 +53,6 @@ import {
  */
 export { tokenDisplay, tokenizeInline };
 export type { InlineToken } from './md-outline-inline';
-
-export interface MdParseResult {
-	tree: MindMapTreeNode;
-	/** 原样保留的 frontmatter 块（含首尾 ---），无则为 null */
-	frontmatter: string | null;
-	/**
-	 * 原样正文（frontmatter 之后，未做任何规范化）。
-	 *
-	 * 供保存管线做「回到加载态」的**逐字还原**：撤销到打开时的状态时，写回的
-	 * 必须是这段原文，而不是 `serializeMdBody` 的规范化结果——否则用户一次
-	 * 「改了又撤」，没编辑过的行（空行、松散列表）照样被重排。
-	 */
-	body: string;
-}
 
 /** UTF-8 BOM：Windows 编辑器/同步工具可能写在文件开头（Obsidian 自己不加） */
 export const UTF8_BOM = '\uFEFF';
@@ -491,11 +479,7 @@ function buildLineInlineData(raw: string): InlineData {
  * 写盘时由 `document-service.wrapBase` 按**磁盘当前值**原样拼回——序列化器不重算它，
  * 否则编辑一个节点就会把这一行空行吃掉（2026-11-09 实机）。
  */
-export function splitFrontmatter(content: string): {
-	body: string;
-	frontmatter: string | null;
-	gap: string;
-} {
+export function splitFrontmatter(content: string): MarkdownSource {
 	const bom = content.startsWith(UTF8_BOM) ? UTF8_BOM : '';
 	const rest = bom ? content.slice(bom.length) : content;
 	/** 结束围栏之后（含换行）在 rest 中的索引；-1 = 不是 frontmatter */
@@ -564,8 +548,8 @@ export function splitFrontmatter(content: string): {
 export function parseMdOutline(
 	content: string,
 	rootName: string,
-): MdParseResult {
-	const { body, frontmatter } = splitFrontmatter(content);
+): MarkdownDocument<MdNodeData> {
+	const { body, frontmatter, gap } = splitFrontmatter(content);
 	const { lines, indentUnit } = classifyLines(body);
 
 	// 虚拟文档根：text=文件名；回写时不输出该行
@@ -575,24 +559,24 @@ export function parseMdOutline(
 		// 文件不会因为改了一个节点就被整篇改成 2 空格（见 MdNodeMeta.mdIndentUnit）
 		rootData.mdIndentUnit = indentUnit;
 	}
-	const root: MindMapTreeNode = { data: rootData, children: [] };
+	const root: ParsedNode = { data: rootData, children: [] };
 	if (lines.length === 0) {
-		return { frontmatter, tree: root, body };
+		return { frontmatter, gap, tree: root, body };
 	}
 
 	/** heading 栈：[节点, # 数量]；虚拟根视作 level 0 恒在栈底 */
-	const headingStack: { node: MindMapTreeNode; level: number }[] = [
+	const headingStack: { node: ParsedNode; level: number }[] = [
 		{ node: root, level: 0 },
 	];
 	/** 当前内容挂载点（= 栈顶 heading 节点） */
-	let contentParent: MindMapTreeNode = root;
+	let contentParent: ParsedNode = root;
 	/**
 	 * list 缩进栈：仅跟踪同一内容区内的列表嵌套。
 	 *
 	 * `contentColumn` = 该项**内容起始列**（缩进 + 标记 + 标记后空白）：续行相对
 	 * 缩进的基准（见 `MdNodeMeta.mdContinuationIndents`）。
 	 */
-	let listStack: { node: MindMapTreeNode; indent: number; contentColumn: number }[] =
+	let listStack: { node: ParsedNode; indent: number; contentColumn: number }[] =
 		[];
 	/**
 	 * 等待合并的相邻 plain 文本行：`raw` 是未 trim 的原文（写进 mdRaw，保逐字回写），
@@ -607,7 +591,7 @@ export function parseMdOutline(
 	 * 行不产出节点，而是挂到上一个节点的 mdRaw 末行。标题节点尤其需要——行内尾插会
 	 * 让 Obsidian 的 heading 文本变成 `支付 %%id:…%%`，`[[#标题]]` 与 `^block-id` 全废。
 	 */
-	let lastNode: MindMapTreeNode | null = null;
+	let lastNode: ParsedNode | null = null;
 
 	/** 把一行指令挂到上一个节点（只动 mdRaw / mdDirectiveTail，不产出节点） */
 	const attachDirectiveLine = (rawLine: string): boolean => {
@@ -615,7 +599,7 @@ export function parseMdOutline(
 			return false;
 		}
 		const line = rawLine.trim();
-		const data = lastNode.data as MdNodeData;
+		const data = lastNode.data;
 		const prevRaw = typeof data.mdRaw === 'string' ? data.mdRaw : '';
 		// 内容为空（空标题 / 空列表项）时**保留一个空内容行**：指令占的是下一行，
 		// 写成 `%%id%%` 单行会让序列化把它当成内容贴到标记后面（`- %%id:…%%`）
@@ -638,7 +622,7 @@ export function parseMdOutline(
 			return false;
 		}
 		const line = rawLine.trim();
-		const data = lastNode.data as MdNodeData;
+		const data = lastNode.data;
 		const prevRaw = typeof data.mdRaw === 'string' ? data.mdRaw : '';
 		data.mdRaw = prevRaw === '' ? `\n${line}` : `${prevRaw}\n${line}`;
 		return true;
@@ -694,7 +678,7 @@ export function parseMdOutline(
 		if (tails.length > 0) {
 			data.mdDirectiveTail = tails.join('\n');
 		}
-		const node: MindMapTreeNode = { data, children: [] };
+		const node: ParsedNode = { data, children: [] };
 		contentParent.children.push(node);
 		lastNode = node;
 		plainBuffer = [];
@@ -729,7 +713,7 @@ export function parseMdOutline(
 			inline.mdTask = task.state;
 			inline.mdTaskToken = task.token;
 		}
-		const node: MindMapTreeNode = {
+		const node: ParsedNode = {
 			data: {
 				...inline,
 				mdType: 'list',
@@ -765,7 +749,7 @@ export function parseMdOutline(
 				rootData.mdHeadingStart =
 					typeof prev === 'number' ? Math.min(prev, level) : level;
 			}
-			const node: MindMapTreeNode = {
+			const node: ParsedNode = {
 				data: {
 					...buildLineInlineData(line.rawContent ?? line.text),
 					mdType: 'heading',
@@ -830,7 +814,7 @@ export function parseMdOutline(
 				const top = listStack[listStack.length - 1]!.node;
 				const inline = buildInlineData(line.text);
 				// 解析产物携带 md* 元数据，按渲染层合并视图收窄（引擎类型未声明）
-				const topData = top.data as MdNodeData;
+				const topData = top.data;
 				const prevText = topData.text ?? '';
 				const prevDerived = topData.mdDerivedText ?? '';
 				const prevRaw = topData.mdRaw ?? '';
@@ -883,7 +867,7 @@ export function parseMdOutline(
 		);
 	}
 	flushPlain();
-	return { frontmatter, tree: root, body };
+	return { frontmatter, gap, tree: root, body };
 }
 
 /**
@@ -903,14 +887,14 @@ export function parseMdOutline(
  *
  * @returns 片段顶层节点（可直接作为 `INSERT_MULTI_CHILD_NODE` 的 childList）
  */
-export function parseMdOutlineFragment(text: string): MindMapTreeNode[] {
+export function parseMdOutlineFragment(text: string): ParsedNode[] {
 	const nodes = parseMdOutline(text, '').tree.children;
 	// 显式栈而非递归：剪贴板文本的缩进深度由外部内容决定，
 	// 递归实现在超深层级上会栈溢出（与 md-serialize 的 walker 同口径）
 	const stack = [...nodes];
 	while (stack.length > 0) {
 		const node = stack.pop()!;
-		const data = node.data as MdNodeData;
+		const data = node.data;
 		if (data.mdType === 'heading' || data.mdType === 'plain') {
 			delete data.mdType;
 			delete data.mdLevel;

@@ -4,7 +4,7 @@
 
 依赖许可唯一定义在 `scripts/module-boundaries.mjs`；ESLint 与真实依赖图测试共同检查。
 
-- `domain/`：纯领域规则与文档模型，不依赖宿主或引擎。
+- `domain/`：纯领域规则与文档模型；文档模型、源码绑定在 document 能力模块，不依赖宿主或引擎。
 - `core/`：共享机制、输入接口和渲染适配类型。
 - `links/`、`markdown/`、`media/`、`engine/`、`platform/`：各自的基础能力。
 - `ui/`：组件 DOM、局部样式与内部输入；`services/`：文档会话和引擎协调。
@@ -21,6 +21,16 @@
 - 模块内部直接使用内部文件，避免经自身 index 形成循环。
 - 公共入口迁移与访问规则记录在同一依赖脚本中；纯逻辑测试可以直测内部实现。
 - 引擎只保留一个正式防腐入口；业务模块不访问 `renderer`、节点 DOM 或 vendor。
+
+## 当前公共入口
+
+- `domain/document/index.ts`：领域文档树、原始分段与源码绑定。
+- `markdown/index.ts`：解析、序列化、语法编辑与打开能力。
+- `services/document/index.ts`：共享文档会话与注册表。
+- `services/engine/index.ts`：引擎创建、监听与视口恢复协调。
+- `engine/index.ts`：引擎防腐 API，内部按 runtime/nodes/viewport/theme 归组。
+
+单文件工具和已有 UI/特性目录继续沿用所属接口；随需求扩大时再收紧边界，避免一次建立大量空壳入口。
 
 ## 数据与组件
 

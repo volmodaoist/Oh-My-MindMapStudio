@@ -25,6 +25,7 @@
 - `tests/contracts/` 检查依赖矩阵、模块出口、索引、标准文档、vendor、构建与安装。
 - `tests/helpers/`、`tests/mocks/`、`tests/fixtures/` 提供共享支持；测试直接调用内部纯逻辑，不扩大公开 API。
 - Markdown 回归
+  - `tests/markdown/document-contract.test.ts`：原始分段、虚拟根、插件围栏与派生字段写回边界。
   - `tests/markdown/md-roundtrip.test.ts`：具体语法与边界。
   - `tests/markdown/md-roundtrip-property.test.ts`：fast-check 往返性质与规范化不动点。
 - DOM 替身

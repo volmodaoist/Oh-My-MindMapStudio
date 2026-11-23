@@ -21,7 +21,7 @@ import { FOOTNOTE_PREVIEW_CLASS } from '../../core/constants';
 import { elementFromTarget, type EventBinder } from '../../core/event-binder';
 import { tf, type Language } from '../../core/i18n';
 import type { MindMap } from '../../core/engine-types';
-import { nodeContinuationIndents, nodeInlineSource } from '../../domain/md-meta';
+import { nodeContinuationIndents, nodeInlineSource } from '../../domain/document';
 import { collectRenderNodeData, revealNodeByUid } from '../../engine';
 import {
 	collectFootnoteDefinitions,

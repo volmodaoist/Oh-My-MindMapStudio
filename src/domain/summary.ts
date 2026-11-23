@@ -35,7 +35,7 @@ import {
 	type DirectiveSegment,
 	splitDirectiveSegments,
 } from './directive';
-import { nodeInlineSource } from './md-meta';
+import { nodeInlineSource } from './document';
 
 /** 一条概要：覆盖本节点起连续的 `count` 个兄弟 + 说明文字 */
 export interface SummaryEntry {

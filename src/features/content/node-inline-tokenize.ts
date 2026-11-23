@@ -37,7 +37,7 @@ import {
 import { colorDirectiveValueOf } from '../../domain/color';
 import { matchPipeTable, type PipeTable } from '../../domain/pipe-table';
 import { isSchemeUrl, isUrlLikeText } from '../../domain/url';
-import { nodeContinuationIndents, nodeInlineSource } from '../../domain/md-meta';
+import { nodeContinuationIndents, nodeInlineSource } from '../../domain/document';
 import { stripTaskPrefix } from '../../domain/md-task';
 import {
 	FOOTNOTE_ID_SOURCE,

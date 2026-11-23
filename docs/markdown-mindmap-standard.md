@@ -1,7 +1,7 @@
 # Markdown ↔ 思维导图映射标准（Oh-My-Mindmap-Studio）
 
-> 关联实现：`src/markdown/outline/md-outline.ts`（解析）/ `src/markdown/serialize/md-serialize.ts`（回写）/ `src/markdown/links/links-split.ts`（混排双链拆分，命令 + 自动触发）/ `src/features/navigation/view-wikilink.ts`（链接交互）/ `src/features/content/node-inline-content.ts`（节点内联内容对外 barrel；实现拆在 `node-inline-tokenize.ts`〔段序列、接管判定〕与 `node-inline-html.ts`〔DOM 装配、内联样式〕，2026-10-16）/ `src/domain/pipe-table.ts`（GFM 管道表识别，显示层，见 §3.5）/ `src/features/mindmap-codeblock.ts`（代码块只读嵌入，见 §2.4）/ `src/engine/runtime/mindmap.ts`（图标与内联内容钩子）/ `src/engine/viewport/mindmap-viewport.ts`（视口几何）；元数据契约 `src/domain/md-meta.ts`。
-> 回归测试：`tests/markdown/md-roundtrip.test.ts`（往返回归：解析结构、层级深度、不动点、编辑合成、rawOk 分支矩阵、uid、视图状态）、`tests/markdown/outline/md-inline.test.ts`（行内 token 边界形态）、`tests/domain/pipe-table.test.ts`（管道表识别正反例）、`tests/domain/color-directive.test.ts`（节点配色指令：解析 / 保护区内不识别 / 就近覆盖 / 样式键清除）与 `tests/features/mindmap-codeblock.test.ts`（代码块嵌入：展示树折叠、降级边界、只读口径、`styles.css` 类名链）。
+> 公共入口：`src/markdown/index.ts`；文档模型：`src/domain/document/model.ts`；源码绑定：`src/domain/document/node-meta.ts`。
+> 解析与序列化实现分别在 outline / serialize 能力目录；具体规则由 Markdown 往返、文档契约与生成式测试覆盖。
 > 本文档依据**当前工作区源码**重新核对后撰写（核对时点见文末「附：本轮核对状态」）。
 >
 > 本标准定义**双向**映射：① 一个标准的 Obsidian Markdown 文件如何**渲染**为思维导图；② 导图中的编辑如何**无损回写**为该 Markdown。**所有渲染/回写行为以此为准**；实现与本标准不一致处视为缺陷。
@@ -9,6 +9,7 @@
 ## 目录
 
 - 1. 定位与触发
+- 1.1 文档模型与扩展契约
 - 2. 渲染方向：Markdown → 思维导图
 - 2.1 结构映射（大纲 → 树）
 - 2.2 行内映射
@@ -66,6 +67,27 @@
 ---
 
 > **新建导图初始内容（2026-11-18）**：生成 `名称.mindmap.md`，只含 `Mindmap: Mindmap` 与 `Mindmap Layout` 属性，正文为空。中心主题显示「名称」，隐藏格式后缀；重名编号位于完整后缀之前（`名称 1.mindmap.md`）。首个用户节点遵循 `newMapSyntax`，正文层级约定保持原样。
+
+### 1.1 文档模型与扩展契约
+
+> 规则：领域模型独立于宿主和引擎，原始来源与可编辑树同时保留；新增持久化语义必须显式扩展解析与序列化。
+
+- 文档来源
+  - `MarkdownSource` 包含原样 `frontmatter`、头后空白 `gap` 和原始 `body`；三段相接逐字还原输入。
+  - BOM、CRLF、YAML 块标量和头后空白归原始来源；保存继续读取磁盘当前文件头，避免覆盖其它视图的新属性。
+  - `body` 用于加载基线与撤销还原，不能被规范化序列化结果替代。仅打开、测量或渲染不写盘。
+- 权威树
+  - `MarkdownDocument` 在来源之外持有 `MarkdownNode` 树；模型定义不导入 Obsidian 或 vendor。
+  - 树仍使用文件名虚拟根。所有 H1 都保留原有子节点身份；本批不改标题、中心主题或新建语义。
+  - `MarkdownNodeData` 定义身份、显示文本与源码绑定；渲染附加字段通过适配层的泛型类型携带，不作为自动持久化字段。
+- 源码绑定
+  - `mdRaw` 保存原始节点内容，`mdDerivedText` 保存解析期显示文本，二者成对更新。
+  - 是否已编辑与读取当前原文只经文档模块的公共函数判定；分段、续行与指令继续复用同一份规则。
+  - `core/node-data.ts` 连接领域数据与当前引擎投影；Markdown 树算法和文档会话使用领域树结构面。
+- 扩展方式
+  - 新语义先定义所属领域字段和 Markdown 语法，再同步解析、序列化、往返测试及本标准。
+  - 未识别内容继续保留原文；运行时字段不能因为出现在节点对象上就写入文件。
+  - 备注、批注、根主题解耦与新布局语法在后续特性分支设计，本节不预置未实现字段或版本迁移。
 
 ## 2. 渲染方向：Markdown → 思维导图
 
@@ -492,7 +514,7 @@ WeakMap 剪贴板已整体删除）。
 
 | 项 | 状态 |
 |---|---|
-| 核对依据 | **文件指针 / 行数：2026-10-21 复核；版本：2026-11-09 复核**；**行为结论沿用 2026-10-15 复核**（行数口径 = `tests/contracts/agents-md-sync.test.ts` 的 `countSourceLines`：按 `\n` 切分、末尾换行不计行。**不要**用 `Measure-Object -Line`，口径不同会对不上）：`src/markdown/outline/md-outline.ts` 1159 行、`src/markdown/serialize/md-serialize.ts` 1248 行、`src/markdown/syntax/md-line-write.ts` 62 行、`src/markdown/links/links-split.ts` 487 行、`src/links/links-tree.ts` 454 行、`src/links/links-resolve.ts` 353 行、`src/domain/md-meta.ts` 207 行、`src/domain/url.ts` 237 行、`src/domain/pipe-table.ts` 190 行、`src/features/navigation/view-wikilink.ts` 411 行、`src/features/content/node-inline-content.ts` 87 行（barrel）、`src/features/content/node-inline-tokenize.ts` 1081 行、`src/features/content/node-inline-html.ts` 723 行、`src/features/content/node-content-factory.ts` 60 行、`src/features/editing/view-node-actions.ts` 862 行、`src/features/editing/view-dnd.ts` 553 行、`src/features/navigation/view-link-navigator.ts` 126 行、`src/features/view/view.ts` 1131 行、`src/features/editing/view-clipboard.ts` 200 行、`src/features/mindmap-codeblock.ts` 549 行、`src/features/content/content-remeasure.ts` 502 行、`src/media/images-save.ts` 240 行、`src/ui/modal-text.ts` 101 行、`src/platform/system/clipboard.ts` 55 行、`src/platform/rendering/math/math-jax.ts` 1090 行、`src/platform/workspace/mindmap-auto-open.ts` 146 行、`src/services/document/document-service.ts` 367 行、`src/services/engine/engine-controller.ts` 806 行、`src/engine/runtime/mindmap.ts` 714 行、`src/core/i18n.ts` 565 行、`src/core/constants.ts` 568 行、`src/main.ts` 523 行 + `manifest.json` 版本 **0.3.3**（`minAppVersion` 1.13.0）。**行数只是快照**（读取日 2026-10-21）：逻辑定位一律用 `path#符号`，勿引行号；`src/engine/` 现为 10 个文件（`mindmap.ts` + `mindmap-viewport.ts` 等，见 `AGENTS.md` 代码结构索引）。**当日实机核对（当时版本 0.2.1）**（部署该构建到库 `.obsidian/plugins/mindmap-studio/` → 重载）：`dev:errors` 无条目；URL 单独成节点在实机**显示为可点地址文本**（自绘锚点 1 枚、锚点文本即 URL 本体、引擎链接图标 **0** 枚）；popout 悬停预览通过（见「未复核项」行）。**次要观察（未归因）**：删除库内文件（其中一张正开在导图视图）并关弹窗窗口时，`dev:errors` 出现一批（50 条）`ResizeObserver loop completed with undelivered notifications`；对照实验（重建文件 + 开弹窗导图）**不产生新增**，且 `vendor/simple-mind-map.cjs` **零** `ResizeObserver`、插件两处 RO（`engine-controller` 零尺寸等待 / `mindmap-codeblock` 嵌入容器）在该场景均不活跃或已断开 ⇒ 现有证据指向核心/工作区自身，**未归因**（登记待观察） |
+| 核对依据 | **文件指针 / 行数：2026-10-21 复核；版本：2026-11-09 复核**；**行为结论沿用 2026-10-15 复核**（行数口径 = `tests/contracts/agents-md-sync.test.ts` 的 `countSourceLines`：按 `\n` 切分、末尾换行不计行。**不要**用 `Measure-Object -Line`，口径不同会对不上）：`src/markdown/outline/md-outline.ts` 1159 行、`src/markdown/serialize/md-serialize.ts` 1248 行、`src/markdown/syntax/md-line-write.ts` 62 行、`src/markdown/links/links-split.ts` 487 行、`src/links/links-tree.ts` 454 行、`src/links/links-resolve.ts` 353 行、`src/domain/document/node-meta.ts` 207 行、`src/domain/url.ts` 237 行、`src/domain/pipe-table.ts` 190 行、`src/features/navigation/view-wikilink.ts` 411 行、`src/features/content/node-inline-content.ts` 87 行（barrel）、`src/features/content/node-inline-tokenize.ts` 1081 行、`src/features/content/node-inline-html.ts` 723 行、`src/features/content/node-content-factory.ts` 60 行、`src/features/editing/view-node-actions.ts` 862 行、`src/features/editing/view-dnd.ts` 553 行、`src/features/navigation/view-link-navigator.ts` 126 行、`src/features/view/view.ts` 1131 行、`src/features/editing/view-clipboard.ts` 200 行、`src/features/mindmap-codeblock.ts` 549 行、`src/features/content/content-remeasure.ts` 502 行、`src/media/images-save.ts` 240 行、`src/ui/modal-text.ts` 101 行、`src/platform/system/clipboard.ts` 55 行、`src/platform/rendering/math/math-jax.ts` 1090 行、`src/platform/workspace/mindmap-auto-open.ts` 146 行、`src/services/document/document-service.ts` 367 行、`src/services/engine/engine-controller.ts` 806 行、`src/engine/runtime/mindmap.ts` 714 行、`src/core/i18n.ts` 565 行、`src/core/constants.ts` 568 行、`src/main.ts` 523 行 + `manifest.json` 版本 **0.3.3**（`minAppVersion` 1.13.0）。**行数只是快照**（读取日 2026-10-21）：逻辑定位一律用 `path#符号`，勿引行号；`src/engine/` 现为 10 个文件（`mindmap.ts` + `mindmap-viewport.ts` 等，见 `AGENTS.md` 代码结构索引）。**当日实机核对（当时版本 0.2.1）**（部署该构建到库 `.obsidian/plugins/mindmap-studio/` → 重载）：`dev:errors` 无条目；URL 单独成节点在实机**显示为可点地址文本**（自绘锚点 1 枚、锚点文本即 URL 本体、引擎链接图标 **0** 枚）；popout 悬停预览通过（见「未复核项」行）。**次要观察（未归因）**：删除库内文件（其中一张正开在导图视图）并关弹窗窗口时，`dev:errors` 出现一批（50 条）`ResizeObserver loop completed with undelivered notifications`；对照实验（重建文件 + 开弹窗导图）**不产生新增**，且 `vendor/simple-mind-map.cjs` **零** `ResizeObserver`、插件两处 RO（`engine-controller` 零尺寸等待 / `mindmap-codeblock` 嵌入容器）在该场景均不活跃或已断开 ⇒ 现有证据指向核心/工作区自身，**未归因**（登记待观察） |
 | 相对上一版本文档的**事实修正** | 历次修正清单（①–⑰，含当时缺陷与依据）已外迁存档：[`markdown-mindmap-history.md`](markdown-mindmap-history.md)。标准文档只保留现况规则与判据。 |
 | 函数名核对 | 逻辑指针一律 `path#符号`，符号是否真实存在由 `tests/contracts/docs-standard.test.ts` 机械校验（含「目标文件内出现该符号」）；逐批核对清单（2026-09 起，含已删符号与旧归属）见 [`markdown-mindmap-history.md`](markdown-mindmap-history.md)。 |
 | 未复核项 | **无**。① 原「hover 预览在 popout 窗口下的实测」已于 **2026-10-15 实机实测通过**：在独立窗口（`app.workspace.getLeaf("window")` + `setViewState`，注意**必须另开一张导图**——同文件会命中「单实例让位」）打开探针导图，在**该窗口的 document** 里合成 `mouseenter`/`mouseover`/`mousemove` → 官方预览弹窗出现、内容正确（探针目标笔记正文），且**定位在锚点下方**（锚点 [739,433] / 弹窗 [563,465,451,135]：水平居中于锚点、垂直位于其下）——即 popout 下 `ensureOffsetSize` 补几何与「下方优先」定位均生效，无 `NaN` 塌陷。② 原「参考式链接往返」2026-09-13 已实施并登记（§3.5 / §5 第 2 项）。历史注记：本项原以为要依赖 `AGENTS.md` 的 `Node.instanceOf` 登记，该登记已不存在（现唯一 `instanceOf` 记录讲 `view-common.isTextEntryTarget`）。 |

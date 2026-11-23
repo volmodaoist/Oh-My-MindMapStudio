@@ -6,7 +6,7 @@
  * 上层依赖），由 eslint 的 no-restricted-imports 边界规则强制。
  */
 import type { MindMapNodeData } from './engine-types';
-import type { MdNodeMeta } from '../domain/md-meta';
+import type { MarkdownNodeData } from '../domain/document';
 
 /**
  * 引擎节点 data + md 元数据的合并视图。
@@ -24,7 +24,7 @@ import type { MdNodeMeta } from '../domain/md-meta';
  * 两侧形态都由 `tests/contracts/vendor-contract.test.ts` 钉住：引擎升级若改成另一侧，
  * 先红灯，而不是让「清标记」「帧内预览」静默失效。
  */
-export type MdNodeData = MindMapNodeData & MdNodeMeta;
+export type MdNodeData = MindMapNodeData & MarkdownNodeData;
 
 /**
  * 节点 data 上可能承载「库内文件引用」的字段（引擎字段 + 插件回写字段）。

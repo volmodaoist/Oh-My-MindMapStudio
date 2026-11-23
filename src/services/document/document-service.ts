@@ -1,3 +1,4 @@
+import type { MdNodeData } from '../../core/node-data';
 /**
  * Markdown 文档服务：导图文件的读取/解析与保存管线（渲染层数据面）。
  * 从 view.ts 拆出（第 4 步）。
@@ -30,7 +31,7 @@ import { walkTree } from '../../domain/tree';
 import { parseMdOutline, splitFrontmatter, UTF8_BOM } from '../../markdown';
 import { serializeMdBody } from '../../markdown';
 import { forgetImageFail, walkResolveImagePaths } from '../../media/images-path';
-import type { MindMapTreeNode } from '../../core/engine-types';
+import type { MarkdownDocument, MarkdownNode } from '../../domain/document';
 
 /**
  * 收尾一致性补排的次数上限：超过即判定「每轮都在变」（抖动），只留痕不再补排。
@@ -86,18 +87,8 @@ function moveMapKey<T>(
 	map.set(newPath, value);
 }
 
-/** 单次文档加载结果（视图据此前导引擎并更新自身文档状态） */
-export interface DocumentLoadResult {
-	tree: MindMapTreeNode;
-	/** 原样保留的 frontmatter 块（含首尾 ---），保存时拼回文件头；无则 null */
-	frontmatter: string | null;
-	/**
-	 * 原样正文（frontmatter 之后，未规范化；**不含**两者之间的空行——空行由
-	 * `writeBody` 按磁盘当前值拼回）：交给 `SavePipeline.markLoaded` 做
-	 * 「回到加载态」的逐字还原（见 `loadedRawBody`）。
-	 */
-	body: string;
-}
+/** 加载与解析共用同一领域契约，不另复制文件头/正文字段。 */
+export type DocumentLoadResult = MarkdownDocument<MdNodeData>;
 
 /**
  * 文档读写：读文件 → md 大纲解析为导图树（图片地址就地解析为资源地址）。
@@ -138,6 +129,7 @@ export class DocumentService {
 		return {
 			tree,
 			frontmatter: parsed.frontmatter,
+			gap: parsed.gap,
 			body: parsed.body,
 		};
 	}
@@ -152,7 +144,7 @@ export interface SavePipelineDeps {
 	 * **指定文件**的树快照：引擎当前不持有该文件时为 null（引擎已销毁时同样为
 	 * null，此时管线用排空期提前抓的兜底快照续写）。
 	 */
-	getSnapshotFor(file: TFile): MindMapTreeNode | null;
+	getSnapshotFor(file: TFile): MarkdownNode<MdNodeData> | null;
 	/**
 	 * **指定文件**的 md frontmatter（读取失败时的兜底文件头）。必须按文件键取，
 	 * 不能用"最近加载的那份"——换文件期间它会变成新文件的值。
@@ -210,7 +202,7 @@ export class SavePipeline {
 	private saveInProgress = false;
 	private savePending = false;
 	/** 待写快照：视图卸载时引擎已销毁，用它兜底最后一批编辑 */
-	private pendingTree: MindMapTreeNode | null = null;
+	private pendingTree: MarkdownNode<MdNodeData> | null = null;
 	/** pendingTree 所属文件（跨文件不可复用） */
 	private pendingFile: TFile | null = null;
 	/** 正在排空的文件：整轮排空的写盘归属不随视图当前文件漂移 */
@@ -335,7 +327,7 @@ export class SavePipeline {
 	 */
 	markLoaded(
 		file: TFile,
-		tree: MindMapTreeNode | null,
+		tree: MarkdownNode<MdNodeData> | null,
 		rawBody?: string | null,
 	): void {
 		if (!tree) {
@@ -435,7 +427,7 @@ export class SavePipeline {
 	 */
 	async save(
 		file?: TFile,
-		treeHint?: MindMapTreeNode | null,
+		treeHint?: MarkdownNode<MdNodeData> | null,
 		opts?: SaveOptions,
 	): Promise<void> {
 		const target = file ?? this.deps.getFile();
@@ -789,8 +781,8 @@ export class SavePipeline {
 	 */
 	private takeTreeFor(
 		file: TFile,
-		treeHint?: MindMapTreeNode | null,
-	): MindMapTreeNode | null {
+		treeHint?: MarkdownNode<MdNodeData> | null,
+	): MarkdownNode<MdNodeData> | null {
 		const live = this.deps.getSnapshotFor(file);
 		const fallback =
 			this.pendingFile?.path === file.path ? this.pendingTree : null;
@@ -811,7 +803,7 @@ export class SavePipeline {
 	 * 树 → Markdown 正文（不含文件头）。**纯浏览守卫与写盘共用这一段**：
 	 * 两边必须逐字可比，另写一份就等于判据失真。
 	 */
-	private buildBody(tree: MindMapTreeNode, path?: string): string {
+	private buildBody(tree: MarkdownNode<MdNodeData>, path?: string): string {
 		const body = serializeMdBody(tree, this.deps.app);
 		// 序列化器恒输出 LF；CRLF 文件按加载时探测的形态还原（见 loadedEol）
 		return path !== undefined && this.loadedEol.get(path) === '\r\n'

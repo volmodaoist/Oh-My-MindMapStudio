@@ -46,7 +46,7 @@ import {
 	scopeSentinels,
 } from '../../domain/color';
 import { splitDirectiveTail } from '../../domain/directive';
-import { nodeInlineSource } from '../../domain/md-meta';
+import { nodeInlineSource } from '../../domain/document';
 import { walkTree } from '../../domain/tree';
 import { composeNodeContent } from '../../markdown';
 import { createButton, openFormModal } from '../../ui/modal-common';

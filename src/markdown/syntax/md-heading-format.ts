@@ -1,3 +1,4 @@
+import type { MdNodeData } from '../../core/node-data';
 /**
  * 层级语法的**整篇重排**（右键「层级语法」级联）：把整棵树按 (语法, 起点) 归一，
  * 双向可逆——列表 ⇄ 标题、一级 ⇄ 二级。
@@ -20,7 +21,7 @@
  * 转标题保留 `mdMarker`（转回列表恢复 `*` / `+`），有序编号由解析层的
  * `mdOrderedNumber` 保真（不再重排为 1..n）。
  */
-import type { MindMapTreeNode } from '../../core/engine-types';
+import type { MarkdownNode } from '../../domain/document';
 import {
 	MAX_HEADING_LEVEL,
 	convertBranchToList,
@@ -44,9 +45,9 @@ export interface DocumentSyntaxPlan {
 }
 
 /** 子树节点数（含自身） */
-function countNodes(node: MindMapTreeNode): number {
+function countNodes(node: MarkdownNode<MdNodeData>): number {
 	let count = 0;
-	const stack: MindMapTreeNode[] = [node];
+	const stack: MarkdownNode<MdNodeData>[] = [node];
 	while (stack.length > 0) {
 		const current = stack.pop()!;
 		count++;
@@ -62,12 +63,12 @@ function countNodes(node: MindMapTreeNode): number {
  * 目标为列表时全部标题降为列表项。
  */
 export function planDocumentSyntax(
-	root: MindMapTreeNode,
+	root: MarkdownNode<MdNodeData>,
 	target: DocumentSyntax,
 ): DocumentSyntaxPlan {
 	const plan: DocumentSyntaxPlan = { converted: 0, keptList: 0, blocked: [] };
 	if (target === 'list') {
-		const stack: MindMapTreeNode[] = [root];
+		const stack: MarkdownNode<MdNodeData>[] = [root];
 		while (stack.length > 0) {
 			const current = stack.pop()!;
 			// 段落也转列表项：整篇无标题后，无前缀段落行没有层级表达
@@ -88,7 +89,7 @@ export function planDocumentSyntax(
 		delete dataOf(root).mdHeadingStart;
 		return plan;
 	}
-	const groups: { node: MindMapTreeNode; level: number }[] = [
+	const groups: { node: MarkdownNode<MdNodeData>; level: number }[] = [
 		{ node: root, level: target },
 	];
 	while (groups.length > 0) {
@@ -156,7 +157,7 @@ export function planDocumentSyntax(
  * `mdHeadingStart` 归到最近的一档（手写的三级起按二级显示，菜单只有两档）。
  * 根级无标题而深层有标题是非法树（解析器不产出、守卫会拦），按列表处理。
  */
-export function currentDocumentSyntax(root: MindMapTreeNode): DocumentSyntax {
+export function currentDocumentSyntax(root: MarkdownNode<MdNodeData>): DocumentSyntax {
 	const headings = (root.children ?? []).filter((child) =>
 		isHeadingNode(dataOf(child)),
 	);

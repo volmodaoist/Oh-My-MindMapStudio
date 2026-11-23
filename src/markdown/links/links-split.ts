@@ -49,8 +49,8 @@ import {
 	parseWikilink,
 	wikilinkTargetIsAttachment,
 } from '../../domain/wikilink';
-import type { MindMapTreeNode } from '../../core/engine-types';
-import type { MdTokenSegment } from '../../domain/md-meta';
+import type { MarkdownNode } from '../../domain/document';
+import type { MdTokenSegment } from '../../domain/document';
 import type { MdNodeData } from '../../core/node-data';
 
 /** 可承载子节点的行类型（plain 段落跳过，见文件头） */
@@ -206,7 +206,7 @@ export function writeSplitPlanToData(
  * 与单节点路径（引擎命令逐条插入）语义一致，差别只在落地方式。
  */
 function applySplitLinkPlan(
-	node: MindMapTreeNode,
+	node: MarkdownNode<MdNodeData>,
 	plan: SplitLinkPlan,
 ): void {
 	writeSplitPlanToData(node.data, plan);
@@ -231,10 +231,10 @@ function applySplitLinkPlan(
  * - 先收集候选、再逐个施加：拆分会在遍历中插入子节点，边遍历边改会让结果不确定。
  */
 export function splitAllLinksInTree(
-	tree: MindMapTreeNode,
+	tree: MarkdownNode<MdNodeData>,
 	app: App | null,
 ): SplitAllResult {
-	const candidates: MindMapTreeNode[] = [];
+	const candidates: MarkdownNode<MdNodeData>[] = [];
 	walkTree(tree, (node) => {
 		candidates.push(node);
 	});

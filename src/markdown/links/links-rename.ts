@@ -29,7 +29,7 @@
 import { App, TFile } from 'obsidian';
 import { isRenderableImageTarget } from '../../core/constants';
 import { walkTree } from '../../domain/tree';
-import { isNodeTextEdited } from '../../domain/md-meta';
+import { isNodeTextEdited } from '../../domain/document';
 import { parseWikilink } from '../../domain/wikilink';
 import {
 	isTrashedPath,
@@ -42,7 +42,7 @@ import {
 import { buildInlineData, tokenizeInline } from '../outline/md-outline';
 import type { MdNodeData } from '../../core/node-data';
 import type { InlineToken } from '../outline/md-outline';
-import type { MindMapTreeNode } from '../../core/engine-types';
+import type { MarkdownNode } from '../../domain/document';
 
 /**
  * 重命名引用（字段 + 渲染源）。返回是否有变更（由调用方触发保存）。
@@ -52,7 +52,7 @@ import type { MindMapTreeNode } from '../../core/engine-types';
  * 一次全量重渲染即呈现新目标。
  */
 export function renameReferencesInTree(
-	tree: MindMapTreeNode,
+	tree: MarkdownNode<MdNodeData>,
 	file: TFile,
 	oldPath: string,
 	app: App,

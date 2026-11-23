@@ -236,9 +236,11 @@ export default defineConfig(
 					patterns: [
 						// 官方 7 条依赖禁令（替换语义下必须自带，见本表注释）
 						...OFFICIAL_RESTRICTED_IMPORT_PATTERNS,
+						...forbiddenSpecifierPatterns('domain'),
+						{ ...COMBO_ROOT_SPECIFIER_PATTERN, allowTypeImports: false },
 						{
-							group: ['..', '../*', '../**'],
-							message: 'domain 不得反向依赖上层模块或 vendor（黏合类型放 src 根层）',
+							regex: '^\\.\\./(?:\\.\\./)*vendor(?:/|$)',
+							message: 'domain 不得依赖 vendor（类型适配放 core）',
 						},
 						{
 							group: ['obsidian', 'obsidian/*'],

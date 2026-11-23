@@ -32,7 +32,7 @@
  *   `# 甲` + `%%rel:…%%`）。故判据是「去掉末尾指令行后仍是单行」，不是
  *   「`mdRaw` 没有换行」——否则带概要/联系/块 id 的节点全被挡，还会拖累整层。
  */
-import type { MindMapTreeNode } from '../../core/engine-types';
+import type { MarkdownNode } from '../../domain/document';
 import { readNodeDataString, type MdNodeData } from '../../core/node-data';
 import { stripTrailingColorDirectiveLines } from '../../domain/color';
 import { splitDirectiveTail } from '../../domain/directive';
@@ -65,15 +65,15 @@ interface LiveNode {
  * 语法换算」），也无需重渲染（md 字段不参与绘制）。与「深拷贝 + 整树回灌 +
  * 一条历史」的 `replaceMindMapData` 分工：显式动作走那条。
  */
-export function liveNodeTree(node: LiveNode): MindMapTreeNode {
+export function liveNodeTree(node: LiveNode): MarkdownNode<MdNodeData> {
 	return {
-		data: node.getData() as MdNodeData & MindMapTreeNode['data'],
+		data: node.getData() as MdNodeData,
 		children: (node.children ?? []).map(liveNodeTree),
 	};
 }
 
 /** 节点 md 数据的合并视图（data 是引擎活对象，就地改写即改引擎数据） */
-export function dataOf(node: MindMapTreeNode): MdNodeData {
+export function dataOf(node: MarkdownNode<MdNodeData>): MdNodeData {
 	return node.data;
 }
 
@@ -117,7 +117,7 @@ export function levelOf(data: MdNodeData): number {
  * @param headingStart 设置里的起点（`list` 档为 null ⇒ 显式播种列表，见 K201）
  */
 export function seedHeadingStart(
-	tree: MindMapTreeNode,
+	tree: MarkdownNode<MdNodeData>,
 	headingStart: number | null,
 ): void {
 	if ((tree.children ?? []).length > 0) {
@@ -170,11 +170,11 @@ export function headingBlockReason(data: MdNodeData): HeadingBlockReason | null 
  * 与该层的兄弟语法一致。返回被改写的节点数。
  */
 export function convertBranchToHeadings(
-	node: MindMapTreeNode,
+	node: MarkdownNode<MdNodeData>,
 	level: number,
 ): number {
 	let converted = 0;
-	const stack: { node: MindMapTreeNode; level: number }[] = [{ node, level }];
+	const stack: { node: MarkdownNode<MdNodeData>; level: number }[] = [{ node, level }];
 	while (stack.length > 0) {
 		const frame = stack.pop()!;
 		const data = dataOf(frame.node);
@@ -212,10 +212,10 @@ export function convertBranchToHeadings(
  * `level > 6` 之后不再是标题（降为列表），那一段天然安全、无需再查。
  */
 export function findHeadingBlocker(
-	node: MindMapTreeNode,
+	node: MarkdownNode<MdNodeData>,
 	level: number,
 ): string | null {
-	const stack: { node: MindMapTreeNode; level: number }[] = [{ node, level }];
+	const stack: { node: MarkdownNode<MdNodeData>; level: number }[] = [{ node, level }];
 	while (stack.length > 0) {
 		const frame = stack.pop()!;
 		if (frame.level > MAX_HEADING_LEVEL) {
@@ -245,11 +245,11 @@ export function findHeadingBlocker(
  * 返回被改写的节点数。
  */
 export function relevelHeadingBranch(
-	node: MindMapTreeNode,
+	node: MarkdownNode<MdNodeData>,
 	level: number,
 ): number {
 	let converted = 0;
-	const stack: { node: MindMapTreeNode; level: number }[] = [{ node, level }];
+	const stack: { node: MarkdownNode<MdNodeData>; level: number }[] = [{ node, level }];
 	while (stack.length > 0) {
 		const frame = stack.pop()!;
 		const data = dataOf(frame.node);
@@ -278,9 +278,9 @@ export function relevelHeadingBranch(
  * 解析到最近的标题 / 根），不转就会在写盘后丢层、并连带提升后续兄弟。转成
  * `- ` 列表项后，`mdRaw` 的多行续行按列表续行表达，树形可往返。
  */
-export function convertBranchToList(node: MindMapTreeNode): number {
+export function convertBranchToList(node: MarkdownNode<MdNodeData>): number {
 	let converted = 0;
-	const stack: MindMapTreeNode[] = [node];
+	const stack: MarkdownNode<MdNodeData>[] = [node];
 	while (stack.length > 0) {
 		const current = stack.pop()!;
 		const data = dataOf(current);

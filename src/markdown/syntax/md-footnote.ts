@@ -28,7 +28,7 @@
  * 定义；同一 id 出现多次时取**文档序第一个**（GFM 的「首个定义生效」）。
  */
 import { isIndentedCodeLine } from '../../core/constants';
-import { nodeContinuationIndents, nodeInlineSource } from '../../domain/md-meta';
+import { nodeContinuationIndents, nodeInlineSource } from '../../domain/document';
 import {
 	fenceMarker,
 	isFenceCloseLine,

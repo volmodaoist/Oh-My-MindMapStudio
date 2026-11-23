@@ -20,7 +20,7 @@
  */
 
 import { App } from 'obsidian';
-import type { MindMapTreeNode } from '../../core/engine-types';
+import type { MarkdownNode } from '../../domain/document';
 import {
 	isIndentedCodeLine,
 	isRenderableImageExtension,
@@ -31,7 +31,7 @@ import {
 	isColorDirectiveLine,
 	splitTrailingColorDirective,
 } from '../../domain/color';
-import { isNodeTextEdited } from '../../domain/md-meta';
+import { isNodeTextEdited } from '../../domain/document';
 import { withTaskPrefix } from '../../domain/md-task';
 import { tokenizeInline } from '../outline/md-outline';
 import { isValidIndentUnit } from '../outline/md-outline-lines';
@@ -734,7 +734,7 @@ export function composeNodeFirstLine(
  * @param app  可选：图片被编辑后反查库内路径时需要
  */
 export function serializeMdBody(
-	tree: MindMapTreeNode,
+	tree: MarkdownNode<MdNodeData>,
 	app: App | null = null,
 ): string {
 	return serializeTrees(
@@ -776,7 +776,7 @@ function readIndentUnit(data: unknown): string {
  * 剪贴板文本又变回标题——两处各判一次必然漂移。
  */
 export function serializeSubtreesToOutline(
-	trees: readonly MindMapTreeNode[],
+	trees: readonly MarkdownNode<MdNodeData>[],
 	app: App | null = null,
 ): string {
 	// 剪贴板是**新内容**，没有「原文风格」可继承：恒用默认 2 空格 + 一级起
@@ -791,7 +791,7 @@ export function serializeSubtreesToOutline(
  *   同一份实现按原文风格输出，Tab / 4 空格缩进的文件不会因一次编辑被整篇重排
  */
 function serializeTrees(
-	siblings: readonly MindMapTreeNode[],
+	siblings: readonly MarkdownNode<MdNodeData>[],
 	app: App | null,
 	headingsAsList: boolean,
 	indentUnit: string,
@@ -846,7 +846,7 @@ function serializeTrees(
 	 * `app` 直接取外层入参（此前另立同名形参遮蔽之，四处调用全部传同一个值）。
 	 */
 	const nodeLines = (
-		child: MindMapTreeNode,
+		child: MarkdownNode<MdNodeData>,
 		prefix: string,
 		restIndent: string,
 		asHeading = false,
@@ -866,7 +866,7 @@ function serializeTrees(
 	};
 
 	interface SerializeFrame {
-		children: readonly MindMapTreeNode[];
+		children: readonly MarkdownNode<MdNodeData>[];
 		index: number;
 		listIndent: number;
 		orderedCount: number;
@@ -907,7 +907,7 @@ function serializeTrees(
 	 * 变成它的子节点，故只要层内有列表就不能写标题。
 	 */
 	const siblingsFollowList = (
-		children: readonly MindMapTreeNode[],
+		children: readonly MarkdownNode<MdNodeData>[],
 	): boolean => children.some((sib) => isListSibling(sib.data ?? {}));
 
 	/** 层内「存在列表型兄弟」的惰性取值：结果挂 frame，同层只扫一次（O(k²)→O(k)） */
@@ -924,7 +924,7 @@ function serializeTrees(
 	 * 语义与递归等价：先序输出，orderedCount/缩进按层独立。
 	 */
 	const walkChildren = (
-		topSiblings: readonly MindMapTreeNode[],
+		topSiblings: readonly MarkdownNode<MdNodeData>[],
 		listIndent: number,
 		headingLevel: number | null,
 	): void => {

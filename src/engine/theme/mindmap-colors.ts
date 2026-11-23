@@ -42,7 +42,7 @@
 import type { MindMapNode, MindMapTreeNode } from '../../core/engine-types';
 import { nodeColorScale, walkColorDirectives } from '../../domain/color';
 import { nodeLineColorOf } from './mindmap-theme-presets';
-import { nodeInlineSource } from '../../domain/md-meta';
+import { nodeInlineSource } from '../../domain/document';
 
 /** 读一行原文里的配色指令（`#rrggbb` / 哨兵 `none` / 未写则 null）；生产实现 = `colorDirectiveOf` */
 export type ColorDirectiveReader = (raw: string) => string | null;

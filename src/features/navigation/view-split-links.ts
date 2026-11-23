@@ -20,7 +20,7 @@ import {
 	type SplitLinkPlan,
 } from '../../markdown';
 import { ensureUniqueUids } from '../../markdown';
-import { isNodeTextEdited } from '../../domain/md-meta';
+import { isNodeTextEdited } from '../../domain/document';
 import { insertChildNodeWithData } from '../view/view-common';
 import { t, tf } from '../../core/i18n';
 import type { MindMap, MindMapNode } from '../../core/engine-types';

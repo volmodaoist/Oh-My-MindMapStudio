@@ -99,6 +99,7 @@ export const COMBO_ROOT_MODULES = Object.freeze([
 
 /** 多文件能力的唯一公共入口；叶子工具不强制建立 barrel。 */
 export const PUBLIC_MODULES = Object.freeze([
+	'domain/document',
 	'engine',
 	'markdown',
 	'services/document',

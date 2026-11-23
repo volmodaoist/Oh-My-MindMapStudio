@@ -142,7 +142,7 @@ function makeHarness(
 	});
 	const loadDocument = async (): Promise<DocumentLoadResult> => {
 		state.loadCount++;
-		return { tree: tree(options.text ?? 'A'), frontmatter: null, body: disk.body };
+		return { tree: tree(options.text ?? 'A'), frontmatter: null, gap: '', body: disk.body };
 	};
 	const session = new DocumentSession({
 		app,
@@ -152,6 +152,7 @@ function makeHarness(
 		parseDocument: (raw) => ({
 			tree: disk.tree,
 			frontmatter: null,
+			gap: '',
 			body: raw,
 		}),
 		...(options.isDocumentHidden
