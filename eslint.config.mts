@@ -134,6 +134,9 @@ export default defineConfig(
 		'vendor/upstream/**',
 		'vendor/patches/**',
 		'scripts/**',
+		// 项目内技能脚本与 scripts/ 同属 Agent 工具，不是插件运行时代码。
+		'.agents/skills/**/scripts/**',
+		'.venv-docs/**',
 		'config/esbuild.config.mjs',
 		'scripts/version-bump.mjs',
 		'versions.json',

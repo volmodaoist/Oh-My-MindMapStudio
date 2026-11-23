@@ -20,12 +20,12 @@ const labelsOf = (plan: GatesPlan): string[] =>
 	plan.gates.map((gate) => gate.label);
 
 describe('check:gates --fix-lines（真实脚本的索引写入位置）', () => {
-	it('只回填 docs/agents/index.md，AGENTS.md 的内容保持逐字不变', () => {
+	it('只回填 .agents/index.md，AGENTS.md 的内容保持逐字不变', () => {
 		const fixture = mkdtempSync(join(tmpdir(), 'mindmap-index-gates-'));
 		try {
 			mkdirSync(join(fixture, 'scripts'));
 			mkdirSync(join(fixture, 'src'));
-			mkdirSync(join(fixture, 'docs/agents'), { recursive: true });
+			mkdirSync(join(fixture, '.agents'), { recursive: true });
 			writeFileSync(join(fixture, 'scripts/check-gates.mjs'), readFileSync(
 				new URL('../../scripts/check-gates.mjs', import.meta.url), 'utf8',
 			));
@@ -34,12 +34,12 @@ describe('check:gates --fix-lines（真实脚本的索引写入位置）', () =>
 			// 入口也放一张旧表：恢复旧路径时脚本会误改入口，本断言必须抓住它。
 			const agents = '# AGENTS.md\n' + table;
 			writeFileSync(join(fixture, 'AGENTS.md'), agents);
-			writeFileSync(join(fixture, 'docs/agents/index.md'), '# 索引\n' + table);
+			writeFileSync(join(fixture, '.agents/index.md'), '# 索引\n' + table);
 			const result = spawnSync(process.execPath, [
 				join(fixture, 'scripts/check-gates.mjs'), '--fix-lines',
 			], { cwd: fixture, encoding: 'utf8' });
 			expect(result.status, result.stdout + result.stderr).toBe(0);
-			expect(readFileSync(join(fixture, 'docs/agents/index.md'), 'utf8')).toBe(
+			expect(readFileSync(join(fixture, '.agents/index.md'), 'utf8')).toBe(
 				'# 索引\n| `src/example.ts` | 2 | 原有豁免理由 |\n',
 			);
 			expect(readFileSync(join(fixture, 'AGENTS.md'), 'utf8')).toBe(agents);
