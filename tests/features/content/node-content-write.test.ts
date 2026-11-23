@@ -1,13 +1,13 @@
 /** 共享写回管线直测：真实 Markdown 解析/序列化，按一次批量提交检查历史与保存。 */
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { applyRawNodeContent, applyRawNodeContents } from '../../../src/features/content/node-content-write';
-import { composeNodeContent } from '../../../src/markdown/md-serialize';
+import { composeNodeContent } from '../../../src/markdown/serialize/md-serialize';
 import type { MdNodeData } from '../../../src/core/node-data';
 import type { MindMap, MindMapNode } from '../../../src/core/engine-types';
 import type { ViewNodeEditContext } from '../../../src/features/view/view-context';
 
 const mocks = vi.hoisted(() => ({ layout: vi.fn(), history: vi.fn() }));
-vi.mock('../../../src/engine/mindmap', () => ({ markNodeNeedLayout: mocks.layout, recordHistory: mocks.history }));
+vi.mock('../../../src/engine', () => ({ markNodeNeedLayout: mocks.layout, recordHistory: mocks.history }));
 
 function fixture() {
 	const calls: string[] = [];

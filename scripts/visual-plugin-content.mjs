@@ -80,6 +80,12 @@ probe.textContent=JSON.stringify({ok:true,settled,creates,checks:15});
 }
 export const PLUGIN_SHIM_SOURCE = `
 export class App {}
+export class TFile {}
+export class TFolder {}
+export class FileSystemAdapter {}
+export class WorkspaceLeaf {}
+export class MarkdownView {}
+export function normalizePath(value) { return value.replaceAll('\\\\', '/').replace(/\\/+/g, '/'); }
 export class Notice {}
 export class Component {
  constructor(){this.cleanups=[];this.children=[];this.loaded=false}

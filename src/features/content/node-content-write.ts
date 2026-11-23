@@ -2,9 +2,9 @@
  * 节点原文提交的唯一业务管线：解析、图片校正、重排、历史、保存与后续通知。
  * 内联/弹窗、任务勾选、批量配色与联系共用；本模块不持有编辑 UI 或 DOM。
  */
-import { markNodeNeedLayout, recordHistory } from '../../engine/mindmap';
+import { markNodeNeedLayout, recordHistory } from '../../engine';
 import { ensureDefaultImageSizes, resolveImagePath, walkImageSizeCorrections } from '../../media/images-path';
-import { applyRawToNode } from '../../markdown/md-line-write';
+import { applyRawToNode } from '../../markdown';
 import type { MdNodeData } from '../../core/node-data';
 import type { MindMapNode } from '../../core/engine-types';
 import type { ViewNodeEditContext } from '../view/view-context';

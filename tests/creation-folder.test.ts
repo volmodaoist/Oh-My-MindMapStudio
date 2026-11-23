@@ -25,9 +25,9 @@
  */
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type { App } from 'obsidian';
-import { parseMdOutline } from '../src/markdown/md-outline';
-import { serializeMdBody } from '../src/markdown/md-serialize';
-import { seedHeadingStart } from '../src/markdown/md-heading-syntax';
+import { parseMdOutline } from '../src/markdown/outline/md-outline';
+import { serializeMdBody } from '../src/markdown/serialize/md-serialize';
+import { seedHeadingStart } from '../src/markdown/syntax/md-heading-syntax';
 import { headingStartOfSyntax, type NewMapSyntax } from '../src/core/constants';
 import { createNewMindMap, type NewMindMapSettings } from '../src/creation';
 

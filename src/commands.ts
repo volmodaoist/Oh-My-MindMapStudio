@@ -6,7 +6,7 @@ import { MarkdownView, Plugin, type TFile } from 'obsidian';
 import { MindMapView } from './features/view/view';
 import { createNewMindMap, type NewMindMapSettings } from './creation';
 import { fitToScreen } from './features/canvas/view-viewport';
-import { openAsMindMap } from './markdown/md-open';
+import { openAsMindMap } from './markdown';
 import { t, type TranslationKey } from './core/i18n';
 
 /**

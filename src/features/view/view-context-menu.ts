@@ -25,14 +25,14 @@ import {
 	resetZoom,
 	setActiveNodes,
 	siblingMoveBlocker,
-} from '../../engine/mindmap';
+} from '../../engine';
 import {
 	isCustomPaletteValue,
 	LAYOUT_OPTIONS,
 	PALETTE_OPTIONS,
 } from '../../core/constants';
 import { COLOR_DIRECTIVE_NONE } from '../../domain/color';
-import type { DocumentSyntax } from '../../markdown/md-heading-syntax';
+import type { DocumentSyntax } from '../../markdown';
 import {
 	addCascadingMenu,
 	addCustomColorItem,
@@ -71,7 +71,7 @@ import { nodeLink } from '../navigation/view-wikilink';
 import { arrangeMindMap } from './view-toolbar';
 import { t, tf, type TranslationKey } from '../../core/i18n';
 import { writeClipboardText } from '../../platform/system/clipboard';
-import { renderHyperlink } from '../../markdown/md-serialize';
+import { renderHyperlink } from '../../markdown';
 import type { MdNodeData } from '../../core/node-data';
 import type { MindMapNode } from '../../core/engine-types';
 import type { MindMapViewContext } from './view-context';

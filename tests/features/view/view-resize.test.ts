@@ -20,7 +20,7 @@ const mocks = vi.hoisted(() => ({
 
 // 引擎面整体桩掉（vendor bundle 顶层访问 document；本文件只关心调度决策）。
 // 只提供本路径用到的计数入口，其余导出缺失不影响（同 view-md-back-mode 口径）。
-vi.mock('../../../src/engine/mindmap', () => ({
+vi.mock('../../../src/engine', () => ({
 	countMindMapNodes: mocks.countMindMapNodes,
 }));
 

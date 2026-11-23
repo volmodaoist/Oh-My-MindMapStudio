@@ -8,7 +8,7 @@ import {
 	supportsLineStyleSwitch,
 	zoomInMindMap,
 	zoomOutMindMap,
-} from '../../engine/mindmap';
+} from '../../engine';
 import { Toolbar, type ToolbarButtonSpec } from '../../ui/toolbar/toolbar';
 import { fitToScreen } from '../canvas/view-viewport';
 import { exportImage } from '../view-export';

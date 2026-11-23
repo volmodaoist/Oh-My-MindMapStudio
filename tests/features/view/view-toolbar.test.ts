@@ -72,7 +72,7 @@ vi.mock('obsidian', async (importOriginal) => {
 	};
 });
 
-vi.mock('../../../src/engine/mindmap', () => ({
+vi.mock('../../../src/engine', () => ({
 	// ENGINE_COMMANDS 是常量表：保留真实值才能断言「命令名真的用对了」
 	ENGINE_COMMANDS: {
 		BACK: 'BACK',

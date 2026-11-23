@@ -28,7 +28,7 @@ const engine = vi.hoisted(() => ({
 	collectRenderNodeData: vi.fn(),
 }));
 
-vi.mock('../../../src/engine/mindmap', () => ({
+vi.mock('../../../src/engine', () => ({
 	resolveNodesByDoms: engine.resolveNodesByDoms,
 	findNodesByContentProducts: engine.findNodesByContentProducts,
 	refreshNodesCustomContent: engine.refreshNodesCustomContent,

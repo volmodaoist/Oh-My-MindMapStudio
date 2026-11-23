@@ -42,13 +42,13 @@ import { stripTaskPrefix } from '../../domain/md-task';
 import {
 	FOOTNOTE_ID_SOURCE,
 	splitFootnoteDefinitions,
-} from '../../markdown/md-footnote';
+} from '../../markdown';
 import {
 	fenceMarker,
 	isFenceCloseLine,
 	isSelfClosedFenceLine,
-} from '../../markdown/md-outline-lines';
-import { tokenDisplay, tokenizeInline, type InlineToken } from '../../markdown/md-outline';
+} from '../../markdown';
+import { tokenDisplay, tokenizeInline, type InlineToken } from '../../markdown';
 import type { MindMapNode } from '../../core/engine-types';
 
 

@@ -16,8 +16,8 @@ import { t } from './core/i18n';
 import {
 	buildDefaultMindMapName,
 	createDefaultMarkdownContent,
-} from './markdown/markdown';
-import { openAsMindMap } from './markdown/md-open';
+} from './markdown';
+import { openAsMindMap } from './markdown';
 import type { MindMapStudioSettings } from './settings';
 import { openNameInputModal } from './ui/modal-name';
 

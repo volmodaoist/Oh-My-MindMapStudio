@@ -50,7 +50,7 @@ const mocks = vi.hoisted(() => ({
 	isAnyNodeEditing: vi.fn((): boolean => false),
 }));
 
-vi.mock('../../../src/engine/mindmap', () => ({
+vi.mock('../../../src/engine', () => ({
 	fitMindMap: mocks.fitMindMap,
 	getActiveNodes: mocks.getActiveNodes,
 	getCanvasSize: mocks.getCanvasSize,

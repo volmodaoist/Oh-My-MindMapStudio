@@ -2,7 +2,7 @@
 import { join } from 'node:path';
 
 export function buildCanvasDragEntrySource(root) {
-  const engine = join(root, 'src/engine/mindmap.ts').replaceAll('\\', '/');
+  const engine = join(root, 'src/engine/index.ts').replaceAll('\\', '/');
   return `
 import { createMindMap, applyCanvasDragMode } from ${JSON.stringify(engine)};
 const probe = document.createElement('pre'); probe.id = 'canvas-drag-probe'; document.body.appendChild(probe);

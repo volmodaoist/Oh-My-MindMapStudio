@@ -8,7 +8,7 @@ import { buildPluginBlock } from '../../ui/node-content/content-plugin';
 import { normalizeHexColor, nodeContentTones, type NodeContentTones } from '../../domain/color';
 import { t, type Language } from '../../core/i18n';
 import type { MindMapNode } from '../../core/engine-types';
-import type { NodeContentStyle } from '../../engine/mindmap';
+import type { NodeContentStyle } from '../../engine';
 import { MAX_INLINE_CONTENT_CHARS, buildInlineSegments, clampSegments, isMermaidFence, resolveSelfDrawSource, taskStateOf } from './node-inline-tokenize';
 import type { InlineContentDocument, InlineContentOptions, InlineSegment } from '../../core/node-content-types';
 import { type InlineContentRenderer, type BuildContentParams } from '../../ui/node-content/content-context';

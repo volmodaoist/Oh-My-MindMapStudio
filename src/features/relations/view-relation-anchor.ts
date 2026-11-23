@@ -32,7 +32,7 @@ import {
 	relationCanvasLayer,
 	relationClientToContent,
 	relationNodeBox,
-} from '../../engine/mindmap';
+} from '../../engine';
 import type { ViewNodeEditContext } from '../view/view-context';
 
 const SVG_NS = 'http://www.w3.org/2000/svg';

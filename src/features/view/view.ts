@@ -61,7 +61,7 @@ import {
 	syncLiveRelations,
 	syncLiveSummaries,
 	syncNodeColorDirectives,
-} from '../../engine/mindmap';
+} from '../../engine';
 import {
 	resolveFilePreferences,
 	type PreferenceKey,
@@ -76,7 +76,7 @@ import {
 	type ImageSizeValue,
 } from '../../media/images-path';
 
-import { openAsMarkdown, readDeclaredLayout, readMdBackMode } from '../../markdown/md-open';
+import { openAsMarkdown, readDeclaredLayout, readMdBackMode } from '../../markdown';
 import {
 	normalizeLayoutId,
 	setMindMapLayout,
@@ -117,9 +117,9 @@ import {
 	DocumentSession,
 	type SessionSaveState,
 	type SessionViewPort,
-} from '../../services/document-session';
+} from '../../services/document';
 import type { SaveState } from '../../services/status-bar';
-import { EngineController } from '../../services/engine-controller';
+import { EngineController } from '../../services/engine';
 import {
 	buildSearchBar,
 	disposeSearchBar,
@@ -174,7 +174,7 @@ import {
 import {
 	seedHeadingStart,
 	type DocumentSyntax,
-} from '../../markdown/md-heading-syntax';
+} from '../../markdown';
 
 /** 视图装配完成信号超时（毫秒）：正常 onOpen 会 resolve；超时表示装配未完成，降级继续加载 */
 const READY_TIMEOUT_MS = 10_000;

@@ -22,7 +22,7 @@ const mocks = vi.hoisted(() => ({
 	>(),
 }));
 
-vi.mock('../../../src/engine/mindmap', () => ({
+vi.mock('../../../src/engine', () => ({
 	refreshNodeCustomContent: mocks.refreshNodeCustomContent,
 	// 与生产同语义的桩：读节点运行时事实（nodeCreateContents.isUseCustomNodeContent
 	// 的 `!!this._customNodeContent`；防腐层对无该方法的目标回退 false）

@@ -23,7 +23,7 @@ import {
 	resolveDroppedFile,
 	resolveDroppedFolder,
 } from '../../links/links-resolve';
-import { getActiveNode, getRenderRoot } from '../../engine/mindmap';
+import { getActiveNode, getRenderRoot } from '../../engine';
 import {
 	applyDocWikiLink,
 	applyMdLink,

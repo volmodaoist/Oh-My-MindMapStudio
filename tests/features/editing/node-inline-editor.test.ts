@@ -52,8 +52,8 @@ const {
 	ensureDefaultImageSizesMock: vi.fn(),
 }));
 
-vi.mock('../../../src/engine/mindmap', async () => ({
-	hideNodeForEditing: (await import('../../../src/engine/mindmap-editor')).hideNodeForEditing,
+vi.mock('../../../src/engine', async () => ({
+	hideNodeForEditing: (await import('../../../src/engine/nodes/mindmap-editor')).hideNodeForEditing,
 	getNodeGroupEl: getNodeGroupElMock,
 	getDrawTransform: getDrawTransformMock,
 	readNodeEditorAppearance: readNodeEditorAppearanceMock,
@@ -63,11 +63,11 @@ vi.mock('../../../src/engine/mindmap', async () => ({
 	recordHistory: vi.fn(),
 }));
 
-vi.mock('../../../src/markdown/md-serialize', () => ({
+vi.mock('../../../src/markdown/serialize/md-serialize', () => ({
 	composeNodeContent: vi.fn(() => 'RAW 原文'),
 }));
 
-vi.mock('../../../src/markdown/md-line-write', () => ({
+vi.mock('../../../src/markdown/syntax/md-line-write', () => ({
 	applyRawToNode: applyRawToNodeMock,
 }));
 

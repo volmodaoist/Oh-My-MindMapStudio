@@ -14,15 +14,15 @@
  * 纯双链节点「编辑=改别名」/ rawOk 分支矩阵 / 图片独占节点 / 嵌入尺寸参数 /
  * URL icon-only 与附件双链 / 图文 token 不丢 / uid 修复 / 视图状态 /
  * 新建正文（属性声明块 + 空正文）。
- * 源码依据：src/markdown/md-outline.ts、src/markdown/md-serialize.ts、src/markdown/markdown.ts、
+ * 源码依据：src/markdown/outline/md-outline.ts、src/markdown/serialize/md-serialize.ts、src/markdown/markdown.ts、
  * src/services/view-state.ts、src/domain/{md-meta,wikilink,mindmap-property}.ts、src/core/constants.ts。
  */
 import { describe, expect, it, vi } from 'vitest';
 import { App, TFile } from 'obsidian';
 import type { MindMapTreeNode } from '../../src/core/engine-types';
-import { parseMdOutline } from '../../src/markdown/md-outline';
-import { isValidIndentUnit } from '../../src/markdown/md-outline-lines';
-import { serializeMdBody } from '../../src/markdown/md-serialize';
+import { parseMdOutline } from '../../src/markdown/outline/md-outline';
+import { isValidIndentUnit } from '../../src/markdown/outline/md-outline-lines';
+import { serializeMdBody } from '../../src/markdown/serialize/md-serialize';
 import {
 	buildDefaultMindMapName,
 	createDefaultMarkdownContent,

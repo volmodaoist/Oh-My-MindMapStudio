@@ -58,7 +58,7 @@
  *   见 vendor `measureCustomNodeContentSize`），故 styles.css 明确禁止给该容器
  *   直接子 div 设 width/height；本脚本不覆盖该规则的样式级联后果。
  *
- * 做法：esbuild 把 `src/engine/mindmap.ts`（纯模块，无 obsidian 依赖）打成浏览器
+ * 做法：esbuild 把 `src/engine/index.ts`（纯模块，无 obsidian 依赖）打成浏览器
  * IIFE，配合**仓库真实 styles.css** 在无头 Chrome 里渲染若干场景，再解析
  * --dump-dom 输出逐场景断言。临时文件默认落在系统临时目录并在验证后清理。
  *
@@ -555,7 +555,7 @@ export function requestUrl() {
 
 /** 生成浏览器入口：按场景逐个渲染导图（与插件同款容器类名） */
 function buildEntrySource({ workloadEdits = 0, memoryProbe = false, workloadOps = 'edit' } = {}) {
-	const mindmapModule = join(ROOT, 'src', 'engine', 'mindmap.ts').replaceAll('\\', '/');
+	const mindmapModule = join(ROOT, 'src', 'engine', 'index.ts').replaceAll('\\', '/');
 	const wikilinkModule = join(ROOT, 'src', 'features', 'navigation', 'view-wikilink.ts').replaceAll(
 		'\\',
 		'/',
@@ -890,7 +890,7 @@ window.setTimeout(() => {
 
 	// —— 契约 ④：容器收窄后必须按新宽度重算（观察器常驻） ——
 	// 先记下 640px 下的高度，再收窄到 240px；随后**轮询到几何稳定**（连续两拍高度
-	// 一致，60ms 一拍、上限 1.5s）再写**独立探针**读新高度与越界节点数，断言见
+	// 一致且已离开旧高度，60ms 一拍、上限 1.5s）再写**独立探针**读新高度与越界节点数，断言见
 	// checkEmbed。为什么不用固定单点延时：收窄后要连等三拍（观察器回调 → 100ms
 	// 节流窗口 → 布局落地），负载高 / 首帧慢时固定延时不足会读到中间态而**假失败**
 	// ——本文件其它探针早已改用「事件 + 轮询」的就绪等待（见 whenMapReady 的
@@ -938,7 +938,7 @@ window.setTimeout(() => {
 				? resizeStableRounds + 1
 				: 0;
 		lastResizeHeight = heightNow;
-		if (resizeStableRounds >= 2 || Date.now() > resizeDeadline) {
+			if ((heightNow !== wideBefore && resizeStableRounds >= 2) || Date.now() > resizeDeadline) {
 			writeResizeProbe();
 			return;
 		}
@@ -6610,7 +6610,7 @@ const OPEN_BENCH_BUDGET_MS = 15000;
  * ⚠️ 返回值是模板字符串：其内注释与字符串**不得出现反引号**（K69 记录的坑）。
  */
 function buildBenchEntrySource() {
-	const mindmapModule = join(ROOT, 'src', 'engine', 'mindmap.ts').replaceAll('\\', '/');
+	const mindmapModule = join(ROOT, 'src', 'engine', 'index.ts').replaceAll('\\', '/');
 	const inlineContentModule = join(
 		ROOT,
 		'src', 'features', 'content', 'node-inline-content.ts',

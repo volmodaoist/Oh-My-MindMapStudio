@@ -33,7 +33,7 @@ const { exportMock, notifyErrorMock } = vi.hoisted(() => ({
 	notifyErrorMock: vi.fn<(lang: unknown, key: unknown, error: unknown) => void>(),
 }));
 
-vi.mock('../../src/engine/mindmap', () => ({ exportMindMapImage: exportMock }));
+vi.mock('../../src/engine', () => ({ exportMindMapImage: exportMock }));
 vi.mock('../../src/core/errors', () => ({
 	notifyError: notifyErrorMock,
 	// view-export → platform/rendering/math/math-jax → math-jax-fonts 依赖它做「告警一次」；

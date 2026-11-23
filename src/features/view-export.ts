@@ -8,7 +8,7 @@ import { Notice } from 'obsidian';
 import type { ExportImageFormat } from '../core/constants';
 import { notifyError } from '../core/errors';
 import { t, tf, type Language } from '../core/i18n';
-import { exportMindMapImage } from '../engine/mindmap';
+import { exportMindMapImage } from '../engine';
 import { primeExportMathFonts } from '../platform/rendering/math/math-jax';
 import type { MindMapViewContext } from './view/view-context';
 

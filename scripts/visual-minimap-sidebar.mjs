@@ -5,7 +5,7 @@ export function buildMiniMapSidebarProbe(root) {
 	const modulePath = (path) => JSON.stringify(join(root, path).replaceAll('\\', '/'));
 	return `
 import { ItemView } from 'obsidian';
-import { createMindMap, getDrawTransform, applyThemeConfig, captureMiniMap, getCanvasSize } from ${modulePath('src/engine/mindmap.ts')};
+import { createMindMap, getDrawTransform, applyThemeConfig, captureMiniMap, getCanvasSize } from ${modulePath('src/engine/index.ts')};
 import { projectViewportBox } from ${modulePath('src/core/minimap-geometry.ts')};
 import { setupMiniMap, attachMiniMap, refreshAttachedMiniMap, refreshMiniMap, refreshMiniMapAfterRender, teardownMiniMap } from ${modulePath('src/features/view/view-minimap.ts')};
 import { MiniMapSidebar } from ${modulePath('src/platform/workspace/minimap-sidebar.ts')};

@@ -34,8 +34,8 @@ import {
 	splitTrailingColorDirective,
 	walkColorDirectives,
 } from '../../src/domain/color';
-import { branchLayerOf, topMostNodes } from '../../src/engine/mindmap-nodes';
-import { NODE_COLORS } from '../../src/engine/mindmap-theme-presets';
+import { branchLayerOf, topMostNodes } from '../../src/engine/nodes/mindmap-nodes';
+import { NODE_COLORS } from '../../src/engine/theme/mindmap-theme-presets';
 import {
 	colorDirectiveOf,
 	setColorDirective,
@@ -43,8 +43,8 @@ import {
 import {
 	applyColorDirectivesToTree,
 	applyLiveColorDirectives,
-} from '../../src/engine/mindmap-colors';
-import { syncNodeColorDirectives } from '../../src/engine/mindmap';
+} from '../../src/engine/theme/mindmap-colors';
+import { syncNodeColorDirectives } from '../../src/engine';
 
 // `engine/mindmap` barrel 会加载 vendor cjs（Node 下顶层求值触碰 document），
 // 与 engine-history-limit 同款桩面；本文件不测引擎行为，只需模块可加载。

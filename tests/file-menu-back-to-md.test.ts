@@ -17,7 +17,7 @@ import MindMapStudioPlugin from '../src/main';
 import { MindMapView } from '../src/features/view/view';
 import type { MindMapStudioSettings } from '../src/settings';
 
-vi.mock('../src/engine/mindmap', () => ({}));
+vi.mock('../src/engine', () => ({}));
 
 const mdOpen = vi.hoisted(() => ({
 	isMindMapFile: vi.fn(() => true),

@@ -9,7 +9,7 @@ import {
 	jumpToSearchIndex,
 	searchMindMap,
 	searchNextInMindMap,
-} from '../../engine/mindmap';
+} from '../../engine';
 import type { MindMapViewContext, ViewDomContext, ViewEngineContext } from './view-context';
 
 /**

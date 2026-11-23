@@ -172,7 +172,7 @@ const { FakeMenu, ENGINE } = vi.hoisted(() => {
 			found.click(evt);
 		}
 	}
-	// 命令名取值与 src/engine/mindmap.ts 的 ENGINE_COMMANDS 一致；常量表本身的
+	// 命令名取值与 src/engine/runtime/mindmap.ts 的 ENGINE_COMMANDS 一致；常量表本身的
 	// token 契约由 vendor-contract 测试把关，这里只验证菜单传了哪一个命令。
 	return {
 		FakeMenu: FakeMenuClass,
@@ -257,7 +257,7 @@ vi.mock('obsidian', async (importOriginal) => {
 	return { ...actual, Menu: FakeMenu };
 });
 
-vi.mock('../../../src/engine/mindmap', () => ({
+vi.mock('../../../src/engine', () => ({
 	ENGINE_COMMANDS: ENGINE,
 	findNodeByDom: findNodeByDomMock,
 	fitMindMap: fitMindMapMock,

@@ -10,7 +10,7 @@ import { EventBinder } from '../../../src/core/event-binder';
 import type { ViewPluginContext } from '../../../src/features/view/view-context';
 import type { MindMapNode } from '../../../src/core/engine-types';
 import type { NewMapSyntax } from '../../../src/core/constants';
-import type { EngineControllerDeps } from '../../../src/services/engine-controller';
+import type { EngineControllerDeps } from '../../../src/services/engine/engine-controller';
 import { MindMapView } from '../../../src/features/view/view';
 import { createChildNodeBelow } from '../../../src/features/editing/view-node-actions';
 
@@ -42,7 +42,7 @@ vi.mock('obsidian', async (importOriginal) => {
 		},
 	};
 });
-vi.mock('../../../src/services/engine-controller', () => ({
+vi.mock('../../../src/services/engine/engine-controller', () => ({
 	EngineController: class {
 		mindMap = harness.engine;
 		engineEvents = harness.events;
@@ -50,7 +50,7 @@ vi.mock('../../../src/services/engine-controller', () => ({
 		constructor(deps: EngineControllerDeps) { harness.deps = deps; }
 	},
 }));
-vi.mock('../../../src/engine/mindmap', () => ({
+vi.mock('../../../src/engine', () => ({
 	ENGINE_COMMANDS: { INSERT_CHILD_NODE: 'INSERT_CHILD_NODE' },
 	getRenderRoot: (engine: { renderer: { root: unknown } } | null) => engine?.renderer.root,
 	isCustomNodeContent: () => true,

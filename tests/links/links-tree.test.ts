@@ -11,8 +11,8 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { App, TFile } from 'obsidian';
 import { fileLookupIndex } from '../../src/links/file-lookup';
-import { parseMdOutline } from '../../src/markdown/md-outline';
-import { serializeMdBody } from '../../src/markdown/md-serialize';
+import { parseMdOutline } from '../../src/markdown/outline/md-outline';
+import { serializeMdBody } from '../../src/markdown/serialize/md-serialize';
 import {
 	removeReferencesOnDelete,
 	updateReferencesOnRename,

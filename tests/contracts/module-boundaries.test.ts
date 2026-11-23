@@ -28,8 +28,10 @@ import {
 	COMBO_ROOT_SPECIFIER_PATTERN,
 	MODULE_DEPENDENCIES,
 	MODULE_GROUPS,
+	PUBLIC_MODULES,
 	allowedTargets,
 	forbiddenSpecifierPatterns,
+	violatesPublicEntry,
 } from '../../scripts/module-boundaries.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '../..');
@@ -380,6 +382,33 @@ describe('矩阵定义（scripts/module-boundaries.mjs）', () => {
 });
 
 describe('模块边界（K51）：依赖图性质', () => {
+	it('公共入口拒绝外部深层引用和内部反向导入，允许叶子与直测', () => {
+		expect(violatesPublicEntry('src/features/view/view.ts', 'src/engine/nodes/mindmap-nodes.ts')).toBe(true);
+		expect(violatesPublicEntry('src/services/document/document-session.ts', 'src/engine/index.ts')).toBe(false);
+		expect(violatesPublicEntry('src/markdown/outline/md-outline.ts', 'src/markdown/index.ts')).toBe(true);
+		expect(violatesPublicEntry('src/markdown/index.ts', 'src/markdown/outline/md-outline.ts')).toBe(false);
+		expect(violatesPublicEntry('src/features/view/view.ts', 'src/domain/url.ts')).toBe(false);
+	});
+
+	it('实际源文件均遵循唯一公共入口（含类型和 re-export 边）', () => {
+		const violations = IMPORT_EDGES.filter(edge => violatesPublicEntry(relPath(edge.from), relPath(edge.to)));
+		expect(violations.map(edge => `${relPath(edge.from)} → ${relPath(edge.to)}`)).toEqual([]);
+	});
+
+	it('公共出口存在、仅具名转出 API，且不执行初始化', () => {
+		for (const module of PUBLIC_MODULES) {
+			const entry = path.join(SRC, module, 'index.ts');
+			const source = ts.createSourceFile(entry, readFileSync(entry, 'utf8'), ts.ScriptTarget.Latest, true);
+			expect(source.statements.length, module).toBeGreaterThan(0);
+			for (const statement of source.statements) {
+				expect(ts.isExportDeclaration(statement), `${module}: 入口只允许转出`).toBe(true);
+				if (ts.isExportDeclaration(statement)) {
+					expect(statement.exportClause && ts.isNamedExports(statement.exportClause), `${module}: 禁止 export *`).toBeTruthy();
+				}
+			}
+		}
+	});
+
 	it('依赖图采集非空（防止解析器失效后全部断言空转）', () => {
 		// 采集为空时，下面每条「无违规」都会假绿——宁可在此红灯。
 		expect(SRC_FILES.length).toBeGreaterThan(50);

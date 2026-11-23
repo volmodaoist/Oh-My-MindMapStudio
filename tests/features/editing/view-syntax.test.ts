@@ -7,7 +7,7 @@
  * - **自动守卫**（`runSyntaxGuard`）：按落点就地升标题 / 降列表（不走整树回灌、
  *   不进历史）；转不了、或段落父下挂标题 → `BACK` 撤回这次编辑并提示原因；
  * - **空文档种子**（`md-heading-syntax.seedHeadingStart`，视图在 `loadMindMapFromFile`
- *   里调用，回归在 `tests/markdown/md-heading-syntax.test.ts`）：只有"正文没有节点"的
+ *   里调用，回归在 `tests/markdown/syntax/md-heading-syntax.test.ts`）：只有"正文没有节点"的
  *   文件才用设置里的起始级别，有内容的文件一律以正文为准。
  *
  * 引擎面以桩替换（`getRenderRoot` / `replaceMindMapData` / `ENGINE_COMMANDS`），
@@ -22,7 +22,7 @@ import {
 	resolveDocumentSyntax,
 	runSyntaxGuard,
 } from '../../../src/features/editing/view-syntax';
-import { parseMdOutline } from '../../../src/markdown/md-outline';
+import { parseMdOutline } from '../../../src/markdown/outline/md-outline';
 
 const { execCommandMock, replaceDataMock, renderRootRef, ENGINE } = vi.hoisted(
 	() => {
@@ -32,14 +32,14 @@ const { execCommandMock, replaceDataMock, renderRootRef, ENGINE } = vi.hoisted(
 			execCommandMock: vi.fn<(...args: unknown[]) => void>(),
 			replaceDataMock: vi.fn<(...args: unknown[]) => void>(),
 			renderRootRef: ref,
-			// 命令名与 src/engine/mindmap.ts 的 ENGINE_COMMANDS 一致；常量表本身由
+			// 命令名与 src/engine/runtime/mindmap.ts 的 ENGINE_COMMANDS 一致；常量表本身由
 			// vendor-contract 把关，这里只验证编排传了哪一个命令
 			ENGINE: { BACK: 'BACK' },
 		};
 	},
 );
 
-vi.mock('../../../src/engine/mindmap', () => ({
+vi.mock('../../../src/engine', () => ({
 	ENGINE_COMMANDS: ENGINE,
 	getRenderRoot: () => renderRootRef.current,
 	replaceMindMapData: (...args: unknown[]): void => {

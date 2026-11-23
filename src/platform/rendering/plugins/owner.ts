@@ -3,7 +3,7 @@ import { Component } from 'obsidian';
 import type { App, EventRef } from 'obsidian';
 import { PLUGIN_SLOT_CLASS, PLUGIN_SLOT_ID, PLUGIN_LIVE_CLASS, PLUGIN_INTERACTIVE_ATTR, PLUGIN_AUTO_WIDTH_ATTR } from '../../../core/plugin-content-types';
 import type { PluginBlockRequest } from '../../../core/plugin-content-types';
-import { fencedNodeBlocks, normalizeBlockSource } from '../../../markdown/md-codeblocks';
+import { fencedNodeBlocks, normalizeBlockSource } from '../../../markdown';
 import { pluginPresentation } from './snapshot';
 import { renderNativePlugin } from './native';
 import type { PluginRenderRequest, PluginAdapter } from './native';

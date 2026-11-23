@@ -22,12 +22,12 @@ import { elementFromTarget, type EventBinder } from '../../core/event-binder';
 import { tf, type Language } from '../../core/i18n';
 import type { MindMap } from '../../core/engine-types';
 import { nodeContinuationIndents, nodeInlineSource } from '../../domain/md-meta';
-import { collectRenderNodeData, revealNodeByUid } from '../../engine/mindmap';
+import { collectRenderNodeData, revealNodeByUid } from '../../engine';
 import {
 	collectFootnoteDefinitions,
 	splitFootnoteDefinitions,
 	type FootnoteDefinition,
-} from '../../markdown/md-footnote';
+} from '../../markdown';
 import {
 	FOOTNOTE_ID_ATTR,
 	FOOTNOTE_IDS_ATTR,

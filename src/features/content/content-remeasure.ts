@@ -56,7 +56,7 @@
  */
 import { hasPluginContents, syncPluginContents, disposePluginContents, getEditingPluginNodeIds } from '../../platform/rendering/plugins/bridge';
 import { readNodeDataString } from '../../core/node-data';
-import { collectRenderNodeData, getRenderRoot } from '../../engine/mindmap';
+import { collectRenderNodeData, getRenderRoot } from '../../engine';
 import type { MindMap, MindMapNode } from '../../core/engine-types';
 import { createWarnOnce } from '../../core/errors';
 import {
@@ -64,7 +64,7 @@ import {
 	isNodeCollapsed,
 	refreshNodesCustomContent,
 	resolveNodesByDoms,
-} from '../../engine/mindmap';
+} from '../../engine';
 import {
 	clearUnsettledMath,
 	pruneUnsettledMathOwnedBy,

@@ -57,7 +57,7 @@ vi.mock('obsidian', async (importOriginal) => {
 	};
 });
 
-vi.mock('../../../src/engine/mindmap', () => ({
+vi.mock('../../../src/engine', () => ({
 	endMindMapSearch: searchMocks.endMindMapSearch,
 	getSearchCurrentIndex: searchMocks.getSearchCurrentIndex,
 	getSearchMatchCount: searchMocks.getSearchMatchCount,

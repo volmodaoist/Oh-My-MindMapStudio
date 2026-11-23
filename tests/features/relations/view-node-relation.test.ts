@@ -159,7 +159,7 @@ vi.mock('obsidian', async (importOriginal) => {
 });
 
 // 引擎面：本文件只验证「问引擎要了哪条线」
-vi.mock('../../../src/engine/mindmap', () => ({
+vi.mock('../../../src/engine', () => ({
 	activeRelationLine: mocks.activeRelationLine,
 	clearActiveRelationLine: mocks.clearActiveRelationLine,
 	collectRelationIds: (): Set<string> => new Set<string>(),

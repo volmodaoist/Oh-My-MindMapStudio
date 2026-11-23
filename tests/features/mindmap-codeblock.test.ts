@@ -29,8 +29,8 @@ import {
 	getThemeConfig,
 	isDarkTheme,
 	measureContentFitToWidth,
-} from '../../src/engine/mindmap';
-import { parseMdOutline } from '../../src/markdown/md-outline';
+} from '../../src/engine';
+import { parseMdOutline } from '../../src/markdown/outline/md-outline';
 import {
 	EMBED_CANVAS_CLASS,
 	EMBED_CONTAINER_CLASS,

@@ -97,6 +97,32 @@ export const COMBO_ROOT_MODULES = Object.freeze([
 	'creation',
 ]);
 
+/** 多文件能力的唯一公共入口；叶子工具不强制建立 barrel。 */
+export const PUBLIC_MODULES = Object.freeze([
+	'engine',
+	'markdown',
+	'services/document',
+	'services/engine',
+]);
+
+/**
+ * 输入为相对仓库根的 posix 文件路径，类型引用与值引用共用规则。
+ * 外部只能访问 index；模块内部不得反向导入自身 index。
+ * @param {string} from
+ * @param {string} to
+ * @returns {boolean}
+ */
+export function violatesPublicEntry(from, to) {
+	if (!from.startsWith('src/')) return false;
+	return PUBLIC_MODULES.some((module) => {
+		const prefix = `src/${module}/`;
+		const entry = `${prefix}index.ts`;
+		if (!to.startsWith(prefix)) return false;
+		const internal = from.startsWith(prefix);
+		return internal ? from !== entry && to === entry : to !== entry;
+	});
+}
+
 /**
  * 某组允许依赖的全部组（含恒许的 domain），按层级顺序返回。
  *

@@ -77,10 +77,10 @@ import {
 	destroyMindMap,
 	measureContentFitToWidth,
 	resizeMindMap,
-} from '../engine/mindmap';
+} from '../engine';
 import { layoutIdOfPropertyValue } from '../domain/mindmap-property';
-import { parseMdOutline } from '../markdown/md-outline';
-import { ensureUniqueUids } from '../markdown/markdown';
+import { parseMdOutline } from '../markdown';
+import { ensureUniqueUids } from '../markdown';
 import {
 	ensureDefaultImageSizes,
 	walkResolveImagePaths,

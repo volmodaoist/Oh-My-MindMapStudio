@@ -28,12 +28,12 @@ import {
 	getActiveNode,
 	getRenderRoot,
 	insertSubtreesAsChildren,
-} from '../../engine/mindmap';
+} from '../../engine';
 import { readClipboardText, writeClipboardText } from '../../platform/system/clipboard';
-import { adaptSubtreesToGroup } from '../../markdown/md-heading-normalize';
-import { liveNodeTree } from '../../markdown/md-heading-syntax';
-import { parseMdOutlineFragment } from '../../markdown/md-outline';
-import { serializeSubtreesToOutline } from '../../markdown/md-serialize';
+import { adaptSubtreesToGroup } from '../../markdown';
+import { liveNodeTree } from '../../markdown';
+import { parseMdOutlineFragment } from '../../markdown';
+import { serializeSubtreesToOutline } from '../../markdown';
 import { t, type Language, type TranslationKey } from '../../core/i18n';
 import { isTextEntryTarget, type PasteClipboardHost } from '../view/view-common';
 import { isAnyNodeEditing } from './node-inline-editor';

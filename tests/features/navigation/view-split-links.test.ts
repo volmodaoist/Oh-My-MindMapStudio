@@ -20,7 +20,7 @@ import {
 	runAutoSplitCheck,
 	splitAllLinks,
 } from '../../../src/features/navigation/view-split-links';
-import { parseMdOutline } from '../../../src/markdown/md-outline';
+import { parseMdOutline } from '../../../src/markdown/outline/md-outline';
 
 const {
 	execCommandMock,
@@ -34,14 +34,14 @@ const {
 	isEditingTextMock: vi.fn<() => boolean>(() => false),
 	// 整树替换入口（批量拆分走它）：必须保留撤销历史，见 replaceMindMapData
 	replaceDataMock: vi.fn<(...args: unknown[]) => void>(),
-	// 命令名取值与 src/engine/mindmap.ts 的 ENGINE_COMMANDS 一致；常量表本身的
+	// 命令名取值与 src/engine/runtime/mindmap.ts 的 ENGINE_COMMANDS 一致；常量表本身的
 	// token 契约由 vendor-contract 测试把关，这里只验证编排传了哪一个命令。
 	ENGINE: {
 		INSERT_CHILD_NODE: 'INSERT_CHILD_NODE',
 	},
 }));
 
-vi.mock('../../../src/engine/mindmap', () => ({
+vi.mock('../../../src/engine', () => ({
 	ENGINE_COMMANDS: ENGINE,
 	setNodeText: (...args: unknown[]): void => {
 		setNodeTextMock(...args);

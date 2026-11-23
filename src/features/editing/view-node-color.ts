@@ -30,7 +30,7 @@ import {
 	getRenderRoot,
 	paletteNodeColor,
 	topMostNodes,
-} from '../../engine/mindmap';
+} from '../../engine';
 import type { PaletteId } from '../../core/constants';
 import {
 	isNodeOnlyColorScope,
@@ -48,7 +48,7 @@ import {
 import { splitDirectiveTail } from '../../domain/directive';
 import { nodeInlineSource } from '../../domain/md-meta';
 import { walkTree } from '../../domain/tree';
-import { composeNodeContent } from '../../markdown/md-serialize';
+import { composeNodeContent } from '../../markdown';
 import { createButton, openFormModal } from '../../ui/modal-common';
 import { applyRawNodeContents } from '../content/node-content-write';
 import { colorDirectiveOf, setColorDirective } from '../content/node-inline-tokenize';

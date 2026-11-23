@@ -11,7 +11,7 @@
  * - 快捷键钩子：`Control+c/x/v` 返回 true（取消引擎行为），其余键放行。
  *
  * 剪贴板 IO 与引擎防腐层以 stub 替换；Markdown 解析/序列化用**真实现**
- * （文本形态契约由 tests/markdown/clipboard-outline.test.ts 单独覆盖，此处验证接线）。
+ * （文本形态契约由 tests/markdown/outline/clipboard-outline.test.ts 单独覆盖，此处验证接线）。
  * Notice 断言用 `t(lang, key)` 取真实文案，手写字符串会让测试与实现脱钩。
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
@@ -65,7 +65,7 @@ vi.mock('obsidian', async (importOriginal) => {
 	};
 });
 
-vi.mock('../../../src/engine/mindmap', () => ({
+vi.mock('../../../src/engine', () => ({
 	// view-common 在模块加载期读它（插入子节点路径）；取值与生产表一致
 	ENGINE_COMMANDS: { INSERT_CHILD_NODE: 'INSERT_CHILD_NODE' },
 	getActiveNode: getActiveNodeMock,

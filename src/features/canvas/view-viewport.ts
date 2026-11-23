@@ -65,7 +65,7 @@ import {
 	measureNodesCanvasBox,
 	panMindMap,
 	zoomMindMapAt,
-} from '../../engine/mindmap';
+} from '../../engine';
 import { isAnyNodeEditing } from '../editing/node-inline-editor';
 import type { MindMapViewContext } from '../view/view-context';
 

@@ -45,8 +45,8 @@
  */
 import { t } from '../../core/i18n';
 import { EventBinder } from '../../core/event-binder';
-import { getNodeGroupEl, getDrawTransform, isEditingText, readNodeEditorAppearance, hideNodeForEditing } from '../../engine/mindmap';
-import { composeNodeContent } from '../../markdown/md-serialize';
+import { getNodeGroupEl, getDrawTransform, isEditingText, readNodeEditorAppearance, hideNodeForEditing } from '../../engine';
+import { composeNodeContent } from '../../markdown';
 import type { MdNodeData } from '../../core/node-data';
 import type { MindMap, MindMapNode } from '../../core/engine-types';
 import type { ViewNodeEditContext } from '../view/view-context';

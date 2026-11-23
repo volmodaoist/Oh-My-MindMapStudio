@@ -68,9 +68,9 @@ import {
 	markNodeNeedLayout,
 	relationLineAt,
 	type RelationLineHit,
-} from '../../engine/mindmap';
-import { composeNodeContent } from '../../markdown/md-serialize';
-import { applyRawToNode } from '../../markdown/md-line-write';
+} from '../../engine';
+import { composeNodeContent } from '../../markdown';
+import { applyRawToNode } from '../../markdown';
 import { applyRawNodeContents } from '../content/node-content-write';
 import { cancelNodePick, startNodePick } from './node-pick';
 import type { MindMapViewContext, ViewNodeEditContext } from '../view/view-context';

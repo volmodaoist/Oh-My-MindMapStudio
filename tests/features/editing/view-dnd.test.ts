@@ -99,9 +99,9 @@ vi.mock('obsidian', async (importOriginal) => {
 });
 
 // 引擎模块整体以桩替换（真实模块会拉入 vendor 打包产物）。
-// ENGINE_COMMANDS 的取值与 src/engine/mindmap.ts 一致——断言用它证明插入走的是
+// ENGINE_COMMANDS 的取值与 src/engine/runtime/mindmap.ts 一致——断言用它证明插入走的是
 // 「命令名常量表」而非散落的魔法字符串。
-vi.mock('../../../src/engine/mindmap', () => ({
+vi.mock('../../../src/engine', () => ({
 	ENGINE_COMMANDS: {
 		INSERT_CHILD_NODE: 'INSERT_CHILD_NODE',
 		SET_NODE_IMAGE: 'SET_NODE_IMAGE',

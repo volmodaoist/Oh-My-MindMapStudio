@@ -42,7 +42,7 @@ const mocks = vi.hoisted(() => ({
 	panMindMap: vi.fn<(...args: unknown[]) => void>(),
 }));
 
-vi.mock('../../../src/engine/mindmap', () => ({
+vi.mock('../../../src/engine', () => ({
 	captureMiniMap: mocks.captureMiniMap,
 	contentExceedsCanvasAtFullScale: mocks.contentExceedsCanvasAtFullScale,
 	getCanvasSize: mocks.getCanvasSize,

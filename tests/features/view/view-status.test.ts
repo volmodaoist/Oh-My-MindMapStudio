@@ -33,7 +33,7 @@ const { countMindMapNodesMock } = vi.hoisted(() => ({
 	countMindMapNodesMock: vi.fn<(mindMap: unknown) => number>(),
 }));
 
-vi.mock('../../../src/engine/mindmap', () => ({
+vi.mock('../../../src/engine', () => ({
 	countMindMapNodes: countMindMapNodesMock,
 }));
 

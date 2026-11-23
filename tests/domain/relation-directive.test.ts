@@ -29,9 +29,9 @@ import {
 	resolveRelationGraph,
 	type RelationState,
 } from '../../src/domain/relation';
-import { parseMdOutline } from '../../src/markdown/md-outline';
-import { serializeMdBody } from '../../src/markdown/md-serialize';
-import { applyRawToNode } from '../../src/markdown/md-line-write';
+import { parseMdOutline } from '../../src/markdown/outline/md-outline';
+import { serializeMdBody } from '../../src/markdown/serialize/md-serialize';
+import { applyRawToNode } from '../../src/markdown/syntax/md-line-write';
 import type { MdNodeData } from '../../src/core/node-data';
 
 /** 构造一个"未编辑"的节点 data（rawOk 走 mdRaw 逐字回写） */

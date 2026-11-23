@@ -7,7 +7,7 @@
  * （view.ts，持有类引用）完成后才调用 handleWindowPaste。
  */
 import { Notice } from 'obsidian';
-import { getActiveNode, getRenderRoot } from '../../engine/mindmap';
+import { getActiveNode, getRenderRoot } from '../../engine';
 import { buildPastedImageName, saveImageToVault } from '../../media/images-save';
 import { notifyError } from '../../core/errors';
 import { applyNodeImage, createImageChildNode } from './view-node-actions';

@@ -3,7 +3,7 @@ import { MarkdownView, setTooltip } from 'obsidian';
 import type { Component, Workspace } from 'obsidian';
 import { CORE_VIEW_TYPE } from '../../core/constants';
 import { t, type Language } from '../../core/i18n';
-import { openAsMindMap } from '../../markdown/md-open';
+import { openAsMindMap } from '../../markdown';
 
 export class MarkdownMindMapAction {
 	private readonly actions = new Map<MarkdownView, HTMLElement>();

@@ -14,7 +14,7 @@
  */
 import { isPluginContentTarget } from '../../core/plugin-content-types';
 import { Platform, Scope } from 'obsidian';
-import { ENGINE_COMMANDS, getActiveNode } from '../../engine/mindmap';
+import { ENGINE_COMMANDS, getActiveNode } from '../../engine';
 import { isAnyNodeEditing } from './node-inline-editor';
 import { isTextEntryTarget } from '../view/view-common';
 import { deleteActiveNode, editNodeText } from './view-node-actions';

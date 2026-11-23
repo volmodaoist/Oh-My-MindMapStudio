@@ -61,7 +61,7 @@ vi.mock('obsidian', async (importOriginal) => {
 	};
 });
 
-vi.mock('../../../src/engine/mindmap', () => ({
+vi.mock('../../../src/engine', () => ({
 	getActiveNode: getActiveNodeMock,
 	getRenderRoot: getRenderRootMock,
 }));

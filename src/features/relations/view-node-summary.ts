@@ -38,8 +38,8 @@ import {
 	getNodeDataString,
 	isSummaryNode,
 	summaryAnchorOf,
-} from '../../engine/mindmap';
-import { composeNodeContent } from '../../markdown/md-serialize';
+} from '../../engine';
+import { composeNodeContent } from '../../markdown';
 import { showExclusiveMenu } from '../../ui/menu-submenu';
 import { openSummaryTextModal } from '../../ui/modal-summary-text';
 import { applyRawNodeContents } from '../content/node-content-write';

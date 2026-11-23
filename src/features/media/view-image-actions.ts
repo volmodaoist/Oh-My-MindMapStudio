@@ -4,7 +4,7 @@
  * 被 view-toolbar.ts / view-context-menu.ts / view-dnd.ts / view-paste.ts 共用。
  */
 import { App, TFile } from 'obsidian';
-import { ENGINE_COMMANDS, getNodeDataString } from '../../engine/mindmap';
+import { ENGINE_COMMANDS, getNodeDataString } from '../../engine';
 import {
 	createNaturalSizeSetNodeImageOptions,
 	createSetNodeImageOptions,

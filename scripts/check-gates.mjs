@@ -58,7 +58,7 @@ const VISUAL_MATCHERS = [
 	'scripts/visual-minimap-sidebar.mjs',
 	'scripts/chrome-page.mjs',
 	'src/core/minimap-geometry.ts',
-	'src/engine/mindmap-minimap.ts',
+	'src/engine/',
 	'scripts/visual-node-content.mjs',
 	'config/esbuild.config.mjs',
 	'src/ui/toolbar/',

@@ -29,7 +29,7 @@ import {
 	openAsMindMap,
 	openAsMarkdown,
 	setViewSwitchDoneHook,
-} from './markdown/md-open';
+} from './markdown';
 import {
 	refreshCommandLabels,
 	registerCommands,
@@ -39,7 +39,7 @@ import { VaultSyncService } from './platform/workspace/vault-sync';
 import { fileLookupIndex } from './links/file-lookup';
 import { setImageSizeCacheStore } from './media/images-path';
 import { ViewStateStore } from './services/view-state';
-import { DocumentSessionRegistry } from './services/document-session-registry';
+import { DocumentSessionRegistry } from './services/document';
 import { notifyError } from './core/errors';
 import { PluginDataWriter } from './core/persistence';
 import { ElementStatusBarService } from './services/status-bar';

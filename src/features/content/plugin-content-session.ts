@@ -1,8 +1,8 @@
 /** 插件正文更新仍走节点原文提交管线，不另起 Vault 保存或撤销时间线。 */
 import { readNodeDataString } from '../../core/node-data';
 import { t } from '../../core/i18n';
-import { findRenderNodeByUid, getRenderRoot, refreshNodesCustomContent, renderWithCallback } from '../../engine/mindmap';
-import { FencedBlockConflictError, replaceFencedNodeBlock } from '../../markdown/md-codeblocks';
+import { findRenderNodeByUid, getRenderRoot, refreshNodesCustomContent, renderWithCallback } from '../../engine';
+import { FencedBlockConflictError, replaceFencedNodeBlock } from '../../markdown';
 import { applyRawNodeContent } from './node-content-write';
 import { preparePluginContents } from '../../platform/rendering/plugins/bridge';
 import type { ViewNodeEditContext } from '../view/view-context';

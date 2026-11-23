@@ -36,7 +36,7 @@ import {
 	isEditingText,
 	setNodeText,
 	startNodeTextEdit,
-} from '../../../src/engine/mindmap';
+} from '../../../src/engine';
 import { openNodeTextModal } from '../../../src/ui/modal-text';
 import { cancelNodePick } from '../../../src/features/relations/node-pick';
 import { removeActiveRelationLine } from '../../../src/features/relations/view-node-relation';
@@ -45,7 +45,7 @@ import {
 	openNodeInlineEditor,
 } from '../../../src/features/editing/node-inline-editor';
 
-vi.mock('../../../src/engine/mindmap', () => ({
+vi.mock('../../../src/engine', () => ({
 	// 与生产常量表同名同值（断言处用字面量核对转发目标）
 	ENGINE_COMMANDS: { BACK: 'BACK', FORWARD: 'FORWARD' },
 	getActiveNode: vi.fn(),
@@ -65,7 +65,7 @@ vi.mock('../../../src/engine/mindmap', () => ({
 	countMindMapNodes: (): number => 0,
 	getActiveNodes: vi.fn((): unknown[] => []),
 	// 概要节点判定（`Delete` 先判概要再删正文节点）：本文件只验证键位转发，
-	// 概要删除路径由 tests/engine/engine-summaries.test.ts 与实机覆盖
+	// 概要删除路径由 tests/engine/nodes/engine-summaries.test.ts 与实机覆盖
 	isSummaryNode: vi.fn((): boolean => false),
 	summaryAnchorOf: vi.fn((): null => null),
 	getNodeGroupEl: vi.fn((): Element | null => null),

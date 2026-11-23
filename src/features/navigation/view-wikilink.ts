@@ -24,7 +24,7 @@ import { HOVER_LINK_EVENT, VIEW_TYPE } from '../../core/constants';
 import { elementFromTarget } from '../../core/event-binder';
 import { isSafeAnchorHref } from '../../domain/url';
 import { formatWikilink, wikilinkLinkpath } from '../../domain/wikilink';
-import { getNodeDataString, getNodeGroupEl } from '../../engine/mindmap';
+import { getNodeDataString, getNodeGroupEl } from '../../engine';
 import { MERMAID_BLOCK_CLASS } from '../content/node-inline-content';
 import type { MindMap, MindMapNode } from '../../core/engine-types';
 import type { HyperlinkOpenMode, MindMapViewContext } from '../view/view-context';

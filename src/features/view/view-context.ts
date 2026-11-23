@@ -13,8 +13,8 @@ import type { MindMap, MindMapNode } from '../../core/engine-types';
 import type { EventBinder } from '../../core/event-binder';
 import type { Language } from '../../core/i18n';
 import type { SaveState, StatusBarService } from '../../services/status-bar';
-import type { DocumentSessionRegistry } from '../../services/document-session-registry';
-import type { DocumentSyntax } from '../../markdown/md-heading-syntax';
+import type { DocumentSessionRegistry } from '../../services/document';
+import type { DocumentSyntax } from '../../markdown';
 import type { MindMapStudioSettings } from '../../settings';
 import type { PreferenceKey, ViewStateStore } from '../../services/view-state';
 

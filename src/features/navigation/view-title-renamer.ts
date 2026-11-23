@@ -7,7 +7,7 @@ import { mindMapFileName, mindMapFileTitle } from '../../domain/mindmap-file';
 import { App, Notice, normalizePath, TFile } from 'obsidian';
 import { createDebouncer } from '../../core/concurrency';
 import { notifyError } from '../../core/errors';
-import { isMindMapFile } from '../../markdown/md-open';
+import { isMindMapFile } from '../../markdown';
 import { sanitizeFileName } from '../../media/images-save';
 import { TITLE_RENAME_DEBOUNCE_MS } from '../../core/constants';
 import { t } from '../../core/i18n';

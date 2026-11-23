@@ -20,7 +20,7 @@
 - `src/features/content/`
   - `content-remeasure.ts`：ResizeObserver 接原有合批重测；渲染树临时为空时不误删组件。
   - `plugin-content-session.ts`：按 UID 与围栏顺序改节点原文，经文档会话、自动保存和共享撤销提交。
-- `src/markdown/md-codeblocks.ts`：复用围栏判据；写回前核对预期源码，保留外围正文、信息行、引用前缀与换行格式；新正文包含同长闭合围栏时只延长外层标记。
+- `src/markdown/syntax/md-codeblocks.ts`：复用围栏判据；写回前核对预期源码，保留外围正文、信息行、引用前缀与换行格式；新正文包含同长闭合围栏时只延长外层标记。
 
 ## TikZJax
 

@@ -49,7 +49,7 @@ import {
 	measureMiniMapContent,
 	panMindMap,
 	type MiniMapFrame,
-} from '../../engine/mindmap';
+} from '../../engine';
 import { startWindowDragSession, type WindowDragSession } from '../canvas/drag-session';
 import type { MindMapViewContext } from './view-context';
 

@@ -48,7 +48,7 @@ const { getNodeGroupElMock } = vi.hoisted(() => ({
 	getNodeGroupElMock: vi.fn<(node: unknown) => unknown>(),
 }));
 
-vi.mock('../../../src/engine/mindmap', () => ({
+vi.mock('../../../src/engine', () => ({
 	getNodeGroupEl: getNodeGroupElMock,
 	// 与生产实现同语义：getData 取字符串，非字符串（含 undefined）归一为空串
 	getNodeDataString: (

@@ -21,10 +21,10 @@ import {
 	setNodeText,
 	startNodeTextEdit,
 	type SiblingMoveOutcome,
-} from '../../engine/mindmap';
+} from '../../engine';
 import { openLinkEditorModal } from '../../ui/modal-link';
 import { openNodeTextModal } from '../../ui/modal-text';
-import { markNodeNeedLayout } from '../../engine/mindmap';
+import { markNodeNeedLayout } from '../../engine';
 import { notifyError } from '../../core/errors';
 import { isEmbeddableAttachmentExtension } from '../../core/constants';
 import {
@@ -39,7 +39,7 @@ import { resolvePathToFile } from '../../links/links-resolve';
 import { t, type TranslationKey } from '../../core/i18n';
 import { isHyperlinkProtocolUrl } from '../../domain/url';
 import { relationStateOf } from '../../domain/relation';
-import { composeNodeContent, isPureLinkNode } from '../../markdown/md-serialize';
+import { composeNodeContent, isPureLinkNode } from '../../markdown';
 import { stripInboundRelations } from '../relations/view-node-relation';
 import { editSummaryText, removeSummary } from '../relations/view-node-summary';
 

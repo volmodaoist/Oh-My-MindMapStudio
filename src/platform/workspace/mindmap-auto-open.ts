@@ -22,7 +22,7 @@ import { isDedicatedMindMapPath } from '../../domain/mindmap-file';
 import {
 	canAutoOpenMindMap, isExplicitMindMapOpen, openAsMarkdown,
 	openAsMindMap, readMdBackMode,
-} from '../../markdown/md-open';
+} from '../../markdown';
 
 /**
  * `file-open` 未命中叶子时的重试延时（ms）。

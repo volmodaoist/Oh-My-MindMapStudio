@@ -23,16 +23,16 @@ import {
 	ENGINE_COMMANDS,
 	getRenderRoot,
 	replaceMindMapData,
-} from '../../engine/mindmap';
+} from '../../engine';
 import {
 	currentDocumentSyntax,
 	planDocumentSyntax,
-} from '../../markdown/md-heading-format';
-import { normalizeSiblingSyntax } from '../../markdown/md-heading-normalize';
+} from '../../markdown';
+import { normalizeSiblingSyntax } from '../../markdown';
 import {
 	liveNodeTree,
 	type DocumentSyntax,
-} from '../../markdown/md-heading-syntax';
+} from '../../markdown';
 import { updateStatusBar } from '../view/view-status';
 import type { MindMapViewContext } from '../view/view-context';
 

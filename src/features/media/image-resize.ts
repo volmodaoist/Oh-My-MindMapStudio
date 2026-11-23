@@ -37,7 +37,7 @@ import {
 	isNodeImageElement,
 	previewNodeImageSize,
 	setNodeImageSize,
-} from '../../engine/mindmap';
+} from '../../engine';
 import type { MindMap, MindMapNode } from '../../core/engine-types';
 import type { MdNodeData } from '../../core/node-data';
 import type { MindMapViewContext } from '../view/view-context';

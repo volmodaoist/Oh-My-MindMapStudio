@@ -31,7 +31,7 @@ Obsidian 社区插件（TypeScript → esbuild → `main.js`）。把「声明�
 **2. 引擎访问只走防腐层**
 
 - Don't：在 `features/` 直读 `renderer.*` / `node.group` / `view_data_change` / `doExport`
-- Do：经 `engine/mindmap.ts` 的具名函数（该文件是唯一收口面）
+- Do：经 `engine/index.ts` 的具名函数（该文件是唯一收口面）
 
 **3. vendor 只读**
 
@@ -94,7 +94,7 @@ Obsidian 社区插件（TypeScript → esbuild → `main.js`）。把「声明�
 
 ### 修改 Markdown 往返格式
 
-1. 解析改 `src/markdown/md-outline.ts`，序列化改 `src/markdown/md-serialize.ts`
+1. 解析改 `src/markdown/outline/md-outline.ts`，序列化改 `src/markdown/serialize/md-serialize.ts`
 2. 同步 `docs/markdown-mindmap-standard.md`（权威标准）
 3. `npx vitest run tests/markdown/md-roundtrip-property.test.ts`（fast-check 四条性质，含 `T∘T` 不动点）
 4. `npx vitest run tests/markdown/md-roundtrip.test.ts`

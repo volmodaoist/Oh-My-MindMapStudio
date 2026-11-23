@@ -63,7 +63,7 @@ const {
 	applyRawMock,
 } = vi.hoisted(() => ({
 	noticeCalls: [] as string[],
-	// 命令名取值与 src/engine/mindmap.ts 的 ENGINE_COMMANDS 一致；常量表本身的 token
+	// 命令名取值与 src/engine/runtime/mindmap.ts 的 ENGINE_COMMANDS 一致；常量表本身的 token
 	// 契约由 vendor-contract 测试把关，这里只验证编排传了哪一个命令。
 	ENGINE: {
 		BACK: 'BACK',
@@ -79,7 +79,7 @@ const {
 	setNodeTextMock: vi.fn<(...args: unknown[]) => void>(),
 	markNodeNeedLayoutMock: vi.fn<(...args: unknown[]) => void>(),
 	// 兄弟上/下移的防腐入口（兄弟判定与清坐标在 engine/mindmap.ts，
-	// 由 tests/engine/engine-node-move.test.ts 直测；本文件只验编排与提示映射）
+	// 由 tests/engine/nodes/engine-node-move.test.ts 直测；本文件只验编排与提示映射）
 	siblingMoveMock: vi.fn<(...args: unknown[]) => unknown>(),
 	forceRemoveMock: vi.fn<(...args: unknown[]) => void>(),
 	openLinkMock: vi.fn<(...args: unknown[]) => Promise<unknown>>(),
@@ -104,7 +104,7 @@ vi.mock('obsidian', async (importOriginal) => {
 	};
 });
 
-vi.mock('../../../src/engine/mindmap', () => ({
+vi.mock('../../../src/engine', () => ({
 	ENGINE_COMMANDS: ENGINE,
 	setNodeText: (...args: unknown[]): void => {
 		setNodeTextMock(...args);
@@ -117,7 +117,7 @@ vi.mock('../../../src/engine/mindmap', () => ({
 		forceRemoveMock(...args);
 	},
 	// 以下三个保持生产语义：桩成常量会让「按节点数据分流」的分支永远走同一路，
-	// 断言全部失真（renderer 缺失 ⇒ 无激活节点/无根，与 src/engine/mindmap.ts 一致）。
+	// 断言全部失真（renderer 缺失 ⇒ 无激活节点/无根，与 src/engine/runtime/mindmap.ts 一致）。
 	getActiveNode: (mindMap: unknown): unknown => {
 		const renderer = (
 			mindMap as { renderer?: { activeNodeList?: unknown[] } } | null

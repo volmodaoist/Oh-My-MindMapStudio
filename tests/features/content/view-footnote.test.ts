@@ -36,7 +36,7 @@ const engine = vi.hoisted(() => ({
 	revealNodeByUid: vi.fn(() => true),
 }));
 
-vi.mock('../../../src/engine/mindmap', () => ({
+vi.mock('../../../src/engine', () => ({
 	collectRenderNodeData: engine.collectRenderNodeData,
 	revealNodeByUid: engine.revealNodeByUid,
 }));

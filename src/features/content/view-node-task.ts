@@ -19,8 +19,8 @@
  * 右键菜单**刻意没有**任务条目（用户裁决 2026-10-28）：勾选只有「点复选框」这一个
  * 入口，因此也没有多选批量切换；图片节点不渲染复选框（同一裁决）。
  */
-import { findNodeByDom } from '../../engine/mindmap';
-import { composeNodeContent } from '../../markdown/md-serialize';
+import { findNodeByDom } from '../../engine';
+import { composeNodeContent } from '../../markdown';
 import { setTaskTokenInRaw, toggleTaskToken } from '../../domain/md-task';
 import { elementFromTarget } from '../../core/event-binder';
 import type { MdNodeData } from '../../core/node-data';

@@ -21,7 +21,7 @@ const engineMocks = vi.hoisted(() => ({
 	recordHistory: vi.fn(),
 }));
 
-vi.mock('../../../src/engine/mindmap', () => ({
+vi.mock('../../../src/engine', () => ({
 	findNodeByDom: engineMocks.findNodeByDom,
 	recordHistory: engineMocks.recordHistory,
 	markNodeNeedLayout: vi.fn(),
