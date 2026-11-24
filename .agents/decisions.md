@@ -388,3 +388,10 @@ Markdown 数据语义以 [标准](../docs/markdown-mindmap-standard.md) 为准�
 - @/ 对应仓库根，跨目录 TS 模块和测试 mock 引用使用该别名；同目录 ./ 保持简洁。
 - tsconfig paths、Vitest resolver 与 esbuild 自动配置解析对齐；真实依赖图解析别名目标，ESLint 禁令也覆盖 @/src，不把别名当外部 npm 包跳过。
 - 直接由 Node 加载的 scripts/config、文件 URL 与 Markdown 链接保留可直接运行和点击的路径，避免引入额外加载器。
+
+## 节点级布局（K224）
+
+- 语义在 `domain/document/node-layout.ts`：值解析、指令段读取、`mdSide`/`mdFold` 与引擎 `dir`/`expand` 投影。
+- 解析与原文写回在 markdown 层统一调用；指令行本身仍由通用指令体系保存，未编辑逐字回写。
+- 交互在 `features/canvas/view-node-layout.ts`：右键方向/折叠 + 接管引擎折叠按钮（capture），写入走 `applyRawNodeContents`，一次渲染/保存/撤销。
+- 方向仅首层分支与 mindMap/timeline/fishbone；折叠任意有子节点。`auto` 与展开不写属性，避免冗余指令。

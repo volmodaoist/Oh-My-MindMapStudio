@@ -24,7 +24,7 @@
 
 ## 领域能力与测试目录
 
-- `domain/document/`：文档模型、源码绑定、文件命名、启用/布局声明与通用树操作。
+- `domain/document/`：文档模型、源码绑定、文件命名、启用/布局声明、节点级方向/折叠与通用树操作。
 - `domain/links/`：URL、双链、路径和显示别名的纯语义；Vault 文件解析仍由上层 links 负责。
 - `domain/content/`：任务、callout 与管道表的内容规则。
 - `domain/relations/`：独立指令块、联系、概要与锚点几何。
