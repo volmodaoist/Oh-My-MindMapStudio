@@ -7389,7 +7389,7 @@ async function main() {
 		await diag.file('13-canvas-drag.html', canvasDom);
 		const canvasRead = readProbe(canvasDom, 'canvas-drag-probe', '画布拖拽');
 		const canvasFailures = canvasRead.failures ?? (canvasRead.probe?.ok ? [] : [canvasRead.probe?.error ?? '画布拖拽验证未完成']);
-		diag.log('  ' + (canvasFailures.length ? '✗' : '✓') + ' canvas-drag 两档设置 × Cmd/Ctrl × 缩放及独立 Window、节点/输入/中键/右键/滚轮与中途切换');
+		diag.log('  ' + (canvasFailures.length ? '✗' : '✓') + ' canvas-drag 两档设置、缩放和独立 Window；节点折叠/展开 SVG 点击与 Markdown 写回');
 		for (const failure of canvasFailures) diag.log('      - ' + failure);
 		failed = pluginFailures.length + uiFailures.length + contentFailures.length + minimapFailures.length + canvasFailures.length + await runChecks(dom, diag);
 

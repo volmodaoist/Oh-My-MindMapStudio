@@ -35,6 +35,7 @@ export {
 	getNodeGroupEl,
 	getRenderRoot,
 	getRootText,
+	hasNodeDataChildren,
 	isCustomNodeContent,
 	isEditingText,
 	isNodeCollapsed,

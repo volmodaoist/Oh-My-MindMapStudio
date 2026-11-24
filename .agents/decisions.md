@@ -394,4 +394,5 @@ Markdown 数据语义以 [标准](../docs/markdown-mindmap-standard.md) 为准�
 - 语义在 `domain/document/node-layout.ts`：值解析、指令段读取、`mdSide`/`mdFold` 与引擎 `dir`/`expand` 投影。
 - 解析与原文写回在 markdown 层统一调用；指令行本身仍由通用指令体系保存，未编辑逐字回写。
 - 交互在 `features/canvas/view-node-layout.ts`：右键方向/折叠 + 接管引擎折叠按钮（capture），写入走 `applyRawNodeContents`，一次渲染/保存/撤销。
-- 方向仅首层分支与 mindMap/timeline/fishbone；折叠任意有子节点。`auto` 与展开不写属性，避免冗余指令。
+- 方向仅首层分支与 mindMap/timeline/fishbone；`auto` 与展开不写属性，避免冗余指令。
+- 折叠/展开资格检查完整数据树，而非渲染树；折叠的子节点可能没有渲染实例。

@@ -20,7 +20,12 @@ export function getActiveNode(mindMap: MindMap | null): MindMapNode | null {
 	return mindMap?.renderer ? mindMap.renderer.activeNodeList[0] ?? null : null;
 }
 
-/** 递归统计树节点数量（数据树/渲染节点树同构，均可用） */
+/** 是否有数据子节点：折叠时渲染树不一定保留子节点实例。 */
+export function hasNodeDataChildren(node: MindMapNode): boolean {
+	return node.nodeData.children.length > 0;
+}
+
+/** 递归统计传入的数据树或渲染树；后者只计已实例化的节点。 */
 export function countTreeNodes<T extends { children?: readonly T[] | null }>(
 	tree: T | null,
 ): number {

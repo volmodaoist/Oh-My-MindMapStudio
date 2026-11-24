@@ -7,7 +7,7 @@ const mocks = vi.hoisted(() => ({
 	applyRawNodeContents: vi.fn(),
 }));
 
-vi.mock('@/src/engine', () => ({ findNodeByDom: vi.fn() }));
+vi.mock('@/src/engine', () => import('@/src/engine/nodes/mindmap-nodes'));
 vi.mock('@/src/features/content/node-content-write', () => ({
 	applyRawNodeContents: mocks.applyRawNodeContents,
 }));
@@ -30,12 +30,13 @@ function makeView(layout = 'mindMap'): MindMapViewContext {
 
 function makeNode(
 	data: Record<string, unknown>,
-	options: { root?: boolean; parentRoot?: boolean; children?: number } = {},
+	options: { root?: boolean; parentRoot?: boolean; children?: number; renderedChildren?: number } = {},
 ): MindMapNode {
 	return {
 		isRoot: options.root ?? false,
 		parent: { isRoot: options.parentRoot ?? true },
-		children: Array.from({ length: options.children ?? 0 }, () => ({})),
+		children: Array.from({ length: options.renderedChildren ?? options.children ?? 0 }, () => ({})),
+		nodeData: { data, children: Array.from({ length: options.children ?? 0 }, () => ({})) },
 		getData: () => data,
 	} as unknown as MindMapNode;
 }
@@ -79,6 +80,21 @@ describe('可用性判定', () => {
 });
 
 describe('写回', () => {
+	it('折叠节点即使没有渲染子节点也能展开，保留方向与正文', () => {
+		mocks.applyRawNodeContents.mockClear();
+		const node = makeNode(headingData({
+			mdRaw: '前端\n%%side:left,fold:1%%',
+			mdDirectiveTail: '%%side:left,fold:1%%',
+			mdSide: 'left',
+			mdFold: true,
+			expand: false,
+		}), { children: 1, renderedChildren: 0 });
+		expect(toggleNodeFold(makeView(), node)).toBe(true);
+		expect(mocks.applyRawNodeContents).toHaveBeenCalledExactlyOnceWith(
+			expect.anything(), [{ node, raw: '前端\n%%side:left%%' }], { afterCommit: false },
+		);
+	});
+
 	it('设置方向只替换 side/fold 段，概要等其它指令逐字保留', () => {
 		mocks.applyRawNodeContents.mockClear();
 		const node = makeNode(

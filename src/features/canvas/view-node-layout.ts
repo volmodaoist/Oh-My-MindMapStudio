@@ -28,7 +28,7 @@ import {
 	splitDirectiveSegments,
 	type DirectiveSegment,
 } from '@/src/domain/relations';
-import { findNodeByDom } from '@/src/engine';
+import { findNodeByDom, hasNodeDataChildren } from '@/src/engine';
 import { applyRawNodeContents } from '@/src/features/content/node-content-write';
 import type { MindMapViewContext } from '@/src/features/view/view-context';
 import { composeNodeContent } from '@/src/markdown';
@@ -38,7 +38,7 @@ const EXPAND_BTN_CLASS = 'smm-expand-btn';
 
 /** 该节点能否折叠：有子节点且不是中心主题（虚拟根没有正文行） */
 export function isFoldableNode(node: MindMapNode): boolean {
-	return !node.isRoot && (node.children?.length ?? 0) > 0;
+	return !node.isRoot && hasNodeDataChildren(node);
 }
 
 /** 该节点能否设置方向：根的直接子节点（后代继承父分支方向） */

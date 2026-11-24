@@ -260,6 +260,7 @@ vi.mock('obsidian', async (importOriginal) => {
 vi.mock('@/src/engine', () => ({
 	ENGINE_COMMANDS: ENGINE,
 	findNodeByDom: findNodeByDomMock,
+	hasNodeDataChildren: (): boolean => false,
 	fitMindMap: fitMindMapMock,
 	// 大图 fit 的计数入口（fitToScreen 经此判断是否提示+让帧）：0 节点 ⇒ 同步 fit
 	countMindMapNodes: (): number => 0,

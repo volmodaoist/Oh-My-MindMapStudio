@@ -3,8 +3,12 @@ import { join } from 'node:path';
 
 export function buildCanvasDragEntrySource(root) {
   const engine = join(root, 'src/engine/index.ts').replaceAll('\\', '/');
+  const path = relative => JSON.stringify(join(root, relative).replaceAll('\\', '/'));
   return `
 import { createMindMap, applyCanvasDragMode } from ${JSON.stringify(engine)};
+import { EventBinder } from ${path('src/core/event-binder.ts')};
+import { parseMdOutline, serializeMdBody } from ${path('src/markdown/index.ts')};
+import { setupNodeLayoutInteractions } from ${path('src/features/canvas/view-node-layout.ts')};
 const probe = document.createElement('pre'); probe.id = 'canvas-drag-probe'; document.body.appendChild(probe);
 const report = { cases: [], assertions: 0 };
 const pause = ms => new Promise(resolve => setTimeout(resolve, ms));
@@ -29,8 +33,43 @@ async function make(extra = {}) {
   map.opt.selectTranslateStep = 0;
   return { map, holder, dispose: () => { map.destroy(); holder.remove(); } };
 }
+async function checkNodeFold() {
+  const expanded = '# Branch\\n%%side:left%%\\n\\n## Child';
+  const folded = '# Branch\\n%%side:left,fold:1%%\\n\\n## Child';
+  const holder = document.createElement('div');
+  holder.style.cssText = 'width:1000px;height:500px;position:relative';
+  document.body.appendChild(holder);
+  const map = createMindMap(holder, parseMdOutline(folded, 'Root').tree, { ...options, layout: 'mindMap' });
+  map.opt.alwaysShowExpandBtn = true;
+  const engineEvents = new EventBinder();
+  try {
+    const saved = [];
+    setupNodeLayoutInteractions({ canvasEl: holder, mindMap: map, engineEvents, scheduleSave: () => saved.push(serializeMdBody(map.getData()).trimEnd()) });
+    const branch = () => map.renderer.root?.children[0];
+    const button = () => branch()?.group.node.querySelector('.smm-expand-btn');
+    const waitFor = async (condition, label) => {
+      for (let i = 0; i < 100 && !condition(); i++) await pause(10);
+      assert(condition(), label);
+    };
+    await waitFor(button, 'folded branch shows its SVG button on load');
+    assert(holder.querySelectorAll('.smm-node').length === 2, 'folded child is not rendered');
+    const click = () => button().firstElementChild.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+    click();
+    await waitFor(() => holder.querySelectorAll('.smm-node').length === 3, 'click renders the hidden child');
+    assert(saved.length === 1 && saved[0] === expanded && branch().dir === 'left', 'unfold saves once and preserves branch side and content');
+    await waitFor(button, 'expanded branch shows its SVG button');
+    click();
+    await waitFor(() => holder.querySelectorAll('.smm-node').length === 2, 'second click hides the child');
+    assert(saved.length === 2 && saved[1] === folded, 'refold saves the original folded Markdown');
+  } finally {
+    engineEvents.destroy();
+    map.destroy();
+    holder.remove();
+  }
+}
 (async () => {
   try {
+    await checkNodeFold();
     for (const enabled of [true, false]) for (const scale of [0.5, 1, 2.35]) for (const modifier of ['plain', 'ctrlKey', 'metaKey']) {
       const { map, holder, dispose } = await make();
       assert(map.opt.dragCanvasWithModifier === false, 'unspecified engine option defaults to plain-drag pan');
