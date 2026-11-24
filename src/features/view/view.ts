@@ -138,6 +138,7 @@ import { setupDragAndDrop } from '@/src/features/editing/view-dnd';
 import { setupContextMenu } from './view-context-menu';
 import { registerViewHotkeys } from '@/src/features/editing/view-hotkeys';
 import { setupViewportGestures } from '@/src/features/canvas/view-viewport';
+import { setupNodeLayoutInteractions } from '@/src/features/canvas/view-node-layout';
 import { handleWindowPaste, setupPasteHandler } from '@/src/features/editing/view-paste';
 import { handleClipboardShortcut } from '@/src/features/editing/view-clipboard';
 import {
@@ -616,6 +617,8 @@ export class MindMapView
 				registerCodeBlockInteractions(this);
 				// 画布视口手势（Ctrl+滚轮缩放 / 滚轮平移 / 中键拖）：对齐官方 Canvas
 				setupViewportGestures(this);
+				// 节点级布局：接管引擎折叠按钮，把方向/折叠写回正文指令
+				setupNodeLayoutInteractions(this);
 				// 自绘（富）节点的双击编辑兜底（引擎编辑框对自绘节点静默 no-op）
 				setupNodeTextEditFallback(this);
 				setupImageResize(this);

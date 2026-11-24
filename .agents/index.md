@@ -93,6 +93,7 @@
   - **features/**
     - **canvas/**
       - [drag-session.ts](../src/features/canvas/drag-session.ts)
+      - [view-node-layout.ts](../src/features/canvas/view-node-layout.ts)
       - [view-node-width.ts](../src/features/canvas/view-node-width.ts)
       - [view-viewport.ts](../src/features/canvas/view-viewport.ts)
     - **content/**
@@ -353,6 +354,7 @@
   - **features/**
     - **canvas/**
       - [drag-session.test.ts](../tests/features/canvas/drag-session.test.ts)
+      - [view-node-layout.test.ts](../tests/features/canvas/view-node-layout.test.ts)
       - [view-node-width.test.ts](../tests/features/canvas/view-node-width.test.ts)
       - [view-viewport.test.ts](../tests/features/canvas/view-viewport.test.ts)
     - **content/**
@@ -539,11 +541,11 @@
 | `src/markdown/outline/md-outline.ts` | 940 | 大纲 ↔ 节点树 的单一往返实现：解析与生成共用同一套层级/标记规则。2026-10-12 增至 1108：首图与 icon-only URL 也登记台账段并附**上下文锚点**（`tokenAnchors`）——不登记则合成只能尾插，图片被搬到行尾 |
 | `src/markdown/outline/md-outline-lines.ts` | 421 | 逐行分类的唯一实现（围栏状态机 / 自闭合围栏 / setext 与分隔线 / 空列表项 / 有序编号，零依赖）；拆开会把「行 → 分类」与「树装配」割成两份缩进与围栏口径（K164）。2026-11-08 增至 322：有序编号 `orderedNumber` 随行记录（K170），只加字段不拆文件；同批把编号限制为**安全整数**（`orderedNumberOf`，超长编号写回会成 `1e+21.` 让整行退化成段落，K172） |
 | `src/core/minimap-geometry.ts` | 1562 | 小地图纯几何与 SVG 模型的唯一实现：全树内容盒、节点抽样/墨色、布局五态连线、等比面板映射、视口框投影与浮层节拍共享同一坐标系。K215 只增加可用侧栏尺寸参数，SVG、框和拖动仍共用 miniMapScale，不复制几何/连线/导航算法。浮层维持宽 160–220、高度按画布封顶；侧栏以完整承载区和 12px 单源 inset 等比居中，实际连线外扩与全树节点共用一份绘制 bounds；最小像素标记须保留边缘空白。 |
-| `src/core/i18n.ts` | 850 | 纯词条表（无逻辑分支）。2026-10-14 增至 563：节点上/下移 5 条（双语），含中心节点与首/末位拒绝提示。 |
-| `src/features/view/view-context-menu.ts` | 844 | 节点与空白画布右键菜单的**唯一装配面**：按落点形态分流链接/图片/文字动作与视图级外观项，共享右键时的选中快照、历史动作与分流规则。宿主级联菜单等通用 DOM 机制已移至 `ui/menu-submenu.ts`；本文件保留菜单语义与视图动作编排，继续拆分须避免复制落点/选中判据。行为依据见 K146/K154，历次增长与拆分查 Git。 |
+| `src/core/i18n.ts` | 866 | 纯词条表（无逻辑分支）。2026-10-14 增至 563：节点上/下移 5 条（双语），含中心节点与首/末位拒绝提示。 |
+| `src/features/view/view-context-menu.ts` | 901 | 节点与空白画布右键菜单的**唯一装配面**：按落点形态分流链接/图片/文字动作与视图级外观项，共享右键时的选中快照、历史动作与分流规则。宿主级联菜单等通用 DOM 机制已移至 `ui/menu-submenu.ts`；本文件保留菜单语义与视图动作编排，继续拆分须避免复制落点/选中判据。行为依据见 K146/K154，历次增长与拆分查 Git。 |
 | `src/features/editing/view-node-color.ts` | 475 | 节点配色的**全部写入入口**（2026-11-06 越线并登记；2026-11-09 增至 468）：右键节点「配色」与空白右键「按分支自动上色」两个入口共用同一套「原文合成 → 一次批量落地」、同一份**作用范围**定义（`nodeColorScope`：含子节点＝只写有色节点、靠继承；仅本节点＝再给直接子节点补哨兵阻断，K167）、「默认」的两种落地（上层还在染色 ⇒ 写 `%%none%%`；否则 ⇒ 删指令）与撤色后的无主哨兵回收。2026-11-09 追加**一次性的旧哨兵清理**（`collectColorSentinelSessions` / `applyColorSentinelCleanup` / `offerColorSentinelCleanup`，K175）：判「哪行是自身哨兵」与删除仍复用 `colorDirectiveOf` / `setColorDirective`，与上色两条入口同源。拆开就会让「这次改色到底写哪几行（带不带 `%%none%%`）」跨文件漂移——而那正是本批反复踩到的地方：色源与哨兵必须**同批**落地，否则一次改色要付两轮整树重渲（K149 ⑥ / K167 ③）。 |
 | `src/features/view/view-minimap.ts` | 884 | 原小地图的单一会话与副作用收口：组件迁移承载、渲染事件/可见性调度、视口框本地投影、拖拽导航与滚轮转发共用同一几何和引擎实例。K215 增加主窗口常驻侧栏与 ResizeObserver，保留 popout 浮层回退；纯几何仍在 core，承载选择/Outline 恢复独立在 platform。拆开导航状态会让图、框与拖拽持有不同变换。 |
-| `src/features/view/view.ts` | 2006 | 视图 Controller：**第 6 步拆分后的编排壳**（见文件头契约）。数学校准会话已外置为 `features/content/content-remeasure.ts`（2026-10-11）；自绘内容装配（`InlineContentOptions` 的五项绑定）外置为 `features/content/node-content-factory.ts`（2026-10-13，与代码块嵌入共用同一份装配）。**2026-10-21 增至 1149**：连线样式两态收敛（读取侧归一存量 `auto`/`direct`；`applyLineStyle` 写入侧同样归一，防旧词汇回写 `data.json`）。**同日再增至 1249**：边框 / 配色改为按文件记（`applyPalette`/`applyThemeStyle`），四项「按文件偏好」的缺省值收进 `resolveFilePreferences`（此前 themeStyle 在 load 处回落硬编码 `default`，导致「默认边框样式」对新建导图无效）。**2026-10-23 复测 1223**：读取侧四个 `resolve*()` 收敛为 `resolvePreference(key: PreferenceKey)`（与写入侧 `commitPreference` 对称，`MindMapViewContext` 接口面 −3）；`onEngineReady` 删掉两个死参，改由本类自行 `refreshToolbar()`。**2026-10-29 增至 1337**：逐文件布局移入文件属性——`loadMindMapFromFile` 读 `readDeclaredLayout`（种子值只兜缓存滞后，且**读完文档再复问一次**——`vault.read` 给 MetadataCache 追赶时间，勾选态与引擎创建因此对齐磁盘真值而非停在种子值），`applyLayout` 改为「排空正文 → `processFrontMatter` → 成功后才动画面」的独立实现，新增 `syncDeclaredLayout`（跟外部改写、幂等、不回写）；`resolvePreference` 收窄为三项、新增 `resolveLayout()`，`SESSION_FIELDS` / `IN_PLACE_REFRESH_KEYS` 去掉布局。**2026-11-02 增至 1513**：大图首帧提示（`showLargeMapRenderHint` / `clearRenderHint`，阈值 `LARGE_MAP_RENDER_HINT_NODES`，理由见 K161）+ `markLoaded` 传入 `doc.body`（撤销回加载态按原样正文还原，K160⑤）。**同日再增至 1565**：「加载基线」与「大图首帧提示」改为**在引擎就绪时消费**——`initMindMap` 在容器 0 尺寸（后台标签/折叠面板）时只挂 ResizeObserver 等待、`getDataSnapshot()` 为 null，原来那一版会把 `markLoaded` 的空守卫吞掉（基线缺失 ⇒ 此后每轮自动保存都不再算「纯浏览」，打开即重排全文），提示则会绑不上 `node_tree_render_end` 而挂到 15 s 兜底（不透明遮罩盖住画布）。故新增 `recordLoadedBaseline(file)` + `LoadSession.pendingBaseline` / `pendingRenderHint`，由 `onEngineReady` 补记/补建（设置刷新重建不写 pending，不会把未落盘编辑误标成基线）。 |
+| `src/features/view/view.ts` | 2009 | 视图 Controller：**第 6 步拆分后的编排壳**（见文件头契约）。数学校准会话已外置为 `features/content/content-remeasure.ts`（2026-10-11）；自绘内容装配（`InlineContentOptions` 的五项绑定）外置为 `features/content/node-content-factory.ts`（2026-10-13，与代码块嵌入共用同一份装配）。**2026-10-21 增至 1149**：连线样式两态收敛（读取侧归一存量 `auto`/`direct`；`applyLineStyle` 写入侧同样归一，防旧词汇回写 `data.json`）。**同日再增至 1249**：边框 / 配色改为按文件记（`applyPalette`/`applyThemeStyle`），四项「按文件偏好」的缺省值收进 `resolveFilePreferences`（此前 themeStyle 在 load 处回落硬编码 `default`，导致「默认边框样式」对新建导图无效）。**2026-10-23 复测 1223**：读取侧四个 `resolve*()` 收敛为 `resolvePreference(key: PreferenceKey)`（与写入侧 `commitPreference` 对称，`MindMapViewContext` 接口面 −3）；`onEngineReady` 删掉两个死参，改由本类自行 `refreshToolbar()`。**2026-10-29 增至 1337**：逐文件布局移入文件属性——`loadMindMapFromFile` 读 `readDeclaredLayout`（种子值只兜缓存滞后，且**读完文档再复问一次**——`vault.read` 给 MetadataCache 追赶时间，勾选态与引擎创建因此对齐磁盘真值而非停在种子值），`applyLayout` 改为「排空正文 → `processFrontMatter` → 成功后才动画面」的独立实现，新增 `syncDeclaredLayout`（跟外部改写、幂等、不回写）；`resolvePreference` 收窄为三项、新增 `resolveLayout()`，`SESSION_FIELDS` / `IN_PLACE_REFRESH_KEYS` 去掉布局。**2026-11-02 增至 1513**：大图首帧提示（`showLargeMapRenderHint` / `clearRenderHint`，阈值 `LARGE_MAP_RENDER_HINT_NODES`，理由见 K161）+ `markLoaded` 传入 `doc.body`（撤销回加载态按原样正文还原，K160⑤）。**同日再增至 1565**：「加载基线」与「大图首帧提示」改为**在引擎就绪时消费**——`initMindMap` 在容器 0 尺寸（后台标签/折叠面板）时只挂 ResizeObserver 等待、`getDataSnapshot()` 为 null，原来那一版会把 `markLoaded` 的空守卫吞掉（基线缺失 ⇒ 此后每轮自动保存都不再算「纯浏览」，打开即重排全文），提示则会绑不上 `node_tree_render_end` 而挂到 15 s 兜底（不透明遮罩盖住画布）。故新增 `recordLoadedBaseline(file)` + `LoadSession.pendingBaseline` / `pendingRenderHint`，由 `onEngineReady` 补记/补建（设置刷新重建不写 pending，不会把未落盘编辑误标成基线）。 |
 | `src/services/engine/engine-controller.ts` | 690 | **第 4 步从 view.ts 拆出**的引擎防腐收口：引擎实例生命周期（初始化代际锁/零尺寸等待）+ 全部引擎内部访问（`renderer.*`/`view.*`/`opt`）封装为显式方法；导出 SVG 后处理链经 `deps.exportSvgTransforms` 由组合根注入（K51：services 不依赖 features）。2026-10-13：主题写入与 resize 改走 `engine/index` 的 `applyThemeConfig` / `resizeMindMap`（视图与代码块嵌入共用同一入口）。 |
 | `src/media/images-path.ts` | 758 | 图片引用处理的单一关注点（外部地址判定／路径解析与序列化／尺寸归一）。`schedulePersistSizeCache` 是**第三种调度语义**（纯延迟落盘、窗口不重置、首调不立即执行），刻意不用 `createDebouncer`/`createThrottler`。 |
 | `src/features/media/image-resize.ts` | 432 | 单一交互特性（图片拖拽调宽）：hover 手柄 → 拖拽会话 → 尺寸回写是一条不可分割的状态链。窗口级会话（监听 + rAF 合帧 + 幂等收尾）已收口到 `drag-session`，本文件只留业务回调；`capture: true` 是「手势独占」的显式参数 |
@@ -582,7 +584,7 @@
   - [README.md](README.md)：按需阅读、权威边界与文档规模
   - [architecture.md](architecture.md)：模块职责、数据流与依赖层
   - [baseline-metrics.md](baseline-metrics.md)：可复现基线与静态指标
-  - [conventions.md](conventions.md)：关键约定 K1–K223，按主题及编号读取分层摘要
+  - [conventions.md](conventions.md)：关键约定 K1–K224，按主题及编号读取分层摘要
   - [testing.md](testing.md)：测试分层、CI 与验证流程
   - [process.md](process.md)：维护义务与发布流程
 

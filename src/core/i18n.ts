@@ -113,6 +113,14 @@ const ZH = {
 	// 与相邻兄弟交换顺序（引擎 UP_NODE / DOWN_NODE；拖拽摆放过的节点位置不跟随）
 	'menu.moveUp': '上移节点',
 	'menu.moveDown': '下移节点',
+	// 节点级布局：左右方向（首层分支）与折叠，写在正文指令里
+	'menu.branchSide': '方向',
+	'menu.branchSideLeft': '左侧',
+	'menu.branchSideRight': '右侧',
+	'menu.branchSideAuto': '自动',
+	'menu.branchSideUnsupported': '当前布局不支持分支方向',
+	'menu.foldNode': '折叠节点',
+	'menu.unfoldNode': '展开节点',
 	'menu.copyNode': '复制节点',
 	/** 多选时的复制：标题报数量（与「概要（覆盖 N 个）」同一口径） */
 	'menu.copyNodeCount': '复制 {count} 个节点',
@@ -507,6 +515,14 @@ const EN: Record<TranslationKey, string> = {
 	'menu.addSibling': 'Add sibling node',
 	'menu.moveUp': 'Move node up',
 	'menu.moveDown': 'Move node down',
+	// Per-node layout: branch side (first-level branches) and folding, stored in the note body
+	'menu.branchSide': 'Branch side',
+	'menu.branchSideLeft': 'Left',
+	'menu.branchSideRight': 'Right',
+	'menu.branchSideAuto': 'Auto',
+	'menu.branchSideUnsupported': 'This layout does not support branch sides',
+	'menu.foldNode': 'Collapse node',
+	'menu.unfoldNode': 'Expand node',
 	'menu.copyNode': 'Copy node',
 	/** Multi-selection copy: report the count (same convention as the summary item) */
 	'menu.copyNodeCount': 'Copy {count} topics',

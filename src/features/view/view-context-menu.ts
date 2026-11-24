@@ -32,6 +32,7 @@ import {
 	PALETTE_OPTIONS,
 } from '@/src/core/constants';
 import { COLOR_DIRECTIVE_NONE } from '@/src/domain/color';
+import { readNodeLayout, supportsBranchSide } from '@/src/domain/document';
 import type { DocumentSyntax } from '@/src/markdown';
 import {
 	addCascadingMenu,
@@ -47,6 +48,12 @@ import {
 	nodeColorOptions,
 } from '@/src/features/editing/view-node-color';
 import { fitToScreen } from '@/src/features/canvas/view-viewport';
+import {
+	isBranchRootNode,
+	isFoldableNode,
+	setBranchSide,
+	toggleNodeFold,
+} from '@/src/features/canvas/view-node-layout';
 import {
 	addImageToActiveNode,
 	addLinkToActiveNode,
@@ -281,6 +288,55 @@ function addRelationItem(
 			? entry.setDisabled(true)
 			: entry.onClick(() => startRelationPicking(view, node));
 	});
+}
+
+/**
+ * 节点级布局：左右方向与折叠。
+ *
+ * - **方向**只对根的直接子节点有语义（后代继承父分支方向），且只在引擎读取
+ *   `data.dir` 的布局里提供（思维导图 / 时间轴 / 鱼骨图）；其它布局隐藏入口，
+ *   文件里已有的 `%%side%%` 原样保留，切回支持的布局时重新生效。
+ * - **折叠**对任何有子节点的节点提供；写 `%%fold:1%%`，展开时删除该属性。
+ * - 两者都写在正文指令里，随文件跨设备同步（不是 `data.json`）。
+ */
+function addNodeLayoutMenu(
+	menu: Menu,
+	view: MindMapViewContext,
+	node: MindMapNode,
+): void {
+	if (node.isRoot) {
+		return;
+	}
+	if (isBranchRootNode(node) && supportsBranchSide(view.resolveLayout())) {
+		const current = readNodeLayout(node.getData() as MdNodeData).side;
+		addCascadingMenu(menu, view.lang, {
+			title: 'menu.branchSide',
+			icon: 'arrow-left-right',
+			build: (submenu) => {
+				for (const option of [
+					{ value: 'left', label: 'menu.branchSideLeft' },
+					{ value: 'right', label: 'menu.branchSideRight' },
+					{ value: 'auto', label: 'menu.branchSideAuto' },
+				] as const) {
+					submenu.addItem((item) =>
+						item
+							.setTitle(t(view.lang, option.label))
+							.setChecked(option.value === current)
+							.onClick(() => setBranchSide(view, node, option.value)),
+					);
+				}
+			},
+		});
+	}
+	if (isFoldableNode(node)) {
+		const folded = readNodeLayout(node.getData() as MdNodeData).fold;
+		menu.addItem((item) =>
+			item
+				.setTitle(t(view.lang, folded ? 'menu.unfoldNode' : 'menu.foldNode'))
+				.setIcon(folded ? 'chevrons-down-up' : 'chevrons-up-down')
+				.onClick(() => toggleNodeFold(view, node)),
+		);
+	}
 }
 
 /**
@@ -821,6 +877,7 @@ function showNodeContextMenu(
 	menu.addSeparator();
 	addRelationItem(menu, view, node);
 	addSummaryItem(menu, view, node, targets);
+	addNodeLayoutMenu(menu, view, node);
 	menu.addSeparator();
 	addLayoutMenu(menu, view);
 	// 中心主题是**虚拟文档根**（文件名，没有正文行）：节点颜色无处持久化，
