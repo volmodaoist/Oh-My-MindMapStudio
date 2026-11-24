@@ -7328,6 +7328,13 @@ async function main() {
 		const baselineArchive = join(workDir, 'baseline.tar');
 		execFileSync('git', ['archive', '--output', baselineArchive, 'HEAD', 'src'], { cwd: ROOT });
 		execFileSync('tar', ['-xf', baselineArchive, '-C', baselineDir]);
+		// 基线副本只带 src，`@/` 别名在临时目录里没有 tsconfig 可依；补一份局部
+		// paths，让基线模块解析到 baseline/src，而不是当前工作树（否则比较空转）。
+		await writeFile(
+			join(baselineDir, 'tsconfig.json'),
+			JSON.stringify({ compilerOptions: { paths: { '@/*': ['./*'] } } }),
+			'utf8',
+		);
 		await build({ entryPoints: [join(baselineDir, 'src/ui/styles/index.css')], outfile: join(workDir, 'baseline.css'), bundle: true, logLevel: 'warning' });
 		const baselineCss = await readFile(join(workDir, 'baseline.css'), 'utf8');
 		const currentCss = await readFile(join(ROOT, 'styles.css'), 'utf8');
