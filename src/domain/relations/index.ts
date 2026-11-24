@@ -2,10 +2,12 @@
 export {
 	applyDirectiveBlock,
 	isDirectiveLine,
+	parseDirectiveLines,
 	splitDirectiveSegments,
 	splitDirectiveTail,
 	stripTrailingSegments,
 } from './directive';
+export type { DirectiveSegment } from './directive';
 export {
 	commitAnchorSession,
 	createAnchorSession,

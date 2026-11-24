@@ -32,7 +32,7 @@
 
 /** 一个指令段：`key` + 冒号后的原文 + 逐字切片 */
 export interface DirectiveSegment {
-	/** 小写关键字（本插件登记的三种：`id` / `rel` / `sum`） */
+	/** 小写关键字（本插件登记的：`id` / `rel` / `sum` / `side` / `fold`） */
 	key: string;
 	/** 冒号后的原文（已 trim，**未做语义解析**） */
 	value: string;
@@ -46,7 +46,7 @@ export interface DirectiveSegment {
  * 新增一种指令：在这里登记 + 在自己的 domain 模块里解释 value；语法层不需要
  * 任何改动（不登记 = 该行按普通注释处理）。
  */
-const DIRECTIVE_KEYS = ['id', 'rel', 'sum'] as const;
+const DIRECTIVE_KEYS = ['id', 'rel', 'sum', 'side', 'fold'] as const;
 
 /** `key: value` 的段内形态（key 只收字母，避免把 `%%#hex%%` 这类注释当指令） */
 const SEGMENT_PATTERN = /^\s*([a-z]+)\s*:\s*([\s\S]*)$/i;
@@ -120,6 +120,24 @@ function parseDirectiveLine(
  */
 export function isDirectiveLine(line: string): boolean {
 	return parseDirectiveLine(line) !== null;
+}
+
+/**
+ * 解析一段**只含指令行**的原文（节点 `mdDirectiveTail` / 新写回的指令块）。
+ *
+ * 与 `splitDirectiveSegments` 的差别：后者面向「内容 + 尾块」，整行都是指令时会把
+ * 首行当作孤立节点的内容；这里只按行解析指令段，不套孤立节点规则。无法解析的行
+ * 跳过（普通注释不影响语义）。
+ */
+export function parseDirectiveLines(source: string): DirectiveSegment[] {
+	const segments: DirectiveSegment[] = [];
+	for (const line of source.split('\n')) {
+		const parsed = parseDirectiveLine(line);
+		if (parsed) {
+			segments.push(...parsed);
+		}
+	}
+	return segments;
 }
 
 /**

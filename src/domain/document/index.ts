@@ -23,3 +23,16 @@ export {
 	cloneTree,
 	walkTree,
 } from './tree';
+export {
+	applyNodeLayoutFields,
+	parseFoldValue,
+	parseSideValue,
+	readLayoutDirectives,
+	readNodeLayout,
+	supportsBranchSide,
+} from './node-layout';
+export type {
+	BranchSide,
+	LayoutDirectiveSegment,
+	NodeLayout,
+} from './node-layout';

@@ -46,6 +46,7 @@
       - [mindmap-file.ts](../src/domain/document/mindmap-file.ts)
       - [mindmap-property.ts](../src/domain/document/mindmap-property.ts)
       - [model.ts](../src/domain/document/model.ts)
+      - [node-layout.ts](../src/domain/document/node-layout.ts)
       - [node-meta.ts](../src/domain/document/node-meta.ts)
       - [source.ts](../src/domain/document/source.ts)
       - [tree.ts](../src/domain/document/tree.ts)
@@ -313,6 +314,7 @@
     - **document/**
       - [mindmap-file.test.ts](../tests/domain/document/mindmap-file.test.ts)
       - [mindmap-property.test.ts](../tests/domain/document/mindmap-property.test.ts)
+      - [node-layout.test.ts](../tests/domain/document/node-layout.test.ts)
       - [tree.test.ts](../tests/domain/document/tree.test.ts)
     - **links/**
       - [url.test.ts](../tests/domain/links/url.test.ts)
@@ -421,6 +423,7 @@
     - [md-open-trigger.test.ts](../tests/markdown/md-open-trigger.test.ts)
     - [md-roundtrip-property.test.ts](../tests/markdown/md-roundtrip-property.test.ts)
     - [md-roundtrip.test.ts](../tests/markdown/md-roundtrip.test.ts)
+    - [node-layout.test.ts](../tests/markdown/node-layout.test.ts)
   - **media/**
     - [images-path.test.ts](../tests/media/images-path.test.ts)
     - [pasted-name.test.ts](../tests/media/pasted-name.test.ts)
@@ -533,7 +536,7 @@
 | `src/features/mindmap-codeblock.ts` | 765 | Markdown 代码块只读嵌入（语言键 `mindmap`）的**单一关注点**：块体解析 → 只读引擎装配（`readonly: true` + `enableViewDrag: false`）→ **容器高度随内容**（按宽度适配量测 + 写内联高度 + 请引擎重排）→ **容器宽度变化即重排**（观察器**先建且常驻**：首帧同步挂载成功也注册，否则高度口径锁死在首帧、内容被 `overflow: hidden` 裁掉；重排在**下一帧**落（`deferFit`），在 RO 回调里写布局会被 Chrome 记 `ResizeObserver loop…` 实机可见）→ 滚轮归宿主页面（capture 拦截；引擎 `onMousewheel` 无条件 preventDefault）→ 超限降级只读大纲 → 生命周期收尾（观察器/事件/尺寸会话/引擎/卸载即清 DOM）是一条不可分割的链；拆开会让「解析口径、零尺寸等待、尺寸反馈环、销毁顺序」四处漂移。**不写 data.json**（用户裁决 2026-10-13）。 |
 | `src/markdown/syntax/md-footnote.ts` | 316 | 脚注的**唯一判定面**：定义语法（`parseFootnoteDefinition` / `isFootnoteDefinition`，解析层的链接引用定义豁免也委托它）、逐行分类（`forEachFootnoteLine` 同时服务渲染期剥离与全文索引——拆开必然出现「显示剥了、索引没剥」）、id 字符类（`FOOTNOTE_ID_SOURCE`，行内引用正则从它拼）。2026-11-12 增至 315：续行改按**相对内容起始列的缩进**判定（`indentOf`：优先解析层 `mdContinuationIndents`，否则行首空白），同列的非空行不再被当成续行隐藏；行分类与 id 语法各自只留一份实现（硬规则 5）。 |
 | `src/markdown/serialize/md-serialize.ts` | 1072 | 逐字回写 与 合成回写 的判定/合成必须共享同一份「节点是否被编辑」上下文（`rawOk` 一族谓词），拆分会把它切成跨文件的隐式协议。**2026-11-08 增至 997**：「跟随兄弟风格」改为按**位置**判（`SerializeFrame.lastWasList`，层首仍看整层）——只看整层会让混排组里排在标题之后的新建节点写出列表项、重开被读成该标题的子节点（K172）。嵌入拼写走 `domain/links/wikilink.formatEmbedWikilink`，注意 `embedLabelSuffix` 返回值**带前导 `\|`** 需去前缀。2026-10-12 增至 1189：无显示名段（首图 / icon-only URL）的**锚点插入点**反查（`anchorInsertPoint` / `insertionForm`）与替换型 slot 共用同一遍行内拼装，拆开会让「文本定位」与「锚点定位」各持一份区间占用判定。2026-10-13 到 1191：`serializeMdBody` 内的 `nodeLines` 去掉遮蔽外层入参的冗余 `app` 形参 |
-| `src/markdown/outline/md-outline.ts` | 910 | 大纲 ↔ 节点树 的单一往返实现：解析与生成共用同一套层级/标记规则。2026-10-12 增至 1108：首图与 icon-only URL 也登记台账段并附**上下文锚点**（`tokenAnchors`）——不登记则合成只能尾插，图片被搬到行尾 |
+| `src/markdown/outline/md-outline.ts` | 940 | 大纲 ↔ 节点树 的单一往返实现：解析与生成共用同一套层级/标记规则。2026-10-12 增至 1108：首图与 icon-only URL 也登记台账段并附**上下文锚点**（`tokenAnchors`）——不登记则合成只能尾插，图片被搬到行尾 |
 | `src/markdown/outline/md-outline-lines.ts` | 421 | 逐行分类的唯一实现（围栏状态机 / 自闭合围栏 / setext 与分隔线 / 空列表项 / 有序编号，零依赖）；拆开会把「行 → 分类」与「树装配」割成两份缩进与围栏口径（K164）。2026-11-08 增至 322：有序编号 `orderedNumber` 随行记录（K170），只加字段不拆文件；同批把编号限制为**安全整数**（`orderedNumberOf`，超长编号写回会成 `1e+21.` 让整行退化成段落，K172） |
 | `src/core/minimap-geometry.ts` | 1562 | 小地图纯几何与 SVG 模型的唯一实现：全树内容盒、节点抽样/墨色、布局五态连线、等比面板映射、视口框投影与浮层节拍共享同一坐标系。K215 只增加可用侧栏尺寸参数，SVG、框和拖动仍共用 miniMapScale，不复制几何/连线/导航算法。浮层维持宽 160–220、高度按画布封顶；侧栏以完整承载区和 12px 单源 inset 等比居中，实际连线外扩与全树节点共用一份绘制 bounds；最小像素标记须保留边缘空白。 |
 | `src/core/i18n.ts` | 850 | 纯词条表（无逻辑分支）。2026-10-14 增至 563：节点上/下移 5 条（双语），含中心节点与首/末位拒绝提示。 |

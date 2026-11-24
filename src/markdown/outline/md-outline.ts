@@ -23,6 +23,11 @@
 
 import type { MarkdownDocument, MarkdownNode, MarkdownSource } from '@/src/domain/document';
 import {
+	applyNodeLayoutFields,
+	readLayoutDirectives,
+	walkTree,
+} from '@/src/domain/document';
+import {
 	formatWikilink,
 	linkDisplayText,
 	parseWikilink,
@@ -31,7 +36,11 @@ import {
 import { isUrlLikeText } from '@/src/domain/links';
 import { parseTaskPrefix, stripTaskPrefix } from '@/src/domain/content';
 import { isIndentedCodeLine } from '@/src/core/constants';
-import { isDirectiveLine, stripTrailingSegments } from '@/src/domain/relations';
+import {
+	isDirectiveLine,
+	parseDirectiveLines,
+	stripTrailingSegments,
+} from '@/src/domain/relations';
 import { isColorDirectiveLine } from '@/src/domain/color';
 import type { MdTokenSegment } from '@/src/domain/document';
 import type { MdNodeData } from '@/src/core/node-data';
@@ -867,7 +876,28 @@ export function parseMdOutline(
 		);
 	}
 	flushPlain();
+	applyNodeLayouts(root);
 	return { frontmatter, gap, tree: root, body };
+}
+
+/**
+ * 解析完成后把 `%%side%%` / `%%fold%%` 指令投影到节点 data。
+ *
+ * 指令行本身已由 `attachDirectiveLine` 收进 `mdDirectiveTail`（逐字保真）；
+ * 这里只读语义并写 `mdSide` / `mdFold`（供菜单与再次写回）以及引擎投影
+ * `dir` / `expand`。没有任何布局指令的节点保持原样（默认自动 + 展开）。
+ */
+function applyNodeLayouts(root: ParsedNode): void {
+	walkTree(root, (node) => {
+		const tail = node.data.mdDirectiveTail;
+		if (typeof tail !== 'string' || !tail) {
+			return;
+		}
+		const layout = readLayoutDirectives(parseDirectiveLines(tail));
+		if (layout) {
+			applyNodeLayoutFields(node.data, layout);
+		}
+	});
 }
 
 /**

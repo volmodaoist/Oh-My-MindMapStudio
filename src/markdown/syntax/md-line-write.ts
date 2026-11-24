@@ -22,7 +22,8 @@ import {
 	PLAIN_IMAGE_FIELDS,
 } from '@/src/markdown/outline/md-outline';
 import { parseTaskPrefix, stripTaskPrefix } from '@/src/domain/content';
-import { isDirectiveLine } from '@/src/domain/relations';
+import { applyNodeLayoutFields, readLayoutDirectives } from '@/src/domain/document';
+import { isDirectiveLine, parseDirectiveLines } from '@/src/domain/relations';
 import type { MdNodeData } from '@/src/core/node-data';
 
 /**
@@ -94,4 +95,9 @@ export function applyRawToNode(data: MdNodeData, raw: string): void {
 	if (tails.length > 0) {
 		data.mdDirectiveTail = tails.join('\n');
 	}
+	// 布局指令随原文整体重算：删掉 `%%side%%` / `%%fold%%` 后不能残留旧方向或折叠态
+	const layout = readLayoutDirectives(
+		parseDirectiveLines(data.mdDirectiveTail ?? ''),
+	);
+	applyNodeLayoutFields(data, layout ?? { side: 'auto', fold: false });
 }
