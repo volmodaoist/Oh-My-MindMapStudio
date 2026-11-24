@@ -33,6 +33,5 @@ export {
 } from './node-layout';
 export type {
 	BranchSide,
-	LayoutDirectiveSegment,
 	NodeLayout,
 } from './node-layout';

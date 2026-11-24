@@ -47,7 +47,7 @@ export function isBranchRootNode(node: MindMapNode): boolean {
 }
 
 /** 当前布局是否提供方向入口 */
-export function canSetBranchSide(view: MindMapViewContext): boolean {
+function canSetBranchSide(view: MindMapViewContext): boolean {
 	return supportsBranchSide(view.resolveLayout());
 }
 
